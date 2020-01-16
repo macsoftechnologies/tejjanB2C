@@ -1,0 +1,385 @@
+<div class="search-panel">
+  <div class="bg-mask"></div>
+
+  <div class="search-container">
+    <form [formGroup]="searchHotelsForm">
+      <div class="container custom-container">
+        <div class="search-panel-mask">
+          <div class="additional-options">
+            <div class="row d-none">
+              <div class="col-md-3">
+                <label class="checkbox-container">including Madinah
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-md-3">
+                <label class="checkbox-container">Special Needs Services
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="col-md-6 booking-flight-text">
+                <span class="booking-with-flight">Booking with Flight</span>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 flight-trans-blocks">
+              <div class="flight-and-hotel col">
+                <h5>Hotels</h5>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div>
+                        <label for="hotels">Travel To</label>
+                        <div class="input-group mb-2">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text"><img class="icon-size" src="assets/images/icons/hotel.png"
+                                alt="calendar"></div>
+                          </div>
+                          <ng-select [formControl]="searchHotelsForm.controls['location']" [items]="locationSearch"
+                            bindLabel="city" [virtualScroll]="true" placeholder="Travel To" class="custom-select">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="date-pickers">
+                      <div class="calendar-dates">
+                        <label for="return_date">Check-In Date</label>
+                        <div class="form-group custom-border">
+                          <div class="input-group input-group-md">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                                <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                              </button>
+                            </div>
+                            <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp2"
+                              ngbDatepicker #d1="ngbDatepicker" #checkIn [readonly]="true"
+                              [formControl]="searchHotelsForm.controls['checkIn']" [minDate]="chekInMinDate"
+                              (focus)="d1.open()">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="calendar-dates">
+                        <label for="return_date">Check-Out Date </label>
+                        <div class="form-group">
+                          <div class="input-group input-group-md checkout-input">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary calendar brad-none" (click)="d2.toggle()"
+                                type="button">
+                                <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                              </button>
+                            </div>
+                            <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp2"
+                              ngbDatepicker #d2="ngbDatepicker" #checkOut (focus)="d2.open()" [readonly]="true"
+                              [minDate]="chekOutMinDate" [formControl]="searchHotelsForm.controls['checkOut']">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex">
+                      <div class="room-mobile custom-width">
+                        <div class="form-group">
+                          <!-- <div> -->
+                          <label for="rooms">Room</label>
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text"><img class="icon-size" src="assets/images/icons/hotel.png"
+                                  alt="hotel rooms"></div>
+                            </div>
+                            <div class="form-control room-group-append">
+                              <span>{{roomCount}} room(s)</span>
+                              <div class="room-count-card">
+                                <a href="javascript:void(0)" class="" (click)="decreaseRoomCount()"><i
+                                    class="fa fa-minus"></i></a>
+                                <span class="m-1">{{roomCount}}</span>
+                                <a href="javascript:void(0)" class="" (click)="increaseRoomCount()"><i
+                                    class="fa fa-plus"></i></a>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                      <div class="room-mobile custom-width">
+                        <div class="form-group">
+                          <!-- <div> -->
+                          <label for="guest">Guest</label>
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text brad-left-none"><img class="icon-size"
+                                  src="assets/images/icons/user.png" alt="guests"></div>
+                            </div>
+                            <div class="form-control room-group-append">
+                              <span (click)="toggleCollapse()">{{calculateGuestCount()}} Guests</span>
+                            </div>
+                            <input type="text" class="form-control guest-selection" placeholder="Select Guest" id=""
+                              (click)="toggleCollapse()" />
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                        <div class="adult-child-selection" *ngIf="!isCollapsed">
+                          <span class="error" *ngIf="calculateGuestCount()==9">Traveller count cannot be more than
+                            9</span>
+
+                          <div class="room-count-card m-1" *ngFor="let guest of guestInfo;let i=index">
+                            <div class="d-flex justify-content-between p-1">
+                              <span>Adult</span>
+                              <div class="room-count-card">
+                                <a href="javascript:void(0)" class="m-2" (click)="decreaseAdultCount(i)"><i
+                                    class="fa fa-minus"></i></a>
+                                <span class="m-1">{{guest.adult}}</span>
+                                <a href="javascript:void(0)" class="m-2" (click)="increaseAdultCount(i)"><i
+                                    class="fa fa-plus"></i></a>
+                              </div>
+                            </div>
+                            <div class="d-flex justify-content-between p-1">
+                              <span>Child</span>
+                              <div class="room-count-card">
+                                <a href="javascript:void(0)" class="m-2" (click)="decreaseChildCount(i)"><i
+                                    class="fa fa-minus"></i></a>
+                                <span class="m-1">{{guest.child}}</span>
+                                <a href="javascript:void(0)" class="m-2"
+                                  (click)="guest.child<6?increaseChildCount(i):false"><i class="fa fa-plus"></i></a>
+                                <div class="error" *ngIf="guest.child==6">
+                                  <span>child count should not be more than 6</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="m-1">
+                              <div *ngIf="guest.child >0">
+                                <div class="row">
+                                  <div class="col-md-6" *ngFor="let ages of guest.childAges;let j= index;">
+                                    <span>Child {{j+1}}</span>
+                                    <div class="form-group">
+                                      <ng-select [items]="child_ages" placeholder="age"
+                                        (change)="changeChildAge($event,i,j)">
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div>
+                        <label for="nationality">Nationality</label>
+                        <div class="input-group mb-2 select-brad-none"
+                          [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['nationality'].errors}">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text"><img class="icon-size" src="assets/images/icons/flag.png"
+                                alt="nationality"></div>
+                          </div>
+                          <ng-select class="custom-select" [items]="countries" [virtualScroll]="true"
+                            placeholder="Select nationality"
+                            [formControl]="searchHotelsForm.controls['nationality']" bindLabel="countryName"
+                            [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['nationality'].errors}">
+                          </ng-select>
+                        </div>
+                        <div class="validation-lavel-tootip d-none"
+                          *ngIf="searchValidationFlag && searchHotelsForm.controls['nationality'].errors">
+                          <div *ngIf="searchHotelsForm.controls['nationality'].errors.required">
+                            Select country
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 flight-trans-blocks">
+              <div class="transport-and-ground-services col">
+                <h5>Transportation & Services</h5>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div>
+                        <label for="route">Route</label>
+                        <div class="input-group mb-2"
+                          [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['route'].errors}">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text brad-left-none"><img class="icon-size"
+                                src="assets/images/icons/bus.png" alt=""></div>
+                          </div>
+                          <ng-select class="custom-select" [items]="transportRoutes" [virtualScroll]="true"
+                            placeholder="Select Route" [formControl]="searchHotelsForm.controls['route']"
+                            bindLabel="name">
+                          </ng-select>
+                        </div>
+                        <div class="validation-lavel-tootip d-none"
+                          *ngIf="searchValidationFlag && searchHotelsForm.controls['route'].errors">
+                          <div *ngIf="searchHotelsForm.controls['route'].errors.required">
+                            Select country
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex">
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <!-- <div> -->
+                          <label for="hotels">Vehicle Types</label>
+                          <div class="input-group mb-2 select-brad-none">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text"><img class="icon-size" src="assets/images/icons/bus.png"
+                                  alt="transport-vehicle"></div>
+                            </div>
+                            <ng-select class="custom-select" [items]="vehicleTypes" [virtualScroll]="true"
+                              placeholder="Select Type" [formControl]="searchHotelsForm.controls['vehicleType']"
+                              bindLabel="name">
+                            </ng-select>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <!-- <div> -->
+                          <label for="transport-class">Transportation Class</label>
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text brad-left-none"><img class="icon-size"
+                                  src="assets/images/icons/valet.png" alt="transport-class"></div>
+                            </div>
+                            <ng-select class="custom-select" [items]="tranportCategories" [virtualScroll]="true"
+                              placeholder="Select Class" [formControl]="searchHotelsForm.controls['tranportationClass']"
+                              bindLabel="name">
+                            </ng-select>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex">
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <div>
+                            <label for="quantity">How Many Vehicles</label>
+                            <div class="input-group mb-2"
+                              [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['vehicleQuantity'].errors}">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><img class="icon-size"
+                                    src="assets/images/icons/Group_quantity.png" alt="Ground-service"></div>
+                              </div>
+                              <input type="number" class="form-control brad-right-none" placeholder="How many"
+                                [formControl]="searchHotelsForm.controls['vehicleQuantity']" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <div>
+                            <label for="ground_service">Additional Services</label>
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text brad-left-none"><img class="icon-size"
+                                    src="assets/images/icons/bus.png" alt="Ground-service"></div>
+                              </div>
+                              <ng-select class="custom-select" [items]="trasportAdditionalServices"
+                                [virtualScroll]="true" placeholder="Select transportAdditional Services"
+                                [formControl]="searchHotelsForm.controls['transportAdditionalServices']" bindLabel="name">
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex">
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <div>
+                            <label for="ground_service">Package Class</label>
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text brad-left-none"><img class="icon-size"
+                                    src="assets/images/icons/ground-info.png" alt="Ground-service"></div>
+                              </div>
+                              <ng-select class="custom-select" [items]="groundServicePackageServices"
+                                [virtualScroll]="true" placeholder="Select Services"
+                                [formControl]="searchHotelsForm.controls['groundServicePackage']" bindLabel="name">
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="custom-width">
+                        <div class="form-group">
+                          <div>
+                            <label for="route">Country of Residence</label>
+                            <div class="input-group mb-2"
+                              [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['countryOfResidence'].errors}">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text brad-left-none"><img class="icon-size"
+                                    src="assets/images/icons/flag.png" alt=""></div>
+                              </div>
+                              <ng-select class="custom-select" [items]="countries" [virtualScroll]="true"
+                              placeholder="Select countryOfResidence"
+                              [formControl]="searchHotelsForm.controls['countryOfResidence']" bindLabel="countryName"
+                              [ngClass]="{'validation-border':searchValidationFlag && searchHotelsForm.controls['countryOfResidence'].errors}">
+                            </ng-select>
+                            </div>
+                            <div class="validation-lavel-tootip d-none"
+                              *ngIf="searchValidationFlag && searchHotelsForm.controls['countryOfResidence'].errors">
+                              <div *ngIf="searchHotelsForm.controls['countryOfResidence'].errors.required">
+                                Select country
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="search-btn">
+                <button class="btn" (click)="onSearch()"><img src="assets/images/icons/search_icon.png" alt=""></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+   
+
+
+</div>

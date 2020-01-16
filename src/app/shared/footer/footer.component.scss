@@ -1,0 +1,257 @@
+@import "../../../assets/variables/global-variables";
+
+.footer-body {
+    background-color: #F2F4F6;
+    padding: 25px 25px;
+        .footer-header {
+            color: $primary-color;
+            font-weight: 400 !important;
+            text-align: center;
+        }
+        .footer-sub-header {
+            font-size: 16px;
+            text-align: center;
+            color: #3A3A3A;
+        }
+        .input-subscribe {
+            text-align: center;
+            height: 60px;
+            width: 100%;
+            background-color: $light-font-color;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            position: relative;
+            box-shadow: 0 10px 40px 0 rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            .mail-icon img {
+                height: 20px;
+                width: 25px;
+                margin-left: 20px;
+                display: flex;
+                align-items: center;
+            }
+            input {
+                width: 65%;
+                height: 25px;
+                border-radius: $border-radius;
+                border: none;
+                position: relative;
+                padding-left: 10px;
+            }
+            input:focus {
+                outline: none;
+            }
+            .sub-btn {
+                height: 40px;
+                width: 111px;
+                color: $light-font-color;
+                background-color: $primary-color;
+                border: none;
+                border-radius: $border-radius;
+                margin-right: 10px;
+                box-shadow: 0 20px 40px 0 rgba(0,0,0,0.2);
+                font-family: "roboto"
+            }
+        }
+        .details-list ul li {
+            padding-bottom: 8px;
+        }
+        .address-list ul li {
+            padding-bottom: 8px;
+        }
+        .website-links ul li {
+            padding-bottom: 10px;
+        }
+        .help-links ul li {
+            padding-bottom: 10px;
+        }
+        .details-list ul li a {
+            color: $primary-color;
+            text-decoration: none;
+        }
+        .address-list ul li a {
+            color: #5c6163;
+            text-decoration: none;
+        }
+        .footer-column-header {
+            color: $primary-color;
+            font-size: $label-font-size;
+            
+            ul li a {
+                color: #5c6163;
+            }
+        }
+        .images {
+           text-align: right;
+        }
+        .card-images img:nth-child(1) {
+            height: 16px;
+            width: 53px;
+            margin-right: 35px;
+        }
+        .card-images img:last-child {
+            height: 26px;
+            width: 43px;
+        }
+        .logo {
+            padding-top: 32px;;
+        } 
+        img {
+            height: 90px;
+            width: 184px;
+        }
+        .footer-bottom h5 {
+            color: #5c6163;
+            text-align: center;
+            font-weight: 400 !important;
+            font-size: 18px;
+
+            .copy-rights-year {
+                font-weight: 500;
+            }
+        }
+        .details-list,.help-links ul li a {
+            color: #5c6163 !important;
+            text-decoration: none;
+            img {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+        }
+        .website-links ul li a {
+            color: #5c6163;
+            text-decoration: none;
+        }
+        .social-icons ul {
+            display: flex;
+            padding: 0;
+            margin-bottom: 10px;
+           li {
+               list-style-type: none;
+               margin-right: 18px;
+           }
+           a img {
+               width: 25px;
+               height: 25px;
+           }
+           
+           
+    }
+    .footer-columns {
+        display: grid;
+        justify-content: center;
+        .footer-column-header {
+            margin: 0px;
+        }
+    }
+    .bold-letters {
+        font-weight: 500;
+    }
+    .sub-input {
+        text-align: center;
+    }
+    .subscribeblock {
+        width: 450px;
+        margin: auto;
+    }
+
+}
+@media (min-width:200px) and (max-width:767px) {
+    .footer-body {
+        padding: 25px 0px;
+
+    .input-subscribe {
+        width: 100%;
+        height: 55px;
+        .mail-icon img {
+            margin-left: 10px;
+            height: 15px;
+            width: 20px;
+        }
+        .sub-btn {
+            right: 2%;
+            height: 45px;
+            border-radius: 8px;
+            width: 105px;
+        }
+    }
+        .address-list ul li a {
+            font-size: 11px;
+        }
+        .details-list,.website-links,.help-links ul li a {
+            font-size: 10px;
+            color: #5c6163 !important;
+            font-weight: 500;
+        }
+        .logo {
+            padding-top: 0px;
+        }
+        .images {
+            display: flex;
+            justify-content: space-between;
+        }
+        .card-images img:nth-child(2) {
+            margin-right: 20px;
+        }
+        .details-list ul li {
+            padding-bottom: 7px;
+        }
+        .address-list ul li {
+            padding-bottom: 5px;
+        }
+        .website-links ul li {
+            padding-bottom: 5px;
+        }
+        .help-links ul li {
+            padding-bottom: 0px;
+        }
+
+    }
+    .footer-body {
+        img {
+            height: 65px;
+            width: 145px
+        }
+        .address-list ul li {
+            padding-bottom: 0;
+        }
+    .social-icons ul {
+        margin-bottom: 0px;
+        li {
+            margin-right: 5px;
+
+        }
+     }
+    }
+    .footer-body {
+        .details-list img {
+            height: 18px;
+            width: 18px;
+        }
+        .social-icons {
+            ul li a img {
+                height: 22px;
+                width: 22px;
+            }
+        }
+        .address-list {
+            padding-bottom: 15px;
+            ul li {
+            height: 15px;
+            }
+        }
+      .subscribeblock {
+          width: 100%;
+        }
+    }
+    .footer-body .bold-letters {
+        font-weight: 700;
+    }
+    .images {
+        padding-bottom: 15px;
+    }
+    
+}

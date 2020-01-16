@@ -1,0 +1,563 @@
+<div class="hotel-search-results">
+  <div class="mecca-bg">
+    <div class="bg-mask"></div>
+  </div>
+  <div class="results-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Filters -->
+        <div class="col-md-2 forMobileFilter" [ngClass]="{'forMobileFilter': !isFilterDisplay}">
+          <aside class="booking-filters booking-filters-white">
+            <div class="filter-block-title">
+              <h3 class="mb-0 d-inline">Search Filters</h3>
+              <i class="fa fa-times d-block d-md-none" (click)="closeFilter()"></i>
+            </div>
+            <!-- 
+            <a href="javascript:void(0)" class="fa fa-times booking-item-wishlist-remove d-block d-md-none"
+              (click)="onCloseFilter()"></a>
+           
+            <button class="btn btn-primary d-md-none change-search-mob" (click)="onBackHotelSearch()">Change
+              Search</button> -->
+            <!-- <hr> -->
+            <ul class="list booking-filters-list">
+
+              <li id="star-rating">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+
+                    <h5 class="booking-filters-title d-inline">Star Rating</h5>
+                    <span (click)="clearFilter('RATING')">Clear</span>
+                    <div>
+                      
+                      <a class="card-link" data-toggle="collapse" href="#starRating">
+                        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                      </a>
+                  </div>
+
+                  </div>
+                  <div id="starRating" class="collapse show filter-options" data-parent="#star-rating">
+                    <perfect-scrollbar style="position: relative; max-height: 245px;overflow: auto;" [config]="config">
+                      <div class="custom-control custom-checkbox mr-sm-2 m-b-5 "
+                        *ngFor="let rating of setRating;let i = index">
+                        <input type="checkbox" class="custom-control-input" id="checkboxR{{i}}" #ratingCheckbox
+                          (change)="onHotelFilter('RATING',$event,rating)" [checked]="rating.isSelected">
+                        <label class="custom-control-label" for="checkboxR{{i}}">{{rating.name}} Star</label>
+                        <!-- <span>(15)</span> -->
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </li>
+
+              <li id="amenities" *ngIf="hasAmenities">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+
+                    <h5 class="booking-filters-title d-inline">Services</h5>
+
+                    <span (click)="clearFilter('AMENITIES')">Clear</span>
+                    <a class="card-link" data-toggle="collapse" href="#amenitiesList">
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="amenitiesList" class="collapse show filter-options" data-parent="#amenities">
+                    <perfect-scrollbar style="position: relative; max-height: 240px;overflow: auto;" [config]="config">
+                      <div class="custom-control custom-checkbox mr-sm-2 m-b-5 "
+                        *ngFor="let amenity of filterAmenities | unique;let i = index">
+                        <input type="checkbox" class="custom-control-input" id="checkboxAmenities{{i}}"
+                          #amenitiesCheckbox (change)="onHotelFilter('AMENITIES',$event,amenity)">
+                        <label class="custom-control-label" for="checkboxAmenities{{i}}">{{amenity}}</label>
+                        <!-- <span>(15)</span> -->
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </li>
+
+              <li id="hotel-chain" *ngIf="hasHotelChains">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+
+                    <h5 class="booking-filters-title d-inline">Hotel Chain</h5>
+                    <span (click)="clearFilter('CHAINS')">Clear</span>
+                    <a class="card-link" data-toggle="collapse" href="#chainList">
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="chainList" class="collapse show filter-options" data-parent="#hotel-chain">
+                    <perfect-scrollbar style="position: relative; max-height: 230px;overflow: auto;" [config]="config">
+                      <div class="custom-control custom-checkbox mr-sm-2 m-b-5 "
+                        *ngFor="let chain of filterChains | unique;let i = index">
+                        <input type="checkbox" class="custom-control-input" id="checkboxChains{{i}}" #chainsCheckbox
+                          (change)="onHotelFilter('CHAINS',$event,chain)">
+                        <label class="custom-control-label" for="checkboxChains{{i}}">{{chain}}</label>
+                        <!-- <span>(15)</span> -->
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </li>
+
+              <li id="price-range">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+
+                    <h5 class="booking-filters-title d-inline">Price Range</h5>
+                    <span (click)="clearFilter('Price')">Clear</span>
+                    <a class="card-link" data-toggle="collapse" href="#priceRange">
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="priceRange" class="collapse show filter-options" data-parent="#price-range">
+                    <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                      (userChange)="priceSliderChange($event)"></ng5-slider>
+                  </div>
+                </div>
+              </li>
+              <li id="distance">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+
+                    <h5 class="booking-filters-title d-inline">Distance From Haram</h5>
+                    <span (click)="clearFilter('RATING')">Clear</span>
+                    <a class="card-link" data-toggle="collapse" href="#distanceFrom">
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="distanceFrom" class="collapse show filter-options" data-parent="#distance">
+                    <ng5-slider [(value)]="value" [options]="distanceOptions"></ng5-slider>
+                  </div>
+                </div>
+              </li>
+              <li id="other-amenities" *ngIf="hasRoomAmenities">
+                <div class="filter-wrapper">
+                  <div class="filter-header">
+                    <a class="card-link" data-toggle="collapse" href="#otherAmenities">
+                      <h5 class="booking-filters-title d-inline">Optional Amenities</h5>
+                      <span (click)="clearFilter('RATING')">Clear</span>
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="otherAmenities" class="collapse show filter-options" data-parent="#other-amenities">
+                    <perfect-scrollbar style="position: relative; max-height: 230px;overflow: auto;" [config]="config">
+                      <div class="custom-control custom-checkbox mr-sm-2 m-b-5 "
+                        *ngFor="let rmAmenity of filterRoomAmenities ;let i = index">
+                        <input type="checkbox" class="custom-control-input" id="checkboxRM{{i}}" #amenitiesCheckbox
+                          (change)="onHotelFilter('RMAMENITIES',$event,rmAmenity)">
+                        <label class="custom-control-label" for="checkboxRM{{i}}">{{rmAmenity}}</label>
+                        <!-- <span>(15)</span> -->
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </aside>
+        </div>
+        <!-- /filters -->
+        <!-- hotel list  -->
+        <div class="col-md-10" [ngClass]="{'forHotelListMObile':isFilterDisplay}">
+          <div class="filter-options-header">
+            <div class="row filter-header-reverse-row">
+              <div class="col-12 col-md-10">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label>Hotel Name</label>
+                      <input type="text" class="form-control form-control-lg" id="price-slider"
+                        [(ngModel)]="name_filter" name="name_filter">
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <form [formGroup]="searchHotelForm">
+                      <div class="row">
+                        <div class="col-9">
+                          <div class="date-pickers">
+                            <div class="calendar-dates">
+                              <label for="return_date">Check In</label>
+                              <div class="form-group">
+                                <div class="input-group input-group-lg">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" type="button"
+                                      (click)="d1.toggle()">
+                                      <i class="fa fa-calendar"></i>
+                                    </button>
+                                  </div>
+                                  <input class="form-control" [formControl]="searchHotelForm.controls['checkIn']"
+                                    placeholder="dd-mm-yyy" name="dp1" ngbDatepicker #d1="ngbDatepicker" #checkIn
+                                    [readonly]="true" (focus)="d1.open()">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="calendar-dates">
+                              <label for="return_date">Check Out</label>
+                              <div class="form-group">
+                                <div class="input-group input-group-lg">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" type="button"
+                                      (click)="d2.toggle()">
+                                      <i class="fa fa-calendar"></i>
+                                    </button>
+                                  </div>
+                                  <input class="form-control" [formControl]="searchHotelForm.controls['checkOut']"
+                                    placeholder="dd-mm-yyy" name="dp2" ngbDatepicker #d2="ngbDatepicker" #checkOut
+                                    (focus)="d2.open()" [readonly]="true">
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="col-3 d-flex align-items-center filter-search-btn">
+                          <button class="btn btn-lg" (click)="changeHotelSearch()"><img
+                              src="assets/images/icons/search_icon.png" alt="hotel search"></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-1 d-flex align-self-end switch-icons">
+
+                <div class="d-block d-md-none">
+                  <button class="btn btn-sm resp-search-filter" (click)="onFilterDisplay()">Search Filters</button>
+                </div>
+                <div class="sorting-for-mobile">
+                  <div class="d-flex justify-content-between mb-2">
+                    <div class="list-view" (click)="onViewSwitching()" [ngClass]="{'view-switching': isViewChange}">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="grid-view" (click)="onViewSwitching()" [ngClass]="{'view-switching': !isViewChange}">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                  <div class="no-of-hotels-display">
+                    <select name="" id="" class="form-control form-control-sm"
+                      (change)="onChangeItemsPerpage($event.target.value)">
+                      <option value=5>5</option>
+                      <option value=10>10</option>
+                      <option value=15>15</option>
+                      <option value=20>20</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="no-of-lists">
+            <h5>{{(hotels | NameFilter: name_filter|unique)?.length}} properties found - {{itemsPerPage}} hotels shown
+              per page.</h5>
+          </div>
+          <div class="state-group">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="javascript:void(0)">All</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="javascript:void(0)">Makkah</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="javascript:void(0)">Al-Madinah</a>
+              </li>
+            </ul>
+          </div>
+          <div class="hotel-items">
+            <ul>
+              <!-- hotels data found -->
+              <div *ngIf="hotels.length > 0">
+                <!-- ******* Hotel Item in List View ********** -->
+                <div *ngIf="isViewChange">
+                  <li
+                    *ngFor=" let hotel of hotels | NameFilter: name_filter | unique |paginate: { itemsPerPage: itemsPerPage , currentPage: page };let i= index ">
+                    <div class="hotel-item">
+                      <a href='javascript:void(0)'>
+                        <div class="row">
+                          <div class="col-md-3 hotel-image" (click)="onHotelDetails(hotel)">
+
+                            <!-- <div class="hotel-image"></div> -->
+                            <img src="assets/search-bg.jpg" alt="">
+
+
+
+                            <div *ngIf="hotel?.images!=undefined" [hidden]=true>
+                              <div *ngIf="hotel?.images.length>0" [hidden]=true>
+                               
+
+                                <!--  <img src='assets/images/defaultImage.png'
+                              [defaultImage]="'assets/images/img_not_avalable.png'" [lazyLoad]="hotel?.images[0].url"
+                              offset="100" onError="this.src='assets/images/img_not_avalable.png';"
+                              alt=" no image available" (click)="open(hotel?.images[0],hotel.dynamicHotelPics,0)"> -->
+                              </div>
+                              <div *ngIf="hotel?.images.length === 0" [hidden]=true>
+                                <p>image not found</p>
+                              </div>
+                            </div>
+                            <div *ngIf="hotel?.images==undefined" [hidden]=true>
+                              <!-- <img src='assets/images/img_not_avalable.png' alt="" width="100%"> -->
+                            </div>
+                          </div>
+                          <div class="col-md-6 hotel-full-details">
+                            <div class="row">
+                              <div class="col-9">
+                                <div class="hotel-left-box">
+                                  <h5 class="hotel-booking-title" (click)="onHotelDetails(hotel)">{{hotel?.name}}</h5>
+                                  <div class="rating-triadvisor ">
+                                    <span class="booking-item-rating">
+                                      <ngb-rating [(rate)]="hotel.rating" max="5" class="booking-item-rating-stars"
+                                        [readonly]="true">
+                                        <ng-template let-fill="fill">
+                                          <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                        </ng-template>
+                                      </ngb-rating>
+                                      <!-- <span class="booking-item-rating-number"><strong>{{hotel.rating}}</strong>
+                                    of
+                                    5</span> -->
+                                    </span>
+
+                                  </div>
+
+                                  <p class="booking-address hotel-details">Address: {{hotel?.address}}</p>
+                                  <p class="booking-type hotel-details">Type: {{hotel?.address}}</p>
+                                  <!-- <p class="hotel-details">Distance to Masjid al-Haram 0.30 km</p> -->
+                                  <!-- | removingTags -->
+                                  <span [clamp]="3" class="hotel-booking-description hotel-details"
+                                    [innerHTML]="hotel?.description"></span>
+                                </div>
+                              </div>
+                              <div class="col-3">
+                                <div class="hotel-right-box">
+                                  <div class="reviews-wrapper">
+                                    <div class="review-container">
+                                      <span class="review-caption">review score</span>
+                                      <span class="reviews-count"> 000 reviews</span>
+                                    </div>
+                                    <div class="favourite-selection">
+                                      <span class="review-score">9.5</span>
+                                      <!-- <ng-template #t let-fill="fill">
+                                        <span class="star" [class.full]="fill === 100">
+                                          <span class="half" [style.width.%]="fill">&hearts;</span>
+                                        </span>
+                                      </ng-template>
+                                      <ngb-rating [starTemplate]="t" [rate]="0" [readonly]="false" max="1">
+                                        
+                                      </ngb-rating> -->
+
+                                      <ngb-rating [rate]="0" max="1">
+                                        <ng-template let-fill="fill" let-index="index">
+                                          <span class="star" [class.filled]="fill === 100">&hearts;</span>
+                                        </ng-template>
+                                      </ngb-rating>
+                                    </div>
+                                  </div>
+                                  <div class="price-wrapper">
+                                    <div class="" *ngIf=" hotel?.amount == undefined ">
+                                      <!-- <img src="assets/images/Ellipsis-1.4s-50px.svg"> -->
+                                    </div>
+                                    <div *ngIf="hotel?.amount != '' && hotel?.amount != undefined">
+                                      <div class="hotel-price-styling">
+                                        <span class="price-from">Start From <span class="hotel-price">
+                                            {{hotel?.amount | number : '1.2-2'}} {{hotel?.currencyCode}}</span>
+                                        </span>
+                                      </div>
+                                      <button class="btn book-room-btn" (click)="onHotelDetails(hotel)">Select
+                                        Room</button>
+                                    </div>
+                                    <div *ngIf="hotel?.amount == ''">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+                          </div>
+                          <div class="col-md-3 list-maps">
+
+                            <agm-map [latitude]="hotel.latitude" [zoom]="zoom" [longitude]="hotel.longitude">
+                              <agm-marker [latitude]="hotel.latitude" [longitude]="hotel.longitude"></agm-marker>
+                            </agm-map>
+
+                            <div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                </div>
+                <!-- ******* Hotel Item in Grid View ********** -->
+                <div *ngIf="!isViewChange">
+                  <li>
+                    <div class="hotel-grid-item">
+                      <a href='javascript:void(0)'>
+                        <div class="row">
+                          <div class="col-md-4 hotel-image hotel-grid-img" *ngFor=" let hotel of hotels | NameFilter: name_filter | unique |
+                           paginate: { itemsPerPage: 9 , currentPage: page };let i= index">
+                            <!-- <div> -->
+                            <div [hidden]=true>
+                              <img src="assets/search-bg.jpg" alt="">
+                              <div class="transparent-layer"></div>
+                              <div *ngIf="hotel?.images!=undefined" [hidden]=true>
+                                <div *ngIf="hotel?.images.length>0" [hidden]=true>
+                                  <!--  <img src='assets/images/defaultImage.png'
+                                    [defaultImage]="'assets/images/img_not_avalable.png'" [lazyLoad]="hotel?.images[0].url"
+                                    offset="100" onError="this.src='assets/images/img_not_avalable.png';"
+                                    alt=" no image available" (click)="open(hotel?.images[0],hotel.dynamicHotelPics,0)"> -->
+                                </div>
+                                <div *ngIf="hotel?.images.length === 0" [hidden]=true>
+                                  <p>image not found</p>
+                                </div>
+                              </div>
+                              <div *ngIf="hotel?.images==undefined" [hidden]=true>
+                                <!-- <img src='assets/images/img_not_avalable.png' alt="" width="100%"> -->
+                              </div>
+                              <!-- </div> -->
+                              <div class="favourite-selection fav-section-on-img">
+                                <ng-template #t1 let-fill="fill">
+                                  <span class="star" [class.full]="fill === 100">
+                                    <span class="half" [style.width.%]="fill">&hearts;</span>
+                                  </span>
+                                </ng-template>
+                                <ngb-rating [starTemplate]="t1" [readonly]="true" max="1"></ngb-rating>
+                              </div>
+                              <div class="hotel-left-box text-on-grid-img">
+                                <div class="row">
+                                  <div class="col-md-8">
+                                    <h5 class="hotel-booking-title">{{hotel?.name}}
+                                    </h5>
+                                    <p class="booking-address hotel-details">Address: {{hotel?.address}}</p>
+                                    <p class="booking-type hotel-details">Type: {{hotel?.address}}</p>
+                                    <div class="rating-triadvisor ">
+                                      <span class="booking-item-rating">Rating:
+                                        <ngb-rating [(rate)]="hotel.rating" max="5" class="booking-item-rating-stars"
+                                          [readonly]="true">
+                                          <ng-template let-fill="fill">
+                                            <span class="star star-icon" [class.filled]="fill === 100">&#9733;</span>
+                                          </ng-template>
+                                        </ngb-rating>
+                                        <!-- <span class="booking-item-rating-number"><strong>{{hotel.rating}}</strong>
+                                of
+                                5</span> -->
+                                      </span>
+                                    </div>
+                                    <!-- <p class="hotel-details">Distance to Masjid al-Haram 0.30 km</p> -->
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div *ngIf="hotel?.amount != '' && hotel?.amount != undefined">
+                                      <div class="hotel-price-styling">
+                                        <p class="price-from">Per night</p>
+                                        <p class="hotel-price">
+                                          {{hotel?.amount | number : '1.2-2'}} {{hotel?.currencyCode}}</p>
+                                        <button class="btn btn-md more-btn">More</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                            <div class="hotel-grid-wrapper">
+                              <div class="hotel-mask"></div>
+                              <div class="favourite-selection fav-section-on-img">
+                                <ng-template #t1 let-fill="fill">
+                                  <span class="star" [class.full]="fill === 100">
+                                    <span class="half" [style.width.%]="fill">&hearts;</span>
+                                  </span>
+                                </ng-template>
+                                <ngb-rating [starTemplate]="t1" [readonly]="true" max="1"></ngb-rating>
+                              </div>
+                              <div class="grid-hotel-details">
+                                <div class="grid-hotels-info">
+                                  <div class="left-box">
+                                    <h5 class="hotel-booking-title">{{hotel?.name}}
+                                    </h5>
+                                    <p class="booking-address hotel-details">Address: {{hotel?.address}}</p>
+                                    <p class="booking-type hotel-details">Type: {{hotel?.address}}</p>
+                                    <p class="rating-triadvisor">
+                                      <span class="booking-item-rating">Rating:
+                                        <ngb-rating [(rate)]="hotel.rating" max="5" class="booking-item-rating-stars"
+                                          [readonly]="true">
+                                          <ng-template let-fill="fill">
+                                            <span class="star star-icon" [class.filled]="fill === 100">&#9733;</span>
+                                          </ng-template>
+                                        </ngb-rating>
+                                      </span>
+                                    </p>
+                                    <!-- <p class="hotel-details">Distance to Masjid al-Haram 0.30 km</p> -->
+                                  </div>
+                                  <div class="right-box" *ngIf="hotel?.amount != '' && hotel?.amount != undefined">
+                                    <p class="price-from">Per night <span class="hotel-price d-block">
+                                        {{hotel?.amount | number : '1.2-2'}} {{hotel?.currencyCode}}</span></p>
+                                    <button class="btn btn-md more-btn" (click)="onHotelDetails(hotel)">More</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                </div>
+              </div>
+              <!--  /hotels data found-->
+
+              <!-- Showing skeleton layout  -->
+              <div *ngIf="hotels.length === 0 && isFirstTimeLoad">
+                <div *ngFor="let fake of generateFake(5)" class="skeleton-card-layout">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="booking-item-img-wrap">
+                        <div class="item ">
+                          <ngx-skeleton-loader class="ngx-skeleton-circle" count="1" appearance="circle">
+                          </ngx-skeleton-loader>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+
+                      <ngx-skeleton-loader count="1" [theme]="{
+                        'width': '250px',
+    'height': '15px',
+    'margin': '10px 0px 5px 15px'
+                      }"></ngx-skeleton-loader>
+                      <ngx-skeleton-loader count="1" [theme]="{
+                        'width': '300px',
+    'height': '20px',
+    'margin': '10px 24px 5px 15px'
+                      }"></ngx-skeleton-loader>
+
+                      <ngx-skeleton-loader count="5"></ngx-skeleton-loader>
+                    </div>
+                    <div class="col-md-3 align-self-center btn-book">
+                      <ngx-skeleton-loader count="1" [theme]="{ width: '200px', height: '40px'}"></ngx-skeleton-loader>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!--  /Showing skeleton layout -->
+            </ul>
+          </div>
+          <pagination-controls class="d-flex justify-content-center" (pageChange)="page = $event" previousLabel=""
+            nextLabel="" autoHide=true>
+          </pagination-controls>
+        </div>
+        <!-- /hotel list -->
+
+      </div>
+    </div>
+  </div>
+</div>

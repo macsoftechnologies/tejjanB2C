@@ -1,0 +1,849 @@
+@import "../../../assets/variables/global-variables";
+
+.stepper-container {
+  @include mobile {
+    top: 35px !important;
+  }
+}
+
+.bg-image {
+  background-image: url(../../../assets/search-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  height: 250px;
+  margin-bottom: 10px;
+  position: relative;
+
+  @include mobile {
+    height: 163px;
+  }
+
+  .bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #BB9356;
+    opacity: 0.6;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+//Custom ngSelect
+
+.ng-select.custom-select {
+  border-radius: 5px;
+  padding: 0;
+  height: calc(1.5em + 0.75rem + 0px);
+  border: transparent;
+}
+
+::ng-deep.ng-select.custom-select.ng-select-single .ng-select-container {
+  height: 38px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-color: transparent;
+}
+
+::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  color: #fff;
+  border-radius: 2px;
+  background-color: #bb9356;
+}
+
+::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #fff !important;
+  border-radius: 2px;
+  background-color: #bb9356 !important;
+}
+
+//custom ngselect
+
+.transport-panel {
+
+  .tranport-filter-mask {
+    border-radius: $border-radius;
+    background-color: rgba(58, 58, 58, 0.7);
+    padding: 20px;
+
+    .search-btn {
+      display: flex;
+      justify-content: center;
+      border-radius: 5px;
+      background-color: $primary-color;
+      color: $light-font-color;
+
+      img {
+        height: 25px;
+        width: 25px;
+      }
+    }
+  }
+
+  .transport-data-panel {
+    .transportlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 10px 0;
+
+      .transport-icon-size {
+        height: 35px;
+        width: 35px;
+        padding: 5px;
+      }
+
+      h4 {
+        line-height: 35px;
+
+        @include mobile {
+          font-size: 20px;
+        }
+      }
+
+      .resp-search-filter {
+        background-color: $primary-color;
+        color: $light-font-color;
+      }
+    }
+
+    .transport-wrapper {
+
+      // transport filter Styles
+      .search-results {
+        .no-search-results-section {
+          text-align: center;
+          padding: 12px;
+          margin: 40px;
+
+          // box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
+          .search-btns {
+            button {
+              margin: 10px 11px;
+              background-color: $primary-color;
+              color: $light-font-color;
+              border: solid 1px $primary-color;
+              box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
+              border-radius: 8px;
+            }
+          }
+        }
+      }
+
+      .transport-filters {
+        box-sizing: border-box;
+        border: 2px solid $primary-color;
+        border-radius: 10px;
+        background-color: $light-font-color;
+        box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.3);
+
+        .filter-block-title {
+          border-radius: 4px 5px 0 0;
+          background-color: $primary-color;
+          padding: 15px;
+          color: $light-font-color;
+
+          h3 {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 24px;
+          }
+
+          i {
+            color: #fff;
+            float: right;
+          }
+        }
+
+
+        .transport-filters-list {
+          list-style: none;
+          padding: 0;
+
+          li {
+            margin-bottom: 0;
+            border-bottom: 2px solid $primary-color;
+
+            .filter-wrapper {
+              padding: 8px 16px;
+
+              .filter-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                h5 {
+                  margin-bottom: 0;
+                  color: #5c6163;
+                  font-size: 18px;
+                  font-weight: 500;
+                  line-height: 21px;
+                }
+
+                span {
+                  color: #c2c2c2;
+                  font-size: 11px;
+                  cursor: pointer;
+                }
+
+                a {
+                  display: flex;
+                  justify-content: space-between;
+
+                  i {
+                    line-height: 27px;
+                    margin-left: 5px;
+                  }
+                }
+              }
+
+              /* .filter-options {
+
+          } */
+            }
+
+            &::last-child {
+              border-bottom: transparent;
+            }
+          }
+          #transport-price-range {
+            border-bottom: none;
+          }
+        }
+      }
+
+      // transport filter
+
+      // transport list
+      .transport-list-items {
+        .filter-options-header {
+          label {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 19px;
+            color: $secondary-color;
+          }
+
+          #price-slider {
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.25);
+          }
+
+          .date-pickers {
+            display: flex;
+
+            .calendar-dates {
+              -webkit-box-flex: 0;
+              flex: 0 0 50%;
+              max-width: 50%;
+
+              .form-group {
+                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.25);
+              }
+            }
+          }
+
+          .filter-search-btn {
+            background-color: $primary-color;
+            padding: 8px 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+            img {
+              height: 20px;
+              width: 20px;
+              vertical-align: middle;
+            }
+          }
+
+          .switch-icons {
+            flex-direction: column;
+            margin-bottom: 5px;
+
+            .list-view {
+              cursor: pointer;
+
+              span {
+                display: block;
+                height: 5px;
+                width: 25px;
+                background-color: $primary-color;
+                border-radius: 3px;
+                margin-bottom: 3px;
+              }
+            }
+
+            .grid-view {
+              display: flex;
+              flex-wrap: wrap;
+              width: 35px;
+              justify-content: center;
+              cursor: pointer;
+
+              span {
+                display: block;
+                width: 10px;
+                height: 10px;
+                background-color: #c2c2c2;
+                margin-right: 3px;
+                margin-bottom: 3px;
+              }
+            }
+
+            .no-of-hotels-display {
+              select {
+                border: transparent;
+                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.25);
+              }
+            }
+          }
+        }
+
+        .no-of-lists {
+          @include mobile {
+            padding-top: 10px;
+          }
+
+          h5 {
+            color: $primary-color;
+            line-height: 21px;
+            font-weight: bold;
+            @include mobile {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .transport-data-grid {
+          ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+
+            li {
+              margin-bottom: 15px;
+
+              .transport-item {
+                box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
+                background-color: $light-font-color;
+                border-radius: 10px;
+                border: 1px solid $primary-color;
+
+                @include mobile {
+                  padding: 0 0 10px;
+                }
+
+                .transport-image {
+                  img {
+                    width: 100%;
+                    // height: auto;
+                    height: 100%;
+                    max-width: 280px;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+
+                    @include mobile {
+                      max-width: 100%;
+                      border-top-right-radius: 10px;
+                      border-bottom-left-radius: 0;
+                    }
+                  }
+                }
+
+                .transport-details {
+                  padding: 10px 0;
+
+                  @include mobile {
+                    padding: 10px 20px;
+                  }
+
+                  .transport-title {
+                    color: #3a3a3a;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 19px;
+                    // margin-bottom: 0;
+                  }
+
+                  .transport-address {
+                    color: #3a3a3a;
+                    font-size: 13px;
+                    // line-height: 10px;
+                    font-weight: 500;
+
+                    margin-bottom: 5px;
+                  }
+
+                  .transport-description {
+                    color: #3a3a3a;
+                    font-size: 13px;
+                    // line-height: 10px;
+                    font-weight: 500;
+                  }
+                }
+
+                .transport-price {
+                  align-self: center;
+                  text-align: center;
+
+                  .transport-price-styling {
+                    .transport-price {
+                      color: #3a3a3a;
+                      font-size: 12px;
+                      font-weight: 500;
+                      line-height: 14px;
+                    }
+                  }
+
+                  .book-transport-btn {
+                    background-color: $primary-color;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+                    color: $light-font-color;
+                    font-weight: bold;
+                    font-size: 12px;
+                    line-height: 14px;
+                  }
+                }
+              }
+            }
+
+            .booking-price {
+              .book-transport {
+                border-radius: 5px;
+                background-color: $primary-color;
+                color: $light-font-color;
+              }
+            }
+          }
+
+          ::ng-deep .ngx-pagination {
+            .disabled {
+              color: #000 !important;
+
+              @include mobile {
+                padding: 0.1875rem 0.4rem;
+              }
+            }
+
+            a {
+
+              // color: $light-font-color !important;
+              @include mobile {
+                padding: 0.1875rem 0.4rem;
+              }
+
+              &:hover {
+                background: transparent !important;
+
+                @include mobile {
+                  padding: 0.1875rem 0.4rem;
+                }
+              }
+            }
+
+            padding-left: 0px !important;
+
+            .current {
+              border-radius: 8px;
+              background-color: $primary-color !important;
+              color: $light-font-color !important;
+            }
+
+            .pagination-next {
+              a {
+                &::after {
+                  content: ">" !important;
+                  background: $primary-color;
+                  padding: 10px 18px;
+                  border-radius: 25px;
+                  box-shadow: 3px 1px 10px 4px rgba(0, 0, 0, 0.25);
+                  color: $light-font-color;
+
+                  @include mobile {
+                    padding: 5px 13px;
+                    margin-right: 0;
+                  }
+                }
+              }
+            }
+
+            .pagination-previous {
+              a {
+                &::before {
+                  content: "<" !important;
+                  background: $primary-color;
+                  padding: 10px 18px;
+                  border-radius: 25px;
+                  box-shadow: 3px 1px 10px 4px rgba(0, 0, 0, 0.25);
+                  color: $light-font-color;
+                }
+              }
+            }
+
+            .pagination-previous.disabled {
+              &::before {
+                content: "<" !important;
+                background: #fff;
+                padding: 10px 18px;
+                border-radius: 25px;
+                box-shadow: 3px 1px 10px 4px rgba(0, 0, 0, 0.25);
+
+                @include mobile {
+                  padding: 5px 13px;
+                  margin-right: 0;
+                }
+              }
+            }
+
+            .pagination-next.disabled {
+              &::after {
+                content: ">" !important;
+                background: #fff;
+                padding: 10px 18px;
+                border-radius: 25px;
+                box-shadow: 3px 1px 10px 4px rgba(0, 0, 0, 0.25);
+              }
+            }
+          }
+        }
+      }
+
+      // transport list
+    }
+
+    .skeleton-layout-card {
+      border: 1px solid #bb9356;
+      border-radius: $border-radius;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+  }
+  .trans-avail-heading {
+    h5 {
+      @include mobile{
+        font-size: 16px;
+      }
+    }
+    p {
+      @include mobile {
+        font-size: 13px;
+      }
+    }
+  }
+  .starting-price-section {
+    display: flex;
+
+    .starting-price {
+      display: flex;
+      flex-direction: column;
+
+      // padding-right: 20px;
+      .booking-item-price-from {
+        font-size: 12px;
+        color: #ccc;
+      }
+    }
+
+    .book-room {
+      @include mobile {
+        padding: 13px 12px;
+        line-height: 1;
+      }
+    }
+  }
+
+  .booking-availability {
+    padding-top: 30px;
+
+    .table-bordered thead th {
+      text-align: center;
+    }
+
+    tabel th,
+    td {
+      text-align: center;
+
+      .vehicle {
+        text-align: -webkit-center;
+      }
+
+      .vech-capacity {
+        width: 90px;
+        padding: 0px 3px;
+       }
+    }
+
+
+    thead {
+      background-color: #BB9356;
+      color: #fff;
+
+      tr {
+        i {
+          color: #fff;
+          padding-right: 7px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    // tbody {
+    //   tr {
+    //     td {
+    //       .form-group {
+    //         .custom-select {
+    //           width: 78px !important;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+
+
+  }
+
+  .book-room {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    color: #fff;
+
+    @include mobile {
+      font-size: 12px;
+    }
+  }
+
+  .booking-item-price {
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 25px;
+  }
+}
+
+::ng-deep {
+  .ng-select .ng-select-container {
+    border: 1px solid #ccc !important;
+  }
+
+  .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    font-size: 12px !important;
+    // color: $light-font-color !important;
+  }
+}
+
+.booking-item-sec {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .booking-item-price-sec {
+    display: flex;
+    flex-direction: column;
+
+    .booking-item-price {
+      font-size: 17px;
+    }
+  }
+}
+
+.custom-color {
+  color: #ccc;
+  font-size: 14px !important;
+}
+
+#vehicle-type {
+  border-bottom: 2px solid #fff !important;
+}
+
+.search-results {
+  margin-left: 290px;
+  .no-search-results-section {
+    text-align: center;
+    padding: 12px;
+    margin: 40px;
+
+    // box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
+    .search-btns {
+      button {
+        // margin: 10px 11px;
+        background-color: $primary-color;
+        color: $light-font-color;
+        border: solid 1px $primary-color;
+        box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+// ************* Customize the ng5-slider  **********
+::ng-deep {
+  .ng5-slider .ng5-slider-pointer {
+    background-color: $primary-color !important;
+  }
+
+  .ng5-slider .ng5-slider-pointer .ng5-slider-active::after {
+    background: #fff !important;
+  }
+
+  .ng5-slider .ng5-slider-selection {
+    background: $primary-color !important;
+  }
+
+  .ng5-slider .ng5-slider-bubble {
+    color: #bb9356 !important;
+    font-size: 14px !important;
+  }
+
+  .mobile-filter-search-btn {
+    position: fixed;
+    top: 91%;
+    z-index: 3;
+    width: 100%;
+
+    button {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .filterForMobile {
+    display: none;
+  }
+}
+
+
+
+// Custom Scrollbar styles
+
+::-webkit-scrollbar {
+  @include mobile{
+    width:7px;
+    height: 7px;
+  }
+
+  @include tab{
+    width: 5px;
+  }
+}
+
+*:hover::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  cursor: pointer;
+
+  @include mobile {
+    height: 8px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  // box-shadow: inset 0 0 5px grey; 
+  border: solid 1px $primary-color;
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-color; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-color; 
+}
+
+
+
+// Filter for mobile
+.forMobileFilter {
+  display: block;
+  position: relative;
+  z-index: 5;
+  top: 1px;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.forHotelListMObile {
+  display: none;
+}
+
+// ***************** Custom styles for Sweet alert  *****************
+::ng-deep {
+  .swal2-icon {
+    width: 3em;
+    height: 3em;
+  }
+  .swal2-icon.swal2-success {
+    border-color: #bb9356;
+    color: #bb9356;
+    margin: 2px;
+}
+  .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
+    top: 1.5em;
+    right: 0.35em;
+    width: 1.7375em;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    background-color: $primary-color;
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
+    top: 1.75em;
+    left: 0.5em;
+    width: 1em;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: $primary-color;
+  }
+  .swal2-icon.swal2-success .swal2-success-ring {
+    position: absolute;
+    z-index: 2;
+    top: 0.2em;
+    left: -.25em;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    border: .25em solid rgba(165,220,134,.3);
+    border-radius: 50%;
+  }
+  .swal2-icon.swal2-success .swal2-success-fix {
+    display: none;
+  }
+  .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
+    display: none;
+  }
+  .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
+    display: none;
+  }
+  .swal2-icon.swal2-success .swal2-success-ring {
+    display: none;
+  }
+} 
+
+//  ********* Custom select Styles  **********
+option:checked, option:hover {
+  color: #fff !important;
+  background: #bb9356 !important;
+  }
+
+  // option:hover { 
+  //   background-color:#bb9356 !important;
+  // }
+
+  // select:active, select:hover {
+  //   background-color:#bb9356 !important;
+  // }

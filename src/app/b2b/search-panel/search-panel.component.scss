@@ -1,0 +1,434 @@
+@import "../../../assets/variables/global-variables";
+
+label {
+  color: $light-font-color;
+  font-weight: 500;
+  line-height: 19px;
+  font-size: 16px;
+
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+.brad-left-none {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.brad-right-none {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: transparent;
+}
+
+::ng-deep.select-brad-none .ng-select.custom-select.ng-select-single .ng-select-container {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.custom-width {
+  width: 50%;
+}
+
+//Custom ngSelect
+
+.ng-select.custom-select {
+  border-radius: 5px;
+  padding: 0;
+  height: calc(1.5em + 0.75rem + 0px);
+  border: transparent;
+}
+
+::ng-deep.ng-select.custom-select.ng-select-single .ng-select-container {
+  height: 38px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  border-left-color: transparent;
+}
+
+::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  color: #fff;
+  border-radius: 2px;
+  background-color: #bb9356;
+}
+
+::ng-deep.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #fff !important;
+  border-radius: 2px;
+  background-color: #bb9356 !important;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+//custom ngselect
+
+.search-panel {
+  background-image: url("../../../assets/search-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 113vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @include mobile {
+    height: 950px;
+    // max-height: 100%;
+  }
+
+  .bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #bb9356;
+    opacity: 0.4;
+  }
+
+  .search-container {
+    width: 100%;
+    position: relative;
+    top: 80px;
+
+    .custom-container {
+      @include mobile {
+        padding: 10px;
+      }
+
+      .search-panel-mask {
+        border-radius: $border-radius;
+        background-color: rgba(58, 58, 58, 0.7);
+        padding: 35px 20px 20px 20px;
+
+        .checkbox-container {
+          font-weight: 300 !important;
+        }
+
+        .additional-options {
+          .row {
+
+            // &:nth-child(-n + 2) {
+            .col-md-3 {
+              @include mobile {
+                order: 1;
+              }
+            }
+
+            // }
+            .booking-flight-text {
+              text-align: right;
+
+              @include mobile {
+                text-align: left;
+                order: 0;
+              }
+
+              .booking-with-flight {
+                color: #fff;
+                font-size: 18px;
+                font-weight: 500;
+                padding-right: 5px;
+
+                @include mobile {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+
+        .flight-trans-blocks {
+          display: flex;
+
+          @include mobile {
+            padding: 5px;
+          }
+        }
+
+        .flight-and-hotel {
+          border-radius: $border-radius;
+          background-color: rgba(58, 58, 58, 0.8);
+          padding: 10px;
+
+          h5 {
+            color: $light-font-color;
+            // font-weight: bold;
+            line-height: 21px;
+
+            @include mobile {
+              font-size: 16px;
+            }
+          }
+
+          .room-mobile {
+            width: 50%;
+
+            .input-group-text {
+              @include mobile {
+                padding: 7px;
+              }
+            }
+
+            .room-group-append {
+              display: flex;
+              justify-content: space-between;
+              border-left: solid 1px #fff !important;
+              border: transparent;
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 0;
+
+              span {
+                @include mobile {
+                  font-size: 11px;
+                }
+              }
+
+              .room-count-card {
+                border-radius: $border-radius;
+                background-color: #fff;
+                box-shadow: 0px 1px 3px 3px #8b7d7d7d;
+                padding: 0px 9px;
+
+                @include mobile {
+                  margin-left: 4px;
+                  display: flex;
+                }
+
+                a {
+                  i {
+                    font-size: 12px;
+
+                    @include mobile {
+                      font-size: 11px;
+                      // padding: 8px 6px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .guest-selection {
+            cursor: pointer;
+          }
+
+          .adult-child-selection {
+            position: absolute;
+            // height: 100px;
+            width: 230px;
+            top: 65px;
+            background-color: white;
+            right: 15px;
+            border-radius: 3px;
+            padding: 5px;
+            box-shadow: 0px 1px 3px 1px #8b7d7d7d;
+            z-index: 2;
+          }
+
+          .error {
+            color: red;
+          }
+        }
+
+        .date-pickers {
+          display: flex;
+
+          .calendar-dates {
+            width: 50%;
+            .brad-none {
+              border-top-left-radius: 0 !important;
+              border-bottom-left-radius: 0 !important;
+            }
+            .checkout-input {
+              #d2{
+                left: -79px !important;
+              }
+            }
+          }
+        }
+
+        .transport-and-ground-services {
+          border-radius: $border-radius;
+          background-color: rgba(58, 58, 58, 0.8);
+          padding: 10px;
+
+          h5 {
+            color: $light-font-color;
+          }
+        }
+
+        .search-btn {
+          display: flex;
+          justify-content: flex-end;
+
+          button {
+            border-radius: 5px;
+            background-color: $primary-color;
+            color: $light-font-color;
+            padding: 7px 65px;
+            margin: 10px 0px;
+
+            img {
+              height: 25px;
+              width: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .checking-options-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.validation-border {
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.validation-lavel-tootip {
+  position: absolute;
+  width: 230px;
+  top: -5px;
+  background-color: #a07979;
+  right: 18px;
+  border-radius: 3px;
+  padding: 5px;
+  box-shadow: 0px 1px 3px 1px #8b7d7d7d;
+  z-index: 2;
+}
+
+/*  Toggler button */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 25px;
+
+  @include mobile {
+    width: 48px;
+    height: 23px;
+  }
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: $primary-color;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+
+  @include mobile {
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+  }
+}
+
+input:checked+.slider {
+  background-color: #fff;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px $primary-color;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/*  Toggler button */
+
+// ---testing--//
+@media (max-width: 767px) {
+  .search-panel {
+    height: 1122px;
+  }
+
+  .search-container {
+    display: block !important;
+    top: 49px !important;
+  }
+
+  .search-panel-mask {
+    padding: 20px 10px;
+  }
+}
+
+.form-group ::placeholder {
+  font-size: 13px;
+  // font-weight: bold;
+  // columns: $light-font-color;
+  // vertical-align: middle;
+}
+
+.custom-border {
+  border-right: solid 1px #ccc;
+}
+
+.custom-left-input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.custom-right-input {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+// ******** custom ng-select ************
+
+::ng-deep {
+  .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    font-size: 13px;
+  }
+}
+

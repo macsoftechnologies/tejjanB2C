@@ -1,0 +1,148 @@
+<div class="header d-none d-md-block ">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 col-lg-3">
+        <div class="profile-list">
+          <ul>
+            <li class="dropdown"><a href="" class="language dropdown-toggle" data-toggle="dropdown">EN</a>
+              <div class="dropdown-menu lan-down">
+                <a class="dropdown-item" href="">Arabic</a>
+                <a class="dropdown-item" href="">English</a>
+              </div>
+            </li>
+            <li *ngIf="!showHideLogin" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""><img
+                  src="../../../assets/images/header-images/profile.png" alt=""></a>
+              <div class="dropdown-menu">
+                <a [routerLink]="['b2b/profile']" class="dropdown-item">Account</a>
+                <a [routerLink]="" class="dropdown-item">Favourite Hotel</a>
+                <a [routerLink]="['b2b/mybooking']" class="dropdown-item">My Booking</a>
+                <a (click)="logout()" class="dropdown-item">Log out</a>
+              </div>
+            </li>
+            <li *ngIf="showHideLogin"><a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2b/signup']">
+                Register</a></li>
+          </ul>
+        </div>
+        <!-- <div class="left-header d-none">
+          <div class="language">
+           <span>EN</span>
+          </div>
+          <div class="profile">
+            <img src="../../../assets/images/header-images/profile.png" alt="">
+            <span>Login / Register</span>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-7 col-lg-6 res-fortab">
+        <div class="menu-list">
+          <ul class="menu-list-nav m-0">
+            <!-- <li class="nav-item"><a href="">Umrah Packages <img -->
+            <!-- src="../../../assets/images/header-images/honeymoon.png" alt=""></a></li> -->
+            <!-- <li class="nav-item"><a [routerLink]="['b2b/search']">Hotels <img src="../../../assets/images/header-images/hotel.png" alt=""></a>
+            </li> -->
+            <!-- <li class="nav-item"><a href="">Flight <img src="../../../assets/images/header-images/flight.png"
+                  alt=""></a></li> -->
+            <li class="nav-item drop-down">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">Support<img
+                  src="../../../assets/images/header-images/support.png" alt=""></a>
+              <div class="dropdown-menu inner-lists">
+                <a [routerLink]="['b2b/contactus']" class="dropdown-item">Contact Us</a>
+                <a [routerLink]="['b2b/faq']" class="dropdown-item">FAQ's <img
+                    src="../../../assets/images/header-images/faqs.png"></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <div class="header-logo row">
+          <div class="col-md-6">
+            <a (click)="bookigSummary()">Cart</a>
+            <a (click) = "sucess()">sucess</a>
+            <a (click) = "failure()">fail</a>
+            <i class="fa fa-shopping-cart" aria-hidden="true" (click)="bookigSummary()"></i>
+          </div>
+          <a class="col-md-6" href="javascript:void(0)" [routerLink]="['b2b/search']">
+            <img src="../../../assets/images/header-images/header-logo.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Header for Mobile -->
+<div class="mobile-header d-block d-md-none">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="user-image-details">
+        <div class="mobile-user-details">
+          <div class="profile-details-mobile">
+            <div class="dropdown">
+              <a *ngIf="!showHideLogin" class="dropdown-toggle" data-toggle="dropdown" href="">
+                <img src="../../../assets/images/header-images/profile.png" alt="">
+                <div class="dropdown-menu">
+                  <a [routerLink]="['b2b/profile']" class="dropdown-item">Account</a>
+                  <a class="dropdown-item">Favourite Hotel</a>
+                  <a [routerLink]="['b2b/mybooking']" class="dropdown-item">My Booking</a>
+                  <a (click)="logout()" class="dropdown-item">Log out</a>
+                </div>
+              </a>
+              <span *ngIf="showHideLogin" class="mobile-login">
+                <a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2b/signup']"> Register</a>
+              </span>
+            </div>
+          </div>
+          <div class="other-details-mobile">
+            <div class="mobile-menu">
+              <div class="dropdown">
+                <a href="" class="language dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bars" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu">
+                  <ul>
+                    <!-- <li class="nav-item"><a href="">Umrah Packages </a> <span><img
+                          src="../../../assets/images/header-images/honeymoon.png" alt=""></span></li> -->
+                    <li class="nav-item"><a [routerLink]="['b2b/search']" href="">Hotels </a><span><img
+                          src="../../../assets/images/header-images/hotel.png" alt=""></span>
+                    </li>
+                    <!-- <li class="nav-item"><a href="">Flight </a><span><img
+                          src="../../../assets/images/header-images/flight.png" alt=""></span></li> -->
+                    <li class="nav-item dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown">Support</a>
+                      <span><img src="../../../assets/images/header-images/support.png" alt=""></span>
+                      <div class="dropdown-menu inner-lists">
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a [routerLink]="['b2b/contactus']" class="dropdown-item" href="">Contact Us</a>
+                          </li>
+                          <li>
+                            <a [routerLink]="['b2b/faq']" class="dropdown-item" href="">FAQ's </a><span><img
+                                src="../../../assets/images/header-images/faqs.png">
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+            <div class="mobile-language-menu">
+              <div class="dropdown "><a href="" class="language dropdown-toggle" data-toggle="dropdown">EN</a>
+                <div class="dropdown-menu ">
+                  <a class="dropdown-item" href="">Arabic</a>
+                  <a class="dropdown-item" href="">English</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mobile-header-image">
+          <img src="../../../assets/images/header-images/logo.png" alt="" class="">
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>

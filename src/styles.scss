@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+
+@import "./assets/variables/_global-variables";
+@import "./assets/variables/_modular-variables.scss";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+body {
+  font-family: $primary-font-family;
+  box-sizing: border-box;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+i {
+  color: $primary-color;
+}
+
+.input-group {
+  .input-group-append {
+    button {
+      background-color: $light-font-color;
+      border-top-left-radius: 4px !important;
+      border-bottom-left-radius: 4px !important;
+      border: transparent;
+      padding: 0.4rem 0.75rem !important;
+    }
+  }
+
+  .form-control[readonly] {
+    background-color: $light-font-color;
+    border: transparent;
+  }
+
+  .input-group-text {
+    background-color: $light-font-color;
+    padding: 0.5rem 0.75rem;
+  }
+
+  input {
+    border-left: transparent;
+  }
+}
+
+.icon-size {
+  width: 20px;
+  height: 20px;
+}

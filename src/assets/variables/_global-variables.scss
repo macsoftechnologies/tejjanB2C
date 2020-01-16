@@ -1,0 +1,74 @@
+$primary-font-family: 'Roboto',
+sans-serif;
+
+$primary-color: #BB9356;
+$secondary-color: #3A3a3A;
+
+$border-radius: 8px;
+
+$box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.2);
+$card-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
+
+$dark-font-color: #5C6163;
+$light-font-color: #fff;
+$seconday-font-color: #3a3a3a;
+$read-font-color: #4f5c69;
+$transparent-font-color: #c2c2c2;
+
+$dark-card-bg-color: rgba(58, 58, 58, 0.8);
+
+$label-font-size: 18px;
+$h3-font-size: 16px;
+
+//  ********* Media Queries For Desktop  ************
+
+$for-desktop: 1200px;
+
+@mixin desktop {
+  @media screen and (max-width: #{ $for-desktop }) {
+    @content;
+  }
+}
+
+//  ********* Media Queries For Tab  ************
+
+$tab: 991px;
+
+@mixin tab {
+  @media screen and (max-width: #{ $tab }) {
+    @content;
+  }
+}
+
+//  ********* Media Queries For Mobile  ************
+
+$mobile: 767px;
+
+@mixin mobile {
+  @media screen and (max-width: #{ $mobile }) {
+    @content;
+  }
+}
+
+// *********** Custom styles for Sweet alert ***************
+
+::ng-deep {
+  .swal2-title {
+    font-size: 15px;
+    color: #000;
+  }
+  .swal2-styled.swal2-confirm {
+    font-size: 13px;
+    background-color: $primary-color;
+    border-radius: 8px;
+    padding: 8px 24px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
+  }
+  .swal2-styled.swal2-cancel {
+    font-size: 13px;
+    background-color: $primary-color;
+    border-radius: 8px;
+    padding: 8px 24px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
+  }
+} 

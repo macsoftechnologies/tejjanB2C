@@ -1,0 +1,51 @@
+<!-- <p>
+  b2b-sign-in works!
+</p> -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container-body">
+      <div class="card custom-card">
+        <div class="">
+          <form [formGroup]="signinForm">
+            <!-- <div class="cancel">
+               <span>x</span> 
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </div> -->
+            <div class="top-img">
+              <img src="../../../assets/images/footer-images/logo.png" alt="">
+            </div>
+            <div class="row"> 
+              <div class="col-md-2"></div>
+              <div class="col-md-8 form-fields">
+                <div class="form-group">
+                  <input formControlName="userName" class="form-control custom-input" type="text" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <input formControlName="password" class="form-control custom-input" type="text" placeholder="Password">
+                </div>
+                <div class="d-flex form-group custom-input-group justify-content-between">
+                  <div class="">
+                    <label class="login-label checkbox-container">Stay Logged in
+                      <input type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                    <!-- <input type="checkbox"><label class="login-label" for=""></label> -->
+                  </div>
+                  
+                  <div class="forgot-text">
+                    <a href="">Forgot Password</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+          </form>
+        </div>
+        <div class="form-group signin-btn">
+          <button class="btn btn-md btn-block" (click)="login()">Login</button>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>

@@ -1,0 +1,136 @@
+@import "../../../assets/variables/global-variables";
+@import "../../../assets/variables/modular-variables";
+
+.container-fluid {
+    background-image: url("../../../assets/search-bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 30px;
+    @include mobile {
+        padding: 20px;
+        height: 132vh;
+    }
+}
+.bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #bb9356;
+    opacity: 0.4;
+  }
+
+.heading {
+    text-align: center;
+    color: #fff;
+}
+.agent-signup {
+    i {
+        font-size: 22px !important;
+    }
+    label {
+        padding-left: 12px;
+        font-size: 20px !important;
+    }
+}
+.container-body {
+    // padding-left: 58px;
+    padding-top: 15px;
+    @include mobile {
+        // padding-left: 15px;
+        padding-top: 0px;
+    }
+}
+.custom-card {
+    box-shadow: $card-box-shadow;
+    padding: 13px;
+    width: 610px;
+    height: 440px;
+    @include mobile {
+        width: auto;
+        height: auto;
+        padding: 6px 25px 12px 30px;
+    }
+}
+.form-group {
+    margin-bottom: 5px;
+    label,i {
+        color: $primary-color;
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+}
+.form-group ::placeholder {
+    font-size: 12px;
+    color: #5c6165;
+}
+.custom-input {
+    width: 270px;
+    border: none;
+    border-bottom: 1px solid #c2c2c2;
+    border-radius: 0;
+}
+.signup-btn {
+    padding-top: 5px;
+    @include mobile {
+        text-align: center;
+    }
+    button {
+        background-color: $primary-color;
+        color: $light-font-color;
+        border-radius: $border-radius;
+        padding: 7px 20px;
+        box-shadow: $box-shadow;
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    }
+}
+.terms {
+    padding-top: 17px;
+    .terms-label {
+        padding-left: 25x;
+        a {
+            text-decoration: underline;
+        }
+        
+    }
+}
+.form-control {
+    padding: 0;
+}
+
+
+// ***** Override the custom checkbox styles  *******
+
+.checkbox-container {
+    .checkmark {
+        border: 1px solid $primary-color !important;
+    }
+    a {
+        color: #ccc;   
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #bb9356 !important;
+    }
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder{
+    font-size: 12px !important;
+    color: #5c6165 !important;
+}
+::ng-deep.ng-select-container.ng-has-value {
+    border: none;
+}
+::ng-deep.ng-select-container {
+    border: none !important;
+    box-shadow: none !important;
+}
+

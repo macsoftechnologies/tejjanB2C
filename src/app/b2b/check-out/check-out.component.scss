@@ -1,0 +1,417 @@
+@import "../../../assets/variables/global-variables";
+
+.checkout-page {
+    .checkout-header {
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 42px;
+            color: $primary-color;
+            text-align: center;
+            padding: 20px 0px;
+
+            @include mobile {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 28px;
+                color: #BB9356;
+                text-align: center;
+                padding: 10px 0px;
+            }
+        }
+    }
+    .checkout-body {
+        padding: 0px 5px;
+
+        @include mobile {
+            .res-div{
+                padding: 5px !important;
+            }
+            
+        }
+    }
+    .accordion-block {
+        padding-bottom: 20px;
+         .card {
+             border: 1px solid $primary-color;
+             box-sizing: border-box;
+             border-radius: 5px;
+              .card-header {
+                  background-color: #fff;
+                  display: flex;
+                  align-items: center;
+                  border-bottom: none;
+                  border-radius: 5px;
+
+                   a {
+                       width: 100%;
+                       display: flex;
+                       justify-content: space-between;
+                       align-items: center;
+                        h4 {
+                            color: #3a3a3a;
+                            font-family: "roboto";
+                            font-size: 20px;
+                            font-weight: bold;
+                            line-height: 24px;
+                            margin: 0;
+
+                            @include mobile {
+                                font-size: 18px;
+                            }
+                        }
+                        i {
+                            font-size: 25px;
+                        }
+                   }
+
+
+              }
+              .card-body {
+                  padding: 5px;
+
+                  
+                  label {
+                      color: $primary-color;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      font-weight: 500;
+                      line-height: 16px;
+                  }
+                  p {
+                      color: #3a3a3a;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      line-height: 16px;
+                      margin-bottom: 8px;
+                  }
+
+                  table, tr, th{
+                      padding-right: 150px;
+                  }
+
+                  
+              } 
+
+              @include mobile {
+                .collapse.show {
+                    max-width: 100%;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+
+                    .mutamer-body {
+                        width: 100%;
+
+                        .mutamer-container {
+                            padding: 10px;
+                        }
+                    }  
+                }
+
+                #collapseSix:last-child {
+                    overflow:hidden;
+                }
+              }
+
+              @include mobile {
+                  margin-bottom: 5px;
+              }
+         }
+    }
+    .bill-details {
+        box-sizing: border-box;
+        border: 1px solid $primary-color;
+        background-color: #fff;
+        border-radius: 7px;
+        
+        ul {
+            padding: 15px 15px 0px ;
+            margin-bottom: 0;
+             li {
+                list-style-type: none;
+                border-bottom: 1px solid #DBE1E6;
+                 h4 {
+                     color: #4f5c69;
+                     font-family: "roboto";
+                     font-size: 16px;
+                     line-height: 19px;
+                     padding-top: 5px;
+                 }
+                 .amount {
+                     display: flex;
+                     justify-content: space-between;
+                      p {
+                          color: #4f5c69;
+                          font-family: "roboto";
+                          font-size: 14px;
+                          letter-spacing: -0.65px;
+                          line-height: 16px;
+                          margin-bottom: 5px;
+                           i {
+                               padding-right: 5px;
+                               font-size: 15px;
+                           }
+                      }
+                 }
+                 
+            }
+            li:nth-child(1) h4 {
+                padding-top: 0;
+            }
+        }
+        .total-price {
+            background-color: $primary-color;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom-right-radius: 7px;
+            border-bottom-left-radius: 7px;
+            border: 1px solid $primary-color;
+             p {
+                 margin-bottom: 0;
+                 color: #fff;
+                 font-size: 21px;
+                 line-height: 32px;
+             }
+        }
+    }
+    .card-details {
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
+        margin: 20px 0px;
+        padding: 30px 32px;
+        height: 500px;
+
+        @include mobile {
+            padding:15px;
+        }
+
+         .card-image {
+             text-align: center;
+             margin-bottom: 15px;
+              img {
+                height: 40px;
+                width: 125px;
+              }
+         }
+         .details {
+
+                label {
+                font-size: 13px;
+                font-family: "roboto";
+                font-weight: bold;
+                letter-spacing: 0.75px;
+                line-height: 15px;
+                color: $primary-color;
+            }
+            @include mobile {
+                .res-label {
+                    padding: 0px;
+                }
+
+                .res-card-data div:nth-child(2) {
+                    padding-left: 0px;
+                }
+
+                .res-card-data2 div:nth-child(1) {
+                    padding-right: 0px;
+                }
+                .res-card-data2 div:nth-child(3) {
+                    padding-left: 0px;
+                }
+            }
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        input {
+            border-radius: 5px;
+            background-color: rgba(194,194,194,0.25);
+            width: 100%;
+            height: 37px;
+            border: none;
+            padding: 15px 15px;
+
+            @include mobile {
+                padding: 15px 7px;
+                font-size: 13px;
+            }
+        }
+        .order-btn {
+            text-align: center;
+                button {
+                    background-color: $primary-color;
+                    border: none;
+                    padding: 13px 24px;
+                    border-radius: 5px;
+                     h5 {
+                         font-family: "roboto";
+                         font-weight: 800;
+                         letter-spacing: 0.75px;
+                         line-height: 15px;
+                         font-size: 13.2px;
+                         color: #fff;
+                         margin: 0;
+
+                         @include mobile {
+                            font-size: 10.2px;
+                         }
+                     }
+                }
+        }
+
+        .card-pills {
+            display: flex;
+            justify-content: center;
+            
+            ul {
+
+                margin-bottom: 25px;
+                
+                li {
+
+                   .active {
+                       color: green;
+                   } 
+
+                    a {
+                        color: #c2c2c2;
+                        border-bottom: 3px solid #c2c2c2;
+                        border-radius: 0;
+                        padding: 8px 50px;
+                        text-decoration: none;
+
+                        
+                    }
+
+                    
+
+                }
+            }
+
+            .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+                background-color: #fff;
+            }
+        }
+        
+    }
+    .my-custom-class .tooltip-inner {
+        background-color: $primary-color;
+        width: 100px;
+    }
+
+    .pilgrim-details {
+
+        .piligram-type {
+            padding: 0px 10px;
+            font-size: 20px;
+        }
+
+        .checkout-data {
+            margin-bottom: 25px;
+
+            .input-group input {
+                border-left: 1px solid #e9ecef;
+            }
+        }
+
+        .room-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        p {
+            padding: 0px 10px;
+        }
+
+    }
+
+    .passenger-fieldset-styles {
+
+        legend {
+            padding: 0px 10px;
+        }
+    }
+    .piligrim-total-detail {
+        padding: 0px 10px !important;
+    }
+
+    // .pay-now {
+    //     margin: 20px 0px 20px 0px;
+    //     height: 40px;
+    //     width: 111px;
+    //     color: #fff;
+    //     background-color: #BB9356;
+    //     border: none;
+    //     border-radius: 8px;
+    //     font-family: "roboto";
+    //     font-weight: 500;
+    //     font-size: 15px;
+    // }
+    
+    
+}
+
+// Custom Scrollbar styles
+
+::-webkit-scrollbar {
+    @include mobile{
+      width:7px;
+      height: 7px;
+    }
+  
+    @include tab{
+      width: 5px;
+    }
+  }
+  
+  *:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+  
+    @include mobile {
+      height: 8px;
+    }
+  }
+  
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 5px grey; 
+    border: solid 1px $primary-color;
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $primary-color; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $primary-color; 
+  }
+  
+
+//   .checkout-page .card-details .card-pills .nav-pills .nav-link:active {
+//     background-color: #fff;
+//     color: #BB9356 !important;
+//     border-radius: 0;
+//     border-bottom: 3px solid #BB9356 !important;
+// }
+
+.nav-pills .nav-link.active {
+    background-color: #fff !important;
+    color: #BB9356 !important;
+    border-bottom: 3px solid #BB9356 !important;
+}
+

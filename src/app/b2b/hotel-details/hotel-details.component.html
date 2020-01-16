@@ -1,0 +1,360 @@
+<div class="hotel-details-container">
+
+  <div class="mecca-bg">
+    <div class="bg-mask"></div>
+  </div>
+  <div class="col-md-12 search-results" *ngIf="currentHotelAvailability?.roomGroups == undefined && isroomGroups == false ">
+    <div class="no-search-results-section">
+      <div>
+        <p>{{selectedHotel.name}} Hotel rooms not available at this time please select another hotel </p>
+        <div class="search-btns">
+          <button class="btn btn-primary" (click)="backToHotelList()">Back to hotelList</button>
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="container-fluid" *ngIf="currentHotelAvailability?.roomGroups != undefined && isroomGroups == true ">
+    <div class="">
+      <div class="hotel-details-wrapper">
+        <section class="hotel-image-and-reviews">
+          <div>
+            <div class="hotel-images">
+              <div class="row hotel-data">
+                <div class="col-md-9">
+                  <div class="hotel-desc-images">
+
+
+                    <div class="row">
+
+                      <div class="col-md-10 col-9">
+                      <div class="hotel-description">
+                        <h5>{{currentHotelAvailability?.name}}</h5>
+                        <p class="hotel-booking-description" [innerHtml]="currentHotelAvailability.description"></p>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2 col-3 hotel-star-rating">
+                      <div class="reviews-score">
+                        <!-- review score -->
+                        <div class="reviews-wrapper">
+                          <div class="review-container">
+                            <div>
+                              <span class="review-caption">review score</span>
+                              <span class="reviews-count"> 000 reviews</span>
+                            </div>
+                            <div class="favourite-selection">
+                              <span class="review-score">9.5</span>
+                            </div>
+                          </div>
+                          <div class="star-rating">
+                            <ng-template #t let-fill="fill">
+                              <span class="star" [class.full]="fill === 100">
+                                <span class="half" [style.width.%]="fill">&#9733;</span>
+                              </span>
+                            </ng-template>
+                            <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                    <div class="hotel-image-lightbox">
+                      <div class="d-flex flex-row mb-3">
+                        <div class="p-2 main-img">
+                          <img src="assets/search-bg.jpg" alt="">
+                        </div>
+                        <div class="d-flex flex-column lightbox-col-images mb-0">
+                          <div class="p-2">
+                            <img src="assets/search-bg.jpg" alt="">
+                          </div>
+                          <div class="p-2">
+                            <img src="assets/search-bg.jpg" alt="">
+                          </div>
+                          <div class="p-2 see-all-img">
+                            <img src="assets/search-bg.jpg" alt="">
+                            <button class="btn btn-md see-all-btn" (click)="lightbox.open(0)">See all photos</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="light-box d-none">
+                      <p class="container" gallerize>
+                        <img *ngFor="let img of imageData" [src]="img.srcUrl">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="reviews-and-contact">
+                    <div class="contact">
+                      <h5>Hotel Contact:</h5>
+                      <ul>
+                        <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{saudiPhoneCode}}  {{hotelPhone}}
+                        </li>
+                        <li><img class="" src="assets/images/icons/email.png">{{currentHotelAvailability.email}}</li>
+                        <li class="detail-contact"><img class="" src="assets/images/icons/Group.png">
+                          <div>{{currentHotelAvailability.address}}</div></li>
+                      </ul>
+                    </div>
+                    <div class="reviews">
+                      <h5>Reviews:</h5>
+                      <ul>
+                        <li class="reviews-list">
+                          <ul>
+                            <li>
+                              <span class="review-user-name">Abdullah Alsaad</span>
+                            </li>
+                            <li>
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                                </span>
+                              </ng-template>
+                              <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                              <span>2w</span>
+                            </li>
+                            <li><small class="review-content"> Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry.</small></li>
+                          </ul>
+                        </li>
+                        <li class="reviews-list">
+                          <ul>
+                            <li>
+                              <span class="review-user-name">Abdullah Alsaad</span>
+                            </li>
+                            <li>
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                                </span>
+                              </ng-template>
+                              <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                              <span>2w</span>
+                            </li>
+                            <li><small class="review-content"> Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry.</small></li>
+                          </ul>
+                        </li>
+                        <li class="reviews-list">
+                          <ul>
+                            <li>
+                              <span class="review-user-name">Abdullah Alsaad</span>
+                            </li>
+                            <li>
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                                </span>
+                              </ng-template>
+                              <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                              <span>2w</span>
+                            </li>
+                            <li><small class="review-content"> Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry.</small></li>
+                          </ul>
+                        </li>
+                        <li class="reviews-list">
+                          <ul>
+                            <li>
+                              <span class="review-user-name">Abdullah Alsaad</span>
+                            </li>
+                            <li>
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                                </span>
+                              </ng-template>
+                              <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+                              <span>2w</span>
+                            </li>
+                            <li><small class="review-content"> Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry.</small></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="room-type-and-info">
+            <div class="row custom-datepickers">
+              <div class="col-md-4 room-info">
+                <div class="date-pickers">
+                  <div class="calendar-dates">
+                    <label for="return_date">Check In</label>
+                    <div class="form-group">
+                      <div class="input-group input-group-lg">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" type="button">
+                            <i class="fa fa-calendar"></i>
+                          </button>
+                        </div>
+                        <input class="form-control" placeholder="dd-mm-yyy" name="dp2" ngbDatepicker #d2="ngbDatepicker"
+                          #checkOut [readonly]="true" [value]="searchDate.request.checkInDate">
+                        <!-- <i class="fa fa-caret-down" aria-hidden="true"></i> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="calendar-dates">
+                    <label for="return_date">Check Out</label>
+                    <div class="form-group">
+                      <div class="input-group input-group-lg">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" type="button">
+                            <i class="fa fa-calendar"></i>
+                          </button>
+                        </div>
+                        <input class="form-control" placeholder="dd-mm-yyy" name="dp2" ngbDatepicker #d2="ngbDatepicker"
+                          #checkOut [readonly]="true" [value]="searchDate.request.checkOutDate">
+                        <!-- <i class="fa fa-caret-down" aria-hidden="true"></i> -->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 guests-section">
+                <label for="">Guests</label>
+                <div class="guests-input">
+                  <div class="input-group mb-2 input-group-lg">
+                    <div class="input-group-prepend input-group-append">
+                      <div class="input-group-text"><img class="icon-size" src="assets/images/icons/user.png"
+                          alt="Ground-service"></div>
+                    </div>
+                    <!-- <input type="guests" class="form-control" disabled /> -->
+                    <input type="guests" class="form-control" disabled [value]="travellerCount" />
+                    <!-- <i class="fa fa-caret-down" aria-hidden="true"></i> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td>
+                      Room type
+                    </td>
+                    <td>
+                      Guests
+                    </td>
+                    <td>
+                      Price per night
+                    </td>
+                    <td>
+                      Select Room
+                    </td>
+                    <td>
+                      <!-- Room type -->
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let room of currentHotelAvailability?.roomGroups[0]?.rooms let i = index;">
+                    <td>
+                      <p class="room-type-name">Room type name</p>
+                      <div class="room-type-image-lightbox">
+                        <div class="d-flex flex-row mb-3">
+                          <div class="p-2 room-type-main-img">
+                            <img src="assets/search-bg.jpg" alt="">
+                          </div>
+                          <div class="d-flex flex-column room-lightbox-col-images mb-0">
+                            <div class="p-2"><img src="assets/search-bg.jpg" alt=""></div>
+                            <div class="p-2"><img src="assets/search-bg.jpg" alt=""></div>
+                            <div class="p-2"><img src="assets/search-bg.jpg" alt=""></div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-between" *ngIf="adults">
+                        <div class="adults-count">
+                          <img src="assets/images/icons/man-standing-up.png" alt=""
+                            *ngFor="let adultImage of currentHotelAvailability?.adults">
+                          <!-- <img src="assets/images/icons/man-standing-up.png" alt=""> -->
+                        </div>
+                        <div class="guest-count-value">{{currentHotelAvailability?.adults?.length}} adults</div>
+                      </div>
+                      <div class="d-flex justify-content-between" *ngIf="child">
+                        <div class="child-count" *ngFor="let childImage of currentHotelAvailability?.childrens"><img
+                            src="assets/images/icons/children.png" alt=""></div>
+                        <div class="guest-count-value">{{currentHotelAvailability?.childrens?.length}} child</div>
+                      </div>
+                    </td>
+                    <td class="custom-select-section">
+                      <div *ngFor="let roomaAmount of room.displayRateInfo">
+                        <p class="nights-count" *ngIf="roomaAmount.purpose == 1">{{currentHotelAvailability?.nights}}
+                          nights {{roomaAmount.amount | number : "1.2-2"}} {{roomaAmount.currencyCode}}</p>
+                        <small *ngIf="roomaAmount.purpose == 40">+ {{roomaAmount.amount | number : "1.2-2"}}
+                          {{roomaAmount.currencyCode}}
+                          taxs</small>
+                      </div>
+                    </td>
+                    <td class="custom-select-section">
+
+                      <select name="rooms" class="custom-select "
+                        (change)="selectRoomQuantity($event.target.value, i,room)">
+                        <option value="0">0</option>
+                        <option value="{{roomqty}}" *ngFor="let roomqty of room.availabilityCount">{{roomqty}}</option>
+                      </select>
+                    </td>
+                    <td class="custom-select-section">
+                      <button class="btn book-room-btn" (click)="onTransport(currentHotelAvailability)">Book
+                        room</button>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="property-and-map">
+            <div class="row">
+              <!-- <div class="col-md-8">
+                <div class="property-details">
+                  <h5>Property Details :</h5>
+                  <p [innerHtml]="currentHotelAvailability.description">
+                  </p>
+                </div>
+              </div> -->
+              <!-- <div class="col-md-4">
+                <div class="property-map">
+                  <agm-map [latitude]="currentHotelAvailability.latitude" [zoom]="zoom"
+                    [longitude]="currentHotelAvailability.longitude">
+                    <agm-marker [latitude]="currentHotelAvailability.latitude"
+                      [longitude]="currentHotelAvailability.longitude"></agm-marker>
+                  </agm-map>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- 
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->
+
+<ngx-spinner
+bdOpacity = 0.9
+bdColor = "#333"
+size = "medium"
+color = "#BB9356"
+type = "ball-pulse-sync"
+[fullScreen] = "true"
+>
+<p style="color: white" > Loading... </p>
+</ngx-spinner>

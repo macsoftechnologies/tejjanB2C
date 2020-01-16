@@ -1,0 +1,806 @@
+<div class="checkout-page" *ngIf = "isHotelBooking">
+  <div class="checkout-header" *ngIf = "isHotelBooking">
+    <h1>Check Out</h1>
+  </div>
+  <div class="checkout-body" *ngIf = "isHotelBooking ">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-8 res-div">
+        <div class="accordion-block">
+        <div id="accordion">
+          <div class="card d-none">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                <h4>Flight :</h4>
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div id="collapseOne" class="collapse show">
+             <div class="card-body">
+              <div class="from-data">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="title">From:</label>
+                      <p>Pakistan</p>
+                    </div>
+                    <div class="col-3">
+                      <label for="title">Depart Date:</label>
+                      <p>25/11/2019</p>
+                    </div>
+                    <div class="col-3">
+                      <label for="title">Depart Time:</label>
+                      <p>10:00 A.M</p>
+                    </div>
+                    <div class="col-2">
+                      <label for="title">Arrival Time:</label>
+                      <p>02:00 P.M</p>
+                    </div>
+                    <div class="col-2">
+                      <label for="title">Guests:</label>
+                      <p>2 People</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="title">To:</label>
+                      <p>Pakistan</p>
+                    </div>
+                    <div class="col-3">
+                      <label for="title">Return Date:</label>
+                      <p>25/11/2019</p>
+                    </div>
+                    <div class="col-3">
+                      <label for="title">Depart Time:</label>
+                      <p>10:00 A.M</p>
+                    </div>
+                    <div class="col-2">
+                      <label for="title">Arrival Time:</label>
+                      <p>02:00 P.M</p>
+                    </div>
+                    <div class="col-2">
+                      <label for="title">Total:</label>
+                      <p>2 People</p>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+              <h4>Hotel Makkah :</h4>
+              <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            </a>
+            </div>
+            <div id="collapseTwo" class="collapse">
+              <div class="card-body">
+                <div class="hotel-data">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-4 col-5">
+                        <label for="title">Hotel Name:</label>
+                        <p>{{hotelcart.name}}</p>
+                      </div>
+                      <div class="col-md-3 col-3">
+                        <label for="title">Check in:</label>
+                        <p>{{hotelcart.checkInDate | date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-2 col-2">
+                        <label for="title">Nights:</label>
+                        <p>{{hotelcart.nights}}</p>
+                      </div>                    
+                      <div class="col-md-3 col-2">
+                        <label for="title">Guests:</label>
+                        <p>{{guests}}  People</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 col-5">
+                        <label for="title">City:</label>
+                        <p>{{hotelcart.city}}</p>
+                      </div>
+                      <div class="col-md-3 col-3">
+                        <label for="title">Check out:</label>
+                        <p>{{hotelcart.checkOutDate | date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-2 col-2">
+                        <label for="title">Rooms:</label>
+                        <p>{{hotelcart.roomGroups[0].rooms.length}} Room</p>
+                      </div>
+                      
+                      <div class="col-md-3 col-2">
+                        <label for="title">Total:</label>
+                        <p>{{hotelTotalPrice | number : '1.2-2'}} SAR</p>
+                      </div>
+                    </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="card d-none">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                <h4>Hotel Madinah :</h4>
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div id="collapseThree" class="collapse">
+              <div class="card-body">
+               <div class="hotel-data">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="title">Hotel Name:</label>
+                        <p>Hotel Name</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Check in:</label>
+                        <p>25/11/2019</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Nights:</label>
+                        <p>4 Nights</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Room Type:</label>
+                        <p>Studio room</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Guests:</label>
+                        <p>2 People</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="title">City:</label>
+                        <p>Makkah</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Check out:</label>
+                        <p>25/11/2019</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Rooms:</label>
+                        <p>1 Room</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Bed Type:</label>
+                        <p>King bed</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Total:</label>
+                        <p>1,800 SAR</p>
+                      </div>
+                    </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" *ngIf = "transportCart != null || groundCart != null">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                <h4>services:</h4>
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div id="collapseFour" class="collapse">
+              <div class="card-body">
+                <div class="services-data">
+                  <div class="container-fluid">
+                    <div class="row" *ngIf = "transportCart != null">
+                      <div class="col-4">
+                        <label for="title">Transportation Services:</label>
+                        <p>{{transportCart?.companyName}}</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Transportation Date:</label>
+                        <p>{{transportCart?.startDate | date : "dd-MM-y"}}</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Price:</label>
+                        <p>{{transportTotalPrice  | number : "1.2-2"}} SAR</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Guests:</label>
+                        <p>{{guests}} People</p>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf = "groundCart != null">
+                      <div class="col-6">
+                        <label for="title">Ground Services:</label>
+                        <p>{{groundCart?.category.categoryName}}</p>
+                      </div>
+                      <!-- <div class="col-3">
+                        <label for="title">Price:</label>
+                        <p>0.00 SAR</p>
+                      </div> -->
+                      <div class="col-6">
+                        <label for="title">Price:</label>
+                        <p>{{groundTotalPrice | number : "1.2-2"}} SAR</p>
+                      </div>
+                    </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="card d-none">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
+                <h4>Extra:</h4>
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div id="collapseFive" class="collapse">
+              <div class="card-body">
+               <div class="extra-row">
+                 <div class="container-fluid">
+                   <div class="row">
+                     <div class="col-4 col-md-2">
+                       <label for="title">Adahi:</label>
+                       <p>1 Adahi</p>
+                     </div>
+                     <div class="col-3">
+                       <label for="title">Price:</label>
+                       <p>450 SAR</p>
+                     </div>
+                     <div class="col-2">
+                      <label for="title">Price:</label>
+                      <p>450 SAR</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseSix">
+                <h4>Mutamer Details :</h4>
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div id="collapseSix" class="collapse show">
+              <div class="card-body mutamer-body">
+               <div class="extra-row">
+                 <div class="container-fluid mutamer-container">
+
+                  <div class="passenger-details" [hidden]=false>
+                    <!-- <form [formGroup]="travellerForm"> -->
+                      <fieldset class="passenger-fieldset-styles">
+                        <!-- <legend>Mutamer Details</legend> -->
+                        <!-- <div class="alert alert-warning alert-dismissible">
+                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet
+                            provident ipsum hic
+                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
+                            perspiciatis iusto et reprehenderit?</p>
+                        </div>
+                        <div class="alert alert-warning alert-dismissible">
+                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet provident ipsum hic
+                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
+                            perspiciatis iusto et reprehenderit?</p>
+                        </div>
+                        <div class="alert alert-warning alert-dismissible">
+                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet provident ipsum hic
+                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
+                            perspiciatis iusto et reprehenderit?</p>
+                        </div> -->
+                
+                        <div class="pilgrim-details" >
+                          
+                          <div *ngFor="let room of roomsForms; let k = index">
+                            <label class="room-name">Room : {{room.sequence + 1}}</label>
+                            <div *ngFor="let adult of room.adults; let i = index;">
+                              <div class="checkout-data">
+                              <label class="piligram-type">Pilgrim Type : Adult {{i+1}}</label>
+                              <div class="row piligrim-total-detail">
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Gender*</label>
+                                    <select class="form-control custom-select"
+                                      (change)="onAdultChange($event.target.value, i, 'gender', k)"
+                                      data-placeholder="Choose a Category">
+                                      <option value="" selected>Select One</option>
+                                      <option value="M">Male</option>
+                                      <option value="F">
+                                        Female</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>First Name*</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'firstName',k)"
+                                      type="text">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Middel Name*</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'middleName',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Last Name*</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'lastName',k)"
+                                      type="text">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row piligrim-total-detail">
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Birth Date(DD/MM/YYYY)*</label>
+                                    <div class="input-group">
+                                      <input class="form-control" (input)="onAddAdult($event.target.value,i,'birthDate',k)"
+                                        type="" name="dp2" ngbDatepicker #d2="ngbDatepicker" #birthDate (focus)="d2.open()"
+                                        >
+                                      <div class="input-group-append">
+                                        <button class="btn border border-warning no-shadow btn-pad" (click)="d2.toggle()"
+                                          type="button">
+                                          <i class="fa fa-calendar"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Passport Number*</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'passportNumber',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Location Name*</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'locationName',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Address</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'address',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row piligrim-total-detail">
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>City</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'city',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>State</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'state',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Country*</label>
+                                    <select class="form-control custom-select"
+                                      (change)="onAdultChange($event.target.value, i, 'country', k)"
+                                      data-placeholder="Choose a Category">
+                                      <option value="">Select Country</option>
+                                      <option *ngFor="let country of countryList">{{country.countryName}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Zip</label>
+                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'zip',k)"
+                                      type="">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                             
+                            </div>
+                
+                            <div *ngFor="let child of room.childrens; let l = index;">
+                              <div class="checkout-data">
+                              <label class="piligram-type">Pilgrim Type : child {{l+1}}</label>
+                              <div class="row  piligrim-total-detail">
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Gender*</label>
+                                    <select class="form-control custom-select"
+                                      (change)="onChildrenChange($event.target.value, l, 'gender', k)"
+                                      data-placeholder="Choose a Category">
+                                      <option value="" selected>Select One</option>
+                                      <option value="M">Male</option>
+                                      <option value="F">
+                                        Female</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>First Name*</label>
+                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'firstName',k)"
+                                      type="text">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Middel Name*</label>
+                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'middleName',k)"
+                                      type="text">
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Last Name*</label>
+                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'lastName',k)"
+                                      type="text">
+                                  </div>
+                                </div>
+                              </div>
+                
+                              <div>
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                    <label>Birth Date(DD/MM/YYYY)*</label>
+                                    <!-- <input class="form-control" (input)="onAddChildren($event.target.value,k,'birthDate',k)"
+                                      type=""> -->
+                                      <div class="input-group">
+                                        <input class="form-control" (input)="onAddChildren($event.target.value,i,'birthDate',k)"
+                                          type="" name="dp3" ngbDatepicker #d3="ngbDatepicker" #birthDate (focus)="d3.open()"
+                                          >
+                                        <div class="input-group-append">
+                                          <button class="btn border border-warning no-shadow btn-pad" (click)="d3.toggle()"
+                                            type="button">
+                                            <i class="fa fa-calendar"></i>
+                                          </button>
+                                        </div>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            </div>
+                           
+                          </div>
+                          <p >Infant and Child should be less than 2 and 12 years respectively till the end of trip.</p>
+                        </div>
+                      
+                      </fieldset>
+                    <!-- </form> -->
+                      <form [formGroup]="contactForm">
+                      <fieldset class="passenger-fieldset-styles">
+                        <legend>Contact</legend>
+                        <div class="contact-details">
+                          <div class="row piligrim-total-detail">
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Gender*</label>
+                                <select class="form-control custom-select" [formControl]="contactForm.controls['cgender']"
+                                  data-placeholder="Choose a Category">
+                                  <option value="contact-male">Male</option>
+                                  <option value="contact-female">
+                                    Female</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>First Name*</label>
+                                <input class="form-control" formControlName="cfirstName" type="text">
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Last Name*</label>
+                                <input class="form-control" formControlName="clastName" type="text">
+                              </div>
+                            </div>
+                           
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Email*</label>
+                                <input class="form-control" formControlName="email" type="email">
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Mobile Number*</label>
+                                <div class="d-flex">
+                                 
+                                  <input class="form-control" formControlName="mobileNumber" type="number">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Home Mobile Number</label>
+                                <div class="d-flex">
+                                 
+                                  <input class="form-control" formControlName="secondMobileNumber" type="number">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
+
+                 </div>
+               </div>
+              </div>
+            </div>	
+           
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-12 col-md-4 res-div">
+        <div class="bill-details">
+          <ul>
+            <li class="d-none"><h4>Flight</h4>
+              <div class="amount">
+                <ng-template #tipContent>
+                  <div class="full-person-details">
+                    <p>Quantity x 1</p>
+                    <p>SAR 6,075</p>
+                  </div>
+                  <div class="vat-details">
+                    <p>VAT</p>
+                    <p>SAR 54</p>
+                  </div>
+                  <div class="price-details">
+                    <p>Total-price</p>
+                    <p>SAR 6,129</p>
+                  </div>
+                </ng-template>
+                <p>2xAdults</p>
+                <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContent" tooltipClass="my-custom-class"></i>
+                  SAR 2,600</p>
+              </div>
+            </li>
+            <li class="d-none"><h4>Accomodations</h4>
+              <div class="amount">
+                <p>Hotel name</p>
+                <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContent" tooltipClass="my-custom-class"></i>SAR 1,800</p>
+              </div>
+            </li>
+            <li><h4>Hotels</h4>
+
+               <ng-template #tipContentHotel>
+                  <div class="full-person-details">
+                    <p>Quantity x {{hotelcart.roomGroups[0].rooms.length}}</p>
+                    <p>SAR {{roomsBasePrice | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsFees != 0">
+                    <p>Fees</p>
+                    <p>SAR {{roomsFees | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsVAT != 0">
+                    <p>VAT</p>
+                    <p>SAR {{roomsVAT | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsGDS != 0">
+                    <p>GDS</p>
+                    <p>SAR {{roomsGDS | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsOTA != 0">
+                    <p>OTA</p>
+                    <p>SAR {{roomsOTA | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="price-details">
+                    <p>Total-price</p>
+                    <p>SAR {{hotelTotalPrice | number : "1.2-2"}}</p>
+                  </div>
+                </ng-template>
+                <div class="amount">
+                  <p>{{hotelcart.name}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
+                </div>
+            </li>
+            <li *ngIf = "transportCart != null"><h4>Transportation</h4>
+              <ng-template #tipContentTransport>
+                <div class="full-person-details">
+                  <p>Quantity x {{transportQuantity}}</p>
+                  <p>SAR {{transportBasePrice | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportVAT != 0">
+                  <p>VAT</p>
+                  <p>SAR {{transportVAT | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportGDS != 0">
+                  <p>GDS</p>
+                  <p>SAR {{transportGDS | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportOTA != 0">
+                  <p>OTA</p>
+                  <p>SAR {{transportOTA | number : "1.2-2"}}</p>
+                </div>
+                <div class="price-details">
+                  <p>Total-price</p>
+                  <p>SAR {{transportTotalPrice | number : "1.2-2"}}</p>
+                </div>
+              </ng-template>
+              <div class="amount">
+                <p>{{transportCart.companyName}}</p>
+                <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
+              </div>
+            </li>
+            <li  *ngIf = "groundCart != null"><h4>Ground Services</h4>
+              <ng-template #tipContentGround>
+                <div class="full-person-details">
+                  <p>Quantity x {{groundQuantity}}</p>
+                  <p>SAR {{groundBasePrice | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportVAT != 0">
+                  <p>VAT</p>
+                  <p>SAR {{groundVAT | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportGDS != 0">
+                  <p>GDS</p>
+                  <p>SAR {{groundGDS | number : "1.2-2"}}</p>
+                </div>
+                <div class="vat-details" *ngIf = "transportOTA != 0">
+                  <p>OTA</p>
+                  <p>SAR {{groundOTA | number : "1.2-2"}}</p>
+                </div>
+                <div class="price-details">
+                  <p>Total-price</p>
+                  <p>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+                </div>
+              </ng-template>
+              <div class="amount">
+                <p>{{groundCart?.category.categoryName}}</p>
+                <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+              </div>
+            </li>
+            <li><h4>Charges</h4>
+              <div class="amount">
+                <!-- <p>Special seeds services</p> -->
+                <p>VisaCharges</p>
+                <p>(300 SAR Per Traveller)</p>
+                <p>SAR {{guests * 300}}</p>
+              </div>
+              <div class="amount">
+                <!-- <p>Special seeds services</p> -->
+                <p>Medical Insurance Fees</p>
+                <p>(189 SAR Per Motamer )</p>
+                <p>SAR {{guests * 189}}</p>
+              </div>
+            </li>
+          </ul>
+          <div class="total-price">
+            <p>Total</p>
+            <p>SAR {{cartGrandTotal | number : "1.2-2"}}</p>
+          </div>
+        </div>
+        <div class="card-details">
+          <div class="card-pills">
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#card">Card</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#wallet">Wallet</a>
+              </li> -->
+            </ul>
+        </div>
+          
+          <div class="tab-content">
+            <div id="card" class="tab-pane active">
+              <div class="card-image">
+                <img src="../../../assets/images/footer-images/visa.png" alt="">
+              </div>
+              <div class="details">
+              <div class="container-fluid res-card">
+                <div class="row res-card-data">
+                  <div class="col-9">
+                    <label for="">CARD NUMBER</label>
+                   <p><input type="text"></p>
+                  </div>
+                  <div class="col-3">
+                    <label for="">CVC</label>
+                    <p><input type=""></p>
+                  </div>
+                </div>
+                <div class="row res-card-data1">
+                  <div class="col-md-12">
+                    <div class="card-holder-name">
+                      <label for="title">CARD HOLDER NAME</label>
+                      <p><input type=""></p>
+                    </div>
+                  </div>
+                </div >
+    
+                <label for="title">EXPERITION DATE</label>
+                <div class="row res-card-data2">
+                  <div class="col-3">
+                    <p><input type=""></p>
+                  </div>
+                  <div class="col-6">
+                    <p><input type=""></p>
+                  </div>
+                  <div class="col-3">
+                    <p><input type=""></p>
+                  </div>
+                </div>
+                <div class="order-btn">
+                  <button  (click) = "cardPay()"> <h5>COMPLETE ORDER (TOTAL SAR {{cartGrandTotal | number : "1.2-2"}})</h5></button>
+                </div>
+              </div>
+             </div>
+            </div>
+            <!-- <div id="wallet " class="tab-pane fade active show">
+              <form [formGroup] = "walletForm">
+              <div class="details" >
+                <div class="container-fluid res-card">
+                  <div class="row res-card-data">
+                    <div class="col-12">
+                      <label for="">Wallet ID</label>
+                     <p><input type=""  placeholder="wallet Id" formControlName = "walletId"></p>
+                    </div>
+                    <div class="col-12">
+                      <label for="">Wallet Authentication Code</label>
+                      <p><input type=""  placeholder="walletAuthenticationCode" formControlName = "walletAuthCode"></p>
+                    </div>
+                    <div class="order-btn">
+                      <button  (click) = "wallet(hotelTotalPrice , transportTotalPrice , groundTotalPrice)"> <h5>COMPLETE ORDER (TOTAL SAR {{cartGrandTotal | number : "1.2-2"}})</h5></button>
+                    </div>
+                  </div>
+                </div>
+               </div>
+              </form>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class = "container-fluid"  *ngIf = "!isHotelBooking ">
+       
+   <p>Booking Failed</p>
+   <button (click) = "onNavToSearch()">GO To Search</button>
+
+</div>
+<ngx-spinner
+bdOpacity = 0.9
+bdColor = "#333"
+size = "medium"
+color = "#BB9356"
+type = "ball-pulse-sync"
+[fullScreen] = "true"
+>
+<p style="color: white" > Loading... </p>
+</ngx-spinner>
+
+
+<!-- <ngx-spinner bdColor="rgba(255, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->
+
+
+
+
+
+  

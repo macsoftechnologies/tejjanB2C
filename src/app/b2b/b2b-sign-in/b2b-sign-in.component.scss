@@ -1,0 +1,128 @@
+@import "../../../assets/variables/global-variables";
+@import "../../../assets/variables/modular-variables";
+
+.container {
+    padding: 44px;
+    @include mobile {
+        padding: 16px;
+    }
+}
+.container-body {
+    padding-left: 80px;
+    padding-top: 15px;
+    @include tab {
+        padding-left: 0px;
+    }
+    @include mobile {
+        padding-left: 15px;
+        padding-top: 0px;
+    }
+}
+.custom-card {
+    box-shadow: $card-box-shadow;
+    width: 545px;
+    // height: 407px;
+    border-radius: 8px;
+    @include tab {
+        width: auto;
+    }
+    @include mobile {
+        width: auto;
+        // height: 430px;
+    }
+}
+.form-group ::placeholder,a {
+    color: #afafaf;
+}
+.top-img {
+    text-align: center;
+    padding-top: 45px;
+    img {
+        width: 184px;
+    }
+}
+.form-fields {
+    padding: 41px;
+    @include mobile {
+        padding: 27px;
+    }
+}
+.custom-input {
+    width: 298px;
+    height: 39px;
+    @include tab {
+        width: auto;
+    }
+    @include mobile {
+        width: 100%;
+    }
+}
+.form-group .login-label {
+    color: $primary-color;
+    padding-left: 27px;
+    font-size: 14px;
+}
+.custom-input-group {
+    padding-top: 10px;
+    @include mobile {
+        padding-top: 0px;
+    }
+    .custom-input {
+        margin-top: 7px;
+    }
+}
+.forgot-text {
+    padding-left: 73px;
+    padding-top: 4px;
+    font-size: 14px;
+    
+    a {
+        color: #ccc;   
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #bb9356 !important;
+    }
+}
+.signin-btn {
+  margin-bottom: 0px;
+    button {
+        background-color: $primary-color;
+        color: $light-font-color;
+        font-weight: 600;
+        height: 66px;
+        font-size: 22px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    }
+}
+.cancel {
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    float: right;
+    background-color: $primary-color;
+    margin: 12px 13px 0px 0px;
+    i {
+        color: $light-font-color;
+        margin-left: 5px;
+        font-size: 20px;
+    }
+}
+
+// ***** Override the custom checkbox styles  *******
+
+.checkbox-container {
+    line-height: 27px !important;
+    .checkmark {
+        top: 8px !important;
+        border: 1px solid $primary-color !important;
+        @include mobile {
+            top: 5px !important;
+        }
+    }
+}
+
+// ***** Override the custom checkbox styles  *******

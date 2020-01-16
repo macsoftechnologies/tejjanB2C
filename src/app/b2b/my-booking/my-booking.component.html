@@ -1,0 +1,412 @@
+<div class="mybooking-page">
+  <div class="mybooking-header">
+    <h1>My Booking</h1>
+  </div>
+  <div class="mybooking-body">
+    <div class="container-fluid">
+      <div class="row res-data">
+        <div class="col-12 col-md-8">
+          <div class="accordion-block">
+            <div id="accordion">
+              <div class="card d-none">
+                <div class="card-header">
+                  <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                    <h4>Flight :</h4>
+                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div id="collapseOne" class="collapse show">
+                  <div class="card-body">
+                    <div class="from-data">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-2">
+                            <label for="title">From:</label>
+                            <p>Pakistan</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Depart Date:</label>
+                            <p>25/11/2019</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Depart Time:</label>
+                            <p>10:00 A.M</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Arrival Time:</label>
+                            <p>02:00 P.M</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Guests:</label>
+                            <p>2 People</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-2">
+                            <label for="title">To:</label>
+                            <p>Pakistan</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Return Date:</label>
+                            <p>25/11/2019</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Depart Time:</label>
+                            <p>10:00 A.M</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Arrival Time:</label>
+                            <p>02:00 P.M</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Total:</label>
+                            <p>2 People</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card d-none">
+                <div class="card-header">
+                  <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                    <h4>Hotel Makkah :</h4>
+                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div id="collapseTwo" class="collapse two-collapse">
+                  <div class="card-body">
+                    <div class="hotel-data">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-2">
+                            <label for="title">Hotel Name:</label>
+                            <p>Hotel Name</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Check in:</label>
+                            <p>25/11/2019</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Nights:</label>
+                            <p>4 Nights</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Room Type:</label>
+                            <p>Studio room</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Guests:</label>
+                            <p>2 People</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-2">
+                            <label for="title">City:</label>
+                            <p>Makkah</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Check out:</label>
+                            <p>25/11/2019</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Rooms:</label>
+                            <p>1 Room</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Bed Type:</label>
+                            <p>King bed</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Total:</label>
+                            <p>1,800 SAR</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                    <h4>Hotel Makkah :</h4>
+                    <div>
+                      <button class="btn btn-md cancel-button" data-toggle="modal" data-target="#myModal">
+                        Invoice
+                      </button>
+                      <!-- Modal for Invoice -->
+                      <div class="modal" id="myModal">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+
+                            
+ 
+                              <h4 class="modal-title">Invoice </h4>
+                              <button class="btn btn-md print-btn" printSectionId="printSection" ngxPrint style="
+                              margin-left: 530px;
+                          ">Download</button>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                              
+                            <div class="modal-body" style="
+                            color: black;" id="printSection">
+
+                        <div class="row">
+                          <div class="col-md-4">
+                              <h4>HotelDetails</h4>
+                              <br>
+                              <p><b>BookingStatus :</b> {{hotel?.bookingStatus}} </p>
+                                             
+                              <p><b>Reference Number :</b>{{hotel?.bookingReferenceNo}}</p>
+                          
+                            <p><b>Hotel Address:</b> {{hotel?.hotelDetails.address}}</p>
+                           
+
+                            <p> <b>Check-In:</b>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}
+                            </p>
+                            <p>
+                              <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
+                            </p>
+                            <p>
+                              <b>Total Amount:</b>SAR {{hotelAmount}}
+                            </p>
+                            </div>
+
+                            <div class="col-md-4">
+                              <h4>transportDetils</h4>
+                              <br>
+                              <p><b>bookingStatus :</b>{{transport?.bookingStatus}}</p>
+                              <p><b>Reference Number:</b>{{transport?.bookingReferenceNo}}</p>
+                              <p><b>CompanyName:</b>{{transport?.companyName}}</p>
+                              <p><b>RouteName :</b>{{transport?.routeName}}</p>
+                              <p>
+                                <b>Total Amount:</b>SAR {{transportAmount}}
+                              </p>
+                            </div>
+                            <div class="col-md-4">
+                              <h4>groundDetails</h4>
+                              <br>
+                              <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
+                              <p><b>bookingReferenceNo:</b>{{ground?.bookingReferenceNo}}</p>
+                              <p><b>category:</b>{{ground?.category?.categoryName}}</p>
+                              <p>
+                                <b>Total Amount:</b>SAR {{groundAmount}}
+                              </p>
+                            </div>
+
+
+
+                          </div>
+
+                          </div>
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                      <button (click)="cancelHotelReservation()" class="cancel-button">Cancel Booking</button>
+                      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    </div>
+                  </a>
+                </div>
+                <div id="collapseThree" class="collapse two-collapse">
+                  <div class="card-body">
+                    <div class="hotel-data">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-4">
+                            <label for="title">Hotel Name:</label>
+                            <p>{{hotel?.hotelDetails.name}}</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Check in:</label>
+                            <p>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Nights:</label>
+                            <p>{{numberOfNights}} Nights</p>
+                          </div>
+                          <!-- <div class="col-2">
+                        <label for="title">Room Type:</label>
+                        <p>Studio room</p>
+                      </div> -->
+                          <div class="col-3">
+                            <label for="title">Guests:</label>
+                            <p>{{guests}} People</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4">
+                            <label for="title">City:</label>
+                            <p>{{hotel?.hotelDetails.city}}</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Check out:</label>
+                            <p>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Rooms:</label>
+                            <p>{{hotel?.hotelDetails.roomGroups[0].rooms.length}} </p>
+                          </div>
+                          <!-- <div class="col-2">
+                        <label for="title">Bed Type:</label>
+                        <p>King bed</p>
+                      </div> -->
+                          <div class="col-3">
+                            <label for="title">Total:</label>
+                            <p>{{hotelAmount}} SAR</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                    <h4>services:</h4>
+                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div id="collapseFour" class="collapse three-collapse">
+                  <div class="card-body">
+                    <div class="services-data">
+                      <div class="container-fluid">
+                        <div class="row" *ngIf="transportBookingResponse != null">
+                        
+                          <div class="col-5">
+                            <label for="title">Transportation Services:</label>
+                            <p>{{transport?.companyName}}</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Price:</label>
+                            <p>{{transportAmount | number : "1.2-2"}} SAR</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Guests:</label>
+                            <p>{{guests}} People</p>
+                         
+                        </div>
+                        
+                        </div>
+
+                        <div class="row" *ngIf="transportBookingResponse == null">
+
+                          <p>Transportation Booking Failed</p>
+
+                        </div>
+                        <div class="row" *ngIf="groundBookingResponse != null">
+                        
+                          <div class="col-5">
+                            <label for="title">Ground Services:</label>
+                            <p>{{ground?.category?.categoryName}}</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Price:</label>
+                            <p>{{groundAmount | number : "1.2-2"}} SAR</p>
+                          </div>
+                          
+                   
+                          <!-- <div class="col-2">
+                        <label for="title">Total:</label>
+                        <p>520 SAR</p>
+                      </div> -->
+                        </div>
+                        <div class="row" *ngIf="groundBookingResponse == null">
+
+                          <p>GroundService Booking Failed</p>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card d-none">
+                <div class="card-header">
+                  <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
+                    <h4>Extra:</h4>
+                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div id="collapseFive" class="collapse four-collapse">
+                  <div class="card-body">
+                    <div class="extra-row">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-4 col-md-2">
+                            <label for="title">Adahi:</label>
+                            <p>1 Adahi</p>
+                          </div>
+                          <div class="col-3">
+                            <label for="title">Price:</label>
+                            <p>450 SAR</p>
+                          </div>
+                          <div class="col-2">
+                            <label for="title">Price:</label>
+                            <p>450 SAR</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 ">
+          <div class="trip-countdown">
+            <div class="trip-header-timer">
+              <h5>Trip Countdown | Mon 25 Nov Departing 12:00</h5>
+              <h5>GMT+0300</h5>
+            </div>
+            <div class="timer-body">
+              <div class="count-down-timer">
+                <ul>
+                  <li><span>1</span>
+                    <p>DAY</p>
+                  </li>
+                  <li><span>5</span>
+                    <p>HOURS</p>
+                  </li>
+                  <li><span>35</span>
+                    <p>MINUTES</p>
+                  </li>
+                  <li><span>41</span>
+                    <p>SECONDS</p>
+                  </li>
+                </ul>
+              </div>
+              <div class="range-bar">
+                <form action="/action_page.php">
+                  <input type="range" class="custom-range" id="customRange" name="points1" placeholder="1">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div>
+    <button class="btn btn-md btn-primary evisa-btn" (click)="evisaDetails()">E-visa</button>
+  </div>
+</div>
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->
+<ngx-spinner bdOpacity=0.9 bdColor="#333" size="medium" color="#BB9356" type="ball-pulse-sync" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

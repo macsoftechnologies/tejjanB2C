@@ -1,0 +1,431 @@
+<!-- ***--Booking Summary Page --*** -->
+<div class="booking-summary-page">
+  <div class="bg-image">
+    <div class="bg-mask"></div>
+  </div>
+  <div class="booking-summary-header">
+    <h1>Booking Summary</h1>
+  </div>
+  <div class="booking-summary-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-md-8 res-div">
+          <div class="accordion-block">
+          <div id="accordion">
+            <div class="card d-none">
+              <div class="card-header">
+                <a class="card-link">
+                  <h4>Flight :</h4>
+                </a>
+              </div>
+              <div id="collapseOne" class="collapse show">
+               <div class="card-body">
+                <div class="from-data">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="title">From:</label>
+                        <p>Pakistan</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Depart Date:</label>
+                        <p>25/11/2019</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Depart Time:</label>
+                        <p>10:00 A.M</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Arrival Time:</label>
+                        <p>02:00 P.M</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Guests:</label>
+                        <p>2 People</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <label for="title">To:</label>
+                        <p>Pakistan</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Return Date:</label>
+                        <p>25/11/2019</p>
+                      </div>
+                      <div class="col-3">
+                        <label for="title">Depart Time:</label>
+                        <p>10:00 A.M</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Arrival Time:</label>
+                        <p>02:00 P.M</p>
+                      </div>
+                      <div class="col-2">
+                        <label for="title">Total:</label>
+                        <p>2 People</p>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a class="collapsed card-link">
+                <h4>Hotel Makkah :</h4>
+              </a>
+              </div>
+              <div id="collapseTwo" class="two-collapse">
+                <div class="card-body">
+                  <div class="hotel-data">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-4 col-5">
+                          <label for="title">Hotel Name:</label>
+                          <p>{{hotelcart.name}}</p>
+                        </div>
+                        <div class="col-md-3 col-3">
+                          <label for="title">Check in:</label>
+                          <p>{{hotelcart.checkInDate | date : "y-MM-dd"}}</p>
+                        </div>
+                        <div class="col-md-2 col-2">
+                          <label for="title">Nights:</label>
+                          <p>{{hotelcart.nights}}</p>
+                        </div>
+                        
+                        <div class="col-md-3 col-2">
+                          <label for="title">Guests:</label>
+                          <p>{{guests}} People</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4 col-5">
+                          <label for="title">City:</label>
+                          <p>{{hotelcart.city}}</p>
+                        </div>
+                        <div class="col-md-3 col-3">
+                          <label for="title">Check out:</label>
+                          <p>{{hotelcart.checkOutDate | date : "y-MM-dd"}}</p>
+                        </div>
+                        <div class="col-md-2 col-2">
+                          <label for="title">Rooms:</label>
+                          <p>{{hotelcart.roomGroups[0].rooms.length}} Room</p>
+                        </div>
+                     
+                        <div class="col-md-3 col-2">
+                          <label for="title">Total:</label>
+                          <p>{{hotelTotalPrice | number : '1.2-2'}} SAR</p>
+                        </div>
+                      </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card d-none">
+              <div class="card-header">
+                <a class="collapsed card-link">
+                  <h4>Hotel Madinah :</h4>
+                </a>
+              </div>
+              <div id="collapseThree" class="three-collapse">
+                <div class="card-body">
+                 <div class="hotel-data">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-2">
+                          <label for="title">Hotel Name:</label>
+                          <p>Hotel Name</p>
+                        </div>
+                        <div class="col-3">
+                          <label for="title">Check in:</label>
+                          <p>25/11/2019</p>
+                        </div>
+                        <div class="col-3">
+                          <label for="title">Nights:</label>
+                          <p>4 Nights</p>
+                        </div>
+                        <div class="col-2">
+                          <label for="title">Room Type:</label>
+                          <p>Studio room</p>
+                        </div>
+                        <div class="col-2">
+                          <label for="title">Guests:</label>
+                          <p>2 People</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          <label for="title">City:</label>
+                          <p>Makkah</p>
+                        </div>
+                        <div class="col-3">
+                          <label for="title">Check out:</label>
+                          <p>25/11/2019</p>
+                        </div>
+                        <div class="col-3">
+                          <label for="title">Rooms:</label>
+                          <p>1 Room</p>
+                        </div>
+                        <div class="col-2">
+                          <label for="title">Bed Type:</label>
+                          <p>King bed</p>
+                        </div>
+                        <div class="col-2">
+                          <label for="title">Total:</label>
+                          <p>1,800 SAR</p>
+                        </div>
+                      </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card"  *ngIf = "transportCart != null || groundCart != null">
+              <div class="card-header">
+                <a class="collapsed card-link">
+                  <h4>Services:</h4>
+                </a>
+              </div>
+              <div id="collapseFour" class="four-collapse">
+                <div class="card-body">
+                  <div class="services-data">
+                    <div class="container-fluid">
+                      <div class="row" *ngIf = "transportCart != null">
+                        <div class="col-4">
+                          <label for="title">Transportation Services:</label>
+                          <p>{{transportCart?.companyName}}</p>
+                        </div>
+                        <!-- <div class="col-3">
+                          <label for="title">Location:</label>
+                          <p>{{transportCart.routeName}}</p>
+                        </div> -->
+                        <div class="col-3">
+                          <label for="title">Transportation Date:</label>
+                          <p>{{transportCart?.startDate | date : "dd-MM-y"}}</p>
+                        </div>
+                        <div class="col-3">
+                          <label for="title">Price:</label>
+                          <p>{{transportTotalPrice  | number : "1.2-2"}} SAR</p>
+                        </div>
+                        <div class="col-2">
+                          <label for="title">Guests:</label>
+                          <p>{{guests}}</p>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf = "groundCart != null">
+                        <div class="col-6">
+                          <label for="title">Ground Services:</label>
+                          <p>{{groundCart?.category?.categoryName}}</p>
+                        </div>
+                        <div class="col-6">
+                          <label for="title">Price:</label>
+                          <p>{{groundTotalPrice | number : "1.2-2"}} SAR</p>
+                        </div>
+                        <!-- <div class="col-3">
+                          <label for="title">Total:</label>
+                          <p>0.00 SAR</p>
+                        </div> -->
+                      </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card d-none">
+              <div class="card-header">
+                <a class="collapsed card-link">
+                  <p class="extras-header">Extras</p>
+                </a>
+              </div>
+              <div id="collapseFive" class="five-collapse">
+                <div class="card-body">
+                 <div class="extra-row">
+                   <div class="container-fluid">
+                     <div class="extra-data">
+                       <div>
+                        <div class="custom-control custom-checkbox mb-1">
+                          <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                          <label class="custom-control-label" for="customCheck">Special Needs Services</label>
+                        </div>
+                        <p>ipsum dolor sit amet, consectetur adipisicing elit. Iusto</p>
+                        </div>
+                       <p class="extra-data-header">Free</p>
+                     </div>
+
+                     <div class="extra-data">
+                      <div>
+                        <div class="custom-control custom-checkbox mb-1">
+                          <input type="checkbox" class="custom-control-input" id="customCheck1" name="example1">
+                          <label class="custom-control-label" for="customCheck1">Adahi</label>
+                        </div>
+                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. IustoLorem ipsum dolor sit </p>
+                       </div>
+
+                      <div>
+                        <p class="sar-value">SAR 450</p>
+                        <div class="no-of-hotels-display">
+                          <select class="form-control form-control-sm">
+                            <option value=5>5</option>
+                            <option value=10>10</option>
+                            <option value=15>15</option>
+                            <option value=20>20</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-12 col-md-4 res-div">
+          <div class="bill-details">
+            <ul>
+              <li class="d-none"><h3>Makkah,Saudi Arabia</h3>
+                <div class="amount ">
+                  <div class=summary-date>
+                  <p><i class="fa fa-calendar"></i>29/11/2019</p>
+                  <p><i class="fa fa-users" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
+                    2 Motamers</p>
+                  </div>
+                  <span><p><u><a href="#">Edit</a></u></p></span>
+                </div>
+              </li>
+              <li class="d-none"><h4>Flight</h4>
+                <div class="amount ">                 
+                  <p>2xAdults</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
+                    SAR 2,600</p>
+                </div>
+              </li>
+              <li class="d-none"><h4>Accomodations</h4>
+                <div class="amount">
+                  <p>Hotel name</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>SAR 1,800</p>
+                </div>
+              </li>
+              <li><h4>Hotels</h4>
+                <ng-template #tipContentHotel>
+                  <div class="full-person-details">
+                    <p>Quantity x {{hotelcart.roomGroups[0].rooms.length}}</p>
+                    <p>SAR {{roomsBasePrice | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsFees != 0">
+                    <p>Fees</p>
+                    <p>SAR {{roomsFees | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsVAT != 0">
+                    <p>VAT</p>
+                    <p>SAR {{roomsVAT | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsGDS != 0">
+                    <p>GDS</p>
+                    <p>SAR {{roomsGDS | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "roomsOTA != 0">
+                    <p>OTA</p>
+                    <p>SAR {{roomsOTA | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="price-details">
+                    <p>Total-price</p>
+                    <p>SAR {{hotelTotalPrice | number : "1.2-2"}}</p>
+                  </div>
+                </ng-template>
+                <div class="amount">
+                  <p>{{hotelcart.name}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
+                </div>
+              </li>
+              <li *ngIf = "transportCart != null"><h4>Transportation</h4>
+                <ng-template #tipContentTransport>
+                  <div class="full-person-details">
+                    <p>Quantity x {{transportQuantity}}</p>
+                    <p>SAR {{transportBasePrice | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportVAT != 0">
+                    <p>VAT</p>
+                    <p>SAR {{transportVAT | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportGDS != 0">
+                    <p>GDS</p>
+                    <p>SAR {{transportGDS | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportOTA != 0">
+                    <p>OTA</p>
+                    <p>SAR {{transportOTA | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="price-details">
+                    <p>Total-price</p>
+                    <p>SAR {{transportTotalPrice | number : "1.2-2"}}</p>
+                  </div>
+                </ng-template>
+                <div class="amount">
+                  <p>{{transportCart.companyName}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
+                </div>
+              </li>
+              <li *ngIf = "groundCart != null"><h4>Ground Services</h4>
+                <ng-template #tipContentGround>
+                  <div class="full-person-details">
+                    <p>Quantity x {{groundQuantity}}</p>
+                    <p>SAR {{groundBasePrice | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportVAT != 0">
+                    <p>VAT</p>
+                    <p>SAR {{groundVAT | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportGDS != 0">
+                    <p>GDS</p>
+                    <p>SAR {{groundGDS | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="vat-details" *ngIf = "transportOTA != 0">
+                    <p>OTA</p>
+                    <p>SAR {{groundOTA | number : "1.2-2"}}</p>
+                  </div>
+                  <div class="price-details">
+                    <p>Total-price</p>
+                    <p>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+                  </div>
+                </ng-template>
+                <div class="amount">
+                  <p>{{groundCart?.category?.categoryName}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+                </div>
+              </li>
+              <li>
+                <!-- <h4>Extras</h4> -->
+                <div class="extra-name">
+                  <h4>Charges</h4>
+                  <!-- <p>Remove</p> -->
+                </div>
+                <div class="amount">
+                  <p>VisaCharges</p>
+                  <p>(300 SAR Per Traveller)</p>
+                  <p>SAR {{guests * 300}}</p>
+                </div>
+                <div class="amount">
+                  <p>Medical Insurance Fees</p>
+                  <p>(189 SAR Per Motamer)</p>
+                  <p>SAR {{guests * 189}}</p>
+                </div>
+              </li>
+            </ul>
+            <div class="total-price">
+              <p>Total</p>
+              <p>SAR {{cartGrandTotal | number : "1.2-2"}}</p>
+            </div>
+          </div>
+          <div class="checkout-btn">
+            <button (click) = "checkout()">CHECKOUT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

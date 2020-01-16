@@ -1,0 +1,438 @@
+<div class="grpund-service-panel">
+  <div class="bg-image">
+    <div class="bg-mask"></div>
+  </div>
+  <!-- tranportsearch filter section -->
+  <div>
+    <form [formGroup]="GroundServicesFormGroup">
+      <div class="container-fluid">
+        <div class="ground-service-filter-mask">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
+                          alt="calendar"></div>
+                    </div>
+                    <ng-select [formControl]="GroundServicesFormGroup.controls['companyCode']" [items]="companies"
+                      bindLabel="name" placeholder="Select company" [virtualScroll]="true" class="custom-select">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
+                          alt="transport-class"></div>
+                    </div>
+                    <ng-select class="custom-select" [items]="categories" [virtualScroll]="true"
+                      placeholder="Select Class" [formControl]="GroundServicesFormGroup.controls['categoryCode']"
+                      bindLabel="name">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div>
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><img class="icon-size" src="assets/images/icons/calendar.png"
+                              alt="Ground-service"></div>
+                        </div>
+                        <input type="email" class="form-control"
+                          [formControl]="GroundServicesFormGroup.controls['arrivalDate']" disabled>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div>
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><img class="icon-size" src="assets/images/icons/user.png"
+                              alt="Ground-service"></div>
+                        </div>
+                        <input type="" class="form-control" disabled
+                          [formControl]="GroundServicesFormGroup.controls['noOfPax']" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img class="icon-size" src="assets/images/icons/bus.png"
+                          alt="transport-class"></div>
+                    </div>
+                    <ng-select class="custom-select" [items]="additionalServices" [virtualScroll]="true"
+                      placeholder="Select Additional Services"
+                      [formControl]="GroundServicesFormGroup.controls['additionalServices']" bindLabel="name">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img class="icon-size" src="assets/images/icons/flag.png"
+                          alt="transport-class"></div>
+                    </div>
+                    <input type="" class="form-control" disabled
+                    [formControl]="GroundServicesFormGroup.controls['countryOfResidence']" />
+                    <!-- <ng-select class="custom-select" [items]="countriesList" [virtualScroll]="true"
+                      placeholder="Select countryOfResidence" [formControl]="GroundServicesFormGroup.controls['countryOfResidence']"
+                      bindLabel="countryName" >
+                    </ng-select> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" (click)="onGroundServices()">
+              <div class="search-btn">
+                <button class="btn" ><img src="assets/images/icons/search_icon.png"
+                    alt="" ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- /groundservice search filter section -->
+
+  <!-- Ground service data section -->
+
+  <div class="container-fluid">
+    <div class="transport-data-panel">
+      <div class="mt-md-3 mt-sm-1 transportlist-header">
+        <div>
+          <img class="transport-icon-size" src="assets/images/icons/bus.png" alt="">
+          <h4 class="d-inline">Ground Services</h4>
+        </div>
+        <div class="d-block d-md-none">
+          <button class="btn btn-sm resp-search-filter" (click)="onFilterDisplay()">Search Filters</button>
+        </div>
+      </div>
+      <div class="transport-wrapper">
+        <div class="row" *ngIf="isGroundServicesAvailableFlag">
+
+          <!-- TransportList Filter section -->
+          <div class="col-md-2 forMobileFilter" [ngClass]="{'forMobileFilter': !isFilterDisplay}">
+            <aside class="transport-filters" *ngIf="groundServiceList.length>0">
+              <div class="filter-block-title">
+                <h3 class="mb-0 d-inline">Search Filters</h3>
+                <i class="fa fa-times d-block d-md-none" (click)="closeFilter()"></i>
+              </div>
+              <ul class="list transport-filters-list">
+
+                <li id="ground-name">
+                  <div class="filter-wrapper">
+                    <div class="filter-header">
+                      <a class="card-link" data-toggle="collapse" href="#groundName">
+                        <h5 class="booking-filters-title d-inline">Ground Service Name</h5>
+                        <span (click)="clearFilter('RATING')">Clear</span>
+                        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                    <div id="groundName" class="collapse show filter-options" data-parent="#ground-name">
+                      <input type="text" class="form-control" id="price-slider" [(ngModel)]="transport_name_filter"
+                        name="transport_name_filter">
+                    </div>
+                  </div>
+                </li>
+
+                <li id="ground-currency">
+                  <div class="filter-wrapper">
+                    <div class="filter-header">
+                      <a class="card-link" data-toggle="collapse" href="#groundCurrency">
+                        <h5 class="booking-filters-title d-inline">Currency</h5>
+                        <span (click)="clearFilter('RATING')">Clear</span>
+                        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                    <div id="groundCurrency" class="collapse show filter-options" data-parent="#ground-currency">
+                      <ng-select [items]="groundCurrencies" [virtualScroll]="true">
+                      </ng-select>
+                    </div>
+                  </div>
+                </li>
+
+                <li id="ground-price-range">
+                  <div class="filter-wrapper">
+                    <div class="filter-header">
+                      <a class="card-link" data-toggle="collapse" href="#transportPriceRange">
+                        <h5 class="booking-filters-title d-inline">Price Range</h5>
+                        <span (click)="clearFilter('RATING')">Clear</span>
+                        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                    <div id="transportPriceRange" class="collapse show filter-options"
+                      data-parent="#ground-price-range">
+                      <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+            </aside>
+          </div>
+          <!-- /TransportList Filter section -->
+
+          <div class="col-md-10" [ngClass]="{'forHotelListMObile':isFilterDisplay}">
+            <!-- Transport List section -->
+            <div>
+              <!-- Skeleton layout -->
+              <div class="col-md-12 p-0 " *ngIf="groundServiceList.length == 0 && isFirstTimeLoad">
+                <div *ngFor="let fake of generateGroundServiceSkeletons(5)" class="skeleton-layout-card">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="">
+                        <ngx-skeleton-loader count="1" appearance="circle"
+                          [theme]="{ width: '100px', height: '100px', 'border-radius': '10px' }"></ngx-skeleton-loader>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="mt-2">
+                        <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+                      </div>
+
+                    </div>
+                    <div class="col-md-3 align-self-center">
+                      <div class="mr-2">
+                        <ngx-skeleton-loader count="1" [theme]="{height:'50px'}"></ngx-skeleton-loader>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /skeleton layout -->
+
+            <!-- transport data found section -->
+
+            <div class="transport-list-items" *ngIf="groundServiceList.length>0 ">
+
+              <div class="no-of-lists">
+                <h5>{{groundServiceList?.length}} Ground Services found - 5 services shown per page.</h5>
+              </div>
+              <div class="transport-data-grid">
+                <ul>
+                  <li
+                    *ngFor="let groundservice of groundServiceList|unique |paginate: { itemsPerPage: 5 , currentPage: page };let i= index">
+                    <div class="transport-item">
+                      <a>
+                        <div class="row">
+                          <div class="col-md-3 transport-image">
+                            <img src="{{groundservice.images[0].url}}" alt="">
+                            <!-- <img src="assets/search-bg.jpg" alt=""> -->
+                          </div>
+                          <div class="col-md-6 transport-details">
+                            <h5 class="transport-title">
+                              {{groundservice.companyName}}
+                            </h5>
+                            <p class="transport-address">Address:
+                              {{groundservice.companyAddress}}</p>
+                            <span class="transport-description " [innerHtml]="groundservice.companyDescription"> </span>
+
+                          </div>
+                          <div class="col-md-3 align-items-center justify-content-center transport-price">
+                            <div *ngFor="let rate of groundservice.category.displayRateInfo">
+                              <div class="transport-price-styling">
+                                <span class="price-from">
+                                  <span class="transport-price" *ngIf="rate.purpose == 1">
+                                    {{rate.amount}}
+                                    {{rate.currencyCode |uppercase}}
+                                  </span>
+                                  <!-- <span *ngIf="rate.purpose == 7">{{rate.amount}} SAR TAXES</span> -->
+                                </span>
+                              </div>
+                            </div>
+                            <button class="btn book-transport-btn"
+                              (click)="onGroundServiceAvailability(groundservice)">View
+                              Details</button>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+
+
+                <pagination-controls class="d-flex justify-content-center" (pageChange)="page = $event" previousLabel=""
+                  nextLabel="" autoHide=true>
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- /transport data found section -->
+        </div>
+        <div class="row">
+          <!-- transport data not found section -->
+          <div class="col-md-12 search-results" *ngIf="groundServiceList.length == 0 && !isFirstTimeLoad">
+            <div class="no-search-results-section">
+              <div>
+                <h4>No matches are found for your search</h4>
+                <div class="search-btns">
+                  <button class="btn btn-primary back-btn" (click)="searchAgain()">Search again</button>
+                  <button class="btn btn-primary back-btn" (click)="bookingSummary()">Skip</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /data not found section -->
+        </div>
+        <!-- /Transport data section -->
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ground Availability Section -->
+  <div class="ground-service container-fluid ground-availability">
+    <div *ngIf="!isGroundServicesAvailableFlag && isGroundAvailabilty == true">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h5>{{groundServiceAvailability?.companyName}}</h5>
+          <p>{{groundServiceAvailability?.routeName}}</p>
+        </div>
+        <div>
+          <div class="starting-price-section" *ngIf="isGroundAvailabilty == true">
+            <div class="starting-price">
+              <span class="booking-item-price-from">Starting from</span>
+              <span class="booking-item-price-styling">
+                <span
+                  class="booking-item-price"><sup>SAR</sup>{{groundServiceAvailability?.category?.displayRateInfo[2]?.amount}}</span>
+              </span>
+            </div>
+            <span class="btn book-room" (click)="addToCart(groundServiceAvailability)">Add To Cart</span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="transport-wrapper" *ngIf="isGroundAvailabilty == false">
+        <div class="search-results">
+          <div class="no-search-results-section">
+            <div>
+              <p>Groundservices not Availabil at this time please select another groundService</p>
+              <div class="search-btns">
+                <button class="btn btn-primary" (click)="backToGroundServicesList()">Back to GroundServiceList</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isGroundAvailabilty == true">
+        <div class="">
+          <h6>Overview</h6>
+          <p></p>
+        </div>
+        <div class="booking-availability">
+          <h6>Availability</h6>
+          <div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Ground Service</th>
+                    <th><i class="fa fa-user-o" aria-hidden="true"></i>Date</th>
+                    <th class="text-center">Price</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr *ngFor="let vehicle of groundServiceAvailability?.vehicleTypes;let i = index"> -->
+                  <td>{{groundServiceAvailability?.category?.categoryName}}</td>
+                  <td>
+                    <div class="form-group">
+                      <p>{{groundServiceAvailability?.category?.arrivalDate | date : "dd-MM-yyyy"}}</p>
+                      <!-- <div class="input-group">
+                          <input class="form-control" placeholder="dd-mm-yyyy" name="dp2" ngbDatepicker
+                            #d1="ngbDatepicker" #checkIn [readonly]="true" (focus)="d1.open()">
+                          <div class="input-group-append">
+                            <button class="btn border border-warning no-shadow btn-pad" (click)="d1.toggle()"
+                              type="button">
+                              <i class="fa fa-calendar"></i>
+                            </button>
+                          </div>
+                        </div> -->
+                    </div>
+                  </td>
+
+                  <td class="text-center">
+                    <div class="booking-item-sec">
+                      <div class="booking-item-price-sec">
+                        <!-- <span class="booking-item-price">
+                            <sup>SAR</sup>{{groundServiceAvailability?.category?.displayRateInfo[2]?.amount}}
+                          </span> -->
+                        <div *ngFor="let displayRateInfo of groundServiceAvailability?.displayRateInfo">
+                          <span class="booking-item-price" *ngIf="displayRateInfo.purpose == 1">
+                            {{displayRateInfo.amount | number: '1.2-2'}} SAR
+                          </span>
+                          <span class="booking-item-price custom-color booking-item-taxes" *ngIf="displayRateInfo.purpose == 40">
+                            +{{displayRateInfo.amount | number: '1.2-2'}} {{displayRateInfo.currencyCode}}
+                            {{displayRateInfo.description}}
+                          </span>
+                        </div>
+                      </div>
+                      <!-- <a class="btn btn-primary" href="#" (click)="onNavToGroundService()">Book Now</a> -->
+
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn book-room" (click)="addToCart(groundServiceAvailability)">
+                      Add To Cart
+                    </button>
+                  </td>
+                  <!-- </tr> -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div>
+          <h6>Payment Policy</h6>
+          <p>5.00% VAT will be applied on booking amount</p>
+        </div>
+      </div>
+      <!-- /Transport Availability Section -->
+    </div>
+  </div>
+</div>
+
+<ngx-spinner
+bdOpacity = 0.9
+bdColor = "#333"
+size = "medium"
+color = "#BB9356"
+type = "ball-pulse-sync"
+[fullScreen] = "true"
+>
+<p style="color: white" > Loading... </p>
+</ngx-spinner>
+<!-- </div> -->

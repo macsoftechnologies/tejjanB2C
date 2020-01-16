@@ -1,0 +1,113 @@
+@import "../../../assets/variables/global-variables";
+
+.container {
+    padding: 30px;
+}
+.heading {
+    text-align: center;
+    color: $primary-color;
+    @include mobile {
+        font-size: 24px;
+        font-weight: 500;
+    }
+}
+.custom-card {
+    padding: 13px;
+    border: solid 1px $primary-color;
+    border-radius: 9px;
+}
+.form-fields {
+    display: flex;
+    flex-direction: row;
+    @include mobile {
+        flex-direction: column;
+    }
+    .name-fields {
+        order: 1;
+        @include mobile {
+            order: 2;
+        }
+    }
+    .image-section {
+        order: 2;
+        flex-grow: 2;
+        @include mobile {
+            order: 1;
+        }
+    }
+}
+
+.form-group {
+    margin-bottom: 0px;
+    label {
+        color: $primary-color;
+        font-size: 13px;
+    }
+    .custom-input, input {
+        width: 324px;
+        @include mobile {
+            width: 286px;
+        }
+    }
+}
+.user-image {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 28px;
+    @include mobile {
+        padding-top: 0px;
+    }
+    img {
+        border-radius: 50%;
+        width: 120px;
+    }
+    a {
+        color: $primary-color;
+    }
+}
+.form-group ::placeholder {
+    font-size: 12px;
+    columns: $light-font-color;
+}
+.save-profile {
+    text-align: right;
+    padding-top: 39px;
+    @include mobile {
+        text-align: center;
+        padding-top: 18px;
+    }
+    .save-btn {
+        button {
+            background-color: $primary-color;
+            color: $light-font-color;
+            padding: 4px 17px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+    }
+}
+
+// ****** customize datepicker styles  *********
+.input-group input {
+    border-left: solid 1px #ccc !important;
+}
+.input-group .input-group-append button {
+    border-top: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    border-left: none;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    padding: 5px !important;
+}
+
+// ng-select > div > div.single > div.placeholder {
+//     font-size: 12px !important;
+//     columns: $light-font-color !important;
+//   }
+
+::ng-deep .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    font-size: 12px !important;
+    columns: $light-font-color !important;
+}

@@ -1,0 +1,358 @@
+@import "../../../assets/variables/global-variables";
+
+.mybooking-page {
+    .mybooking-header {
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 42px;
+            color: $primary-color;
+            text-align: center;
+            padding: 20px 0px;
+
+            @include mobile {
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 28px;
+                color: #BB9356;
+                text-align: center;
+                padding: 10px 0px;
+            }
+        }
+    }
+    .mybooking-body {
+        padding: 0px 5px;
+
+        .res-data {
+            @include mobile {
+                flex-direction: column-reverse;
+            }
+        }
+        
+    }
+    .accordion-block {
+        padding-bottom: 20px;
+         .card {
+             border: 1px solid $primary-color;
+             box-sizing: border-box;
+             border-radius: 5px;
+              .card-header {
+                  background-color: #fff;
+                  display: flex;
+                  align-items: center;
+                  border-bottom: none;
+                  border-radius: 5px;
+                   a {
+                       width: 100%;
+                       display: flex;
+                       justify-content: space-between;
+                       align-items: center;
+                        h4 {
+                            color: #3a3a3a;
+                            font-family: "roboto";
+                            font-size: 20px;
+                            font-weight: bold;
+                            line-height: 24px;
+                            margin: 0;
+
+                            @include mobile {
+                                font-size: 18px;
+                            }
+                        }
+                         i {
+                            font-size: 25px;
+                         }
+                   }
+
+                   .cancel-button {
+                        background-color: #BB9356;
+                        border: none;
+                        padding: 7px 10px;
+                        border-radius: 5px;
+                        color: #fff;
+                        margin-right: 20px;
+
+                        @include mobile {
+                            background-color: #BB9356;
+                            border: none;
+                            padding: 9px 10px;
+                            border-radius: 5px;
+                            color: #fff;
+                            font-size: 12px;
+                            margin-right: 4px;
+                        }
+                   }
+              }
+              .card-body {
+                  padding: 5px;
+                  label {
+                      color: $primary-color;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      font-weight: 500;
+                      line-height: 16px;
+                  }
+                  p {
+                      color: #3a3a3a;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      line-height: 16px;
+                      margin-bottom: 8px;
+                  }
+              } 
+
+              @include mobile {
+                .collapse.show {
+                        max-width: 345px;
+                        overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+                }
+
+                .two-collapse {
+                    max-width: 345px;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+                }
+
+                .three-collapse {
+                    max-width: 345px;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+                }
+
+                .four-collapse {
+                    max-width: 345px;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+                }
+
+                .five-collapse {
+                    max-width: 345px;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+                }
+            }
+
+            @include mobile {
+                margin-bottom: 5px;
+            }
+
+         }
+    }
+    .trip-countdown {
+        box-sizing: border-box;
+        border: 1px solid $primary-color;
+        background-color: #fff;
+        border-radius: 7px;
+         .trip-header-timer {
+             background-color: $primary-color;
+             border-radius: 7px 7px 0 0;
+             height: 68px;
+             text-align: center;
+             padding: 15px;
+             word-spacing: 4px;
+
+             @include mobile {
+                background-color: #BB9356;
+                border-radius: 7px 7px 0 0;
+                height: 68px;
+                text-align: center;
+                padding: 10px 10px;
+                word-spacing: 1px;
+             }
+              h5 {
+                  color: #fff;
+                  font-family: "roboto";
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 19px;
+
+                  @include mobile {
+                    color: #fff;
+                    font-family: "roboto";
+                    font-size: 13px;
+                    font-weight: 500;
+                    line-height: 19px;
+                    margin-bottom: 5px;
+                  }
+              }
+         }
+         .timer-body {
+             padding: 15px;
+              .count-down-timer {
+                  padding: 5px 0 20px ;
+                  ul {
+                      display: flex;
+                      padding: 0;
+                      margin: 0;
+                      justify-content: center;
+                      
+                      li {
+                          list-style-type: none;
+                          padding: 0 25px;
+                          border-right: 1px solid $primary-color;
+                          text-align: center;
+
+                          @include mobile {
+                            list-style-type: none;
+                            padding: 0 15px;
+                            border-right: 1px solid #BB9356;
+                            text-align: center;
+                            font-size: 14px;
+                          }
+                           p {
+                               margin: 0;
+                           } 
+                      }
+                      :last-child {
+                        border-right: none;
+                    }
+                  }
+              }
+              .range-bar {
+                  padding: 0 30px;
+                    .custom-range::-webkit-slider-thumb {
+                        background: $primary-color;
+                    }
+              }
+         }
+
+         @include mobile {
+             margin-bottom: 10px;
+         }
+    }
+    
+}
+
+
+  // Custom Scrollbar styles
+
+  ::-webkit-scrollbar {
+    height: 9px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 5px grey; 
+    border: solid 1px $primary-color;
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $primary-color; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $primary-color; 
+  }
+
+  .payment-success {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .box-icon-center {
+    margin: 30px auto;
+    display: block;
+  }
+  .box-icon-large {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    font-size: 42px;
+  }
+  .round {
+    background: #51a351;
+  }
+  .payment-success h2 {
+    font-size: 30px;
+  }
+  .list {
+    list-style: none;
+    padding: 0;
+  }
+  .order-payment-list > li:first-child {
+    border-top: 1px dashed #ccc;
+  }
+  .order-payment-list > li {
+    padding: 10px 15px;
+    border-bottom: 1px dashed #ccc;
+  }
+  .order-details-container p {
+    padding: 0 0px;
+    font-size: 15px;
+    margin: 5px 0;
+  }
+  .payment-success h4 {
+    font-size: 22px;
+  }
+  .hotel-cancellation {
+    text-align: center;
+    margin-bottom: 100px;
+    margin-top: 20px;
+  }
+  .list-center {
+    display: table;
+    margin: 0 auto;
+  }
+  .btn-primary {
+    color: #ffffff;
+    margin-top: 15px;
+  }
+  /* --BOOKING DETAILS */
+  .booking-details {
+    display: flex;
+    justify-content: center;
+  }
+  .booking-details > div {
+    padding: 20px;
+    border-right: 1px  dashed #000;
+  }
+  .booking-details > div:last-child {
+    border: none;
+  }
+  .hotel-details,.transport-details,.ground-details {
+    flex-basis: 30%;
+  }
+  .room-details-price {
+    display: flex;
+    justify-content: space-between;
+  }
+  .room1-details-price {
+    justify-content: space-between;
+    display: flex;
+  }
+  .room1-details > div p,b {
+    margin: 0px;
+  }
+  @media (max-width: 768px) {
+    .payment-success {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .booking-failed-case {
+      text-align: center;
+  }
+
+  .details-border {
+    border-right: 1px dashed #ccc;
+  }
+
+
+  // .modal-dialog {
+  //   max-width: 800px !important;
+  // }
