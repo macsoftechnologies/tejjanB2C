@@ -88,31 +88,13 @@ export class HotelDetailsComponent implements OnInit {
 
   /* preparing hotel availability Request Object */
   public selectedHotelDeatils() {
-
-    // for (let i = 0; i < this.selectedHotel.roomGroups.length; i++) {
-    //   // delete this.selectedHotel.roomGroups[i].hasSpecialDeal
-    //   // delete this.selectedHotel.roomGroups[i].tpExtensions
-
-    //   let rooms = this.selectedHotel.roomGroups[i].rooms
-    //   for (let j = 0; j < rooms.length; j++) {
-    //     delete rooms[j].images
-    //     delete rooms[j].description
-    //     delete rooms[j].breakDownRateInfo
-    //     delete rooms[j].features
-
-    //     rooms[j]["roomCategory"] = "";
-    //   }
-    //   // delete this.selectedHotel.roomGroups[i].paxInfo
-
-    // }
-
     var CountryCode = this.searchDate.request.providerLocations[0].countryCode
     var locationCode = this.searchDate.request.providerLocations[0].locationCode
 
     this.hotelAvailabilityReq = {
       "context": {
         "cultureCode": this.searchDate.context.cultureCode,
-        "trackToken": this.hotelslistrespTrackToken,
+        // "trackToken": this.hotelslistrespTrackToken,
         "providerInfo": [
           {
             "provider": this.selectedHotel.provider,

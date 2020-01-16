@@ -99,65 +99,26 @@ public vehiclePolicies =[]
     this.transportCart = JSON.parse(localStorage.getItem('transportcart'))
     this.transportAvailabilityTracktoken = localStorage.getItem("transportAvailabilityTracktoken")
     this.groundCart = JSON.parse(localStorage.getItem('groundCart'))
-
     this.groundAvailabilityToken = localStorage.getItem("groundAvailabilityToken")
-
     this.reservation();
 
   }
 
 
-  public reservation() {
-   
-
-    
+  public reservation() {    
+    this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
         // HotelResrvation 
-      if (this.hotelcart != null) {
-  
+      if (this.hotelcart != null) {  
         this.spinner.show();
       /* preparing roomGroups Array  with travellerDetails*/
-     
-  
-  
-    
-    
-   
-  
-  
      /* preparing roomGroups */
      for (var h = 0; h < this.hotelcart.roomGroups.length; h++) {
       let hotelRoomGroup =  this.hotelcart.roomGroups[h]
-          
-      // delete hotelRoomGroup.hasSpecialDeal
-      // delete hotelRoomGroup.paxInfo
-      // delete hotelRoomGroup.policies
-      // delete hotelRoomGroup.tpExtensions
-      // this.hotelcart.roomGroups[h]["groupAmount"] = this.hotelTotalPrice
       // preparing rooms in roomGroup
-      for (var k = 0; k < hotelRoomGroup.rooms.length; k++) {
-            
-        let paxDetail =   this.searchObj.request.rooms[k].PaxInfo
-       
+      for (var k = 0; k < hotelRoomGroup.rooms.length; k++) {            
+        let paxDetail =   this.searchObj.request.rooms[k].PaxInfo       
        // add paxInfo  
          hotelRoomGroup.rooms[k]["paxInfo"] = paxDetail
-  
-         
-        // delete hotelRoomGroup.rooms[k].specialDealId
-        // delete hotelRoomGroup.rooms[k].specialDealDescription
-        // delete hotelRoomGroup.rooms[k].sequenceNumber
-        // delete hotelRoomGroup.rooms[k].images
-        // delete hotelRoomGroup.rooms[k].hasSpecialDeal
-        // delete hotelRoomGroup.rooms[k].businessName
-        // delete hotelRoomGroup.rooms[k].description
-        // delete hotelRoomGroup.rooms[k].availabilityCount
-        // delete hotelRoomGroup.rooms[k].objectIdentifier
-        // delete hotelRoomGroup.rooms[k].features
-        // delete hotelRoomGroup.rooms[k].amount
-        
-        // let quantity = hotelRoomGroup.rooms[k].quantity
-        // hotelRoomGroup.rooms[k]["quantity"] = quantity
-        // hotelRoomGroup.rooms[k]["optionalAmenities"] = []
-        // hotelRoomGroup.rooms[k]["roomCategory"] = ""
   
       let availabilityCount = hotelRoomGroup.rooms[k].availabilityCount.length
   
