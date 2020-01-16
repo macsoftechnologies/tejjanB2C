@@ -10,6 +10,9 @@ import { sha256, sha224 } from 'js-sha256';
   styleUrls: ['./my-booking.component.scss']
 })
 export class MyBookingComponent implements OnInit {
+
+ public searchObj : any
+
   public hotelBookingResponse: any;
   public hotelAmount = 0
   public hotel :  any
@@ -48,6 +51,7 @@ export class MyBookingComponent implements OnInit {
     this.hotelProvider = localStorage.getItem("hotelProvider")     
     this.transportProvider = localStorage.getItem("transportProvider")     
     this.groundProvider = localStorage.getItem("groundProvider")     
+    this.searchObj = JSON.parse(localStorage.getItem("searchObj"))
 
      console.log("groundProvider" , this.groundBookingResponse);
      console.log("transportProvider" , this.transportBookingResponse);
@@ -325,7 +329,7 @@ export class MyBookingComponent implements OnInit {
       "MobileNo": "9705385368",
       "ArrivalAirportCode": "",
       "ArrivalFlightNumber": "",
-      "ArrivalDate": "",
+      "ArrivalDate": this.searchObj.request.checkInDate,
       "ArrivalTime": "",
       "DepartureAirportCode": "",
       "DepartureFlightNumber": "",
@@ -342,7 +346,7 @@ export class MyBookingComponent implements OnInit {
       this.requestId = evisaDetailsResponse.MutamersGroupResponse.MutamerStatus.RequestId;
       let sha256Str=this.evisaMutmerDetails[0].PassportNo+
       this.evisaMutmerDetails[0].PassportNo+
-      this.requestId+"EN";
+      this.requestId+"en";
       
       if(this.requestId != null){
        let evisaLinkObj = {

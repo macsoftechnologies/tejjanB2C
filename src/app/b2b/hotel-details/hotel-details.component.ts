@@ -69,6 +69,8 @@ export class HotelDetailsComponent implements OnInit {
     });
 
     this.selectedHotelDeatils();
+
+
     // Creat gallery items
     this.items = this.imageData.map(item => new ImageItem({ src: item.srcUrl, thumb: item.previewUrl }));
     /** Lightbox Example */
@@ -88,6 +90,25 @@ export class HotelDetailsComponent implements OnInit {
 
   /* preparing hotel availability Request Object */
   public selectedHotelDeatils() {
+    // console.log("rommGroupsRooms" , this.selectedHotel.roomGroups[0])
+
+
+    var roomGroupsObject = {
+      "policies" : this.selectedHotel.roomGroups[0].policies,
+      "groupId" : this.selectedHotel.roomGroups[0].groupId,
+      "groupAmount" : this.selectedHotel.roomGroups[0].groupAmount,
+      "type" : this.selectedHotel.roomGroups[0].type,
+      "hasSpecialDeal" : this.selectedHotel.roomGroups[0].hasSpecialDeal,
+      "tpExtensions" : this.selectedHotel.roomGroups[0].tpExtensions,
+      "paxInfo" : this.selectedHotel.roomGroups[0].paxInfo,
+      "rooms" : [this.selectedHotel.roomGroups[0].rooms[0]],
+      "config" : this.selectedHotel.roomGroups[0].config,
+      "flags" : this.selectedHotel.roomGroups[0].flags,
+
+
+    }
+    console.log("roomGroupsObject" , roomGroupsObject)
+
     var CountryCode = this.searchDate.request.providerLocations[0].countryCode
     var locationCode = this.searchDate.request.providerLocations[0].locationCode
 
@@ -118,7 +139,7 @@ export class HotelDetailsComponent implements OnInit {
         "config": this.selectedHotel.config,
         // "policies": this.selectedHotel.policies,
         "tpExtensions": this.selectedHotel.tpExtensions,
-        "roomGroups": [this.selectedHotel.roomGroups[0]]
+        "roomGroups": [roomGroupsObject]
       }
     }
     this.hotelPolicies();
