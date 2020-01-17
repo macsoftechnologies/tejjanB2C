@@ -280,7 +280,7 @@
                   <div class="card-body">
                     <div class="services-data">
                       <div class="container-fluid">
-                        <div class="row" *ngIf="transportBookingResponse != null">
+                        <div class="row">
                         
                           <div class="col-5">
                             <label for="title">Transportation Services:</label>
@@ -298,12 +298,12 @@
                         
                         </div>
 
-                        <div class="row" *ngIf="transportBookingResponse == null">
+                        <!-- <div class="row" *ngIf="transportBookingResponse == null">
 
                           <p>Transportation Booking Failed</p>
 
-                        </div>
-                        <div class="row" *ngIf="groundBookingResponse != null">
+                        </div> -->
+                        <div class="row" >
                         
                           <div class="col-5">
                             <label for="title">Ground Services:</label>
@@ -320,11 +320,11 @@
                         <p>520 SAR</p>
                       </div> -->
                         </div>
-                        <div class="row" *ngIf="groundBookingResponse == null">
+                        <!-- <div class="row" *ngIf="groundBookingResponse == null">
 
                           <p>GroundService Booking Failed</p>
 
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>

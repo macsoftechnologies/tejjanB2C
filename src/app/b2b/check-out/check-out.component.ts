@@ -338,13 +338,21 @@ export class CheckOutComponent implements OnInit {
         }
         this.traveller.push(adultObject);
 
+        if(this.roomsForms[r].adults[q].gender == "M")
+        {
+          var genderNumber = 1
+        }else{
+          var genderNumber = 2
+
+        }
+
         let mutamervisaObj =
 
         {
           "DateOfBirth": "1995-01-31",
           "PassportNo": this.roomsForms[r].adults[q].passportNumber,
-          "NationalityId": "20",
-          "Gender": this.roomsForms[r].adults[q].gender
+          "NationalityId": "91",
+          "Gender": genderNumber
         }
 
 
@@ -399,6 +407,23 @@ export class CheckOutComponent implements OnInit {
 
     localStorage.setItem("evisaMutmerDetails", JSON.stringify(this.evisaMutmerDetails))
     localStorage.setItem("travellerDetails", JSON.stringify(this.travellerDetails))
+    var transportTravllerObj  = {
+      "details": {
+        "passportNo": this.roomsForms[0].adults[0].passportNumber,
+        "firstName": this.roomsForms[0].adults[0].firstName,
+        "middleName": this.roomsForms[0].adults[0].middleName,
+        "lastName": this.roomsForms[0].adults[0].lastName,
+        "nationalityCode": "IN",
+        "fullNameAR": "",
+        "gender": this.roomsForms[0].adults[0].gender,
+        "birthDate": "1985-02-25T00:00:00",
+        "phoneNumber": `${this.contactForm.value.mobileNumber}`,
+        "phoneNumberCountryCode": "91",
+        "email": this.contactForm.value.email
+      }
+    }
+
+    localStorage.setItem("transportTravellerDetails" , JSON.stringify(transportTravllerObj))
 
 
 
@@ -729,21 +754,7 @@ export class CheckOutComponent implements OnInit {
                 "displayRateInfo": this.transportCart.displayRateInfo,
                 "config": this.transportCart.config,
                 "secureTPExtensions": transportSecureTPExtensions,
-                "travellerDetails": {
-                  "details": {
-                    "passportNo": this.roomsForms[0].adults[0].passportNumber,
-                    "firstName": this.roomsForms[0].adults[0].firstName,
-                    "middleName": this.roomsForms[0].adults[0].middleName,
-                    "lastName": this.roomsForms[0].adults[0].lastName,
-                    "nationalityCode": "IN",
-                    "fullNameAR": "",
-                    "gender": this.roomsForms[0].adults[0].gender,
-                    "birthDate": "1985-02-25T00:00:00",
-                    "phoneNumber": `${this.contactForm.value.mobileNumber}`,
-                    "phoneNumberCountryCode": "91",
-                    "email": this.contactForm.value.email
-                  }
-                },
+                "travellerDetails": {},
 
               }
 

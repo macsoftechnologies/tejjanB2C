@@ -258,6 +258,14 @@ export class HotelsListComponent implements OnInit {
         );
 
         if (hotelsSearchResp != undefined) {
+          localStorage.setItem(
+            "hotelslistrespTrackToken",
+            hotelsSearchResp.headers.get("tracktoken")
+          );
+          localStorage.setItem(
+            "hotelList",
+           JSON.stringify( hotelsSearchResp.body.hotels)
+          );
           this.hotels = hotelsSearchResp.body.hotels;
           this.mainHotelsList = hotelsSearchResp.body.hotels;
         } else {

@@ -292,7 +292,7 @@ export class GroundServiceComponent implements OnInit {
           "displayRateInfo": groundService.category.displayRateInfo,
           "arrivalDate": groundService.category.arrivalDate
         },
-        "additionalServices": groundService.additionalServices,
+        "additionalServices": [],
         "policies": groundService.policies,
         "termsAndConditions": groundService.termsAndConditions,
         "config": groundService.config,

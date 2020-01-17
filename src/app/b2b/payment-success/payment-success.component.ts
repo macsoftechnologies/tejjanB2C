@@ -82,6 +82,8 @@ public vehiclePolicies =[]
  public countryList = []
 
 
+ public transportTravellerDetails : any
+
  walletForm  : FormGroup
 
   constructor(private teejanServices : AlrajhiumrahService , private router : Router ,     private spinner: NgxSpinnerService,
@@ -89,11 +91,14 @@ public vehiclePolicies =[]
 
   ngOnInit() {
 
+    this.spinner.show()
     console.log("paymentSucess");
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"))
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"))
     this.travellerDetails = JSON.parse(localStorage.getItem("travellerDetails"))
+    this.transportTravellerDetails = JSON.parse(localStorage.getItem("transportTravellerDetails"))
+
     this.guests = parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count);
 
     this.transportCart = JSON.parse(localStorage.getItem('transportcart'))
@@ -108,6 +113,7 @@ public vehiclePolicies =[]
   public reservation() {    
     this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
         // HotelResrvation 
+        this.spinner.hide();
       if (this.hotelcart != null) {  
         this.spinner.show();
       /* preparing roomGroups Array  with travellerDetails*/
@@ -296,21 +302,7 @@ public vehiclePolicies =[]
                   "displayRateInfo": this.transportCart.displayRateInfo,
                   "config": this.transportCart.config,
                   "secureTPExtensions": [],
-                  "travellerDetails": {
-                    "details": {
-                      "passportNo":  this.roomsForms[0].adults[0].passportNumber,
-                      "firstName": this.roomsForms[0].adults[0].firstName ,
-                      "middleName": this.roomsForms[0].adults[0].middleName,
-                      "lastName": this.roomsForms[0].adults[0].lastName,
-                      "nationalityCode": "IN",
-                      "fullNameAR": "",
-                      "gender": this.roomsForms[0].adults[0].gender,
-                      "birthDate": "1995-01-31",
-                      "phoneNumber":`${this.contactForm.value.mobileNumber}`,
-                      "phoneNumberCountryCode": "91",
-                      "email": this.contactForm.value.email
-                    }
-                  },
+                  "travellerDetails":  this.transportTravellerDetails,
                  
                 }
           

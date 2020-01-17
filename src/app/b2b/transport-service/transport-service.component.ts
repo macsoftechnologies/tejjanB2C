@@ -304,38 +304,56 @@ export class TransportServiceComponent implements OnInit {
     );
 
     let quantity = parseInt(this.searchFilterObj.vehicleQuantity);
+  
+     console.log("currentTransportVehicletypes" ,  currentTransport.vehicleTypes)
+
+
+           let OneVehicelType = {
+    "categories": [
+      {
+        "categoryCode": currentTransport.vehicleTypes[0].categories[0].categoryCode,
+        "model": currentTransport.vehicleTypes[0].categories[0].model,
+        "displayRateInfo": currentTransport.vehicleTypes[0].categories[0].displayRateInfo,
+        "images": [],
+        "config": [],
+        "quantity": quantity,
+        "noOfPax": this.noOfPax
+      }
+    ],
+    "vehicleTypeCode":  currentTransport.vehicleTypes[0].vehicleTypeCode
+  }
 
       
-    if( currentTransport.vehicleTypes != undefined ||  currentTransport.vehicleTypes != null){
+  //   if( currentTransport.vehicleTypes != undefined ||  currentTransport.vehicleTypes != null){
 
-    for (let i = 0; i < currentTransport.vehicleTypes.length; i++) {
-      this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
-        item => {
-          delete item.availableQuantity;
-          delete item.maxPaxCapacity;
-          return item;
-        }
-      );
+  //   for (let i = 0; i < currentTransport.vehicleTypes.length; i++) {
+  //     this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
+  //       item => {
+  //         delete item.availableQuantity;
+  //         delete item.maxPaxCapacity;
+  //         return item;
+  //       }
+  //     );
 
-      this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
-        item => {
-          let o = Object.assign({}, item);
-          o.images = [];
-          o.config = [];
-          o.quantity = quantity;
-          o.noOfPax = this.noOfPax;
-          o.termsAndConditions = currentTransport.termsAndConditions;
-          return o;
-        }
-      );
+  //     this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
+  //       item => {
+  //         let o = Object.assign({}, item);
+  //         o.images = [];
+  //         o.config = [];
+  //         o.quantity = quantity;
+  //         o.noOfPax = this.noOfPax;
+  //         o.termsAndConditions = currentTransport.termsAndConditions;
+  //         return o;
+  //       }
+  //     );
 
-      var vehicleObj = {
-        categories: this.vehicleTypesList,
-        vehicleTypeCode: currentTransport.vehicleTypes[i].vehicleTypeCode
-      };
-      this.vehicleArray.push(vehicleObj);
-    }
-  }
+  //     var vehicleObj = {
+  //       categories: this.vehicleTypesList,
+  //       vehicleTypeCode: currentTransport.vehicleTypes[i].vehicleTypeCode
+  //     };
+  //   }
+  // }
+  // this.vehicleArray.push(vehicleObj);
 
     //add description in policeis
 
@@ -364,14 +382,14 @@ export class TransportServiceComponent implements OnInit {
         startDate: this.searchDate.request.checkInDate,
         vendor: currentTransport.provider,
         provider: currentTransport.provider,
-        vehicleTypes: this.vehicleArray,
+        vehicleTypes: [OneVehicelType],
         policies: policies,
         termsAndConditions: currentTransport.termsAndConditions,
         config: []
       }
     };
 
-    
+    console.log("transportForm" , JSON.stringify(formData.request.vehicleTypes))
 
     this.teejanServices.getTransportAvailability(formData).subscribe(
       resp => {

@@ -330,11 +330,11 @@ export class MyBookingComponent implements OnInit {
       "ArrivalAirportCode": "",
       "ArrivalFlightNumber": "",
       "ArrivalDate": this.searchObj.request.checkInDate,
-      "ArrivalTime": "",
+      "ArrivalTime": "23:59:00",
       "DepartureAirportCode": "",
       "DepartureFlightNumber": "",
-      "DepartureDate": "",
-      "DepartureTime": "",
+      "DepartureDate": this.searchObj.request.checkOutDate,
+      "DepartureTime": "14:45:00",
       "Mutamers":  this.evisaMutmerDetails
   }
 
@@ -350,7 +350,7 @@ export class MyBookingComponent implements OnInit {
       
       if(this.requestId != null){
        let evisaLinkObj = {
-          "NationalityId": "20",
+          "NationalityId": "91",
           "PassportNo": this.evisaMutmerDetails[0].PassportNo,
           "RequestId": this.requestId,
           "Lang": "en",

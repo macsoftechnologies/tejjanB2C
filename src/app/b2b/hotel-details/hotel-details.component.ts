@@ -16,6 +16,8 @@ import swal from 'sweetalert2';
 
 
 export class HotelDetailsComponent implements OnInit {
+
+  public hotelList :  any
   zoom = 14
   public issessionexpired: boolean = true;
   public isFirstLoad: boolean = true;
@@ -55,6 +57,7 @@ export class HotelDetailsComponent implements OnInit {
     this.selectedHotel = JSON.parse(localStorage.getItem("currentHotel"));
     this.searchLookUp = JSON.parse(localStorage.getItem("searchLookUp"));
     this.hotelslistrespTrackToken = localStorage.getItem("hotelslistrespTrackToken");
+    this.hotelList = JSON.parse(localStorage.getItem("hotelList"))
     this.travellerCount = parseInt(this.searchFilter.adults_count) + parseInt(this.searchFilter.child_count);
     // this.adults_count = parseInt(this.searchFilter.adults_count)
     // this.child_count = parseInt(this.searchFilter.child_count)
@@ -68,7 +71,7 @@ export class HotelDetailsComponent implements OnInit {
       }
     });
 
-    this.selectedHotelDeatils();
+    // this.selectedHotelDeatils();
 
 
     // Creat gallery items
@@ -87,6 +90,7 @@ export class HotelDetailsComponent implements OnInit {
     // Load items into the lightbox gallery ref
     lightboxRef.load(this.items);
   }
+ 
 
   /* preparing hotel availability Request Object */
   public selectedHotelDeatils() {
