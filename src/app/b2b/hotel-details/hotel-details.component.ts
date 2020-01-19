@@ -453,6 +453,8 @@ export class HotelDetailsComponent implements OnInit {
 
         if (hotelsavailabilityresp.body.roomGroups != undefined) {
           hotelsavailabilityresp.body["name"]= this.selectedHotel.name;
+          hotelsavailabilityresp.body["provider"]= this.selectedHotel.provider;
+          hotelsavailabilityresp.body["vendor"]= this.selectedHotel.provider;
           this.spinner.hide();
           localStorage.setItem('hotelAvailabilityTracktoken', hotelsavailabilityresp.headers.get('tracktoken'))
           localStorage.setItem("hotelAvailability", JSON.stringify(hotelsavailabilityresp.body))
