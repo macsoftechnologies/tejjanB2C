@@ -78,7 +78,8 @@ export class CheckOutComponent implements OnInit {
   public vehicleTypes = []
   public vehiclePolicies = []
   public countryList = []
-
+   
+  public numberOfNights : any
 
   walletForm: FormGroup
 
@@ -113,9 +114,18 @@ export class CheckOutComponent implements OnInit {
     // calculating GrandTotal
     this.cartGrandTotal = this.hotelTotalPrice + this.transportTotalPrice + this.groundTotalPrice + this.guests * 300 + this.guests * 189
     this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
+
     this.country();
     this.travellerForms();
     // this.loadwalletForm();
+
+
+
+    const checkInDate = new Date(this.searchObj.request.checkInDate);
+    const checkOutDate = new Date(this.searchObj.request.checkOutDate);
+
+    const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+    this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
   }
 
@@ -930,125 +940,120 @@ export class CheckOutComponent implements OnInit {
 
   // hotel calculations 
   public hotelCalculations() {
-
     if (this.hotelcart != null || this.hotelcart != undefined) {
-
-      let roomsDisplayRates = this.hotelcart.roomGroups[0].rooms.map(rate => rate.displayRateInfo)
+      let roomsDisplayRates = this.hotelcart.roomGroups[0].rooms.map(
+        rate => rate.displayRateInfo
+      );
 
       roomsDisplayRates.forEach(roomRate => {
-
         roomRate.forEach(priceDetails => {
           if (priceDetails.purpose == "1") {
-            this.roomsBasePrice += priceDetails.amount
 
+                  
+            this.roomsGDS += priceDetails.amount / 100 * 7.5
+            this.roomsOTA += priceDetails.amount / 100 * 30;
+
+              
+            this.roomsBasePrice += priceDetails.amount;
           }
           if (priceDetails.purpose == "2") {
-            this.roomsFees += priceDetails.amount
-
+            this.roomsFees += priceDetails.amount;
           }
-          if (priceDetails.purpose == "20") {
-            this.roomsGDS += priceDetails.amount
-
-          }
-          if (priceDetails.purpose == "30") {
-            this.roomsOTA += priceDetails.amount
-
-          }
+          // if (priceDetails.purpose == "20") {
+          //   this.roomsGDS += priceDetails.amount;
+          // }
+          // if (priceDetails.purpose == "30") {
+          //   this.roomsOTA += priceDetails.amount;
+          // }
           if (priceDetails.purpose == "7") {
-            this.roomsVAT += priceDetails.amount
-
+            this.roomsVAT += priceDetails.amount;
           }
-
-        })
+        });
       });
 
-      this.hotelTotalPrice = this.roomsBasePrice + this.roomsFees + this.roomsVAT + this.roomsGDS + this.roomsOTA
-      console.log("hoteTotalPrice", this.hotelTotalPrice)
-
-      localStorage.setItem("hotelAmount", JSON.stringify(this.hotelTotalPrice))
+      this.hotelTotalPrice =
+        this.roomsBasePrice +
+        this.roomsFees +
+        this.roomsVAT +
+        this.roomsGDS +
+        this.roomsOTA;
+      console.log("hoteTotalPrice", this.hotelTotalPrice);
     }
   }
 
   // transport calculations
   public transportCalculations() {
-
     if (this.transportCart != null || this.transportCart != undefined) {
-
-      let transportCategories = this.transportCart.vehicleTypes.map(vehicel => vehicel.categories)
+      let transportCategories = this.transportCart.vehicleTypes.map(
+        vehicel => vehicel.categories
+      );
 
       transportCategories.forEach(category => {
-
-        this.transportQuantity += category[0].quantity
+        this.transportQuantity += category[0].quantity;
         category[0].displayRateInfo.forEach(rate => {
-
           if (rate.purpose == "1") {
-            this.transportBasePrice += rate.amount * this.transportQuantity
+            this.transportBasePrice += rate.amount * this.transportQuantity;
+            // console.log("transportBasePrice", this.transportBasePrice);
 
+            this.transportGDS += rate.amount / 100 * 7.5 * this.transportQuantity;
+            this.transportOTA += rate.amount / 100 * 30 * this.transportQuantity;
+             
+           
           }
           if (rate.purpose == "7") {
-            this.transportVAT += rate.amount * this.transportQuantity
-
+            this.transportVAT += rate.amount * this.transportQuantity;
+            // console.log("transportVAT", this.transportVAT);
           }
-          if (rate.purpose == "20") {
-            this.transportGDS += rate.amount * this.transportQuantity
+          // if (rate.purpose == "20") {
+          //   this.transportGDS += rate.amount * this.transportQuantity;
+          //   console.log("transportGDS", this.transportGDS);
+          // }
+          // if (rate.purpose == "30") {
+          //   this.transportOTA += rate.amount * this.transportQuantity;
+          //   console.log("transportOTA", this.transportOTA);
+          // }
+        });
+      });
 
+      this.transportTotalPrice =
+        this.transportBasePrice +
+        this.transportVAT +
+        this.transportGDS +
+        this.transportOTA;
 
-          }
-          if (rate.purpose == "30") {
-            this.transportOTA += rate.amount * this.transportQuantity
-
-          }
-        })
-
-      })
-
-      this.transportTotalPrice = this.transportBasePrice + this.transportVAT + this.transportGDS + this.transportOTA
-
-      // console.log("transportTotalPrice", this.transportTotalPrice);
-      localStorage.setItem("transportAmount", JSON.stringify(this.transportTotalPrice))
-
-
+      console.log("transportTotalPrice", this.transportTotalPrice);
     }
-
   }
 
   // ground calculations 
   public groundCalculations() {
-
-    if (this.groundCart != null && this.groundCart != undefined) {
-
-      this.groundQuantity = 1
+    if (this.groundCart != null || this.groundCart != undefined) {
+      this.groundQuantity = 1;
       this.groundCart.displayRateInfo.forEach(rate => {
-
         if (rate.purpose == "1") {
-          this.groundBasePrice += rate.amount * this.groundQuantity
-          console.log("groundBasePrice", this.groundBasePrice);
+          this.groundBasePrice += rate.amount * this.groundQuantity;
+          // console.log("groundBasePrice", this.groundBasePrice);
+          this.groundGDS += rate.amount / 100 * 7.5  * this.groundQuantity;
+          this.groundOTA += rate.amount / 100 * 30 * this.groundQuantity;
+
 
         }
         if (rate.purpose == "7") {
-          this.groundVAT += rate.amount * this.groundQuantity
+          this.groundVAT += rate.amount * this.groundQuantity;
           console.log("groundVAT", this.groundVAT);
-
         }
-        if (rate.purpose == "20") {
-          this.groundGDS += rate.amount * this.groundQuantity
-          console.log("groundGDS", this.groundGDS);
-
-        }
-        if (rate.purpose == "30") {
-          this.groundOTA += rate.amount * this.groundQuantity
-          console.log("groundOTA", this.groundOTA);
-
-        }
-
-
-
-      })
-      this.groundTotalPrice = this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA
-      localStorage.setItem("groundAmount", JSON.stringify(this.groundTotalPrice))
-
+        // if (rate.purpose == "20") {
+        //   this.groundGDS += rate.amount * this.groundQuantity;
+        //   console.log("groundGDS", this.groundGDS);
+        // }
+        // if (rate.purpose == "30") {
+        //   this.groundOTA += rate.amount * this.groundQuantity;
+        //   console.log("groundOTA", this.groundOTA);
+        // }
+      });
+      this.groundTotalPrice =
+        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
     }
   }
-
 
 }

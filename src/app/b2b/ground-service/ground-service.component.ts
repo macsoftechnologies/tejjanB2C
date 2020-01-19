@@ -189,13 +189,11 @@ export class GroundServiceComponent implements OnInit {
       delete formData.request.additionalServices
     }
 
-    console.log("formData", formData)
 
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
       this.isFirstTimeLoad = false;
 
-      console.log("groinsServiceResponse", resp.body);
-
+     
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
 
 
@@ -214,42 +212,7 @@ export class GroundServiceComponent implements OnInit {
 
       this.groundServiceList = resp.body.groundServices
 
-      // if (this.GroundServicesFormGroup.value.companyCode != null) {
-      //   console.log("nullGroundServiceList" ,  this.groundServiceList)
-      //   this.groundServiceList = resp.body.groundServices.map(function (obj) {
-      //     var comp = Object.assign({}, obj);
-      //     comp.companyName = this.GroundServicesFormGroup.value.companyCode.name;
-      //     comp.companyDescription = this.GroundServicesFormGroup.value.companyCode.description
-      //     comp.companyAddress = this.GroundServicesFormGroup.value.companyCode.address
-      //     return comp;
-      //   })
-      // } else {
-
-      //   resp.body.groundServices.forEach(service => {
-
-      //     this.companies.forEach(company => {
-
-      //       if (company.code == service.uoCode) {
-      //         console.log("companyGroundServiceList" ,  this.groundServiceList)
-
-      //         this.groundServiceList = resp.body.groundServices.map(function (obj) {
-      //           const comp = Object.assign({}, obj);
-      //           comp.companyName = company.name;
-      //           comp.companyDescription = company.description
-      //           comp.companyAddress = company.address
-      //           return comp;
-      //         })
-      //       }
-      //     })
-
-      //   })
-
-
-      //   console.log("groundResponse", this.groundServiceList)
-
-      // }
-      //  this.groundServiceList =  resp.body.groundServices
-
+      
     }, (err) => {
 
     })
@@ -284,22 +247,11 @@ export class GroundServiceComponent implements OnInit {
   }
 
   public onGroundServiceViewDetails(groundService): void {
-    console.log("groundService" , groundService)
+    
 
-    // this.spinner.show();
     this.isGroundServicesAvailableFlag = false;
 
-              //  console.log("UOComapnies" , this.companies )
-          // this.companies.forEach(comapny =>{
-            
-          //   if(comapny.code === groundService.uoCode){
-          //     groundService.companyName = comapny.name
-          //   }
-            
 
-          // })
-
-// console.log(" this.categories" ,  this.categories)
          this.categories.forEach( category =>{
 
             if(category.code === groundService.category.categoryCode){
@@ -546,6 +498,8 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
        this.spinner.hide()
 
       console.log("groundavabilityResponse" , groundavabilityResponse)
+      localStorage.setItem("groundAvailabilityToken", groundavabilityResponse.headers.get('tracktoken'))
+
       localStorage.setItem("groundCart", JSON.stringify(groundavabilityResponse.body));
 
       swal.fire({

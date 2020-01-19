@@ -308,9 +308,7 @@ export class TransportServiceComponent implements OnInit {
     // this.spinner.show();
     this.isTransportListAvailableFlag = false;
     this.transportAvailabilityFlag = true
-    this.transportSearckTrackToken = localStorage.getItem(
-      "transportSearchTrackToken"
-    );
+   
 
     let quantity = parseInt(this.searchFilterObj.vehicleQuantity);
   
@@ -558,7 +556,9 @@ export class TransportServiceComponent implements OnInit {
           
 
           })
-
+          this.transportSearckTrackToken = localStorage.getItem(
+            "transportSearchTrackToken"
+          );
           let formData = {
             context: {
               cultureCode: this.searchDate.context.cultureCode,
@@ -595,6 +595,10 @@ export class TransportServiceComponent implements OnInit {
                   timer: 3000
                 })
              console.log("TransportAvailabilityResponse" , resp.body)
+             localStorage.setItem(
+              "transportAvailabilityTracktoken",
+              resp.headers.get('tracktoken')
+            );
              localStorage.setItem(
               "transportcart",
               JSON.stringify(resp.body)
