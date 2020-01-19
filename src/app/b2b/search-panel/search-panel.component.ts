@@ -164,9 +164,14 @@ export class SearchPanelComponent implements OnInit {
           transportLookUpResp.categories
         ).categories;
         this.transportRoutes = JSON.parse(transportLookUpResp.routes).routes;
-        this.transportCompanies = JSON.parse(
-          transportLookUpResp.companies
-        ).companies;
+        if(transportLookUpResp.companies!=""){
+          this.transportCompanies = JSON.parse(
+            transportLookUpResp.companies
+          ).companies;
+        }else{
+          this.transportCompanies = [];
+        }
+       
 
         if (this.transportRoutes != undefined)
           this.searchHotelsForm.patchValue({

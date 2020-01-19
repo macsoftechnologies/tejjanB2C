@@ -395,6 +395,11 @@ export class HotelDetailsComponent implements OnInit {
             delete room["adultsCount"];
             delete room["childCount"];
             rooms.push(room);
+          }else{
+            if(room.length==0){
+              rooms.push(currentRoom);
+            }
+           
           }
         });
         // roomGroup["rooms"] = rooms;
@@ -453,13 +458,16 @@ export class HotelDetailsComponent implements OnInit {
 
         if (hotelsavailabilityresp.body.roomGroups != undefined) {
           hotelsavailabilityresp.body["name"]= this.selectedHotel.name;
-          hotelsavailabilityresp.body["provider"]= this.selectedHotel.provider;
-          hotelsavailabilityresp.body["vendor"]= this.selectedHotel.provider;
+          // hotelsavailabilityresp.body["provider"]= this.selectedHotel.provider;
+          // hotelsavailabilityresp.body["vendor"]= this.selectedHotel.provider;
           this.spinner.hide();
           localStorage.setItem('hotelAvailabilityTracktoken', hotelsavailabilityresp.headers.get('tracktoken'))
           localStorage.setItem("hotelAvailability", JSON.stringify(hotelsavailabilityresp.body))
           localStorage.setItem("hotelcart", JSON.stringify(hotelsavailabilityresp.body));
           this.router.navigateByUrl("b2c/transport");
+        }else{
+          alert("hotel availabilty got error , please try with other hotel")
+          this.router.navigateByUrl("b2c/hotellist")
         }
       });
 
