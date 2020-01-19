@@ -325,7 +325,7 @@
               <span class="booking-item-price-from">Starting from</span>
               <span class="booking-item-price-styling">
                 <span
-                  class="booking-item-price"><sup>SAR</sup>{{groundViewDetails?.category?.displayRateInfo[2]?.amount}}</span>
+                  class="booking-item-price"><sup>SAR</sup>{{groundViewDetails?.category?.displayRateInfo[2]?.amount  | number: '1.2-2'}}</span>
               </span>
             </div>
             <span class="btn book-room" (click)="addToCart(groundServiceAvailability)">Add To Cart</span>

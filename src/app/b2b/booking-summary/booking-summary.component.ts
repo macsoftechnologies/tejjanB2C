@@ -18,6 +18,7 @@ import { BroadcastserviceService } from "src/app/services/broadcastservice.servi
 export class BookingSummaryComponent implements OnInit {
   public hotelcart: any = {};
   public searchFilterObj: any = {};
+  public searchObj : any
   public guests = 0;
   public roomsBasePrice = 0;
   public roomsFees = 0;
@@ -25,6 +26,8 @@ export class BookingSummaryComponent implements OnInit {
   public roomsGDS = 0;
   public roomsOTA = 0;
   public hotelTotalPrice = 0;
+  public numberOfNights : any
+
 
   public transportCart: any = {};
   public transportBasePrice = 0;
@@ -44,6 +47,7 @@ export class BookingSummaryComponent implements OnInit {
 
   public cartGrandTotal = 0;
 
+
   closeResult: string;
   modal: NgbModalRef;
 
@@ -60,6 +64,8 @@ export class BookingSummaryComponent implements OnInit {
     this.broadcastService.stepperValue.emit(3);
     localStorage.setItem("stepperVal", 3 + "");
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"));
+    this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
+
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"));
     this.guests =
       parseInt(this.searchFilterObj.adults_count) +
@@ -80,6 +86,16 @@ export class BookingSummaryComponent implements OnInit {
       this.transportTotalPrice +
       this.groundTotalPrice +
       this.guests * 300 + this.guests * 189
+
+
+
+
+      const checkInDate = new Date(this.searchObj.request.checkInDate);
+      const checkOutDate = new Date(this.searchObj.request.checkOutDate);
+  
+      const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+      this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+   
   }
 
   public hotelCalculations() {
@@ -91,17 +107,23 @@ export class BookingSummaryComponent implements OnInit {
       roomsDisplayRates.forEach(roomRate => {
         roomRate.forEach(priceDetails => {
           if (priceDetails.purpose == "1") {
+
+                  
+            this.roomsGDS += priceDetails.amount / 100 * 7.5
+            this.roomsOTA += priceDetails.amount / 100 * 30;
+
+              
             this.roomsBasePrice += priceDetails.amount;
           }
           if (priceDetails.purpose == "2") {
             this.roomsFees += priceDetails.amount;
           }
-          if (priceDetails.purpose == "20") {
-            this.roomsGDS += priceDetails.amount;
-          }
-          if (priceDetails.purpose == "30") {
-            this.roomsOTA += priceDetails.amount;
-          }
+          // if (priceDetails.purpose == "20") {
+          //   this.roomsGDS += priceDetails.amount;
+          // }
+          // if (priceDetails.purpose == "30") {
+          //   this.roomsOTA += priceDetails.amount;
+          // }
           if (priceDetails.purpose == "7") {
             this.roomsVAT += priceDetails.amount;
           }
@@ -129,20 +151,25 @@ export class BookingSummaryComponent implements OnInit {
         category[0].displayRateInfo.forEach(rate => {
           if (rate.purpose == "1") {
             this.transportBasePrice += rate.amount * this.transportQuantity;
-            console.log("transportBasePrice", this.transportBasePrice);
+            // console.log("transportBasePrice", this.transportBasePrice);
+
+            this.transportGDS += rate.amount / 100 * 7.5 * this.transportQuantity;
+            this.transportOTA += rate.amount / 100 * 30 * this.transportQuantity;
+             
+           
           }
           if (rate.purpose == "7") {
             this.transportVAT += rate.amount * this.transportQuantity;
-            console.log("transportVAT", this.transportVAT);
+            // console.log("transportVAT", this.transportVAT);
           }
-          if (rate.purpose == "20") {
-            this.transportGDS += rate.amount * this.transportQuantity;
-            console.log("transportGDS", this.transportGDS);
-          }
-          if (rate.purpose == "30") {
-            this.transportOTA += rate.amount * this.transportQuantity;
-            console.log("transportOTA", this.transportOTA);
-          }
+          // if (rate.purpose == "20") {
+          //   this.transportGDS += rate.amount * this.transportQuantity;
+          //   console.log("transportGDS", this.transportGDS);
+          // }
+          // if (rate.purpose == "30") {
+          //   this.transportOTA += rate.amount * this.transportQuantity;
+          //   console.log("transportOTA", this.transportOTA);
+          // }
         });
       });
 
@@ -162,20 +189,24 @@ export class BookingSummaryComponent implements OnInit {
       this.groundCart.displayRateInfo.forEach(rate => {
         if (rate.purpose == "1") {
           this.groundBasePrice += rate.amount * this.groundQuantity;
-          console.log("groundBasePrice", this.groundBasePrice);
+          // console.log("groundBasePrice", this.groundBasePrice);
+          this.groundGDS += rate.amount / 100 * 7.5  * this.groundQuantity;
+          this.groundOTA += rate.amount / 100 * 30 * this.groundQuantity;
+
+
         }
         if (rate.purpose == "7") {
           this.groundVAT += rate.amount * this.groundQuantity;
           console.log("groundVAT", this.groundVAT);
         }
-        if (rate.purpose == "20") {
-          this.groundGDS += rate.amount * this.groundQuantity;
-          console.log("groundGDS", this.groundGDS);
-        }
-        if (rate.purpose == "30") {
-          this.groundOTA += rate.amount * this.groundQuantity;
-          console.log("groundOTA", this.groundOTA);
-        }
+        // if (rate.purpose == "20") {
+        //   this.groundGDS += rate.amount * this.groundQuantity;
+        //   console.log("groundGDS", this.groundGDS);
+        // }
+        // if (rate.purpose == "30") {
+        //   this.groundOTA += rate.amount * this.groundQuantity;
+        //   console.log("groundOTA", this.groundOTA);
+        // }
       });
       this.groundTotalPrice =
         this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
@@ -183,6 +214,7 @@ export class BookingSummaryComponent implements OnInit {
   }
 
   checkout() {
+    this.broadcastService.customStepper.emit(false)
     if (document.location.href.toString().includes("b2b")) {
       this.broadcastService.customStepper.emit(false);
       this.router.navigateByUrl("b2c/checkout");
