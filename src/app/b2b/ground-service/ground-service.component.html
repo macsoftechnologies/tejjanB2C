@@ -246,16 +246,16 @@
                       <a>
                         <div class="row">
                           <div class="col-md-3 transport-image">
-                            <img src="{{groundservice.images[0].url}}" alt="">
-                            <!-- <img src="assets/search-bg.jpg" alt=""> -->
+                            <!-- <img src="{{groundservice.images[0].url}}" alt=""> -->
+                            <img src="assets/search-bg.jpg" alt="">
                           </div>
                           <div class="col-md-6 transport-details">
                             <h5 class="transport-title">
                               {{groundservice.companyName}}
                             </h5>
                             <p class="transport-address">Address:
-                              {{groundservice.companyAddress}}</p>
-                            <span class="transport-description " [innerHtml]="groundservice.companyDescription"> </span>
+                              {{groundservice.address}}</p>
+                            <span class="transport-description " [innerHtml]="groundservice.comapnyDescription"> </span>
 
                           </div>
                           <div class="col-md-3 align-items-center justify-content-center transport-price">
@@ -271,7 +271,7 @@
                               </div>
                             </div>
                             <button class="btn book-transport-btn"
-                              (click)="onGroundServiceAvailability(groundservice)">View
+                              (click)="onGroundServiceViewDetails(groundservice)">View
                               Details</button>
                           </div>
                         </div>
@@ -316,8 +316,8 @@
     <div *ngIf="!isGroundServicesAvailableFlag && isGroundAvailabilty == true">
       <div class="d-flex justify-content-between">
         <div>
-          <h5>{{groundServiceAvailability?.companyName}}</h5>
-          <p>{{groundServiceAvailability?.routeName}}</p>
+          <h5>{{groundViewDetails?.companyName}}</h5>
+          <!-- <p>{{groundViewDetails?.routeName}}</p> -->
         </div>
         <div>
           <div class="starting-price-section" *ngIf="isGroundAvailabilty == true">
@@ -325,7 +325,7 @@
               <span class="booking-item-price-from">Starting from</span>
               <span class="booking-item-price-styling">
                 <span
-                  class="booking-item-price"><sup>SAR</sup>{{groundServiceAvailability?.category?.displayRateInfo[2]?.amount}}</span>
+                  class="booking-item-price"><sup>SAR</sup>{{groundViewDetails?.category?.displayRateInfo[2]?.amount}}</span>
               </span>
             </div>
             <span class="btn book-room" (click)="addToCart(groundServiceAvailability)">Add To Cart</span>
@@ -366,10 +366,10 @@
                 </thead>
                 <tbody>
                   <!-- <tr *ngFor="let vehicle of groundServiceAvailability?.vehicleTypes;let i = index"> -->
-                  <td>{{groundServiceAvailability?.category?.categoryName}}</td>
+                  <td>{{groundViewDetails?.category?.categoryName}}</td>
                   <td>
                     <div class="form-group">
-                      <p>{{groundServiceAvailability?.category?.arrivalDate | date : "dd-MM-yyyy"}}</p>
+                      <p>{{groundViewDetails?.category?.arrivalDate | date : "dd-MM-yyyy"}}</p>
                       <!-- <div class="input-group">
                           <input class="form-control" placeholder="dd-mm-yyyy" name="dp2" ngbDatepicker
                             #d1="ngbDatepicker" #checkIn [readonly]="true" (focus)="d1.open()">
@@ -386,12 +386,13 @@
                   <td class="text-center">
                     <div class="booking-item-sec">
                       <div class="booking-item-price-sec">
-                        <!-- <span class="booking-item-price">
-                            <sup>SAR</sup>{{groundServiceAvailability?.category?.displayRateInfo[2]?.amount}}
+                        
+                          <!-- <span class="booking-item-price" >
+                            {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span> -->
-                        <div *ngFor="let displayRateInfo of groundServiceAvailability?.displayRateInfo">
+                        <div *ngFor="let displayRateInfo of  groundViewDetails?.category.displayRateInfo">
                           <span class="booking-item-price" *ngIf="displayRateInfo.purpose == 1">
-                            {{displayRateInfo.amount | number: '1.2-2'}} SAR
+                            {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span>
                           <span class="booking-item-price custom-color booking-item-taxes" *ngIf="displayRateInfo.purpose == 40">
                             +{{displayRateInfo.amount | number: '1.2-2'}} {{displayRateInfo.currencyCode}}
@@ -404,7 +405,7 @@
                     </div>
                   </td>
                   <td>
-                    <button class="btn book-room" (click)="addToCart(groundServiceAvailability)">
+                    <button class="btn book-room" (click)="addToCart(groundViewDetails)">
                       Add To Cart
                     </button>
                   </td>

@@ -17,6 +17,7 @@ export class GroundServiceComponent implements OnInit {
   // public groundResultsNotFound: boolean;
   public isFirstTimeLoad: boolean = true;
   public groundServiceList = [];
+  public groundViewDetails : any;
   public isGroundAvailabilty: boolean = false
   public categories = [];
   public additionalServices = [];
@@ -94,9 +95,13 @@ export class GroundServiceComponent implements OnInit {
 
   public getGroundServicesLookup(): void {
     this.teejanServices.getGroundServiceLookup().subscribe((groundServiceResponse) => {
-      this.categories = JSON.parse(groundServiceResponse.categories).categories;
-      this.companies = JSON.parse(groundServiceResponse.uocompanies).uoCompanies;
+      // console.log("groundServiceResponse" , groundServiceResponse)
+      this.categories = JSON.parse(groundServiceResponse.categories).categories; 
+      this.companies = JSON.parse(groundServiceResponse.uocompanies).uocompanies;
+      console.log(" this.companies" ,  this.companies)
       this.additionalServices = JSON.parse(groundServiceResponse.additionalservices).additionalServices;
+      // console.log(" this.additionalServices" ,  this.additionalServices)
+
       this.patchValues();
 
     }, (err) => {
@@ -192,6 +197,21 @@ export class GroundServiceComponent implements OnInit {
       console.log("groinsServiceResponse", resp.body);
 
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
+
+
+           this.companies.forEach(comapny =>{
+            resp.body.groundServices.forEach(groundCompany =>{
+                if(comapny.code === groundCompany.uoCode){
+                  groundCompany.companyName = comapny.name
+                  groundCompany.comapnyDescription = comapny.description
+                  groundCompany.address = comapny.address
+
+                }
+            })
+           })
+
+
+
       this.groundServiceList = resp.body.groundServices
 
       // if (this.GroundServicesFormGroup.value.companyCode != null) {
@@ -263,11 +283,229 @@ export class GroundServiceComponent implements OnInit {
     return indexes;
   }
 
-  public onGroundServiceAvailability(groundService): void {
-    this.spinner.show();
+  public onGroundServiceViewDetails(groundService): void {
+    console.log("groundService" , groundService)
+
+    // this.spinner.show();
     this.isGroundServicesAvailableFlag = false;
 
+              //  console.log("UOComapnies" , this.companies )
+          // this.companies.forEach(comapny =>{
+            
+          //   if(comapny.code === groundService.uoCode){
+          //     groundService.companyName = comapny.name
+          //   }
+            
 
+          // })
+
+// console.log(" this.categories" ,  this.categories)
+         this.categories.forEach( category =>{
+
+            if(category.code === groundService.category.categoryCode){
+              groundService.category.categoryName = category.name
+
+            }
+
+         })
+
+
+         groundService.category.displayRateInfo.forEach(rate => {
+
+                if (rate.purpose == "1") {
+                  let GDSobject = {
+                    amount: (rate.amount / 100) * 7.5,
+                    purpose: "20",
+                    description: "GDSTAX",
+                    currencyCode: "SAR"
+                  };
+                  groundService.category.displayRateInfo.push(GDSobject);
+                  let OTAobject = {
+                    amount: (rate.amount / 100) * 30,
+                    purpose: "30",
+                    description: "OTATAX",
+                    currencyCode: "SAR"
+                  };
+                  groundService.category.displayRateInfo.push(OTAobject);
+      
+                  // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
+                  if (rate.purpose == "7") {
+                    this.taxAmount = 0;
+                    this.taxAmount = rate.amount;
+                  }
+                  if (rate.purpose == "2") {
+                    this.feeAmount = 0;
+                    this.feeAmount = rate.amount;
+                  }
+      
+                  let taxesObject = {
+                    amount:
+                      (rate.amount / 100) * 30 +
+                      (rate.amount / 100) * 7.5 +
+                      this.taxAmount +
+                      this.feeAmount,
+                    purpose: "40",
+                    description: "TAXES",
+                    currencyCode: "SAR"
+                  };
+                  groundService.category.displayRateInfo.push(taxesObject);
+                }
+      
+      
+              })
+
+
+      this.groundViewDetails = groundService
+
+console.log("this.groundViewDetails" , this.groundViewDetails)
+    // this.groundServiceTrackToken = localStorage.getItem('groundServiceTrackToken')
+    // var requestObj = {
+    //   "context": {
+    //     "cultureCode": this.searchData.context.cultureCode,
+    //     "trackToken": this.groundServiceTrackToken,
+    //     "providerInfo": [
+    //       {
+    //         "provider": groundService.provider
+    //       }
+    //     ]
+    //   },
+    //   "request": {
+    //     "uoCode": groundService.uoCode,
+    //     "nationality": this.searchFilterObj.nationality.countryCode,
+    //     "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
+    //     "vendor": groundService.vendor,
+    //     "provider": groundService.provider,
+    //     "category": {
+    //       "categoryCode": groundService.category.categoryCode,
+    //       "quantity":  parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
+    //       "displayRateInfo": groundService.category.displayRateInfo,
+    //       "arrivalDate": groundService.category.arrivalDate
+    //     },
+    //     "additionalServices": [],
+    //     "policies": groundService.policies,
+    //     "termsAndConditions": groundService.termsAndConditions,
+    //     "config": groundService.config,
+    //     "images" : groundService.images
+    //   }
+
+
+
+    // }
+
+    // this.teejanServices.getGroundServiceAvailability(requestObj).subscribe((groundavabilityResponse) => {
+
+    //   this.spinner.hide();
+
+    //   if (groundavabilityResponse.body.displayRateInfo != undefined) {
+
+    //     this.isGroundAvailabilty = true
+
+    //     localStorage.setItem("groundAvailabilityToken", groundavabilityResponse.headers.get('tracktoken'))
+
+    //     localStorage.setItem("groundAvailability", JSON.stringify(groundavabilityResponse.body))
+
+      
+
+    //     groundavabilityResponse.body.displayRateInfo.forEach(rate => {
+
+    //       if (rate.purpose == "1") {
+    //         let GDSobject = {
+    //           amount: (rate.amount / 100) * 7.5,
+    //           purpose: "20",
+    //           description: "GDSTAX",
+    //           currencyCode: "SAR"
+    //         };
+    //         groundavabilityResponse.body.displayRateInfo.push(GDSobject);
+    //         let OTAobject = {
+    //           amount: (rate.amount / 100) * 30,
+    //           purpose: "30",
+    //           description: "OTATAX",
+    //           currencyCode: "SAR"
+    //         };
+    //         groundavabilityResponse.body.displayRateInfo.push(OTAobject);
+
+    //         // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
+    //         if (rate.purpose == "7") {
+    //           this.taxAmount = 0;
+    //           this.taxAmount = rate.amount;
+    //         }
+    //         if (rate.purpose == "2") {
+    //           this.feeAmount = 0;
+    //           this.feeAmount = rate.amount;
+    //         }
+
+    //         let taxesObject = {
+    //           amount:
+    //             (rate.amount / 100) * 30 +
+    //             (rate.amount / 100) * 7.5 +
+    //             this.taxAmount +
+    //             this.feeAmount,
+    //           purpose: "40",
+    //           description: "TAXES",
+    //           currencyCode: "SAR"
+    //         };
+    //         groundavabilityResponse.body.displayRateInfo.push(taxesObject);
+    //       }
+
+
+
+
+
+    //     })
+
+    //     this.groundServiceAvailability = groundavabilityResponse.body
+    //     console.log("groundServiceAvailabilityCheck", groundavabilityResponse.body)
+
+
+    //   } else {
+
+    //      this.isGroundAvailabilty = false
+    //     setTimeout(() => {
+           
+    //       this.bindGroundServiceFilterData()
+
+
+    //     }, 5000)
+
+    //   }
+    // })
+
+
+
+
+  }
+
+  clearQuantityIfNecessary(id) {
+    var Quntity = this.GroundServicesFormGroup.get(`rows.${id}`).value.quantity;
+    var Duration = this.GroundServicesFormGroup.get(`rows.${id}`).value.duration;
+    if (!this.GroundServicesFormGroup.get(`rows.${id}`).value.checkbox_value) {
+      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ quantity: "" });
+    } else {
+      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ quantity: Quntity });
+      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ duration: Duration });
+    }
+  }
+
+  addToCart(groundService) {
+
+  this.spinner.show();
+    for (let n = 0; n < groundService.category.displayRateInfo.length; n++) {
+
+      if (groundService.category.displayRateInfo[n].purpose === "20") {
+        groundService.category.displayRateInfo.splice(n, 1)
+        n--
+      } else if (groundService.category.displayRateInfo[n].purpose === "30") {
+        groundService.category.displayRateInfo.splice(n, 1)
+        n--
+      } else if (groundService.category.displayRateInfo[n].purpose === "40") {
+        groundService.category.displayRateInfo.splice(n, 1)
+        n--
+      }
+
+    }
+
+
+      console.log("groundService" , groundService)
 
     this.groundServiceTrackToken = localStorage.getItem('groundServiceTrackToken')
     var requestObj = {
@@ -288,7 +526,7 @@ export class GroundServiceComponent implements OnInit {
         "provider": groundService.provider,
         "category": {
           "categoryCode": groundService.category.categoryCode,
-          "quantity":  parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
+          "Quantity":  parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
           "displayRateInfo": groundService.category.displayRateInfo,
           "arrivalDate": groundService.category.arrivalDate
         },
@@ -300,118 +538,43 @@ export class GroundServiceComponent implements OnInit {
       }
 
 
-
     }
+
 
     this.teejanServices.getGroundServiceAvailability(requestObj).subscribe((groundavabilityResponse) => {
 
-      this.spinner.hide();
+       this.spinner.hide()
 
-      if (groundavabilityResponse.body.displayRateInfo != undefined) {
+      console.log("groundavabilityResponse" , groundavabilityResponse)
+      localStorage.setItem("groundCart", JSON.stringify(groundavabilityResponse.body));
 
-        this.isGroundAvailabilty = true
-
-        localStorage.setItem("groundAvailabilityToken", groundavabilityResponse.headers.get('tracktoken'))
-
-        localStorage.setItem("groundAvailability", JSON.stringify(groundavabilityResponse.body))
-
-      
-
-        groundavabilityResponse.body.displayRateInfo.forEach(rate => {
-
-          if (rate.purpose == "1") {
-            let GDSobject = {
-              amount: (rate.amount / 100) * 7.5,
-              purpose: "20",
-              description: "GDSTAX",
-              currencyCode: "SAR"
-            };
-            groundavabilityResponse.body.displayRateInfo.push(GDSobject);
-            let OTAobject = {
-              amount: (rate.amount / 100) * 30,
-              purpose: "30",
-              description: "OTATAX",
-              currencyCode: "SAR"
-            };
-            groundavabilityResponse.body.displayRateInfo.push(OTAobject);
-
-            // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
-            if (rate.purpose == "7") {
-              this.taxAmount = 0;
-              this.taxAmount = rate.amount;
-            }
-            if (rate.purpose == "2") {
-              this.feeAmount = 0;
-              this.feeAmount = rate.amount;
-            }
-
-            let taxesObject = {
-              amount:
-                (rate.amount / 100) * 30 +
-                (rate.amount / 100) * 7.5 +
-                this.taxAmount +
-                this.feeAmount,
-              purpose: "40",
-              description: "TAXES",
-              currencyCode: "SAR"
-            };
-            groundavabilityResponse.body.displayRateInfo.push(taxesObject);
-          }
+      swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        width: '22em',
+        title: 'Added to the cart',
+        showConfirmButton: false,
+        timer: 3000
+      })
+      console.log("groundService", groundService)
+  
+  
+      this.router.navigateByUrl("b2c/bookingsummary")
+  
 
 
-
-
-
-        })
-
-        this.groundServiceAvailability = groundavabilityResponse.body
-        console.log("groundServiceAvailabilityCheck", groundavabilityResponse.body)
-
-
-      } else {
-
-         this.isGroundAvailabilty = false
-        setTimeout(() => {
-           
-          this.bindGroundServiceFilterData()
-
-
-        }, 5000)
-
-      }
     })
 
 
 
 
-  }
 
-  clearQuantityIfNecessary(id) {
-    var Quntity = this.GroundServicesFormGroup.get(`rows.${id}`).value.quantity;
-    var Duration = this.GroundServicesFormGroup.get(`rows.${id}`).value.duration;
-    if (!this.GroundServicesFormGroup.get(`rows.${id}`).value.checkbox_value) {
-      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ quantity: "" });
-    } else {
-      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ quantity: Quntity });
-      this.GroundServicesFormGroup.get(`rows.${id}`).patchValue({ duration: Duration });
-    }
-  }
 
-  addToCart(groundService) {
-    swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      width: '22em',
-      title: 'Added to the cart',
-      showConfirmButton: false,
-      timer: 3000
-    })
-    console.log("groundService", groundService)
 
-    localStorage.setItem("groundCart", JSON.stringify(groundService));
 
-    this.router.navigateByUrl("b2b/bookingsummary")
 
+
+    
   }
 
   searchAgain() {

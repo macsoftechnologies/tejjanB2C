@@ -222,54 +222,13 @@ export class PaymentSuccessComponent implements OnInit {
 
 
   public transportReservation(){
-    for (let i = 0; i < this.transportCart.vehicleTypes.length; i++) {
-      this.vehicleCategory = this.transportCart.vehicleTypes[i].categories.map((obj) => {
-        delete obj.maxPaxCapacity;
-        delete obj.availableQuantity;
-        return;
-      })
-      this.vehicleCategory = this.transportCart.vehicleTypes[i].categories.map((obj) => {
-        let o = Object.assign({}, obj);
-        o.quantity = this.transportCart.vehicleTypes[i].categories[0].quantity
-        o.noOfPax = this.transportCart.vehicleTypes[i].categories[0].noOfPax
-        return o;
-      })
-      for (let k = 0; k < this.vehicleCategory[0].displayRateInfo.length; k++) {
 
-        if (this.vehicleCategory[0].displayRateInfo[k].purpose === "20") {
-
-          this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-          k--
-        }
-        if (this.vehicleCategory[0].displayRateInfo[k].purpose === "30") {
-          this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-          k--
-        }
-        if (this.vehicleCategory[0].displayRateInfo[k].purpose === "40") {
-          this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-          k--
-        }
-      }
-      let vehicleObj = {
-        vehicleTypeCode: this.transportCart.vehicleTypes[i].vehicleTypeCode,
-        vehicleType: this.transportCart.vehicleTypes[i].vehicleType,
-        vehicleTypeAR: this.transportCart.vehicleTypes[i].vehicleTypeAR,
-        categories: this.vehicleCategory,
-      }
-      this.vehicleTypes.push(vehicleObj);
-    }
-    if(this.transportCart.policies !=undefined){
-      this.vehiclePolicies = this.transportCart.policies.map((obj) => {
-        var o = Object.assign({}, obj);
-        o.description = ""
-        return o;
-      })
-    }
+    console.log("transportcart" ,  this.transportCart)
    
     localStorage.setItem("transportProvider", this.transportCart.provider)
     let TransportFormObj = {
       "context": {
-        "cultureCode": this.searchObj.context.cultureCode,
+        // "cultureCode": this.searchObj.context.cultureCode,
         "trackToken": this.transportAvailabilityTracktoken,
         "providerInfo": [{
           "provider": this.transportCart.provider
@@ -286,8 +245,8 @@ export class PaymentSuccessComponent implements OnInit {
         "vendor": this.transportCart.vendor,
         "provider": this.transportCart.provider,
         // "freeCancellationDate": this.transportCart.freeCancellationDate,
-        "vehicleTypes": this.vehicleTypes,
-        "policies": this.vehiclePolicies,
+        "vehicleTypes": this.transportCart.vehicleTypes,
+        // "policies": this.vehiclePolicies,
         // "termsAndConditions": this.transportCart.termsAndConditions,
         "displayRateInfo": this.transportCart.displayRateInfo,
         "config": this.transportCart.config,
@@ -308,32 +267,7 @@ export class PaymentSuccessComponent implements OnInit {
   public getGroundServiceReservation():void{
     if (this.groundCart != null) {
       console.log("groundCart", this.groundCart)
-      for (let n = 0; n < this.groundCart.displayRateInfo.length; n++) {
-
-        if (this.groundCart.displayRateInfo[n].purpose === "20") {
-          this.groundCart.displayRateInfo.splice(n, 1)
-          n--
-        } else if (this.groundCart.displayRateInfo[n].purpose === "30") {
-          this.groundCart.displayRateInfo.splice(n, 1)
-          n--
-        } else if (this.groundCart.displayRateInfo[n].purpose === "40") {
-          this.groundCart.displayRateInfo.splice(n, 1)
-          n--
-        }
-
-      }
-
-      this.groundPolicies = this.groundCart.policies.map((obj) => {
-        var o = Object.assign({}, obj);
-        o.name = "",
-          o.description = ""
-        o.dateCriteria = {
-          "endDate": "",
-          "startDate": ""
-        }
-        return o
-
-      })
+     
       localStorage.setItem("groundProvider", this.groundCart.provider)
       var groundForm = {
         "context": {
@@ -354,7 +288,7 @@ export class PaymentSuccessComponent implements OnInit {
           "provider": this.groundCart.provider,
           // "freeCancellationDate": "",
           "category": this.groundCart.category,
-          // "additionalServices": [],
+          "additionalServices": this.groundCart.additionalServices,
           "displayRateInfo": this.groundCart.displayRateInfo,
           "policies": this.groundCart.policies,
           "termsAndConditions": this.groundCart.termsAndConditions,

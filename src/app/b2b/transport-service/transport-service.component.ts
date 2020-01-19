@@ -34,6 +34,8 @@ export class TransportServiceComponent implements OnInit {
   public companies = [];
   public searchDate: any;
   public transportList = [];
+  public selectTransportDetails : any;
+
   // public transportLists : any
   public page = 1;
   public transport_name_filter: string;
@@ -74,6 +76,7 @@ export class TransportServiceComponent implements OnInit {
 
   transportAvailability: any;
   public transportCurrency = ["SAR", "INR"];
+
 
   minValue: number = 100;
   maxValue: number = 400;
@@ -250,15 +253,19 @@ export class TransportServiceComponent implements OnInit {
         
        this.spinner.hide();
         if (transportSearchResp.body.transportations.length > 0) {
-          transportSearchResp.body.transportations.forEach(transportation => {
+
+           console.log("transportCompanies" , this.companies)
             this.companies.forEach(company => {
-              if (transportation.companyCode === company.code) {
-                transportation["companyName"] = company.name;
-                transportation["companyDescription"] = company.description;
-                transportation["companyAddress"] = company.address;
+          transportSearchResp.body.transportations.forEach(transportation => {
+
+              if (company.code  === transportation.companyCode) {
+                transportation.companyName = company.name;
+                transportation.companyDescription= company.description;
+                transportation.companyAddress= company.address;
               }
-            });
           });
+
+            });
           this.transportList = transportSearchResp.body.transportations;
           this.mainTransportList = transportSearchResp.body.transportations;
 
@@ -293,12 +300,14 @@ export class TransportServiceComponent implements OnInit {
   public searchAgain(): void {}
 
   /* call transport availability api by click on view details of transport list item */
-  public onTransportationAvailability(currentTransport): void {
+  public onTransportationViewDetails(currentTransport): void {
       
 
-    this.spinner.show();
-    this.isTransportListAvailableFlag = false;
+     console.log("transportList" , this.transportList)
 
+    // this.spinner.show();
+    this.isTransportListAvailableFlag = false;
+    this.transportAvailabilityFlag = true
     this.transportSearckTrackToken = localStorage.getItem(
       "transportSearchTrackToken"
     );
@@ -307,227 +316,103 @@ export class TransportServiceComponent implements OnInit {
   
      console.log("currentTransportVehicletypes" ,  currentTransport.vehicleTypes)
 
-
-           let OneVehicelType = {
-    "categories": [
-      {
-        "categoryCode": currentTransport.vehicleTypes[0].categories[0].categoryCode,
-        "model": currentTransport.vehicleTypes[0].categories[0].model,
-        "displayRateInfo": currentTransport.vehicleTypes[0].categories[0].displayRateInfo,
-        "images": [],
-        "config": [],
-        "quantity": quantity,
-        "noOfPax": this.noOfPax
-      }
-    ],
-    "vehicleTypeCode":  currentTransport.vehicleTypes[0].vehicleTypeCode
-  }
-
       
-  //   if( currentTransport.vehicleTypes != undefined ||  currentTransport.vehicleTypes != null){
+     currentTransport.vehicleTypes.forEach(vehicle =>{
 
-  //   for (let i = 0; i < currentTransport.vehicleTypes.length; i++) {
-  //     this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
-  //       item => {
-  //         delete item.availableQuantity;
-  //         delete item.maxPaxCapacity;
-  //         return item;
-  //       }
-  //     );
+       
+        this.vehicleTypes.forEach(vehicleType =>{
+              if(vehicleType.code === vehicle.vehicleTypeCode){
+                vehicle.vehicleTypeName = vehicleType.name
+              }
+        })
 
-  //     this.vehicleTypesList = currentTransport.vehicleTypes[i].categories.map(
-  //       item => {
-  //         let o = Object.assign({}, item);
-  //         o.images = [];
-  //         o.config = [];
-  //         o.quantity = quantity;
-  //         o.noOfPax = this.noOfPax;
-  //         o.termsAndConditions = currentTransport.termsAndConditions;
-  //         return o;
-  //       }
-  //     );
 
-  //     var vehicleObj = {
-  //       categories: this.vehicleTypesList,
-  //       vehicleTypeCode: currentTransport.vehicleTypes[i].vehicleTypeCode
-  //     };
-  //   }
-  // }
-  // this.vehicleArray.push(vehicleObj);
+      vehicle.categories.forEach(category =>{
+
+          
+
+        category.displayRateInfo.forEach(displayRate => {
+                    // adding GDS and OTA TAXES with baseprice
+                    if (displayRate.purpose == "1") {
+                      let GDSobject = {
+                        amount: (displayRate.amount / 100) * 7.5,
+                        purpose: "20",
+                        description: "GDSTAX",
+                        currencyCode: "SAR"
+                      };
+                      vehicle.categories[0].displayRateInfo.push(GDSobject);
+                      let OTAobject = {
+                        amount: (displayRate.amount / 100) * 30,
+                        purpose: "30",
+                        description: "OTATAX",
+                        currencyCode: "SAR"
+                      };
+                      vehicle.categories[0].displayRateInfo.push(OTAobject);
+      
+                      // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
+                      if (displayRate.purpose == "7") {
+                        this.taxAmount = 0;
+                        this.taxAmount = displayRate.amount;
+                      }
+                      if (displayRate.purpose == "2") {
+                        this.feeAmount = 0;
+                        this.feeAmount = displayRate.amount;
+                      }
+      
+                      let taxesObject = {
+                        amount:
+                          (displayRate.amount / 100) * 30 +
+                          (displayRate.amount / 100) * 7.5 +
+                          this.taxAmount +
+                          this.feeAmount,
+                        purpose: "40",
+                        description: "TAXES",
+                        currencyCode: "SAR"
+                      };
+                      vehicle.categories[0].displayRateInfo.push(taxesObject);
+                    }
+                  });
+                
+
+
+
+
+        const vehicleQuntity = Array( category.availableQuantity ) .fill(+0).map((x, i) => i);
+      
+        category.availableQuantity = vehicleQuntity
+
+
+      const vehiclecapacity = Array( category.maxPaxCapacity ).fill(+0).map((x, i) => i);
+         
+      category.maxPaxCapacity = vehiclecapacity
+     
+
+      })      
+
+
+     })
+
+
+       this.selectTransportDetails = currentTransport
+
+
+       console.log("selectTransportDetails" , this.selectTransportDetails);
+
 
     //add description in policeis
 
-    if(currentTransport.policies != undefined || currentTransport.policeis != null){
+  //   if(currentTransport.policies != undefined || currentTransport.policeis != null){
 
-    var policies = currentTransport.policies.map(item => {
-      let o = Object.assign({}, item);
-      o.description = "";
-      return o;
-    });
-  }
+  //   var policies = currentTransport.policies.map(item => {
+  //     let o = Object.assign({}, item);
+  //     o.description = "";
+  //     return o;
+  //   });
+  // }
 
-    let formData = {
-      context: {
-        cultureCode: this.searchDate.context.cultureCode,
-        trackToken: this.transportSearckTrackToken,
-        providerInfo: [
-          {
-            provider: currentTransport.provider
-          }
-        ]
-      },
-      request: {
-        companyCode: currentTransport.companyCode,
-        routeCode: currentTransport.routeCode,
-        startDate: this.searchDate.request.checkInDate,
-        vendor: currentTransport.provider,
-        provider: currentTransport.provider,
-        vehicleTypes: [OneVehicelType],
-        policies: policies,
-        termsAndConditions: currentTransport.termsAndConditions,
-        config: []
-      }
-    };
-
-    console.log("transportForm" , JSON.stringify(formData.request.vehicleTypes))
-
-    this.teejanServices.getTransportAvailability(formData).subscribe(
-      resp => {
     
 
-        this.spinner.hide();
-        if (resp.body.vehicleTypes != undefined) {
-          this.transportAvailabilityFlag = true;
-
-          resp.body.vehicleTypes.forEach(vehicle => {
-            vehicle.categories[0].displayRateInfo.forEach(displayRate => {
-              // adding GDS and OTA TAXES with baseprice
-              if (displayRate.purpose == "1") {
-                let GDSobject = {
-                  amount: (displayRate.amount / 100) * 7.5,
-                  purpose: "20",
-                  description: "GDSTAX",
-                  currencyCode: "SAR"
-                };
-                vehicle.categories[0].displayRateInfo.push(GDSobject);
-                let OTAobject = {
-                  amount: (displayRate.amount / 100) * 30,
-                  purpose: "30",
-                  description: "OTATAX",
-                  currencyCode: "SAR"
-                };
-                vehicle.categories[0].displayRateInfo.push(OTAobject);
-
-                // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
-                if (displayRate.purpose == "7") {
-                  this.taxAmount = 0;
-                  this.taxAmount = displayRate.amount;
-                }
-                if (displayRate.purpose == "2") {
-                  this.feeAmount = 0;
-                  this.feeAmount = displayRate.amount;
-                }
-
-                let taxesObject = {
-                  amount:
-                    (displayRate.amount / 100) * 30 +
-                    (displayRate.amount / 100) * 7.5 +
-                    this.taxAmount +
-                    this.feeAmount,
-                  purpose: "40",
-                  description: "TAXES",
-                  currencyCode: "SAR"
-                };
-                vehicle.categories[0].displayRateInfo.push(taxesObject);
-              }
-            });
-          });
-
-          this.transportSearchResponse = JSON.parse(
-            localStorage.getItem("transportSearchResponse")
-          );
-
-          this.tansportCompany = [];
-          this.transportAvailability = resp.body;
-
-          this.tansportCompany = this.transportSearchResponse.filter(
-            res => res.companyCode === this.transportAvailability.companyCode
-          );
-          for (
-            var i = 0;
-            i < this.tansportCompany[0].vehicleTypes.length;
-            i++
-          ) {
-            for (
-              var j = 0;
-              j < this.transportAvailability.vehicleTypes.length;
-              j++
-            ) {
-              if (
-                this.tansportCompany[0].vehicleTypes[i].vehicleTypeCode ==
-                this.transportAvailability.vehicleTypes[j].vehicleTypeCode
-              ) {
-                for (
-                  var k = 0;
-                  k < this.tansportCompany[0].vehicleTypes[i].categories.length;
-                  k++
-                ) {
-                  for (
-                    var l = 0;
-                    l <
-                    this.transportAvailability.vehicleTypes[j].categories
-                      .length;
-                    l++
-                  ) {
-                    if (
-                      this.tansportCompany[0].vehicleTypes[i].categories[k]
-                        .categoryCode ==
-                      this.transportAvailability.vehicleTypes[j].categories[l]
-                        .categoryCode
-                    ) {
-                      const vehicleCapacity = Array(
-                        this.tansportCompany[0].vehicleTypes[i].categories[k]
-                          .maxPaxCapacity
-                      )
-                        .fill(+0)
-                        .map((x, i) => i);
-                      const vehicleAvailableQuantity = Array(
-                        this.tansportCompany[0].vehicleTypes[i].categories[k]
-                          .availableQuantity
-                      )
-                        .fill(+0)
-                        .map((x, i) => i);
-                      this.transportAvailability.vehicleTypes[j].categories[l][
-                        "maxPaxCapacity"
-                      ] = vehicleCapacity;
-                      this.transportAvailability.vehicleTypes[j].categories[l][
-                        "availableQuantity"
-                      ] = vehicleAvailableQuantity;
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          localStorage.setItem(
-            "transportAvailabilityTracktoken",
-            resp.headers.get("tracktoken")
-          );
-          localStorage.setItem(
-            "transportAvailability",
-            JSON.stringify(resp.body)
-          );
-        } else {
-          this.spinner.hide();
-          this.transportAvailabilityFlag = false;
-          setTimeout(() => {
-            this.onTranportSearch();
-          }, 5000);
-        }
-      },
-      err => {}
-    );
+    
   }
 
   // calling transportlist
@@ -569,7 +454,7 @@ export class TransportServiceComponent implements OnInit {
   // select vehicle quntity
   vehicleAviQty(quantity, vehicle, veIndex) {
 
-    vehicle.categories[0]["quantity"] = parseInt(quantity);
+    vehicle.categories[0]["Quantity"] = parseInt(quantity);
 
     this.vehicelQuntityObj = {
       capacity: "0",
@@ -600,6 +485,8 @@ export class TransportServiceComponent implements OnInit {
 
   /* navigate to ground service */
   onGroundService(selectTransPort) {
+
+    console.log("selectAvailabiltyTransport" , selectTransPort)
     let noOfPax =
       parseInt(this.searchFilterObj.adults_count) +
       parseInt(this.searchFilterObj.child_count);
@@ -637,25 +524,92 @@ export class TransportServiceComponent implements OnInit {
         );
         // validating
         if (totalPax == noOfPax) {
+
+          this.spinner.show();
+
           selectTransPort["vehicleTypes"] = this.cartVehicleList;
-          localStorage.setItem(
-            "transportcart",
-            JSON.stringify(selectTransPort)
-          );
-          swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            width: '22em',
-            title: 'Added to the cart',
-            showConfirmButton: false,
-            timer: 3000
+
+          selectTransPort.vehicleTypes.forEach(vehicle =>{
+
+             delete vehicle.vehicleTypeName
+
+            vehicle.categories.forEach(category =>{
+             delete category.availableQuantity 
+             delete category.maxPaxCapacity 
+
+             for (let k = 0; k < category.displayRateInfo.length; k++) {
+
+              if (category.displayRateInfo[k].purpose === "20") {
+
+                category.displayRateInfo.splice(k, 1)
+                k--
+              }
+              if (category.displayRateInfo[k].purpose === "30") {
+                category.displayRateInfo.splice(k, 1)
+                k--
+              }
+              if (category.displayRateInfo[k].purpose === "40") {
+                category.displayRateInfo.splice(k, 1)
+                k--
+              }
+            }
+
+            })
+          
+
           })
+
+          let formData = {
+            context: {
+              cultureCode: this.searchDate.context.cultureCode,
+              trackToken: this.transportSearckTrackToken,   
+              providerInfo: [
+                {
+                  provider: selectTransPort.provider
+                }
+              ]
+            },
+            request: {
+              companyCode: selectTransPort.companyCode,
+              routeCode: selectTransPort.routeCode,
+              startDate: this.searchDate.request.checkInDate,
+              vendor: selectTransPort.provider,
+              provider: selectTransPort.provider,
+              vehicleTypes: selectTransPort.vehicleTypes,
+              policies: selectTransPort.policies,
+              termsAndConditions: selectTransPort.termsAndConditions,
+              config: []
+            }
+          };
+
+         console.log("ReqTransportAvailability" , formData)
+          this.teejanServices.getTransportAvailability(formData).subscribe(
+              resp => {
+                this.spinner.hide();
+                swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  width: '22em',
+                  title: 'Added to the cart',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+             console.log("TransportAvailabilityResponse" , resp.body)
+             localStorage.setItem(
+              "transportcart",
+              JSON.stringify(resp.body)
+            );
+          this.router.navigateByUrl("b2c/ground");
+
+               })
+
+
+         
+         
   
-          if (document.location.href.toString().includes("b2b")) {
-            this.router.navigateByUrl("b2b/ground");
-          } else {
-            this.router.navigateByUrl("b2c/ground");
-          }
+
+
+        
         } else {
         
           swal.fire({
@@ -684,11 +638,8 @@ export class TransportServiceComponent implements OnInit {
   }
  
   skipGroundService(){
-    if (document.location.href.toString().includes("b2b")) {
-      this.router.navigateByUrl("b2b/ground");
-    } else {
-      this.router.navigateByUrl("b2c/ground");
-    }
+    this.router.navigateByUrl("b2c/ground");
+     
   }
 
   /* Generate skeletons for transport list */

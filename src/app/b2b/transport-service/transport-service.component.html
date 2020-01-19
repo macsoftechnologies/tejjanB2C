@@ -318,7 +318,7 @@
                   <div class="row">
                     <div class="col-3">
                       <div class="form-group">
-                        <label>Hotel Name</label>
+                        <label>transport Name</label>
                         <input type="text" class="form-control form-control-lg" id="price-slider"
                           [(ngModel)]="name_filter" name="name_filter">
                       </div>
@@ -448,7 +448,7 @@
                                   </span>
                                 </div>
                                 <button class="btn book-transport-btn"
-                                  (click)="onTransportationAvailability(transport)">View
+                                  (click)="onTransportationViewDetails(transport)">View
                                   Details</button>
                               </div>
                             </div>
@@ -494,8 +494,8 @@
     <div *ngIf="!isTransportListAvailableFlag">
       <div class="d-flex justify-content-between">
         <div class="trans-avail-heading">
-          <h5>{{transportAvailability?.companyName}}</h5>
-          <p>{{transportAvailability?.routeName}}</p>
+          <h5>{{transport?.companyName}}</h5>
+          <p>{{transport?.routeName}}</p>
         </div>
         <div class="d-none"gIf="transportAvailabilityFlag == true">
           <div class="starting-price-section">
@@ -545,8 +545,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let vehicle of transportAvailability?.vehicleTypes;let i = index">
-                    <td>{{vehicle.vehicleType}}</td>
+                  <tr *ngFor="let vehicle of selectTransportDetails?.vehicleTypes;let i = index">
+                    <td>{{vehicle.vehicleTypeName}}</td>
                     <td>
                       <div class="vehicle">
                         <div class="form-group col-md-12 vech-capacity">
@@ -602,7 +602,7 @@
                     </td>
 
                     <td>
-                      <button class="btn book-room" (click)="onGroundService(transportAvailability)">
+                      <button class="btn book-room" (click)="onGroundService(selectTransportDetails)">
                         Add To Cart
                       </button>
                     </td>
