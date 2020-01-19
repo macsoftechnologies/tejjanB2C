@@ -36,6 +36,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.broadcastservice.customStepper.emit(false);
+    this.broadcastservice.stepperValue.emit(0);
+    localStorage.setItem("stepperVal", "" + 0);
     this.broadcastservice.showHideLogin.emit(false);
     this.router.navigateByUrl('b2c/signin');
     localStorage.removeItem('userData');
@@ -47,6 +50,17 @@ export class HeaderComponent implements OnInit {
       this.router.navigateByUrl('b2c/bookingsummary')
     }
   }
+
+  public navigateToSignIn(): void {
+    console.log("sinin");
+    this.router.navigateByUrl("b2c/signin");
+  }
+
+  public navigateToSignUp(): void {
+    console.log("sinup");
+    this.router.navigateByUrl("b2c/signup");
+  }
+
 
   sucess() {
     this.router.navigateByUrl('b2c/payment/success')

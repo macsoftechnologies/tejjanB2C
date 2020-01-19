@@ -31,6 +31,7 @@ import { LightboxModule } from '@ngx-gallery/lightbox';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { B2BModule } from '../b2b/b2b.module';
 import { B2cSignUpComponent } from './b2c-sign-up/b2c-sign-up.component';
+import { BroadcastserviceService } from '../services/broadcastservice.service';
 
 @NgModule({
   declarations: [B2cSignUpComponent],
@@ -52,4 +53,9 @@ import { B2cSignUpComponent } from './b2c-sign-up/b2c-sign-up.component';
   entryComponents: [
     B2bSignUpComponent],
 })
-export class B2CModule { }
+export class B2CModule { 
+  constructor(private broadcastservice:BroadcastserviceService){
+    this.broadcastservice.stepperValue.emit(0);
+    localStorage.setItem("stepperVal",""+0);
+  }
+}

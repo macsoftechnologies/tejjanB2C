@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AlrajhiumrahService } from "../../services/alrajhiumrah.service";
+import { Router } from '@angular/router';
+import { BroadcastserviceService } from 'src/app/services/broadcastservice.service';
 
 @Component({
   selector: "app-b2c-sign-up",
@@ -10,9 +12,16 @@ import { AlrajhiumrahService } from "../../services/alrajhiumrah.service";
 export class B2cSignUpComponent implements OnInit {
   countries: any;
 
-  constructor(private tejaanServices: AlrajhiumrahService) {}
+  constructor(private tejaanServices: AlrajhiumrahService,
+    private router:Router,
+    private broadcastservice: BroadcastserviceService
+    ) {
+     
+    }
 
   ngOnInit() {
+    console.log("sinup constructor");
+    this.broadcastservice.customStepper.emit(false);
     this.getCountries();
   }
 
@@ -27,5 +36,9 @@ export class B2cSignUpComponent implements OnInit {
 
   resolved(captchaResponse: string) {
     // console.log(`Resolved captcha with response: ${captchaResponse}`);
+  }
+
+  public navigateToSinin():void{
+    this.router.navigateByUrl("b2c/signin");
   }
 }

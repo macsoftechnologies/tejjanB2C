@@ -19,8 +19,9 @@
                 <a (click)="logout()" class="dropdown-item">Log out</a>
               </div>
             </li>
-            <li *ngIf="showHideLogin"><a [routerLink]="['b2c/signin']">Login</a> / <a [routerLink]="['b2c/signup']">
-                Register</a></li>
+            <li *ngIf="showHideLogin"><a href="javascript:void(0)" (click)="navigateToSignIn()">Login</a> / <a
+              href="javascript:void(0)" (click)="navigateToSignUp()">
+              Register</a></li>
           </ul>
         </div>
         <!-- <div class="left-header d-none">
@@ -85,7 +86,10 @@
                 </div>
               </a>
               <span *ngIf="showHideLogin" class="mobile-login">
-                <a [routerLink]="['b2c/signin']">Login</a> / <a [routerLink]="['b2c/signup']"> Register</a>
+                <!-- <!-- <a [routerLink]="['b2c/signin']">Login</a> / <a [routerLink]="['b2c/signup']"> Register</a> --> -->
+               <a href="javascript:void(0)" (click)="navigateToSignIn()">Login</a> / <a
+                  href="javascript:void(0)" (click)="navigateToSignUp()">
+                  Register</a>
               </span>
             </div>
           </div>
