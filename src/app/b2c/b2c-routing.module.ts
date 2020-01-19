@@ -15,6 +15,7 @@ import { FaqComponent } from '../b2b/faq/faq.component';
 import { BookingSummaryComponent } from '../b2b/booking-summary/booking-summary.component';
 import { PaymentSuccessComponent } from '../b2b/payment-success/payment-success.component';
 import { PaymentFailureComponent } from '../b2b/payment-failure/payment-failure.component';
+import { B2cSignUpComponent } from './b2c-sign-up/b2c-sign-up.component';
 
 const routes: Routes = [{
   path: "",
@@ -24,6 +25,10 @@ const routes: Routes = [{
 {
   path:"login",
   component:B2bSignInComponent
+},
+{
+  path:"signup",
+  component:B2cSignUpComponent
 },
 {
   path: "search",

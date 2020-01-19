@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="bg-mask"></div>
+  <div class="signUp">
+    <h3 class="heading">Sign Up</h3>
+    <div class="container">
+      <div class="col-md-9 m-auto">
+        <div class="card custom-card">
+          <!-- <form [formGroup]="signupForm"> -->
+          <form>
+            <div class="form-group agent-signup">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <label>Sign Up Information</label>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="email">Email</label>
+                <!-- <input [formControl]="signupForm.controls['email']" class="form-control custom-input" type="text" -->
+                <input
+                  class="form-control custom-input"
+                  type="text"
+                  placeholder="Enter Email"
+                />
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="userName">User Name</label>
+                <!-- <input [formControl]="signupForm.controls['userName']" class="form-control custom-input" type="text" -->
+                <input
+                  class="form-control custom-input"
+                  type="text"
+                  placeholder="Enter User Name"
+                />
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="country">Country</label>
+                <ng-select
+                  class="custom-input"
+                  [items]="countries"
+                  [virtualScroll]="true"
+                  placeholder="Select country"
+                  bindLabel="countryName"
+                >
+                  <!-- [formControl]="signupForm.controls['country']" bindLabel="countryName"> -->
+                </ng-select>
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="phoneNumber">Phone Number</label>
+                <!-- <input [formControl]="signupForm.controls['phoneNumber']" class="form-control custom-input" type="text" -->
+                <input
+                  class="form-control custom-input"
+                  type="text"
+                  placeholder="Enter Phone Number"
+                />
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="password">Password</label>
+                <!-- <input [formControl]="signupForm.controls['password']" class="form-control custom-input" type="text" -->
+                <input
+                  class="form-control custom-input"
+                  type="text"
+                  placeholder="Enter Password"
+                />
+              </div>
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="confirmPassword">Re-enter Password</label>
+                <!-- <input [formControl]="signupForm.controls['confirmPasswd']" class="form-control custom-input" type="text" -->
+                <input
+                  class="form-control custom-input"
+                  type="text"
+                  placeholder="Re-enter Password"
+                />
+              </div>
+              <div class="form-group col-12 my-2">
+                <re-captcha
+                  (resolved)="resolved($event)"
+                  siteKey="6LfKURIUAAAAAO50vlwWZkyK_G2ywqE52NU7YO0S"
+                ></re-captcha>
+              </div>
+              <div class="form-group col-md-6 col-sm-12 terms">
+                <label class="terms-label checkbox-container"
+                  >I agree to the <a href="#">Terms & Conditions</a>
+                  <input type="checkbox" />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="signup-btn form-group col-md-6 col-sm-12">
+                <button class="btn btn-md">Sign Up</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

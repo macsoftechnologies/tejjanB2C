@@ -28,10 +28,12 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LightboxModule } from '@ngx-gallery/lightbox';
+import { RecaptchaModule } from 'ng-recaptcha';
 import { B2BModule } from '../b2b/b2b.module';
+import { B2cSignUpComponent } from './b2c-sign-up/b2c-sign-up.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [B2cSignUpComponent],
   imports: [CommonModule, B2CRoutingModule, FormsModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyBcWi1J7vn47wgG815QpbvCeklS_AnGzbU"
@@ -45,7 +47,8 @@ import { B2BModule } from '../b2b/b2b.module';
     Ng5SliderModule,
     NgSelectModule,
     B2BModule,
-    LightboxModule],
+    LightboxModule,
+    RecaptchaModule],
   entryComponents: [
     B2bSignUpComponent],
 })

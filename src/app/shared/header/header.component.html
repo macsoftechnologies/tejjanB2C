@@ -19,7 +19,7 @@
                 <a (click)="logout()" class="dropdown-item">Log out</a>
               </div>
             </li>
-            <li *ngIf="showHideLogin"><a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2b/signup']">
+            <li *ngIf="showHideLogin"><a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2c/signup']">
                 Register</a></li>
           </ul>
         </div>
@@ -58,7 +58,7 @@
         <div class="header-logo row">
           <div class="col-md-6">
             <a (click)="bookigSummary()">Cart</a>
-          
+
             <i class="fa fa-shopping-cart" aria-hidden="true" (click)="bookigSummary()"></i>
           </div>
           <a class="col-md-6" href="javascript:void(0)" [routerLink]="['b2b/search']">
@@ -140,7 +140,7 @@
         <div class="mobile-header-image">
           <img src="../../../assets/images/header-images/logo.png" alt="" class="">
         </div>
-      
+
       </div>
     </div>
   </div>
