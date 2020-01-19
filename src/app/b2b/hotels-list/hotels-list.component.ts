@@ -111,16 +111,16 @@ export class HotelsListComponent implements OnInit {
   //Start Range values
   value: number = 100;
   distanceOptions: Options = {
-    floor: 0 ,
+    floor: 0,
     ceil: 10,
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
-          return   value + " km";
+          return value + " km";
         case LabelType.High:
-          return  value + " km";
+          return value + " km";
         default:
-          return  value + " km";
+          return value + " km";
       }
     }
   };
@@ -148,6 +148,8 @@ export class HotelsListComponent implements OnInit {
   chekOutMinDate: { year: any; month: any; day: any };
   public itemsPerPage: number = 5;
   public isFilterDisplay: boolean = false;
+  priceChangeMinValue: any;
+  priceChangeMaxValue: any;
 
   constructor(
     private router: Router,
@@ -192,10 +194,9 @@ export class HotelsListComponent implements OnInit {
     };
     this.searchHotelForm.patchValue({
       checkIn: checkInObj,
-      checkOut: checkOutObj   
+      checkOut: checkOutObj
     });
 
-    console.log(this.searchHotelForm);
   }
   /* Preparing skeleton objects */
   public generateFake(count: number): Array<number> {
@@ -207,7 +208,7 @@ export class HotelsListComponent implements OnInit {
   }
   /* /preparing skeleton objects */
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public onFilterDisplay() {
     this.isFilterDisplay = !this.isFilterDisplay;
@@ -243,8 +244,6 @@ export class HotelsListComponent implements OnInit {
 
     this.searchData.request.checkInDate = checkInDate;
     this.searchData.request.checkOutDate = checkOutDate;
-    // this.hotels= [];
-    // this.mainHotelsList = [];
     this.getHotels();
   }
 
@@ -252,10 +251,7 @@ export class HotelsListComponent implements OnInit {
   public getHotels(): void {
     this.teejanServices.getHotelSearch(this.searchData).subscribe(
       hotelsSearchResp => {
-        localStorage.setItem(
-          "hotelslistrespTrackToken",
-          hotelsSearchResp.headers.get("tracktoken")
-        );
+        this.isFirstTimeLoad = false;
 
         if (hotelsSearchResp != undefined) {
           localStorage.setItem(
@@ -264,91 +260,88 @@ export class HotelsListComponent implements OnInit {
           );
           localStorage.setItem(
             "hotelList",
-           JSON.stringify( hotelsSearchResp.body.hotels)
+            JSON.stringify(hotelsSearchResp.body.hotels)
           );
           this.hotels = hotelsSearchResp.body.hotels;
           this.mainHotelsList = hotelsSearchResp.body.hotels;
+          this.hotels.sort((a, b) => a.amount - b.amount);
+          this.minValue = this.hotels[0].amount;
+          this.maxValue = this.hotels[this.hotels.length - 1].amount;
+          this.options = {
+            floor: this.minValue,
+            ceil: this.maxValue
+          };
+          this.prepareFilterData();
         } else {
           this.hotels = [];
         }
 
-        /* Preparing filters */
-        if (hotelsSearchResp != undefined) {
-          this.hotels.forEach(element => {
-            let temp = [];
-            this.filterChains = [];
-            this.hotels.forEach(function(item, index) {
-              if (item.hotelChain != undefined && item.hotelChain != "") {
-                if (temp != undefined) {
-                  temp.push(item.hotelChain);
-                }
-              }
-            });
-            this.hasHotelChains = temp.length > 0 ? true : false;
-            this.filterChains = temp;
-
-            temp = [];
-            this.filterCategories = [];
-            this.hotels.forEach(function(item, index) {
-              if (item.category != undefined && item.category != "") {
-                if (temp != undefined) {
-                  temp.push(item.category);
-                }
-              }
-            });
-            this.hasCategories = temp.length > 0 ? true : false;
-            this.filterCategories = temp;
-
-            temp = [];
-            this.hotels.forEach(function(item, index) {
-              if (item.amenities != undefined && item.amenities != "") {
-                item.amenities.forEach(im => {
-                  if (im.name != undefined && im.name != "") {
-                    temp.push(im.name);
-                  }
-                });
-              }
-            });
-            this.hasAmenities = temp.length > 0 ? true : false;
-            this.filterAmenities = temp;
-
-            temp = [];
-            this.hotels.forEach(function(item, index) {
-              if (
-                item.optionalAmenities != undefined &&
-                item.optionalAmenities != ""
-              ) {
-                item.optionalAmenities.forEach(im => {
-                  if (im.name != undefined && im.name != "") {
-                    temp.push(im.name);
-                  }
-                });
-              }
-            });
-            this.hasRoomAmenities = temp.length > 0 ? true : false;
-            this.filterRoomAmenities = temp;
-          });
-        }
-        this.isFirstTimeLoad = false;
-
-        this.hotels.sort((a, b) => a.amount - b.amount);
-        this.minValue = this.hotels[0].amount;
-        this.maxValue = this.hotels[this.hotels.length - 1].amount;
-        // console.log(this.minValue, this.maxValue);
-
-        this.options = {
-          floor: this.minValue,
-          ceil: this.maxValue
-        };
       },
-      err => {}
+      err => { }
     );
   }
+  /* preparing filters data */
+  public prepareFilterData(): void {
+    this.hotels.forEach(element => {
+      let temp = [];
+      this.filterChains = [];
+      this.hotels.forEach(function (item, index) {
+        if (item.hotelChain != undefined && item.hotelChain != "") {
+          if (temp != undefined) {
+            temp.push(item.hotelChain);
+          }
+        }
+      });
+      this.hasHotelChains = temp.length > 0 ? true : false;
+      this.filterChains = temp;
+
+      temp = [];
+      this.filterCategories = [];
+      this.hotels.forEach(function (item, index) {
+        if (item.category != undefined && item.category != "") {
+          if (temp != undefined) {
+            temp.push(item.category);
+          }
+        }
+      });
+      this.hasCategories = temp.length > 0 ? true : false;
+      this.filterCategories = temp;
+
+      temp = [];
+      this.hotels.forEach(function (item, index) {
+        if (item.amenities != undefined && item.amenities != "") {
+          item.amenities.forEach(im => {
+            if (im.name != undefined && im.name != "") {
+              temp.push(im.name);
+            }
+          });
+        }
+      });
+      this.hasAmenities = temp.length > 0 ? true : false;
+      this.filterAmenities = temp;
+
+      temp = [];
+      this.hotels.forEach(function (item, index) {
+        if (
+          item.optionalAmenities != undefined &&
+          item.optionalAmenities != ""
+        ) {
+          item.optionalAmenities.forEach(im => {
+            if (im.name != undefined && im.name != "") {
+              temp.push(im.name);
+            }
+          });
+        }
+      });
+      this.hasRoomAmenities = temp.length > 0 ? true : false;
+      this.filterRoomAmenities = temp;
+    });
+  }
+  /* /preparing filters data */
 
   /* Start of Hotel Filter */
   onHotelFilter(type, event, item) {
-    // this.isFirstTimeLoad = false;
-    this.hotels = this.mainHotelsList; //this.searchResultsTemp;
+    this.hotels = this.mainHotelsList; 
     switch (type) {
       case "RATING":
         if (event.target.checked) {
@@ -537,7 +530,6 @@ export class HotelsListComponent implements OnInit {
       }
       this.hotels = temp;
     }
-    console.log(this.hotels.length);
 
     //Room Amenities Filter
     temp = [];
@@ -573,6 +565,15 @@ export class HotelsListComponent implements OnInit {
       }
       this.hotels = temp;
     }
+
+    //Price Range Filter
+    this.hotels.forEach(element => {
+      if (element.amount > this.priceChangeMinValue && element.amount < this.priceChangeMaxValue) {
+        temp.push(element);
+      }
+    });
+    if (temp.length > 0) this.hotels = temp;
+
     this.hotels.sort((a, b) => a.amount - b.amount);
   }
   /* End of Hotel Filter */
@@ -710,11 +711,7 @@ export class HotelsListComponent implements OnInit {
   /* Navigate to hotel details page by select any room */
   public onHotelDetails(hotel): void {
     localStorage.setItem("currentHotel", JSON.stringify(hotel));
-    if (document.location.href.toString().includes("b2b")) {
-      this.router.navigateByUrl("b2b/hoteldetails");
-    } else {
-      this.router.navigateByUrl("b2c/hoteldetails");
-    }
+    this.router.navigateByUrl("b2c/hoteldetails");
   }
 
   /* Views Switching */
@@ -724,14 +721,9 @@ export class HotelsListComponent implements OnInit {
 
   /* price slider change event */
   public priceSliderChange(event): void {
-    let temp = [];
-    this.hotels = [];
-    this.hotels.forEach(element => {
-      if (element.amount > event.value && element.amount < event.highValue) {
-        temp.push(element);
-      }
-    });
-    if (temp.length > 0) this.hotels = temp;
+    this.priceChangeMinValue = event.value;
+    this.priceChangeMaxValue = event.highValue;
+    this.onHotelFilter("Price", "", "");
   }
 
   /* change value of items per page in pagination */

@@ -6,22 +6,35 @@ import { Lightbox } from '@ngx-gallery/lightbox';
 import { NgxSpinnerService } from "ngx-spinner";
 import swal from 'sweetalert2';
 
+const data = [
+  {
+    srcUrl: 'assets/search-bg.jpg',
+    previewUrl: 'assets/search-bg.jpg'
+  },
+  {
+    srcUrl: 'assets/search-bg.jpg',
+    previewUrl: 'assets/search-bg.jpg'
+  },
+  {
+    srcUrl: 'assets/search-bg.jpg',
+    previewUrl: 'assets/search-bg.jpg'
+  },
+  {
+    srcUrl: 'assets/search-bg.jpg',
+    previewUrl: 'assets/search-bg.jpg'
+  }
+];
+
 @Component({
   selector: "app-hotel-details",
   templateUrl: "./hotel-details.component.html",
   styleUrls: ["./hotel-details.component.scss"]
 })
-
-
-
-
 export class HotelDetailsComponent implements OnInit {
-
-  public hotelList :  any
   zoom = 14
   public issessionexpired: boolean = true;
   public isFirstLoad: boolean = true;
-  public isroomGroups:boolean 
+  public isroomGroups: boolean
   public selectedHotel: any = {};
   public searchDate: any = {};
   public searchFilter: any = {}
@@ -34,16 +47,16 @@ export class HotelDetailsComponent implements OnInit {
   public currentHotelPolicies;
   public selectedRoomsList = []
   public roomgroupsrooms = [];
-  public numberOfNights = 0
-  public taxAmount = 0
-  public feeAmount = 0
-  
-  items: GalleryItem[];
-  imageData = data;
-  saudiPhoneCode : any;
-  hotelPhone : any;
-
+  public numberOfNights = 0;
+  public taxAmount = 0;
+  public feeAmount = 0;
+  public items: GalleryItem[];
+  public imageData = data;
+  public saudiPhoneCode: any;
+  public hotelPhone: any;
   public travellerCount;
+
+
   constructor(private router: Router,
     private teejanServices: AlrajhiumrahService,
     public gallery: Gallery,
@@ -51,28 +64,73 @@ export class HotelDetailsComponent implements OnInit {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-
     this.searchDate = JSON.parse(localStorage.getItem("searchObj"));
     this.searchFilter = JSON.parse(localStorage.getItem("searchFilterObj"))
     this.selectedHotel = JSON.parse(localStorage.getItem("currentHotel"));
     this.searchLookUp = JSON.parse(localStorage.getItem("searchLookUp"));
     this.hotelslistrespTrackToken = localStorage.getItem("hotelslistrespTrackToken");
-    this.hotelList = JSON.parse(localStorage.getItem("hotelList"))
     this.travellerCount = parseInt(this.searchFilter.adults_count) + parseInt(this.searchFilter.child_count);
-    // this.adults_count = parseInt(this.searchFilter.adults_count)
-    // this.child_count = parseInt(this.searchFilter.child_count)
+   console.log(JSON.stringify(this.selectedHotel));
+    // this.saudiPhoneCode = this.selectedHotel.phone.substring(0, 3);
+    // this.hotelPhone = this.selectedHotel.phone.substring(3);
+    /* calculating adult and child count in rooms to display in UI */
+    this.selectedHotel.roomGroups.forEach(roomGroup => {
+      roomGroup.rooms.forEach(room => {
+        let adultCount = 0;
+        let childCount = 0;
 
+        /* counting adult and child count in rooms */
+        room.paxInfo.forEach(paxInfo => {
+          if (paxInfo.type === "ADT")
+            adultCount = adultCount + paxInfo.quantity;
+          else if (paxInfo.type === "CHD")
+            childCount = childCount + paxInfo.quantity;
+        });
+        room["adultsCount"] = new Array(adultCount);
+        room["childCount"] = new Array(childCount);
 
-    this.selectedHotel.amenities.forEach(element => {
-      if (element.name.includes("Wifi")) {
-        element["icon"] = "fa fa-wifi";
-      } else if (element.name.includes("Towels")) {
-        element["icon"] = "fa fa-bath";
-      }
+        /* adding GDS and OTA TAXES  */
+      /*   room.displayRateInfo.forEach(displayRate => {
+          if (displayRate.purpose == "1") {
+            let GDSobject = {
+              amount: displayRate.amount / 100 * 7.5,
+              purpose: "20",
+              description: "GDSTAX",
+              currencyCode: "SAR"
+            }
+            room.displayRateInfo.push(GDSobject);
+            let OTAobject = {
+              amount: displayRate.amount / 100 * 30,
+              purpose: "30",
+              description: "OTATAX",
+              currencyCode: "SAR"
+            }
+            room.displayRateInfo.push(OTAobject);
+
+            // calculating all taxes (OTA + GDS + VAT(TAX) + FEES) 
+            if (displayRate.purpose == "7") {
+              this.taxAmount = 0
+              this.taxAmount = displayRate.amount
+            }
+            if (displayRate.purpose == "2") {
+              this.feeAmount = 0
+              this.feeAmount = displayRate.amount
+            }
+
+            let taxesObject = {
+              amount: displayRate.amount / 100 * 30 + displayRate.amount / 100 * 7.5 + this.taxAmount + this.feeAmount,
+              purpose: "40",
+              description: "TAXES",
+              currencyCode: "SAR"
+
+            }
+            room.displayRateInfo.push(taxesObject);
+          }
+        });
+ */
+      });
     });
-
-    // this.selectedHotelDeatils();
-
+    // console.log(JSON.stringify(this.selectedHotel));
 
     // Creat gallery items
     this.items = this.imageData.map(item => new ImageItem({ src: item.srcUrl, thumb: item.previewUrl }));
@@ -89,47 +147,40 @@ export class HotelDetailsComponent implements OnInit {
 
     // Load items into the lightbox gallery ref
     lightboxRef.load(this.items);
+
+    this.getHotelPolicies();
   }
- 
+
 
   /* preparing hotel availability Request Object */
-  public selectedHotelDeatils() {
-    // console.log("rommGroupsRooms" , this.selectedHotel.roomGroups[0])
-
-
+  public getHotelPolicies() {
     var roomGroupsObject = {
-      "policies" : this.selectedHotel.roomGroups[0].policies,
-      "groupId" : this.selectedHotel.roomGroups[0].groupId,
-      "groupAmount" : this.selectedHotel.roomGroups[0].groupAmount,
-      "type" : this.selectedHotel.roomGroups[0].type,
-      "hasSpecialDeal" : this.selectedHotel.roomGroups[0].hasSpecialDeal,
-      "tpExtensions" : this.selectedHotel.roomGroups[0].tpExtensions,
-      "paxInfo" : this.selectedHotel.roomGroups[0].paxInfo,
-      "rooms" : [this.selectedHotel.roomGroups[0].rooms[0]],
-      "config" : this.selectedHotel.roomGroups[0].config,
-      "flags" : this.selectedHotel.roomGroups[0].flags,
-
-
+      "policies": this.selectedHotel.roomGroups[0].policies,
+      "groupId": this.selectedHotel.roomGroups[0].groupId,
+      "groupAmount": this.selectedHotel.roomGroups[0].groupAmount,
+      "type": this.selectedHotel.roomGroups[0].type,
+      "hasSpecialDeal": this.selectedHotel.roomGroups[0].hasSpecialDeal,
+      "tpExtensions": this.selectedHotel.roomGroups[0].tpExtensions,
+      "paxInfo": this.selectedHotel.roomGroups[0].paxInfo,
+      "rooms": [this.selectedHotel.roomGroups[0].rooms[0]],
+      "config": this.selectedHotel.roomGroups[0].config,
+      "flags": this.selectedHotel.roomGroups[0].flags,
     }
-    console.log("roomGroupsObject" , roomGroupsObject)
-
     var CountryCode = this.searchDate.request.providerLocations[0].countryCode
     var locationCode = this.searchDate.request.providerLocations[0].locationCode
 
     this.hotelAvailabilityReq = {
       "context": {
         "cultureCode": this.searchDate.context.cultureCode,
-        // "trackToken": this.hotelslistrespTrackToken,
         "providerInfo": [
           {
             "provider": this.selectedHotel.provider,
-            "pcc" : "1004",
-            "subpcc" : ""
+            "pcc": "1004",
+            "subpcc": ""
           }
         ]
       },
       "request": {
-        // "nationality":  this.searchFilter.nationality.countryCode,
         "code": this.selectedHotel.code,
         "name": this.selectedHotel.name,
         "countryCode": CountryCode,
@@ -141,13 +192,11 @@ export class HotelDetailsComponent implements OnInit {
         "checkInDate": this.searchDate.request.checkInDate,
         "checkOutDate": this.searchDate.request.checkOutDate,
         "config": this.selectedHotel.config,
-        // "policies": this.selectedHotel.policies,
         "tpExtensions": this.selectedHotel.tpExtensions,
         "roomGroups": [roomGroupsObject]
       }
     }
     this.hotelPolicies();
-    this.hotelAvailability();
   }
   /* /preparing hotel availability Request Object */
 
@@ -168,110 +217,110 @@ export class HotelDetailsComponent implements OnInit {
   /* Get hotel availability api call */
   public hotelAvailability(): void {
 
-       this.spinner.show();
+    this.spinner.show();
 
     this.teejanServices.getHotelAvailability(this.hotelAvailabilityReq).subscribe(
       hotelsavailabilityresp => {
 
-         
-        if(hotelsavailabilityresp.body.roomGroups != undefined ) {
-           
+
+        if (hotelsavailabilityresp.body.roomGroups != undefined) {
+
           this.spinner.hide();
 
-         this.isroomGroups = true
-        localStorage.setItem('hotelAvailabilityTracktoken', hotelsavailabilityresp.headers.get('tracktoken'))
-        localStorage.setItem("hotelAvailability", JSON.stringify(hotelsavailabilityresp.body))
+          this.isroomGroups = true
+          localStorage.setItem('hotelAvailabilityTracktoken', hotelsavailabilityresp.headers.get('tracktoken'))
+          localStorage.setItem("hotelAvailability", JSON.stringify(hotelsavailabilityresp.body))
 
 
-        /* calculating numberOfNights */
-        const checkInDate = new Date(this.searchDate.request.checkInDate);
-        const checkOutDate = new Date(this.searchDate.request.checkOutDate);
-        const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-        this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          /* calculating numberOfNights */
+          const checkInDate = new Date(this.searchDate.request.checkInDate);
+          const checkOutDate = new Date(this.searchDate.request.checkOutDate);
+          const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+          this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        hotelsavailabilityresp.body["nights"] = this.numberOfNights
-        hotelsavailabilityresp.body["latitude"] = this.selectedHotel.latitude
-        hotelsavailabilityresp.body["longitude"] = this.selectedHotel.longitude
-
-
-        if (parseInt(this.searchFilter.adults_count) > 0) {
-          hotelsavailabilityresp.body["adults"] = Array(this.searchFilter.adults_count).fill(+0).map((i) => i + 1)
-          this.adults = true
-        } else {
-          this.adults = false
-        }
-
-        if (parseInt(this.searchFilter.child_count) > 0) {
-          hotelsavailabilityresp.body["childrens"] = Array(this.searchFilter.child_count).fill(+0).map((i) => i + 1)
-          this.child = true
-        } else {
-          this.child = false
-        }
+          hotelsavailabilityresp.body["nights"] = this.numberOfNights
+          hotelsavailabilityresp.body["latitude"] = this.selectedHotel.latitude
+          hotelsavailabilityresp.body["longitude"] = this.selectedHotel.longitude
 
 
-        hotelsavailabilityresp.body.roomGroups[0].rooms.forEach(room => {
+          if (parseInt(this.searchFilter.adults_count) > 0) {
+            hotelsavailabilityresp.body["adults"] = Array(this.searchFilter.adults_count).fill(+0).map((i) => i + 1)
+            this.adults = true
+          } else {
+            this.adults = false
+          }
 
-          /* adding GDS and OTA TAXES  */
-          room.displayRateInfo.forEach(displayRate => {
+          if (parseInt(this.searchFilter.child_count) > 0) {
+            hotelsavailabilityresp.body["childrens"] = Array(this.searchFilter.child_count).fill(+0).map((i) => i + 1)
+            this.child = true
+          } else {
+            this.child = false
+          }
 
-            if (displayRate.purpose == "1") {
 
-              let GDSobject = {
-                amount: displayRate.amount / 100 * 7.5,
-                purpose: "20",
-                description: "GDSTAX",
-                currencyCode: "SAR"
+          hotelsavailabilityresp.body.roomGroups[0].rooms.forEach(room => {
+
+            /* adding GDS and OTA TAXES  */
+            room.displayRateInfo.forEach(displayRate => {
+
+              if (displayRate.purpose == "1") {
+
+                let GDSobject = {
+                  amount: displayRate.amount / 100 * 7.5,
+                  purpose: "20",
+                  description: "GDSTAX",
+                  currencyCode: "SAR"
+
+                }
+                room.displayRateInfo.push(GDSobject);
+                let OTAobject = {
+                  amount: displayRate.amount / 100 * 30,
+                  purpose: "30",
+                  description: "OTATAX",
+                  currencyCode: "SAR"
+
+                }
+                room.displayRateInfo.push(OTAobject);
+
+                // calculating all taxes (OTA + GDS + VAT(TAX) + FEES) 
+                if (displayRate.purpose == "7") {
+                  this.taxAmount = 0
+                  this.taxAmount = displayRate.amount
+                }
+                if (displayRate.purpose == "2") {
+                  this.feeAmount = 0
+                  this.feeAmount = displayRate.amount
+                }
+
+                let taxesObject = {
+                  amount: displayRate.amount / 100 * 30 + displayRate.amount / 100 * 7.5 + this.taxAmount + this.feeAmount,
+                  purpose: "40",
+                  description: "TAXES",
+                  currencyCode: "SAR"
+
+                }
+                room.displayRateInfo.push(taxesObject);
 
               }
-              room.displayRateInfo.push(GDSobject);
-              let OTAobject = {
-                amount: displayRate.amount / 100 * 30,
-                purpose: "30",
-                description: "OTATAX",
-                currencyCode: "SAR"
 
-              }
-              room.displayRateInfo.push(OTAobject);
+            })
 
-              // calculating all taxes (OTA + GDS + VAT(TAX) + FEES) 
-              if (displayRate.purpose == "7") {
-                this.taxAmount = 0
-                this.taxAmount = displayRate.amount
-              }
-              if (displayRate.purpose == "2") {
-                this.feeAmount = 0
-                this.feeAmount = displayRate.amount
-              }
-
-              let taxesObject = {
-                amount: displayRate.amount / 100 * 30 + displayRate.amount / 100 * 7.5 + this.taxAmount + this.feeAmount,
-                purpose: "40",
-                description: "TAXES",
-                currencyCode: "SAR"
-
-              }
-              room.displayRateInfo.push(taxesObject);
-
-            }
-
+            console.log("availabilityCount", room.availabilityCount)
+            // availabilityCount convert to Array
+            room.availabilityCount = Array(room.availabilityCount).fill(+0).map((x, i) => i + 1)
           })
 
-          console.log("availabilityCount", room.availabilityCount)
-          // availabilityCount convert to Array
-          room.availabilityCount = Array(room.availabilityCount).fill(+0).map((x, i) => i + 1)
-        })
+          this.currentHotelAvailability = hotelsavailabilityresp.body;
+          this.saudiPhoneCode = this.currentHotelAvailability.phone.substring(0, 3);
+          this.hotelPhone = this.currentHotelAvailability.phone.substring(3);
+        } else {
+          this.spinner.hide();
+          this.isroomGroups = false
+          setTimeout(() => {
+            this.router.navigateByUrl("b2b/hotellist");
+          }, 5000);
+        }
 
-        this.currentHotelAvailability = hotelsavailabilityresp.body;
-        this.saudiPhoneCode = this.currentHotelAvailability.phone.substring(0,3);
-        this.hotelPhone = this.currentHotelAvailability.phone.substring(3,);
-      }else{
-        this.spinner.hide();
-        this.isroomGroups = false
-        setTimeout(() => {
-          this.router.navigateByUrl("b2b/hotellist");
-      }, 5000); 
-      }
-     
       }
 
     );
@@ -307,6 +356,113 @@ export class HotelDetailsComponent implements OnInit {
   }
   /* preparing hotel cart with selected rooms */
 
+
+  /* check room availability */
+  public onRoomAvailability(selectedHotel, currentRoom): void {
+    console.log("currentRoomm", JSON.stringify(currentRoom));
+    console.log("selectedHotel", JSON.stringify(selectedHotel));
+    console.log("no of rooms", this.searchFilter.rooms);
+    let roomGroupArry = [];
+    let tempSelectedRoomGroups = selectedHotel.roomGroups;
+    if (this.selectedHotel.roomGroups.length == 1) {
+      let rooms = [];
+      for (let i = 0; i < this.searchFilter.rooms; i++) {
+        let roomObj = currentRoom;
+        roomObj["quantity"] = 1;
+        roomObj["sequenceNumber"] = i;
+        delete roomObj["adultsCount"];
+        delete roomObj["childCount"];
+        rooms.push(roomObj);
+      }
+      var roomGroupsObject = {
+        "policies": this.selectedHotel.roomGroups[0].policies,
+        "groupId": this.selectedHotel.roomGroups[0].groupId,
+        "groupAmount": this.selectedHotel.roomGroups[0].groupAmount,
+        "type": this.selectedHotel.roomGroups[0].type,
+        "hasSpecialDeal": this.selectedHotel.roomGroups[0].hasSpecialDeal,
+        "tpExtensions": this.selectedHotel.roomGroups[0].tpExtensions,
+        "paxInfo": this.selectedHotel.roomGroups[0].paxInfo,
+        "rooms": rooms,
+        "config": this.selectedHotel.roomGroups[0].config,
+        "flags": this.selectedHotel.roomGroups[0].flags,
+      }
+      roomGroupArry.push(roomGroupsObject);
+    } else if (this.selectedHotel.roomGroups.length > 1) {
+      this.selectedHotel.roomGroups.forEach(roomGroup => {
+        let rooms = [];
+        roomGroup.rooms.forEach(room => {
+          if (room.name === currentRoom.name) {
+            delete room["adultsCount"];
+            delete room["childCount"];
+            rooms.push(room);
+          }
+        });
+        // roomGroup["rooms"] = rooms;
+        var roomGroupsObject = {
+          "policies": this.selectedHotel.roomGroups[0].policies,
+          "groupId": this.selectedHotel.roomGroups[0].groupId,
+          "groupAmount": this.selectedHotel.roomGroups[0].groupAmount,
+          "type": this.selectedHotel.roomGroups[0].type,
+          "hasSpecialDeal": this.selectedHotel.roomGroups[0].hasSpecialDeal,
+          "tpExtensions": this.selectedHotel.roomGroups[0].tpExtensions,
+          "paxInfo": this.selectedHotel.roomGroups[0].paxInfo,
+          "rooms": rooms,
+          "config": this.selectedHotel.roomGroups[0].config,
+          "flags": this.selectedHotel.roomGroups[0].flags,
+        }
+        roomGroupArry.push(roomGroupsObject);
+      });
+    }
+
+    let roomAvailabilityObj = {
+      "context": {
+        "cultureCode": this.searchDate.context.cultureCode,
+        "providerInfo": [
+          {
+            "provider": this.selectedHotel.provider,
+            "pcc": "1004",
+            "subpcc": ""
+          }
+        ]
+      },
+      "request": {
+        // "nationality":  this.searchFilter.nationality.countryCode,
+        "code": this.selectedHotel.code,
+        "name": this.selectedHotel.name,
+        "countryCode": this.searchDate.request.providerLocations[0].countryCode,
+        "locationCode": this.searchDate.request.providerLocations[0].locationCode,
+        "locationName": this.searchDate.request.locationName,
+        "status": this.selectedHotel.status,
+        "vendor": this.selectedHotel.vendor,
+        "provider": this.selectedHotel.provider,
+        "checkInDate": this.searchDate.request.checkInDate,
+        "checkOutDate": this.searchDate.request.checkOutDate,
+        "config": this.selectedHotel.config,
+        // "policies": this.selectedHotel.policies,
+        "tpExtensions": this.selectedHotel.tpExtensions,
+        "roomGroups": roomGroupArry
+      }
+    }
+
+    console.log("room availability request---->", JSON.stringify(roomAvailabilityObj));
+    this.spinner.show();
+    this.teejanServices.getHotelAvailability(roomAvailabilityObj).subscribe(
+      hotelsavailabilityresp => {
+        console.log("hotelAvailabilty resp---->", JSON.stringify(hotelsavailabilityresp));
+        localStorage.setItem("hotelcart", JSON.stringify(hotelsavailabilityresp));
+
+        if (hotelsavailabilityresp.body.roomGroups != undefined) {
+          hotelsavailabilityresp.body["name"]= this.selectedHotel.name;
+          this.spinner.hide();
+          localStorage.setItem('hotelAvailabilityTracktoken', hotelsavailabilityresp.headers.get('tracktoken'))
+          localStorage.setItem("hotelAvailability", JSON.stringify(hotelsavailabilityresp.body))
+          localStorage.setItem("hotelcart", JSON.stringify(hotelsavailabilityresp.body));
+          this.router.navigateByUrl("b2c/transport");
+        }
+      });
+
+  }
+  /* /check room availability */
 
   /* naviagte to transport search */
   public onTransport(selectHotel): void {
@@ -358,33 +514,10 @@ export class HotelDetailsComponent implements OnInit {
   /* skeleton layout end */
 
   /* navigate to hotelList */
-  backToHotelList(){
+  backToHotelList() {
     this.router.navigateByUrl("b2b/hotellist")
   }
 
 }
 
 
-const data = [
-  {
-    srcUrl: 'assets/search-bg.jpg',
-    previewUrl: 'assets/search-bg.jpg'
-  },
-  {
-    srcUrl: 'assets/search-bg.jpg',
-    previewUrl: 'assets/search-bg.jpg'
-  },
-  {
-    srcUrl: 'assets/search-bg.jpg',
-    previewUrl: 'assets/search-bg.jpg'
-  },
-  {
-    srcUrl: 'assets/search-bg.jpg',
-    previewUrl: 'assets/search-bg.jpg'
-  }
-];
-
-// var module = document.querySelector(".hoteldetails span");
-// $clamp(module, {
-//   clamp: 2
-// });

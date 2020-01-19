@@ -18,12 +18,8 @@ export class CustomStepperComponent implements OnInit {
     });
     this.stepPageCount = parseInt(localStorage.getItem("stepperVal"));
     this.broadcastservice.stepperValue.subscribe(stepperVal => {
-      console.log("stepperVal", this.isStepperVisible+"");
       this.stepPageCount = stepperVal;
     });
-
     // this.stepPageCount = parseInt(localStorage.getItem("stepperVal"));
-    console.log(this.stepPageCount);
-    console.log(localStorage.getItem("stepperVal"));
   }
 }

@@ -296,13 +296,8 @@ export class SearchPanelComponent implements OnInit {
           // nationality: this.searchHotelsForm.value.location.countryCode
         }
       };
-
-  
       const adultCount =  this.guestInfo.reduce((a,b)=>  a + b.adult , 0)
       const childCount =  this.guestInfo.reduce((a,b)=>  a + b.child , 0)
-
-      
-       console.log("searchHotelsForm" , this.searchHotelsForm.value)
 
        this.searchHotelsForm.patchValue({
         rooms: this.guestInfo.length,
@@ -318,11 +313,7 @@ export class SearchPanelComponent implements OnInit {
       );
       this.broadCastService.stepperValue.emit(1);
       localStorage.setItem("stepperVal", 1 + "");
-      if ((document.location.href).toString().includes("b2b")) {
-        this.router.navigateByUrl("b2b/hotellist");
-      } else {
-        this.router.navigateByUrl("b2c/hotellist");
-      }
+      this.router.navigateByUrl("b2c/hotellist");
     }
   }
 

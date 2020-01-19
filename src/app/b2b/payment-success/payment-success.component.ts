@@ -126,9 +126,9 @@ public vehiclePolicies =[]
        // add paxInfo  
          hotelRoomGroup.rooms[k]["paxInfo"] = paxDetail
   
-      let availabilityCount = hotelRoomGroup.rooms[k].availabilityCount.length
+      // let availabilityCount = hotelRoomGroup.rooms[k].availabilityCount.length
   
-      hotelRoomGroup.rooms[k].availabilityCount = availabilityCount
+      // hotelRoomGroup.rooms[k].availabilityCount = availabilityCount
        
        // removing taxe objects from displayRateInfo
       for(let p = 0 ; p < hotelRoomGroup.rooms[k].displayRateInfo.length ; p++){
@@ -142,6 +142,10 @@ public vehiclePolicies =[]
     
           p--
         }else if(hotelRoomGroup.rooms[k].displayRateInfo[p].purpose === "40"){
+          hotelRoomGroup.rooms[k].displayRateInfo.splice(p, 1);  
+          p--
+     
+        }else if(hotelRoomGroup.rooms[k].displayRateInfo[p].purpose === "10"){
           hotelRoomGroup.rooms[k].displayRateInfo.splice(p, 1);  
           p--
      
@@ -161,6 +165,7 @@ public vehiclePolicies =[]
   
   
        localStorage.setItem("hotelProvider" , this.hotelcart.provider )
+       console.log(JSON.stringify(this.hotelcart));
   
       let hotelForm =
         {
@@ -186,8 +191,8 @@ public vehiclePolicies =[]
             "status": this.hotelcart.status,
             "vendor": this.hotelcart.vendor,
             "provider": this.hotelcart.provider,
-            "checkInDate": this.hotelcart.checkInDate,
-            "checkOutDate": this.hotelcart.checkOutDate,
+            "checkInDate": this.searchObj.request.checkInDate,
+            "checkOutDate": this.searchObj.request.checkOutDate,
             "config": this.hotelcart.config,
             "tpExtensions": this.hotelcart.tpExtensions,
             "secureTPExtensions": [],
@@ -202,19 +207,8 @@ public vehiclePolicies =[]
         }
         console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
         this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
-  
           this.spinner.hide();
-         
-      
           if (data.bookingStatus == "Confirmed") {
-  
-     
-            // localStorage.removeItem("hotelcart");
-            // localStorage.removeItem("hotelAvailability");
-            // localStorage.removeItem("hotelAvailabilityTracktoken");
-            // localStorage.removeItem("hotelslistrespTrackToken");
-            // localStorage.removeItem("currentHotel");
-  
             localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
             this.router.navigateByUrl('b2b/mybooking');
   

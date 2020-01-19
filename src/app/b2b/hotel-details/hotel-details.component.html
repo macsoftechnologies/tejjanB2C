@@ -3,7 +3,8 @@
   <div class="mecca-bg">
     <div class="bg-mask"></div>
   </div>
-  <div class="col-md-12 search-results" *ngIf="currentHotelAvailability?.roomGroups == undefined && isroomGroups == false ">
+  <!-- *ngIf="selectedHotel?.roomGroups == undefined && isroomGroups == false " -->
+  <div class="col-md-12 search-results d-none" >
     <div class="no-search-results-section">
       <div>
         <p>{{selectedHotel.name}} Hotel rooms not available at this time please select another hotel </p>
@@ -13,7 +14,8 @@
       </div> 
     </div>
   </div>
-  <div class="container-fluid" *ngIf="currentHotelAvailability?.roomGroups != undefined && isroomGroups == true ">
+  <!-- *ngIf="selectedHotel?.roomGroups != undefined && isroomGroups == true " -->
+  <div class="container-fluid" >
     <div class="">
       <div class="hotel-details-wrapper">
         <section class="hotel-image-and-reviews">
@@ -28,8 +30,8 @@
 
                       <div class="col-md-10 col-9">
                       <div class="hotel-description">
-                        <h5>{{currentHotelAvailability?.name}}</h5>
-                        <p class="hotel-booking-description" [innerHtml]="currentHotelAvailability.description"></p>
+                        <h5>{{selectedHotel?.name}}</h5>
+                        <p class="hotel-booking-description" [innerHtml]="selectedHotel.description"></p>
                       </div>
                     </div>
 
@@ -93,9 +95,9 @@
                       <ul>
                         <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{saudiPhoneCode}}  {{hotelPhone}}
                         </li>
-                        <li><img class="" src="assets/images/icons/email.png">{{currentHotelAvailability.email}}</li>
+                        <li><img class="" src="assets/images/icons/email.png">{{selectedHotel.email}}</li>
                         <li class="detail-contact"><img class="" src="assets/images/icons/Group.png">
-                          <div>{{currentHotelAvailability.address}}</div></li>
+                          <div>{{selectedHotel.address}}</div></li>
                       </ul>
                     </div>
                     <div class="reviews">
@@ -249,17 +251,14 @@
                       Price per night
                     </td>
                     <td>
-                      Select Room
-                    </td>
-                    <td>
                       <!-- Room type -->
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let room of currentHotelAvailability?.roomGroups[0]?.rooms let i = index;">
+                  <tr *ngFor="let room of selectedHotel?.roomGroups[0]?.rooms let i = index;">
                     <td>
-                      <p class="room-type-name">Room type name</p>
+                      <p class="room-type-name">{{room?.name}}</p>
                       <div class="room-type-image-lightbox">
                         <div class="d-flex flex-row mb-3">
                           <div class="p-2 room-type-main-img">
@@ -274,39 +273,32 @@
                       </div>
                     </td>
                     <td>
-                      <div class="d-flex justify-content-between" *ngIf="adults">
+                      <div class="d-flex justify-content-between" *ngIf="room?.adultsCount.length>0">
                         <div class="adults-count">
                           <img src="assets/images/icons/man-standing-up.png" alt=""
-                            *ngFor="let adultImage of currentHotelAvailability?.adults">
+                            *ngFor="let adultImage of room?.adultsCount">
                           <!-- <img src="assets/images/icons/man-standing-up.png" alt=""> -->
                         </div>
-                        <div class="guest-count-value">{{currentHotelAvailability?.adults?.length}} adults</div>
+                        <div class="guest-count-value">{{room?.adultsCount.length}} adults</div>
                       </div>
-                      <div class="d-flex justify-content-between" *ngIf="child">
-                        <div class="child-count" *ngFor="let childImage of currentHotelAvailability?.childrens"><img
+                      <div class="d-flex justify-content-between d-none" *ngIf="room?.childCount.length>0">
+                        <div class="child-count" *ngFor="let childImage of room?.childCount"><img
                             src="assets/images/icons/children.png" alt=""></div>
-                        <div class="guest-count-value">{{currentHotelAvailability?.childrens?.length}} child</div>
+                        <div class="guest-count-value">{{room?.childCount.length}} child</div>
                       </div>
                     </td>
                     <td class="custom-select-section">
                       <div *ngFor="let roomaAmount of room.displayRateInfo">
-                        <p class="nights-count" *ngIf="roomaAmount.purpose == 1">{{currentHotelAvailability?.nights}}
+                        <p class="nights-count" *ngIf="roomaAmount.purpose == 1">{{1}}
                           nights {{roomaAmount.amount | number : "1.2-2"}} {{roomaAmount.currencyCode}}</p>
                         <small *ngIf="roomaAmount.purpose == 40">+ {{roomaAmount.amount | number : "1.2-2"}}
                           {{roomaAmount.currencyCode}}
                           taxs</small>
                       </div>
                     </td>
+                   
                     <td class="custom-select-section">
-
-                      <select name="rooms" class="custom-select "
-                        (change)="selectRoomQuantity($event.target.value, i,room)">
-                        <option value="0">0</option>
-                        <option value="{{roomqty}}" *ngFor="let roomqty of room.availabilityCount">{{roomqty}}</option>
-                      </select>
-                    </td>
-                    <td class="custom-select-section">
-                      <button class="btn book-room-btn" (click)="onTransport(currentHotelAvailability)">Book
+                      <button class="btn book-room-btn" (click)="onRoomAvailability(selectedHotel,room)">Book
                         room</button>
                     </td>
                   </tr>
