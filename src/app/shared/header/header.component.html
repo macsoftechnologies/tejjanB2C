@@ -13,13 +13,13 @@
             <li *ngIf="!showHideLogin" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""><img
                   src="../../../assets/images/header-images/profile.png" alt=""></a>
               <div class="dropdown-menu">
-                <a [routerLink]="['b2b/profile']" class="dropdown-item">Account</a>
+                <a [routerLink]="['b2c/profile']" class="dropdown-item">Account</a>
                 <a [routerLink]="" class="dropdown-item">Favourite Hotel</a>
-                <a [routerLink]="['b2b/mybooking']" class="dropdown-item">My Booking</a>
+                <a [routerLink]="['b2c/mybooking']" class="dropdown-item">My Booking</a>
                 <a (click)="logout()" class="dropdown-item">Log out</a>
               </div>
             </li>
-            <li *ngIf="showHideLogin"><a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2b/signup']">
+            <li *ngIf="showHideLogin"><a [routerLink]="['b2c/signin']">Login</a> / <a [routerLink]="['b2c/signup']">
                 Register</a></li>
           </ul>
         </div>
@@ -38,16 +38,14 @@
           <ul class="menu-list-nav m-0">
             <!-- <li class="nav-item"><a href="">Umrah Packages <img -->
             <!-- src="../../../assets/images/header-images/honeymoon.png" alt=""></a></li> -->
-            <!-- <li class="nav-item"><a [routerLink]="['b2b/search']">Hotels <img src="../../../assets/images/header-images/hotel.png" alt=""></a>
-            </li> -->
             <!-- <li class="nav-item"><a href="">Flight <img src="../../../assets/images/header-images/flight.png"
                   alt=""></a></li> -->
             <li class="nav-item drop-down">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Support<img
                   src="../../../assets/images/header-images/support.png" alt=""></a>
               <div class="dropdown-menu inner-lists">
-                <a [routerLink]="['b2b/contactus']" class="dropdown-item">Contact Us</a>
-                <a [routerLink]="['b2b/faq']" class="dropdown-item">FAQ's <img
+                <a [routerLink]="['b2c/contactus']" class="dropdown-item">Contact Us</a>
+                <a [routerLink]="['b2c/faq']" class="dropdown-item">FAQ's <img
                     src="../../../assets/images/header-images/faqs.png"></a>
               </div>
             </li>
@@ -61,7 +59,7 @@
           
             <i class="fa fa-shopping-cart" aria-hidden="true" (click)="bookigSummary()"></i>
           </div>
-          <a class="col-md-6" href="javascript:void(0)" [routerLink]="['b2b/search']">
+          <a class="col-md-6" href="javascript:void(0)" [routerLink]="['b2c/search']">
             <img src="../../../assets/images/header-images/header-logo.png" alt="">
           </a>
         </div>
@@ -80,14 +78,14 @@
               <a *ngIf="!showHideLogin" class="dropdown-toggle" data-toggle="dropdown" href="">
                 <img src="../../../assets/images/header-images/profile.png" alt="">
                 <div class="dropdown-menu">
-                  <a [routerLink]="['b2b/profile']" class="dropdown-item">Account</a>
+                  <a [routerLink]="['b2c/profile']" class="dropdown-item">Account</a>
                   <a class="dropdown-item">Favourite Hotel</a>
-                  <a [routerLink]="['b2b/mybooking']" class="dropdown-item">My Booking</a>
+                  <a [routerLink]="['b2c/mybooking']" class="dropdown-item">My Booking</a>
                   <a (click)="logout()" class="dropdown-item">Log out</a>
                 </div>
               </a>
               <span *ngIf="showHideLogin" class="mobile-login">
-                <a [routerLink]="['b2b/signin']">Login</a> / <a [routerLink]="['b2b/signup']"> Register</a>
+                <a [routerLink]="['b2c/signin']">Login</a> / <a [routerLink]="['b2c/signup']"> Register</a>
               </span>
             </div>
           </div>
@@ -101,7 +99,7 @@
                   <ul>
                     <!-- <li class="nav-item"><a href="">Umrah Packages </a> <span><img
                           src="../../../assets/images/header-images/honeymoon.png" alt=""></span></li> -->
-                    <li class="nav-item"><a [routerLink]="['b2b/search']" href="">Hotels </a><span><img
+                    <li class="nav-item"><a [routerLink]="['b2c/search']" href="">Hotels </a><span><img
                           src="../../../assets/images/header-images/hotel.png" alt=""></span>
                     </li>
                     <!-- <li class="nav-item"><a href="">Flight </a><span><img
@@ -112,10 +110,10 @@
                       <div class="dropdown-menu inner-lists">
                         <ul class="dropdown-menu">
                           <li>
-                            <a [routerLink]="['b2b/contactus']" class="dropdown-item" href="">Contact Us</a>
+                            <a [routerLink]="['b2c/contactus']" class="dropdown-item" href="">Contact Us</a>
                           </li>
                           <li>
-                            <a [routerLink]="['b2b/faq']" class="dropdown-item" href="">FAQ's </a><span><img
+                            <a [routerLink]="['b2c/faq']" class="dropdown-item" href="">FAQ's </a><span><img
                                 src="../../../assets/images/header-images/faqs.png">
                             </span>
                           </li>

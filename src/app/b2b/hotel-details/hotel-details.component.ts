@@ -317,7 +317,7 @@ export class HotelDetailsComponent implements OnInit {
           this.spinner.hide();
           this.isroomGroups = false
           setTimeout(() => {
-            this.router.navigateByUrl("b2b/hotellist");
+            this.router.navigateByUrl("b2c/hotellist");
           }, 5000);
         }
 
@@ -501,12 +501,8 @@ export class HotelDetailsComponent implements OnInit {
     } else {
       selectHotel.roomGroups[0]["rooms"] = this.roomgroupsrooms
       localStorage.setItem("hotelcart", JSON.stringify(selectHotel));
-      // this.router.navigateByUrl('b2b/transport')
-      if ((document.location.href).toString().includes("b2b")) {
-        this.router.navigateByUrl("b2b/transport");
-      } else {
-        this.router.navigateByUrl("b2c/transport");
-      }
+      this.router.navigateByUrl('b2c/transport')
+     
 
     }
   }
@@ -525,7 +521,7 @@ export class HotelDetailsComponent implements OnInit {
 
   /* navigate to hotelList */
   backToHotelList() {
-    this.router.navigateByUrl("b2b/hotellist")
+    this.router.navigateByUrl("b2c/hotellist")
   }
 
 }
