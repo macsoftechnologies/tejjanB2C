@@ -300,10 +300,10 @@ export class TransportServiceComponent implements OnInit {
   public searchAgain(): void {}
 
   /* call transport availability api by click on view details of transport list item */
-  public onTransportationViewDetails(currentTransport): void {
-      
+  public onTransportationViewDetails(currentTransport): void {     
 
      console.log("transportList" , this.transportList)
+     console.log("transportList" , currentTransport)
 
     // this.spinner.show();
     this.isTransportListAvailableFlag = false;

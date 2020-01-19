@@ -222,7 +222,7 @@
                     <div id="vehicleCategory" class="collapse show filter-options" data-parent="#vehicle-category">
 
                       <perfect-scrollbar style="position: relative; max-height: 245px;overflow: auto;"
-                        [config]="config">
+                        >
                         <div class="custom-control custom-checkbox mr-sm-2 m-b-5 ">
                           <input type="checkbox" class="custom-control-input" id="checkbox1">
                           <label class="custom-control-label" for="checkbox1">Normal</label>
@@ -254,7 +254,7 @@
                     <div id="vehicleType" class="collapse show filter-options" data-parent="#vehicle-type">
 
                       <perfect-scrollbar style="position: relative; max-height: 245px;overflow: auto;"
-                        [config]="config">
+                        >
                         <div class="custom-control custom-checkbox mr-sm-2 m-b-5 ">
                           <input type="checkbox" class="custom-control-input" id="checkbox11">
                           <label class="custom-control-label" for="checkbox1">Normal</label>
@@ -320,7 +320,7 @@
                       <div class="form-group">
                         <label>transport Name</label>
                         <input type="text" class="form-control form-control-lg" id="price-slider"
-                          [(ngModel)]="name_filter" name="name_filter">
+                          [(ngModel)]="transport_name_filter" name="transport_name_filter">
                       </div>
                     </div>
                     <div class="col-7">
@@ -572,7 +572,7 @@
                             (change)="vehicleAviQty($event.target.value , vehicle , i)">
                             <!-- <option value="0" selected>0</option> -->
                             <option value="{{availableQuantity}}"
-                              *ngFor="let availableQuantity of vehicle?.categories[0]?.availableQuantity; let k = indexy">
+                              *ngFor="let availableQuantity of vehicle?.categories[0]?.availableQuantity; let k = index">
                               {{availableQuantity}}</option>
                           </select>
                           <!-- <ng-select class="custom-input custom-select" (change)="vehicleAviQty($event , vehicle , i)"
