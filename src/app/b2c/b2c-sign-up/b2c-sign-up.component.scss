@@ -64,7 +64,7 @@
   @include mobile {
     width: auto;
     height: auto;
-    padding: 6px 25px 12px 30px;
+    // padding: 6px 25px 12px 30px;
   }
 }
 
@@ -117,14 +117,12 @@
     a {
       text-decoration: underline;
     }
-
   }
 }
 
 .form-control {
   padding: 0;
 }
-
 
 // ***** Override the custom checkbox styles  *******
 
