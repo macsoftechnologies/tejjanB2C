@@ -524,6 +524,32 @@ export class HotelDetailsComponent implements OnInit {
     this.router.navigateByUrl("b2c/hotellist")
   }
 
+  /* ccalculate room taxes Info */
+  public getTaxexInfo(displayRateInfo):any{
+    let baseAmount=0;
+    let vatAmount=0;
+    let feesAmount=0;
+
+    displayRateInfo.forEach(displayRate => {
+      if (displayRate.purpose == "1") 
+        baseAmount = displayRate.amount;
+        if (displayRate.purpose == "7") 
+          vatAmount = displayRate.amount
+        if (displayRate.purpose == "2") 
+          feesAmount = displayRate.amount
+    })
+
+    let taxesObject = {
+      totalTxAmount:baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount,
+      baseAmount:baseAmount,
+      vatAmount:vatAmount,
+      feesAmount:feesAmount,
+      gdsTax:baseAmount / 100 * 7.5,
+      otaTax:baseAmount / 100 * 30
+    }
+    return taxesObject;
+  }
+
 }
 
 

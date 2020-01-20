@@ -17,7 +17,7 @@ export class GroundServiceComponent implements OnInit {
   // public groundResultsNotFound: boolean;
   public isFirstTimeLoad: boolean = true;
   public groundServiceList = [];
-  public groundViewDetails : any;
+  public groundViewDetails: any;
   public isGroundAvailabilty: boolean = false
   public categories = [];
   public additionalServices = [];
@@ -95,17 +95,11 @@ export class GroundServiceComponent implements OnInit {
 
   public getGroundServicesLookup(): void {
     this.teejanServices.getGroundServiceLookup().subscribe((groundServiceResponse) => {
-      // console.log("groundServiceResponse" , groundServiceResponse)
-      this.categories = JSON.parse(groundServiceResponse.categories).categories; 
+      this.categories = JSON.parse(groundServiceResponse.categories).categories;
       this.companies = JSON.parse(groundServiceResponse.uocompanies).uocompanies;
-      console.log(" this.companies" ,  this.companies)
       this.additionalServices = JSON.parse(groundServiceResponse.additionalservices).additionalServices;
-      // console.log(" this.additionalServices" ,  this.additionalServices)
-
       this.patchValues();
-
     }, (err) => {
-
     })
   }
 
@@ -122,7 +116,6 @@ export class GroundServiceComponent implements OnInit {
     this.teejanServices.getCountyList().subscribe((data) => {
       this.countriesList = data;
     })
-
   }
 
   public loadGroundSericeFilterForm(): void {
@@ -134,7 +127,7 @@ export class GroundServiceComponent implements OnInit {
       // quantity: [""],
       arrivalDate: [""],
       nationality: [null, Validators.required],
-      countryOfResidence:[null , Validators.required],
+      countryOfResidence: [null, Validators.required],
       rows: this.fb.array([]),
     });
     this.bindGroundServiceFilterData();
@@ -144,15 +137,11 @@ export class GroundServiceComponent implements OnInit {
   public bindGroundServiceFilterData(): void {
     this.isGroundAvailabilty = true
     this.GroundServicesFormGroup.patchValue({
-      
       nationality: this.searchFilterObj.nationality.countryName,
       countryOfResidence: this.searchFilterObj.countryOfResidence.countryName,
-
       noOfPax: parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
-      
       arrivalDate: this.searchFilterObj.checkIn.year + "-" + this.searchFilterObj.checkIn.month + "-" + this.searchFilterObj.checkIn.day,
     })
-    console.log(JSON.stringify(this.GroundServicesFormGroup.value));
     this.onGroundServicesSearch();
   }
 
@@ -175,51 +164,35 @@ export class GroundServiceComponent implements OnInit {
         "cultureCode": this.searchData.context.cultureCode,
       },
       "request": {
-        "nationality":  this.searchFilterObj.nationality.countryCode,
-        "countryOfResidence":this.searchFilterObj.countryOfResidence.countryCode ,
+        "nationality": this.searchFilterObj.nationality.countryCode,
+        "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
         "quantity": this.GroundServicesFormGroup.value.noOfPax,
         "additionalServices": groundServices1
       }
     }
-
-
-
     if (formData.request.additionalServices.length <= 0) {
       delete formData.request.additionalServices
     }
-
-
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
       this.isFirstTimeLoad = false;
-
-     
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
-
-
-           this.companies.forEach(comapny =>{
-            resp.body.groundServices.forEach(groundCompany =>{
-                if(comapny.code === groundCompany.uoCode){
-                  groundCompany.companyName = comapny.name
-                  groundCompany.comapnyDescription = comapny.description
-                  groundCompany.address = comapny.address
-
-                }
-            })
-           })
-
-
-
+      this.companies.forEach(comapny => {
+        resp.body.groundServices.forEach(groundCompany => {
+          if (comapny.code === groundCompany.uoCode) {
+            groundCompany.companyName = comapny.name
+            groundCompany.comapnyDescription = comapny.description
+            groundCompany.address = comapny.address
+          }
+        })
+      })
       this.groundServiceList = resp.body.groundServices
-
-      
     }, (err) => {
 
     })
   }
 
-  onGroundServices(){
-    console.log("onGroundServices")
+  onGroundServices() {
     this.onGroundServicesSearch();
   }
 
@@ -247,71 +220,80 @@ export class GroundServiceComponent implements OnInit {
   }
 
   public onGroundServiceViewDetails(groundService): void {
-    
-
     this.isGroundServicesAvailableFlag = false;
+    this.categories.forEach(category => {
+      if (category.code === groundService.category.categoryCode) {
+        groundService.category.categoryName = category.name
+      }
+    })
+  /*   groundService.category.displayRateInfo.forEach(rate => {
+      if (rate.purpose == "1") {
+        let GDSobject = {
+          amount: (rate.amount / 100) * 7.5,
+          purpose: "20",
+          description: "GDSTAX",
+          currencyCode: "SAR"
+        };
+        groundService.category.displayRateInfo.push(GDSobject);
+        let OTAobject = {
+          amount: (rate.amount / 100) * 30,
+          purpose: "30",
+          description: "OTATAX",
+          currencyCode: "SAR"
+        };
+        groundService.category.displayRateInfo.push(OTAobject);
 
+        // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
+        if (rate.purpose == "7") {
+          this.taxAmount = 0;
+          this.taxAmount = rate.amount;
+        }
+        if (rate.purpose == "2") {
+          this.feeAmount = 0;
+          this.feeAmount = rate.amount;
+        }
 
-         this.categories.forEach( category =>{
+        let taxesObject = {
+          amount:
+            (rate.amount / 100) * 30 +
+            (rate.amount / 100) * 7.5 +
+            this.taxAmount +
+            this.feeAmount,
+          purpose: "40",
+          description: "TAXES",
+          currencyCode: "SAR"
+        };
+        groundService.category.displayRateInfo.push(taxesObject);
+      }
+    }) */
+    this.groundViewDetails = groundService
+    console.log("this.groundViewDetails", this.groundViewDetails)
+  }
 
-            if(category.code === groundService.category.categoryCode){
-              groundService.category.categoryName = category.name
+  /* calculating ground service taxes */
+  public getGroundServicesTaxes(displayRateInfo):any{
+    let baseAmount=0;
+    let vatAmount=0;
+    let feesAmount=0;
 
-            }
+    displayRateInfo.forEach(displayRate => {
+      if (displayRate.purpose == "1") 
+        baseAmount = displayRate.amount;
+        if (displayRate.purpose == "7") 
+          vatAmount = displayRate.amount
+        if (displayRate.purpose == "2") 
+          feesAmount = displayRate.amount
+    })
 
-         })
-
-
-         groundService.category.displayRateInfo.forEach(rate => {
-
-                if (rate.purpose == "1") {
-                  let GDSobject = {
-                    amount: (rate.amount / 100) * 7.5,
-                    purpose: "20",
-                    description: "GDSTAX",
-                    currencyCode: "SAR"
-                  };
-                  groundService.category.displayRateInfo.push(GDSobject);
-                  let OTAobject = {
-                    amount: (rate.amount / 100) * 30,
-                    purpose: "30",
-                    description: "OTATAX",
-                    currencyCode: "SAR"
-                  };
-                  groundService.category.displayRateInfo.push(OTAobject);
-      
-                  // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
-                  if (rate.purpose == "7") {
-                    this.taxAmount = 0;
-                    this.taxAmount = rate.amount;
-                  }
-                  if (rate.purpose == "2") {
-                    this.feeAmount = 0;
-                    this.feeAmount = rate.amount;
-                  }
-      
-                  let taxesObject = {
-                    amount:
-                      (rate.amount / 100) * 30 +
-                      (rate.amount / 100) * 7.5 +
-                      this.taxAmount +
-                      this.feeAmount,
-                    purpose: "40",
-                    description: "TAXES",
-                    currencyCode: "SAR"
-                  };
-                  groundService.category.displayRateInfo.push(taxesObject);
-                }
-      
-      
-              })
-
-
-      this.groundViewDetails = groundService
-
-console.log("this.groundViewDetails" , this.groundViewDetails)
-    
-
+    let taxesObject = {
+      totalTxAmount:baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount,
+      baseAmount:baseAmount,
+      vatAmount:vatAmount,
+      feesAmount:feesAmount,
+      gdsTax:baseAmount / 100 * 7.5,
+      otaTax:baseAmount / 100 * 30
+    }
+    return taxesObject;
   }
 
   clearQuantityIfNecessary(id) {
@@ -326,10 +308,8 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
   }
 
   addToCart(groundService) {
-
-  this.spinner.show();
-    for (let n = 0; n < groundService.category.displayRateInfo.length; n++) {
-
+    this.spinner.show();
+    /* for (let n = 0; n < groundService.category.displayRateInfo.length; n++) {
       if (groundService.category.displayRateInfo[n].purpose === "20") {
         groundService.category.displayRateInfo.splice(n, 1)
         n--
@@ -341,10 +321,8 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
         n--
       }
 
-    }
-
-
-      console.log("groundService" , groundService)
+    } */
+    console.log("groundService", groundService)
 
     this.groundServiceTrackToken = localStorage.getItem('groundServiceTrackToken')
     var requestObj = {
@@ -365,7 +343,7 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
         "provider": groundService.provider,
         "category": {
           "categoryCode": groundService.category.categoryCode,
-          "Quantity":  parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
+          "Quantity": parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
           "displayRateInfo": groundService.category.displayRateInfo,
           "arrivalDate": groundService.category.arrivalDate
         },
@@ -373,22 +351,14 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
         "policies": groundService.policies,
         "termsAndConditions": groundService.termsAndConditions,
         "config": groundService.config,
-        "images" : groundService.images
+        "images": groundService.images
       }
-
-
     }
-
-
     this.teejanServices.getGroundServiceAvailability(requestObj).subscribe((groundavabilityResponse) => {
-
-       this.spinner.hide()
-
-      console.log("groundavabilityResponse" , groundavabilityResponse)
+      this.spinner.hide()
+      console.log("groundavabilityResponse", groundavabilityResponse)
       localStorage.setItem("groundAvailabilityToken", groundavabilityResponse.headers.get('tracktoken'))
-
       localStorage.setItem("groundCart", JSON.stringify(groundavabilityResponse.body));
-
       swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -398,46 +368,19 @@ console.log("this.groundViewDetails" , this.groundViewDetails)
         timer: 3000
       })
       console.log("groundService", groundService)
-  
-  
       this.router.navigateByUrl("b2c/bookingsummary")
-  
-
-
     })
-
-
-
-
-
-
-
-
-
-
-    
   }
 
   searchAgain() {
-    // this.groundResultsNotFound  = false
-    this.router.navigateByUrl("b2b/ground");
-    // this.isGroundServicesAvailableFlag = false;
-
+    this.router.navigateByUrl("b2c/ground");
   }
 
-
-  backToGroundServicesList(){
+  backToGroundServicesList() {
     this.bindGroundServiceFilterData();
-   
   }
   bookingSummary() {
     this.router.navigateByUrl("b2c/bookingsummary");
-
-    // if ((document.location.href).toString().includes("b2b")) {
-    //   this.router.navigateByUrl("b2b/bookingsummary");
-    // } else {
-    // }
-    // this.router.navigateByUrl("b2b/bookingsummary")
   }
 
 }

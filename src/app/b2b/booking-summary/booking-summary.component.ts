@@ -186,7 +186,7 @@ export class BookingSummaryComponent implements OnInit {
   public groundCalculations() {
     if (this.groundCart != null || this.groundCart != undefined) {
       this.groundQuantity = 1;
-      this.groundCart.displayRateInfo.forEach(rate => {
+      if(this.groundCart.displayRateInfo !=undefined){ this.groundCart.displayRateInfo.forEach(rate => {
         if (rate.purpose == "1") {
           this.groundBasePrice += rate.amount * this.groundQuantity;
           // console.log("groundBasePrice", this.groundBasePrice);
@@ -209,7 +209,8 @@ export class BookingSummaryComponent implements OnInit {
         // }
       });
       this.groundTotalPrice =
-        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
+        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;}
+     
     }
   }
 
