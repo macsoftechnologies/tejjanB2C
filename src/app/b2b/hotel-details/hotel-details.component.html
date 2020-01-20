@@ -288,13 +288,20 @@
                       </div>
                     </td>
                     <td class="custom-select-section">
-                      <div *ngFor="let roomaAmount of room.displayRateInfo">
+                      <div *ngFor="let roomaAmount of room.displayRateInfo" class="d-none">
                         <p class="nights-count" *ngIf="roomaAmount.purpose == 1">{{1}}
                           nights {{roomaAmount.amount | number : "1.2-2"}} {{roomaAmount.currencyCode}}</p>
-                        <small *ngIf="roomaAmount.purpose == 40">+ {{roomaAmount.amount | number : "1.2-2"}}
-                          {{roomaAmount.currencyCode}}
-                          taxs</small>
+                        
                       </div>
+
+                      <div>
+                        <p class="nights-count">
+                          nights {{room.displayRateInfo[0].amount | number : "1.2-2"}} {{room.displayRateInfo[0].currencyCode}}</p>
+                          <small >+ {{getTaxexInfo(room.displayRateInfo).totalTxAmount }}
+                            {{room.displayRateInfo[0].currencyCode}}
+                            taxs</small>
+                      
+                        </div>
                     </td>
                    
                     <td class="custom-select-section">

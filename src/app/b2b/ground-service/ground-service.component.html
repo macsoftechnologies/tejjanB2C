@@ -390,7 +390,7 @@
                           <!-- <span class="booking-item-price" >
                             {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span> -->
-                        <div *ngFor="let displayRateInfo of  groundViewDetails?.category.displayRateInfo">
+                        <div *ngFor="let displayRateInfo of  groundViewDetails?.category.displayRateInfo" class="d-none">
                           <span class="booking-item-price" *ngIf="displayRateInfo.purpose == 1">
                             {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span>
@@ -399,6 +399,16 @@
                             {{displayRateInfo.description}}
                           </span>
                         </div>
+
+                        <div>
+                          <p class="nights-count">
+                            nights {{groundViewDetails?.category.displayRateInfo[0].amount | number : "1.2-2"}} 
+                            {{groundViewDetails?.category.displayRateInfo[0].currencyCode}}</p>
+                            <small >+ {{getGroundServicesTaxes(groundViewDetails?.category.displayRateInfo).totalTxAmount }}
+                              {{groundViewDetails?.category.displayRateInfo[0].currencyCode}}
+                              taxs</small>
+                        
+                          </div>
                       </div>
                       <!-- <a class="btn btn-primary" href="#" (click)="onNavToGroundService()">Book Now</a> -->
 
