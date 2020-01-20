@@ -225,8 +225,8 @@ export class BookingSummaryComponent implements OnInit {
         .fire({
           text: "Please login to continue",
           // showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#bb9356",
+          // cancelButtonColor: "#d33",
           confirmButtonText: "Login"
         })
         .then(result => {

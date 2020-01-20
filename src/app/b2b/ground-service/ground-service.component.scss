@@ -199,14 +199,14 @@
               padding: 8px 16px;
 
               .filter-header {
-                a {
-                  display: flex;
+                display: flex;
                   justify-content: space-between;
-
+                  align-items: center;
+               
                   h5 {
                     margin-bottom: 0;
                     color: #5c6163;
-                    font-size: 18px;
+                    font-size: 16px;
                     font-weight: 500;
                     line-height: 21px;
                   }
@@ -214,8 +214,10 @@
                   span {
                     color: #c2c2c2;
                     font-size: 11px;
+                    cursor: pointer;
                   }
-
+                  a {
+            
                   i {
                     line-height: 27px;
                   }
@@ -359,7 +361,8 @@
                   img {
                     width: 280px;
                     height: 186px;
-                    border-radius: 10px;
+                    border-bottom-left-radius: 7px;
+                    border-top-left-radius: 7px;
                     // width: 100%;
                     // height: 100%;
                     // max-width: 280px;
@@ -369,7 +372,7 @@
                 }
 
                 .transport-details {
-                  padding: 10px 0;
+                  padding: 10px 20px;
 
                   @include mobile {
                     padding: 10px 20px;

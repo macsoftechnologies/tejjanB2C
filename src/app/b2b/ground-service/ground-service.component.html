@@ -100,7 +100,7 @@
                           alt="transport-class"></div>
                     </div>
                     <input type="" class="form-control" disabled
-                    [formControl]="GroundServicesFormGroup.controls['countryOfResidence']" />
+                      [formControl]="GroundServicesFormGroup.controls['countryOfResidence']" />
                     <!-- <ng-select class="custom-select" [items]="countriesList" [virtualScroll]="true"
                       placeholder="Select countryOfResidence" [formControl]="GroundServicesFormGroup.controls['countryOfResidence']"
                       bindLabel="countryName" >
@@ -111,8 +111,7 @@
             </div>
             <div class="col-md-4" (click)="onGroundServices()">
               <div class="search-btn">
-                <button class="btn" ><img src="assets/images/icons/search_icon.png"
-                    alt="" ></button>
+                <button class="btn"><img src="assets/images/icons/search_icon.png" alt=""></button>
               </div>
             </div>
           </div>
@@ -150,9 +149,9 @@
                 <li id="ground-name">
                   <div class="filter-wrapper">
                     <div class="filter-header">
+                      <h5 class="booking-filters-title d-inline">Ground Service Name</h5>
+                      <span (click)="clearFilter('RATING')">Clear</span>
                       <a class="card-link" data-toggle="collapse" href="#groundName">
-                        <h5 class="booking-filters-title d-inline">Ground Service Name</h5>
-                        <span (click)="clearFilter('RATING')">Clear</span>
                         <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                       </a>
                     </div>
@@ -166,9 +165,9 @@
                 <li id="ground-currency">
                   <div class="filter-wrapper">
                     <div class="filter-header">
+                      <h5 class="booking-filters-title d-inline">Currency</h5>
+                      <span (click)="clearFilter('RATING')">Clear</span>
                       <a class="card-link" data-toggle="collapse" href="#groundCurrency">
-                        <h5 class="booking-filters-title d-inline">Currency</h5>
-                        <span (click)="clearFilter('RATING')">Clear</span>
                         <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                       </a>
                     </div>
@@ -182,9 +181,9 @@
                 <li id="ground-price-range">
                   <div class="filter-wrapper">
                     <div class="filter-header">
+                      <h5 class="booking-filters-title d-inline">Price Range</h5>
+                      <span (click)="clearFilter('RATING')">Clear</span>
                       <a class="card-link" data-toggle="collapse" href="#transportPriceRange">
-                        <h5 class="booking-filters-title d-inline">Price Range</h5>
-                        <span (click)="clearFilter('RATING')">Clear</span>
                         <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                       </a>
                     </div>
@@ -359,7 +358,9 @@
                 <thead>
                   <tr>
                     <th>Ground Service</th>
-                    <th><i class="fa fa-user-o" aria-hidden="true"></i>Date</th>
+                    <th><i class="fa fa-calendar"></i>
+                      Date
+                    </th>
                     <th class="text-center">Price</th>
                     <th></th>
                   </tr>
@@ -386,15 +387,16 @@
                   <td class="text-center">
                     <div class="booking-item-sec">
                       <div class="booking-item-price-sec">
-                        
-                          <!-- <span class="booking-item-price" >
+
+                        <!-- <span class="booking-item-price" >
                             {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span> -->
                         <div *ngFor="let displayRateInfo of  groundViewDetails?.category.displayRateInfo">
                           <span class="booking-item-price" *ngIf="displayRateInfo.purpose == 1">
                             {{groundViewDetails?.category?.displayRateInfo[2]?.amount | number: '1.2-2'}} SAR
                           </span>
-                          <span class="booking-item-price custom-color booking-item-taxes" *ngIf="displayRateInfo.purpose == 40">
+                          <span class="booking-item-price custom-color booking-item-taxes"
+                            *ngIf="displayRateInfo.purpose == 40">
                             +{{displayRateInfo.amount | number: '1.2-2'}} {{displayRateInfo.currencyCode}}
                             {{displayRateInfo.description}}
                           </span>
@@ -426,14 +428,7 @@
   </div>
 </div>
 
-<ngx-spinner
-bdOpacity = 0.9
-bdColor = "#333"
-size = "medium"
-color = "#BB9356"
-type = "ball-pulse-sync"
-[fullScreen] = "true"
->
-<p style="color: white" > Loading... </p>
+<ngx-spinner bdOpacity=0.9 bdColor="#333" size="medium" color="#BB9356" type="ball-pulse-sync" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
 </ngx-spinner>
 <!-- </div> -->

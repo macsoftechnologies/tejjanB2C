@@ -80,33 +80,34 @@ padding: 8px 16px;
 
   display: flex;
   justify-content: space-between;
-
+  h5 {
+    font-size: 18px;
+  }
   span {
     color: #ccc;
     font-size: 11px;
     cursor: pointer;
+    margin-top: 6px;
+    margin-right: 5px;
   }
-a {
-display: flex;
-justify-content: space-between;
-
-h5 {
-margin-bottom: 0;
-color: #5c6163;
-font-size: 18px;
-font-weight: 500;
-line-height: 21px;
-}
-
-span {
-color: #c2c2c2;
-font-size: 11px;
-}
-
-i {
-line-height: 27px;
-}
-}
+  a {
+  display: flex;
+  justify-content: space-between;
+    h5 {
+    margin-bottom: 0;
+    color: #5c6163;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    }
+    span {
+    color: #c2c2c2;
+    font-size: 11px;
+    }
+    i {
+    line-height: 27px;
+    }
+  }
 }
 
 .filter-options {
@@ -330,8 +331,8 @@ width: 100%;
 // height: auto;
 height: 100%;
 max-width: 280px;
-border-top-left-radius: 10px;
-border-bottom-left-radius: 10px;
+border-top-left-radius: 7px;
+border-bottom-left-radius: 7px;
 
 @include mobile {
 max-width: 100%;

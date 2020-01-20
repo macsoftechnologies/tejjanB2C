@@ -2,14 +2,11 @@
 @import "../../../assets/variables/modular-variables";
 
 .container {
-    padding: 44px;
     @include mobile {
         padding: 16px;
     }
 }
 .container-body {
-    padding-left: 80px;
-    padding-top: 15px;
     @include tab {
         padding-left: 0px;
     }
