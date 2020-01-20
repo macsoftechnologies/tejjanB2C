@@ -17,7 +17,7 @@
 }
 .custom-card {
     box-shadow: $card-box-shadow;
-    width: 545px;
+    width: 498px;
     // height: 407px;
     border-radius: 8px;
     @include tab {
@@ -38,10 +38,13 @@
         width: 184px;
     }
 }
-.form-fields {
-    padding: 41px;
-    @include mobile {
-        padding: 27px;
+.row {
+    justify-content: space-around;
+    .form-fields {
+        padding: 41px;
+        @include mobile {
+            padding: 27px;
+        }
     }
 }
 .custom-input {
