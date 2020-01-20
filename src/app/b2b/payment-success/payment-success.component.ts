@@ -90,7 +90,7 @@ export class PaymentSuccessComponent implements OnInit {
     private broadcastService: BroadcastserviceService, private formBuilder: FormBuilder, ) { }
 
   ngOnInit() {
-    // this.spinner.show()
+    this.spinner.show()
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"))
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"))
@@ -109,7 +109,7 @@ export class PaymentSuccessComponent implements OnInit {
   public reservation() {
     this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
     // HotelResrvation 
-    // this.spinner.hide();
+     this.spinner.hide();
     if (this.hotelcart != null) {
       this.spinner.show();
       /* preparing roomGroups Array  with travellerDetails*/
@@ -196,23 +196,24 @@ export class PaymentSuccessComponent implements OnInit {
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
       this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
         this.spinner.hide();
+        this.transportReservation();
+        this.getGroundServiceReservation();
 
-        // if (data.bookingStatus == "Confirmed") {
+         if (data.bookingStatus == "Confirmed") {
         localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
         // transport reservation service 
-        // if (this.transportCart != null) {
-       this.transportReservation();
-       /* }
+         if (this.transportCart != null) {
+       }
          }
          else {
            this.isHotelBooking = false
-           // alert("Booking Faild")
-           // this.router.navigateByUrl("b2b/search")
-           setTimeout(() => {
-             // this.router.navigateByUrl("b2b/search")
+            alert("Booking Faild")
+            this.router.navigateByUrl("b2c/search")
+          //  setTimeout(() => {
+          //    // this.router.navigateByUrl("b2b/search")
  
-           }, 6000)
-         } */
+          //  }, 6000)
+         } 
       })
     }
 
@@ -259,7 +260,7 @@ export class PaymentSuccessComponent implements OnInit {
 
     this.teejanServices.getTransportReservation(TransportFormObj).subscribe((data: any) => {
       console.log("transportBookResponse", data);
-      this.getGroundServiceReservation();
+      // this.getGroundServiceReservation();
     });
   }
 
