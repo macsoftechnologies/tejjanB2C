@@ -438,6 +438,17 @@
                               <p class="transport-address">Address:
                                 {{transport.companyAddress}}</p>
                               <span class="transport-description "> {{transport.companyDescription}}</span>
+                              <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices!=undefined">
+                                <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices.length>0">
+                                  Additional Services
+                                  <ul>
+                                    <li
+                                      *ngFor=" let additionalServicesItem of transport?.vehicleTypes[0]?.categories[0]?.additionalServices">
+                                      <span class="transport-description ">{{additionalServicesItem.description}}</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
                             </div>
                             <div class="col-md-3 align-items-center justify-content-center transport-price">
                               <div>
