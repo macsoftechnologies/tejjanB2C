@@ -87,10 +87,13 @@ export class PaymentSuccessComponent implements OnInit {
   walletForm: FormGroup
 
   constructor(private teejanServices: AlrajhiumrahService, private router: Router, private spinner: NgxSpinnerService,
-    private broadcastService: BroadcastserviceService, private formBuilder: FormBuilder, ) { }
+    private broadcastService: BroadcastserviceService, private formBuilder: FormBuilder, ) { 
+      this.spinner.show()
+
+    }
 
   ngOnInit() {
-    this.spinner.show()
+    
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"))
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"))
@@ -198,10 +201,10 @@ export class PaymentSuccessComponent implements OnInit {
         this.spinner.hide();
 
          if (data.bookingStatus == "Confirmed") {
+
          localStorage.setItem("BookingStatus"  , "false")  
         localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
         this.transportReservation();
-         
          }
          else {
            this.isHotelBooking = false
@@ -221,6 +224,11 @@ export class PaymentSuccessComponent implements OnInit {
 
 
   public transportReservation(){
+
+
+    if(this.transportCart != null){
+
+          this.spinner.show()
 
     console.log("transportcart" ,  this.transportCart)
    
@@ -268,6 +276,7 @@ export class PaymentSuccessComponent implements OnInit {
 
     this.teejanServices.getTransportReservation(TransportFormObj).subscribe((data: any) => {
       console.log("transportBookResponse", data);
+      this.spinner.hide();
       if(data.bookingStatus == "Confirmed"){
         localStorage.setItem("BookingStatus"  , "false")  
       
@@ -282,10 +291,12 @@ export class PaymentSuccessComponent implements OnInit {
       // this.getGroundServiceReservation();
     });
   }
+}
 
 
   public getGroundServiceReservation():void{
     if (this.groundCart != null) {
+      this.spinner.show()
       console.log("groundCart", this.groundCart)
      
       localStorage.setItem("groundProvider", this.groundCart.provider)
@@ -322,6 +333,7 @@ export class PaymentSuccessComponent implements OnInit {
       }
       console.log("groundForm data: ===>", JSON.stringify(groundForm));
       this.teejanServices.getGroundServiceReservation(groundForm).subscribe((data: any) => {
+        this.spinner.hide();
         if (data.bookingStatus == "Confirmed") {
           localStorage.setItem("BookingStatus"  , "true")  
 

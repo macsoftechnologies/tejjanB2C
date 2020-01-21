@@ -196,9 +196,11 @@
                               <br>
                               <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
                               <p><b>bookingReferenceNo:</b>{{ground?.reservationNo}}</p>
-                              <p><b>category:</b>{{ground?.category?.categoryName}}</p>
-                              <p>
-                                <b>Total Amount:</b>SAR {{groundAmount}}
+                              <!-- <p><b>bookingDate:</b>{{ground?.bookingDate}}</p> -->
+
+                              <p *ngIf = "ground?.category != undefined"><b>category:</b>{{ground?.category?.categoryName}}</p>
+                              <p *ngIf = "ground?.category != undefined">
+                                <b >Total Amount:</b>SAR {{groundAmount}}
                               </p>
                             </div>
 
@@ -314,7 +316,7 @@
                           </div>
                           <div class="col-3">
                             <label for="title">Price:</label>
-                            <p *ngIf = "ground?.category != null">{{groundAmount | number : "1.2-2"}} SAR</p>
+                            <p *ngIf = "ground?.category != undefined">{{groundAmount | number : "1.2-2"}} SAR</p>
                           </div>
                           
                    
