@@ -33,6 +33,7 @@ export class GroundServiceComponent implements OnInit {
   public groundServiceAvailability: any = {}
   public groundServiceTrackToken: any
   public isGroundServicesAvailableFlag: boolean = true;
+  public groundservice_name_filter: string;
 
 
   public taxAmount = 0
@@ -44,20 +45,21 @@ export class GroundServiceComponent implements OnInit {
   /*Ground Currencies*/
 
   /* Price Range */
-  minValue: number = 100;
-  maxValue: number = 400;
+  minValue: number = 0;
+  maxValue: number = 0;
   options: Options = {
     floor: 0,
-    ceil: 500,
+    ceil: 0,
     translate: (value: number, label: LabelType): string => {
-      switch (label) {
+     /*  switch (label) {
         case LabelType.Low:
           return "SAR" + value;
         case LabelType.High:
           return "SAR" + value;
         default:
           return "$" + value;
-      }
+      } */
+      return "SAR";
     }
   };
   /* Price Range */
@@ -79,13 +81,15 @@ export class GroundServiceComponent implements OnInit {
   ];
   searchFilterObj: any;
   public isFilterDisplay: boolean = false;
+  priceChangeMinValue: any;
+  priceChangeMaxValue: any;
+  mainGroundServiceList: any;
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
     private fb: FormBuilder, ) { }
 
   ngOnInit() {
     this.getGroundServicesLookup();
-
     this.searchData = JSON.parse(localStorage.getItem("searchObj"));
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"));
     this.loadGroundSericeFilterForm();
@@ -94,10 +98,31 @@ export class GroundServiceComponent implements OnInit {
 
 
   public getGroundServicesLookup(): void {
-    this.teejanServices.getGroundServiceLookup().subscribe((groundServiceResponse) => {
-      this.categories = JSON.parse(groundServiceResponse.categories).categories;
-      this.companies = JSON.parse(groundServiceResponse.uocompanies).uocompanies;
-      this.additionalServices = JSON.parse(groundServiceResponse.additionalservices).additionalServices;
+    this.teejanServices.getGroundServiceLookup().subscribe((groundServiceLookUpResp) => {
+      if(groundServiceLookUpResp.categories!=""){
+        this.categories = JSON.parse(
+          groundServiceLookUpResp.categories
+        ).categories;
+      }else{
+        this.categories =[];
+      }
+
+      if(groundServiceLookUpResp.uocompanies!=""){
+        this.companies = JSON.parse(
+          groundServiceLookUpResp.uocompanies
+        ).uocompanies;
+      }else{
+        this.companies =[];
+      }
+
+      if(groundServiceLookUpResp.additionalservices!=""){
+        this.additionalServices = JSON.parse(
+          groundServiceLookUpResp.additionalservices
+        ).additionalServices;
+      }else{
+        this.additionalServices =[];
+      }
+      this.onGroundServicesSearch();
       this.patchValues();
     }, (err) => {
     })
@@ -142,7 +167,7 @@ export class GroundServiceComponent implements OnInit {
       noOfPax: parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
       arrivalDate: this.searchFilterObj.checkIn.year + "-" + this.searchFilterObj.checkIn.month + "-" + this.searchFilterObj.checkIn.day,
     })
-    this.onGroundServicesSearch();
+    
   }
 
   /* call ground service search api */
@@ -164,8 +189,8 @@ export class GroundServiceComponent implements OnInit {
         "cultureCode": this.searchData.context.cultureCode,
       },
       "request": {
-        uoCodes : ["1039"],
-        
+        uoCodes: ["1039"],
+
         "nationality": this.searchFilterObj.nationality.countryCode,
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
@@ -179,16 +204,30 @@ export class GroundServiceComponent implements OnInit {
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
       this.isFirstTimeLoad = false;
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
-      this.companies.forEach(comapny => {
-        resp.body.groundServices.forEach(groundCompany => {
-          if (comapny.code === groundCompany.uoCode) {
-            groundCompany.companyName = comapny.name
-            groundCompany.comapnyDescription = comapny.description
-            groundCompany.address = comapny.address
-          }
+      if(this.companies !=undefined){
+        this.companies.forEach(comapny => {
+          resp.body.groundServices.forEach(groundCompany => {
+            if (comapny.code === groundCompany.uoCode) {
+              groundCompany.companyName = comapny.name
+              groundCompany.comapnyDescription = comapny.description
+              groundCompany.address = comapny.address
+              groundCompany.images = comapny.images
+            }
+          })
         })
-      })
+      }
+      
       this.groundServiceList = resp.body.groundServices
+      this.mainGroundServiceList = resp.body.groundServices
+      this.groundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
+      this.minValue = this.groundServiceList[0].category.displayRateInfo[0].amount;
+      this.maxValue = this.groundServiceList[
+        this.groundServiceList.length - 1
+      ].category.displayRateInfo[0].amount;
+      this.options = {
+        floor: this.minValue,
+        ceil: this.maxValue
+      };
     }, (err) => {
 
     })
@@ -228,72 +267,31 @@ export class GroundServiceComponent implements OnInit {
         groundService.category.categoryName = category.name
       }
     })
-  /*   groundService.category.displayRateInfo.forEach(rate => {
-      if (rate.purpose == "1") {
-        let GDSobject = {
-          amount: (rate.amount / 100) * 7.5,
-          purpose: "20",
-          description: "GDSTAX",
-          currencyCode: "SAR"
-        };
-        groundService.category.displayRateInfo.push(GDSobject);
-        let OTAobject = {
-          amount: (rate.amount / 100) * 30,
-          purpose: "30",
-          description: "OTATAX",
-          currencyCode: "SAR"
-        };
-        groundService.category.displayRateInfo.push(OTAobject);
-
-        // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
-        if (rate.purpose == "7") {
-          this.taxAmount = 0;
-          this.taxAmount = rate.amount;
-        }
-        if (rate.purpose == "2") {
-          this.feeAmount = 0;
-          this.feeAmount = rate.amount;
-        }
-
-        let taxesObject = {
-          amount:
-            (rate.amount / 100) * 30 +
-            (rate.amount / 100) * 7.5 +
-            this.taxAmount +
-            this.feeAmount,
-          purpose: "40",
-          description: "TAXES",
-          currencyCode: "SAR"
-        };
-        groundService.category.displayRateInfo.push(taxesObject);
-      }
-    }) */
     this.groundViewDetails = groundService
-    console.log("this.groundViewDetails", this.groundViewDetails)
   }
 
   /* calculating ground service taxes */
-  public getGroundServicesTaxes(displayRateInfo):any{
-    let baseAmount=0;
-    let vatAmount=0;
-    let feesAmount=0;
+  public getGroundServicesTaxes(displayRateInfo): any {
+    let baseAmount = 0;
+    let vatAmount = 0;
+    let feesAmount = 0;
 
     displayRateInfo.forEach(displayRate => {
-      if (displayRate.purpose == "1") 
+      if (displayRate.purpose == "1")
         baseAmount = displayRate.amount;
-        if (displayRate.purpose == "7") 
-          vatAmount = displayRate.amount
-        if (displayRate.purpose == "2") 
-          feesAmount = displayRate.amount
+      if (displayRate.purpose == "7")
+        vatAmount = displayRate.amount
+      if (displayRate.purpose == "2")
+        feesAmount = displayRate.amount
     })
 
     let taxesObject = {
-      totalTxAmount:baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount,
-      baseAmount:baseAmount,
-      vatAmount:vatAmount,
-      feesAmount:feesAmount,
-      gdsTax:baseAmount / 100 * 7.5,
-      otaTax:baseAmount / 100 * 30
+      totalTxAmount: baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount,
+      baseAmount: baseAmount,
+      vatAmount: vatAmount,
+      feesAmount: feesAmount,
+      gdsTax: baseAmount / 100 * 7.5,
+      otaTax: baseAmount / 100 * 30
     }
     return taxesObject;
   }
@@ -311,21 +309,6 @@ export class GroundServiceComponent implements OnInit {
 
   addToCart(groundService) {
     this.spinner.show();
-    /* for (let n = 0; n < groundService.category.displayRateInfo.length; n++) {
-      if (groundService.category.displayRateInfo[n].purpose === "20") {
-        groundService.category.displayRateInfo.splice(n, 1)
-        n--
-      } else if (groundService.category.displayRateInfo[n].purpose === "30") {
-        groundService.category.displayRateInfo.splice(n, 1)
-        n--
-      } else if (groundService.category.displayRateInfo[n].purpose === "40") {
-        groundService.category.displayRateInfo.splice(n, 1)
-        n--
-      }
-
-    } */
-    console.log("groundService", groundService)
-
     this.groundServiceTrackToken = localStorage.getItem('groundServiceTrackToken')
     var requestObj = {
       "context": {
@@ -358,7 +341,6 @@ export class GroundServiceComponent implements OnInit {
     }
     this.teejanServices.getGroundServiceAvailability(requestObj).subscribe((groundavabilityResponse) => {
       this.spinner.hide()
-      console.log("groundavabilityResponse", groundavabilityResponse)
       localStorage.setItem("groundAvailabilityToken", groundavabilityResponse.headers.get('tracktoken'))
       localStorage.setItem("groundCart", JSON.stringify(groundavabilityResponse.body));
       swal.fire({
@@ -369,7 +351,6 @@ export class GroundServiceComponent implements OnInit {
         showConfirmButton: false,
         timer: 3000
       })
-      console.log("groundService", groundService)
       this.router.navigateByUrl("b2c/bookingsummary")
     })
   }
@@ -384,5 +365,52 @@ export class GroundServiceComponent implements OnInit {
   bookingSummary() {
     this.router.navigateByUrl("b2c/bookingsummary");
   }
+
+
+  /* Filter clear method */
+  public clearFilter(type): void {
+    switch (type) {
+      case "name":
+        this.groundservice_name_filter = "";
+        break;
+
+        case "price":
+          this.mainGroundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
+          this.minValue = this.mainGroundServiceList[0].category.displayRateInfo[0].amount;
+          this.maxValue = this.mainGroundServiceList[
+            this.mainGroundServiceList.length - 1
+          ].category.displayRateInfo[0].amount;
+          this.options = {
+            floor: this.minValue,
+            ceil: this.maxValue
+          };
+
+          this.groundServiceList = this.mainGroundServiceList
+          break;
+      default: break;
+    }
+  }
+
+  /* price slider change event */
+  public priceSliderChange(event): void {
+    this.priceChangeMinValue = event.value;
+    this.priceChangeMaxValue = event.highValue;
+
+    //Price Range Filter
+    let temp = [];
+    this.mainGroundServiceList.forEach(element => {
+      if (
+        element.category.displayRateInfo[0].amount >=
+        event.value &&
+        element.category.displayRateInfo[0].amount <=
+        event.highValue
+      ) {
+        temp.push(element);
+      }
+    });
+    if (temp.length > 0) this.groundServiceList = temp;
+  }
+
+  
 
 }

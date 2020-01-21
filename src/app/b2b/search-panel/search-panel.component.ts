@@ -108,8 +108,8 @@ export class SearchPanelComponent implements OnInit {
       vehicleQuantity: [null, Validators.required],
       groundServicePackage: [null],
       nationality: [null, Validators.required],
-      countryOfResidence : [null , Validators.required],
-      transportAdditionalServices : [null]
+      countryOfResidence: [null, Validators.required],
+      transportAdditionalServices: [null]
     });
 
     // Select checkIn date set checkout min date
@@ -141,11 +141,11 @@ export class SearchPanelComponent implements OnInit {
         this.locationSearch = searchLookUpResp;
         if (this.locationSearch != undefined)
           this.searchHotelsForm.patchValue({
-            location: this.locationSearch[0]  
+            location: this.locationSearch[0]
           });
         localStorage.setItem("searchLookUp", JSON.stringify(searchLookUpResp));
       },
-      err => {}
+      err => { }
     );
   }
 
@@ -154,31 +154,47 @@ export class SearchPanelComponent implements OnInit {
     this.tejaanServices.getTransportLookup().subscribe(
       transportLookUpResp => {
         this.tranportLookUp = transportLookUpResp;
-        this.vehicleTypes = JSON.parse(
-          transportLookUpResp.vehicletypes
-        ).vehicleTypes;
-        this.trasportAdditionalServices = JSON.parse(
-          transportLookUpResp.additionalservices
-        ).additionalServices;
-        this.tranportCategories = JSON.parse(
-          transportLookUpResp.categories
-        ).categories;
-        this.transportRoutes = JSON.parse(transportLookUpResp.routes).routes;
-        if(transportLookUpResp.companies!=""){
+        if (transportLookUpResp.vehicletypes != "") {
+          this.vehicleTypes = JSON.parse(
+            transportLookUpResp.vehicletypes
+          ).vehicleTypes;
+        } else {
+          this.vehicleTypes = [];
+        }
+        if (transportLookUpResp.additionalservices != "") {
+          this.trasportAdditionalServices = JSON.parse(
+            transportLookUpResp.additionalservices
+          ).additionalServices;
+        } else {
+          this.trasportAdditionalServices = [];
+        }
+        if (transportLookUpResp.categories != "") {
+          this.tranportCategories = JSON.parse(
+            transportLookUpResp.categories
+          ).categories;
+        } else {
+          this.tranportCategories = [];
+        }
+
+        if (transportLookUpResp.routes != "") {
+          this.transportRoutes = JSON.parse(transportLookUpResp.routes).routes;
+        } else {
+          this.transportRoutes = [];
+        }
+        if (transportLookUpResp.companies != "") {
           this.transportCompanies = JSON.parse(
             transportLookUpResp.companies
           ).companies;
-        }else{
+        } else {
           this.transportCompanies = [];
         }
-       
 
         if (this.transportRoutes != undefined)
           this.searchHotelsForm.patchValue({
             route: this.transportRoutes[0]
           });
       },
-      err => {}
+      err => { }
     );
   }
 
@@ -187,17 +203,32 @@ export class SearchPanelComponent implements OnInit {
     this.tejaanServices.getGroundServiceLookup().subscribe(
       groundServiceLookUpResp => {
         this.groundServiceLookUp = groundServiceLookUpResp;
-        this.groundServicePackageServices = JSON.parse(
-          groundServiceLookUpResp.categories
-        ).categories;
-        this.groundServicesCompanies = JSON.parse(
-          groundServiceLookUpResp.uocompanies
-        ).companies;
-        this.groundServiceAdditionalServices = JSON.parse(
-          groundServiceLookUpResp.additionalservices
-        ).additionalServices;
+        if(groundServiceLookUpResp.categories!=""){
+          this.groundServicePackageServices = JSON.parse(
+            groundServiceLookUpResp.categories
+          ).categories;
+        }else{
+          this.groundServicePackageServices =[];
+        }
+
+        if(groundServiceLookUpResp.uocompanies!=""){
+          this.groundServicesCompanies = JSON.parse(
+            groundServiceLookUpResp.uocompanies
+          ).companies;
+        }else{
+          this.groundServicePackageServices =[];
+        }
+
+        if(groundServiceLookUpResp.additionalservices!=""){
+          this.groundServiceAdditionalServices = JSON.parse(
+            groundServiceLookUpResp.additionalservices
+          ).additionalServices;
+        }else{
+          this.groundServicePackageServices =[];
+        }
+       
       },
-      err => {}
+      err => { }
     );
   }
 
@@ -301,14 +332,14 @@ export class SearchPanelComponent implements OnInit {
           // nationality: this.searchHotelsForm.value.location.countryCode
         }
       };
-      const adultCount =  this.guestInfo.reduce((a,b)=>  a + b.adult , 0)
-      const childCount =  this.guestInfo.reduce((a,b)=>  a + b.child , 0)
+      const adultCount = this.guestInfo.reduce((a, b) => a + b.adult, 0)
+      const childCount = this.guestInfo.reduce((a, b) => a + b.child, 0)
 
-       this.searchHotelsForm.patchValue({
+      this.searchHotelsForm.patchValue({
         rooms: this.guestInfo.length,
-        adults_count : adultCount,
-        child_count : childCount
-       })
+        adults_count: adultCount,
+        child_count: childCount
+      })
 
 
       localStorage.setItem("searchObj", JSON.stringify(searchObj));
@@ -409,5 +440,5 @@ export class SearchPanelComponent implements OnInit {
   }
 
 
-  
+
 }

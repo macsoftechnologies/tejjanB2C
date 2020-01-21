@@ -277,7 +277,7 @@ export class TransportServiceComponent implements OnInit {
           console.log(this.transportList)
           this.mainTransportList = transportSearchResp.body.transportations;
 
-          this.transportList.sort((a, b) => a.amount - b.amount);
+          this.transportList.sort((a, b) => a.vehicleTypes[0].categories[0].displayRateInfo[0].amount - b.vehicleTypes[0].categories[0].displayRateInfo[0].amount);
           this.minValue = this.transportList[0].vehicleTypes[0].categories[0].displayRateInfo[0].amount;
           this.maxValue = this.transportList[
             this.transportList.length - 1
@@ -592,6 +592,7 @@ export class TransportServiceComponent implements OnInit {
     });
     if (temp.length > 0) this.transportList = temp;
   }
+  
   public clearFilter(filterName): void {
     switch (filterName) {
       case "name":
