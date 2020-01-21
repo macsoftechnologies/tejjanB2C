@@ -310,6 +310,9 @@ export class TransportServiceComponent implements OnInit {
   /* call transport availability api by click on view details of transport list item */
   public onTransportationViewDetails(currentTransport): void {
     this.isTransportListAvailableFlag = false;
+
+     console.log("currentTransport" , currentTransport)
+
     this.transportAvailabilityFlag = true
     let quantity = parseInt(this.searchFilterObj.vehicleQuantity);
     currentTransport.vehicleTypes.forEach(vehicle => {
@@ -360,10 +363,13 @@ export class TransportServiceComponent implements OnInit {
             vehicle.categories[0].displayRateInfo.push(taxesObject);
           }
         });
-        const vehicleQuntity = Array(category.availableQuantity).fill(+0).map((x, i) => i);
+        const vehicleQuntity = Array(category.availableQuantity + 1).fill(+0).map((x, i) => i );
         category.availableQuantity = vehicleQuntity
-        const vehiclecapacity = Array(category.maxPaxCapacity).fill(+0).map((x, i) => i);
+        console.log("category.availableQuantity" , category.availableQuantity)
+        const vehiclecapacity = Array(category.maxPaxCapacity + 1).fill(+0).map((x, i) => i );
         category.maxPaxCapacity = vehiclecapacity
+        console.log("category.maxPaxCapacity" , category.maxPaxCapacity)
+
       })
     })
     this.selectTransportDetails = currentTransport
