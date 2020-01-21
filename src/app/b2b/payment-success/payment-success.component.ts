@@ -190,7 +190,7 @@ export class PaymentSuccessComponent implements OnInit {
           "config": this.hotelcart.config,
           "tpExtensions": this.hotelcart.tpExtensions,
           "secureTPExtensions": [],
-          "roomGroups": this.hotelcart.roomGroups
+          "roomGroups": this.hotelcart.roomGroups 
         }
       }
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
