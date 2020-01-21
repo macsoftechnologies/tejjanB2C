@@ -98,7 +98,7 @@ export class MyBookingComponent implements OnInit {
     
     let formData = {
       "context": {
-        "cultureCode": "en-US",
+        "cultureCode": this.searchObj.context.cultureCode,
         "providerInfo": [{
           "provider": this.hotelProvider
         }]
@@ -153,7 +153,7 @@ export class MyBookingComponent implements OnInit {
 
     let formData = {
       "context": {
-        "cultureCode": "en-US",
+        "cultureCode": this.searchObj.context.cultureCode,
         "providerInfo": [{
           "provider": this.transportProvider
         }]
@@ -181,7 +181,7 @@ export class MyBookingComponent implements OnInit {
 
   let formData = {
     "context": {
-      "cultureCode": "en-US",
+      "cultureCode": this.searchObj.context.cultureCode,
       "providerInfo": [{
         "provider": this.groundProvider 
       }]
@@ -234,7 +234,7 @@ export class MyBookingComponent implements OnInit {
 
         let Obj = {
           "context": {
-            "cultureCode": "en-US",
+            "cultureCode": this.searchObj.context.cultureCode,
             "trackToken": trackToken,
             "providerInfo": [{
               "provider": this.hotelProvider
