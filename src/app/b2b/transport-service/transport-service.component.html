@@ -433,11 +433,15 @@
                             </div>
                             <div class="col-md-6 transport-details">
                               <h5 class="transport-title">
-                                {{transport.companyName}}
+                                {{transport?.companyName}}
                               </h5>
                               <p class="transport-address">Address:
-                                {{transport.companyAddress}}</p>
-                              <span class="transport-description "> {{transport.companyDescription}}</span>
+                                {{transport?.companyAddress}}</p>
+                              <span class="transport-description "> {{transport?.companyDescription}}</span>
+                              <div>
+                                Category:
+                                <span class="transport-description "> {{transport?.vehicleTypes[0]?.categories[0]?.catName}}</span>
+                              </div>
                               <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices!=undefined">
                                 <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices.length>0">
                                   Additional Services
@@ -449,6 +453,7 @@
                                   </ul>
                                 </div>
                               </div>
+                             
                             </div>
                             <div class="col-md-3 align-items-center justify-content-center transport-price">
                               <div>

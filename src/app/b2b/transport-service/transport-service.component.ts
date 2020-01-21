@@ -255,9 +255,9 @@ export class TransportServiceComponent implements OnInit {
         if (transportSearchResp.body.transportations.length > 0) {
 
           console.log("transportCompanies", this.companies)
-          this.companies.forEach(company => {
-            transportSearchResp.body.transportations.forEach(transportation => {
 
+          transportSearchResp.body.transportations.forEach(transportation => {
+            this.companies.forEach(company => {
               if (company.code === transportation.companyCode) {
                 transportation.companyName = company.name;
                 transportation.companyDescription = company.description;
@@ -265,8 +265,16 @@ export class TransportServiceComponent implements OnInit {
               }
             });
 
+            this.tranportCategories.forEach(category=>{
+              if(category.code ===transportation.vehicleTypes[0].categories[0].categoryCode)
+              transportation.vehicleTypes[0].categories[0]['catName']=category.name;
+            })
+
           });
+
+
           this.transportList = transportSearchResp.body.transportations;
+          console.log(this.transportList)
           this.mainTransportList = transportSearchResp.body.transportations;
 
           this.transportList.sort((a, b) => a.amount - b.amount);
