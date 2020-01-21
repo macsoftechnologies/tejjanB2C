@@ -196,21 +196,21 @@ export class PaymentSuccessComponent implements OnInit {
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
       this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
         this.spinner.hide();
-        this.transportReservation();
-        this.getGroundServiceReservation();
 
          if (data.bookingStatus == "Confirmed") {
+         localStorage.setItem("BookingStatus"  , "false")  
         localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
-        // transport reservation service 
-         if (this.transportCart != null) {
-       }
+        this.transportReservation();
+         
+          this.router.navigateByUrl('b2c/mybooking')
+         
          }
          else {
            this.isHotelBooking = false
             alert("Booking Faild")
             this.router.navigateByUrl("b2c/search")
           //  setTimeout(() => {
-          //    // this.router.navigateByUrl("b2b/search")
+          //    // this.router.navigateByUrl("b2c/search")
  
           //  }, 6000)
          } 
@@ -227,6 +227,11 @@ export class PaymentSuccessComponent implements OnInit {
     console.log("transportcart" ,  this.transportCart)
    
     localStorage.setItem("transportProvider", this.transportCart.provider)
+
+                   this.transportCart.secureTPExtensions = []
+                   this.transportCart.travellerDetails = this.transportTravellerDetails
+
+
     let TransportFormObj = {
       "context": {
         // "cultureCode": this.searchObj.context.cultureCode,
@@ -235,31 +240,44 @@ export class PaymentSuccessComponent implements OnInit {
           "provider": this.transportCart.provider
         }]
       },
-      "request": {
-        "companyCode": this.transportCart.companyCode,
-        "companyName": this.transportCart.companyName,
-        "companyNameAR": this.transportCart.companyNameAR,
-        "routeCode": this.transportCart.routeCode,
-        "routeName": this.transportCart.routeName,
-        "routeNameAR": this.transportCart.routeNameAR,
-        "startDate": this.transportCart.startDate,
-        "vendor": this.transportCart.vendor,
-        "provider": this.transportCart.provider,
-        // "freeCancellationDate": this.transportCart.freeCancellationDate,
-        "vehicleTypes": this.transportCart.vehicleTypes,
-        // "policies": this.vehiclePolicies,
-        // "termsAndConditions": this.transportCart.termsAndConditions,
-        "displayRateInfo": this.transportCart.displayRateInfo,
-        "config": this.transportCart.config,
-        "secureTPExtensions": [],
-        "travellerDetails": this.transportTravellerDetails,
-      }
+      "request": this.transportCart 
+
+
+
+
+      // {
+      //   "companyCode": this.transportCart.companyCode,
+      //   "companyName": this.transportCart.companyName,
+      //   "companyNameAR": this.transportCart.companyNameAR,
+      //   "routeCode": this.transportCart.routeCode,
+      //   "routeName": this.transportCart.routeName,
+      //   "routeNameAR": this.transportCart.routeNameAR,
+      //   "startDate": this.transportCart.startDate,
+      //   "vendor": this.transportCart.vendor,
+      //   "provider": this.transportCart.provider,
+      //   // "freeCancellationDate": this.transportCart.freeCancellationDate,
+      //   "vehicleTypes": this.transportCart.vehicleTypes,
+      //   // "policies": this.vehiclePolicies,
+      //   // "termsAndConditions": this.transportCart.termsAndConditions,
+      //   "displayRateInfo": this.transportCart.displayRateInfo,
+      //   "config": this.transportCart.config,
+      //   "secureTPExtensions": [],
+      //   "travellerDetails": this.transportTravellerDetails,
+      // }
 
     }
     console.log("TransportFormObj: ===>", JSON.stringify(TransportFormObj));
 
     this.teejanServices.getTransportReservation(TransportFormObj).subscribe((data: any) => {
       console.log("transportBookResponse", data);
+      if(data.bookingStatus == "Confirmed"){
+        localStorage.setItem("BookingStatus"  , "false")  
+      
+        localStorage.setItem("transportBookingResponse" , JSON.stringify(data))
+
+      }
+      this.getGroundServiceReservation();
+      
       // this.getGroundServiceReservation();
     });
   }
@@ -270,6 +288,8 @@ export class PaymentSuccessComponent implements OnInit {
       console.log("groundCart", this.groundCart)
      
       localStorage.setItem("groundProvider", this.groundCart.provider)
+      this.groundCart.secureTPExtensions = []
+
       var groundForm = {
         "context": {
           "cultureCode": this.searchObj.context.cultureCode,
@@ -279,28 +299,31 @@ export class PaymentSuccessComponent implements OnInit {
 
           }]
         },
-        "request": {
-          "uoCode": this.groundCart.uoCode,
-          "uoName": this.groundCart.uoName,
-          "uoNameAR": this.groundCart.uoNameAR,
-          "nationality": this.groundCart.nationality,
-          "countryOfResidence": this.groundCart.countryOfResidence,
-          "vendor": this.groundCart.vendor,
-          "provider": this.groundCart.provider,
-          // "freeCancellationDate": "",
-          "category": this.groundCart.category,
-          "additionalServices": this.groundCart.additionalServices,
-          "displayRateInfo": this.groundCart.displayRateInfo,
-          "policies": this.groundCart.policies,
-          "termsAndConditions": this.groundCart.termsAndConditions,
-          "config": this.groundCart.config,
-          "secureTPExtensions": [],
-        }
+        "request": this.groundCart
+        // {
+        //   "uoCode": this.groundCart.uoCode,
+        //   "uoName": this.groundCart.uoName,
+        //   "uoNameAR": this.groundCart.uoNameAR,
+        //   "nationality": this.groundCart.nationality,
+        //   "countryOfResidence": this.groundCart.countryOfResidence,
+        //   "vendor": this.groundCart.vendor,
+        //   "provider": this.groundCart.provider,
+        //   // "freeCancellationDate": "",
+        //   "category": this.groundCart.category,
+        //   "additionalServices": this.groundCart.additionalServices,
+        //   "displayRateInfo": this.groundCart.displayRateInfo,
+        //   "policies": this.groundCart.policies,
+        //   "termsAndConditions": this.groundCart.termsAndConditions,
+        //   "config": this.groundCart.config,
+        //   "secureTPExtensions": [],
+        // }
 
       }
       console.log("groundForm data: ===>", JSON.stringify(groundForm));
       this.teejanServices.getGroundServiceReservation(groundForm).subscribe((data: any) => {
         if (data.bookingStatus == "Confirmed") {
+          localStorage.setItem("BookingStatus"  , "true")  
+
           localStorage.setItem('groundBookingResponse', JSON.stringify(data));
         } else {
         }

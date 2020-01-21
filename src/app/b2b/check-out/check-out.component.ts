@@ -88,7 +88,7 @@ export class CheckOutComponent implements OnInit {
     private teejanServices: AlrajhiumrahService, private router: Router, private spinner: NgxSpinnerService,
     private broadcastService: BroadcastserviceService, private formBuilder: FormBuilder,
     config: NgbDatepickerConfig, calendar: NgbCalendar
-  ) { this.loadcontactForm(fb), this.loadwalletForm(fb)
+  ) { this.loadcontactForm(fb), 
     config.minDate = {year: 1900, month: 1, day: 1};
   }
 
@@ -117,7 +117,7 @@ export class CheckOutComponent implements OnInit {
 
     this.country();
     this.travellerForms();
-    // this.loadwalletForm();
+   
 
 
 
@@ -128,20 +128,6 @@ export class CheckOutComponent implements OnInit {
     this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
   }
-
-
-  //wallet Form
-
-  public loadwalletForm(fb) {
-
-    this.walletForm = this.formBuilder.group({
-      walletId: ["SA1790941327111000000002", Validators.required],
-      walletAuthCode: ["5NMABO6U2RH2ZR5B", Validators.required]
-
-    })
-
-  }
-
 
 
   // get countries list
@@ -308,12 +294,14 @@ export class CheckOutComponent implements OnInit {
   }
 
 
-  /* preparing travellerForms//  */
+ 
 
 
-  /* Reservatoins API'S Calling (hotel , transport , ground) */
+  
 
   cardPay(cartGrandTotal) {
+
+    
     for (var r = 0; r < this.roomsForms.length; r++) {
       this.traveller = []
       for (var q = 0; q < this.roomsForms[r].adults.length; q++) {
@@ -414,9 +402,10 @@ export class CheckOutComponent implements OnInit {
 
     }
 
-
     localStorage.setItem("evisaMutmerDetails", JSON.stringify(this.evisaMutmerDetails))
     localStorage.setItem("travellerDetails", JSON.stringify(this.travellerDetails))
+
+
     var transportTravllerObj  = {
       "details": {
         "passportNo": this.roomsForms[0].adults[0].passportNumber,
@@ -448,23 +437,12 @@ export class CheckOutComponent implements OnInit {
       "mobileNumber": `${this.contactForm.value.mobileNumber}`,
       "referenceId": `${randomNumber}`
     }
-    // let data = {
-    //   "amount": "30",
-    //   "firstName": "ds",
-    //   "lastName": "dsefiuh",
-    //   "emailId":"sanjeev@gmail.com",
-    //   "mobileNumber": "865343686",
-    //   "referenceId": "451554dcjl"
-    // }
+   
 
-    console.log("data", data)
+    
     this.teejanServices.processPayment1(data).subscribe(resp => {
       console.log("success payment page");
       window.location.href = resp.pgLink
-
-
-
-
 
     }, err => {
       console.log(err.url);
@@ -472,471 +450,10 @@ export class CheckOutComponent implements OnInit {
       //  window.location.href = err.url.toString();
     })
 
-    //  let hotelSecureTPExtensions  = [] 
-    //  let transportSecureTPExtensions = [] 
-    //  let groundSecureTPExtensions =[]
-
-    //   this.reservation(hotelSecureTPExtensions , transportSecureTPExtensions , groundSecureTPExtensions);
-
-  }
-  //   wallet(hotelPrice , transportPrice , groundPrice){
-
-  //     let hotelSecureTPExtensions = []
-  //     hotelSecureTPExtensions = [
-  //        {
-  //         key : "payByMoHUWallet.mohuWalletAccNo",
-  //         value :  this.walletForm.value.walletId
-
-  //       },
-  //       {
-  //         key :"payByMoHUWallet.walletAuthCode",
-  //         value : this.walletForm.value.walletAuthCode
-  //       },
-  //       {
-  //         key :"payByMoHUWallet.totalPayment",
-  //         value : hotelPrice
-  //       }
-
-  //   ]
-  //   let transportSecureTPExtensions = []
-  //   transportSecureTPExtensions = [
-  //     {
-  //      key : "payByMoHUWallet.mohuWalletAccNo",
-  //      value :  this.walletForm.value.walletId
-
-  //    },
-  //    {
-  //      key :"payByMoHUWallet.walletAuthCode",
-  //      value : this.walletForm.value.walletAuthCode
-  //    },
-  //    {
-  //      key :"payByMoHUWallet.totalPayment",
-  //      value : transportPrice
-  //    }
-
-  // ]
-  //   let  groundSecureTPExtensions = []
-  //   groundSecureTPExtensions = [
-  //   {
-  //    key : "payByMoHUWallet.mohuWalletAccNo",
-  //    value :  this.walletForm.value.walletId
-
-  //  },
-  //  {
-  //    key :"payByMoHUWallet.walletAuthCode",
-  //    value : this.walletForm.value.walletAuthCode
-  //  },
-  //  {
-  //    key :"payByMoHUWallet.totalPayment",
-  //    value : groundPrice
-  //  }
-
-  // ]
-  //     this.reservation(hotelSecureTPExtensions , transportSecureTPExtensions , groundSecureTPExtensions );
-
-  //   }
-
-
-  public reservation(hotelSecureTPExtensions, transportSecureTPExtensions, groundSecureTPExtensions) {
-    // HotelResrvation 
-    if (this.hotelcart != null) {
-      this.spinner.show();
-      /* preparing roomGroups Array  with travellerDetails*/
-
-
-
-
-
-      console.log("travellerDetails", this.travellerDetails);
-      console.log("this.evisaMutmerDetails", this.evisaMutmerDetails)
-      // e visa service
-
-
-
-      /* preparing roomGroups */
-      for (var h = 0; h < this.hotelcart.roomGroups.length; h++) {
-        let hotelRoomGroup = this.hotelcart.roomGroups[h]
-
-        // delete hotelRoomGroup.hasSpecialDeal
-        // delete hotelRoomGroup.paxInfo
-        // delete hotelRoomGroup.policies
-        // delete hotelRoomGroup.tpExtensions
-        // this.hotelcart.roomGroups[h]["groupAmount"] = this.hotelTotalPrice
-        // preparing rooms in roomGroup
-        for (var k = 0; k < hotelRoomGroup.rooms.length; k++) {
-
-          let paxDetail = this.searchObj.request.rooms[k].PaxInfo
-
-          // add paxInfo  
-          hotelRoomGroup.rooms[k]["paxInfo"] = paxDetail
-
-
-          // delete hotelRoomGroup.rooms[k].specialDealId
-          // delete hotelRoomGroup.rooms[k].specialDealDescription
-          // delete hotelRoomGroup.rooms[k].sequenceNumber
-          // delete hotelRoomGroup.rooms[k].images
-          // delete hotelRoomGroup.rooms[k].hasSpecialDeal
-          // delete hotelRoomGroup.rooms[k].businessName
-          // delete hotelRoomGroup.rooms[k].description
-          // delete hotelRoomGroup.rooms[k].availabilityCount
-          // delete hotelRoomGroup.rooms[k].objectIdentifier
-          // delete hotelRoomGroup.rooms[k].features
-          // delete hotelRoomGroup.rooms[k].amount
-
-          // let quantity = hotelRoomGroup.rooms[k].quantity
-          // hotelRoomGroup.rooms[k]["quantity"] = quantity
-          // hotelRoomGroup.rooms[k]["optionalAmenities"] = []
-          // hotelRoomGroup.rooms[k]["roomCategory"] = ""
-
-          let availabilityCount = hotelRoomGroup.rooms[k].availabilityCount.length
-
-          hotelRoomGroup.rooms[k].availabilityCount = availabilityCount
-
-          // removing taxe objects from displayRateInfo
-          for (let p = 0; p < hotelRoomGroup.rooms[k].displayRateInfo.length; p++) {
-
-            if (hotelRoomGroup.rooms[k].displayRateInfo[p].purpose === "20") {
-              hotelRoomGroup.rooms[k].displayRateInfo.splice(p, 1);
-              p--
-
-            } else if (hotelRoomGroup.rooms[k].displayRateInfo[p].purpose === "30") {
-              hotelRoomGroup.rooms[k].displayRateInfo.splice(p, 1);
-
-              p--
-            } else if (hotelRoomGroup.rooms[k].displayRateInfo[p].purpose === "40") {
-              hotelRoomGroup.rooms[k].displayRateInfo.splice(p, 1);
-              p--
-
-            }
-
-          }
-
-          // add traveller details 
-          hotelRoomGroup.rooms[k]["travellerDetails"] = this.travellerDetails[h].travellersList;
-        }
-
-      }
-
-      var randomNumber = Math.floor(Math.random() * 20000000 + 1);
-      var CountryCode = this.searchObj.request.providerLocations[0].countryCode
-      var locationCode = this.searchObj.request.providerLocations[0].locationCode
-
-
-      localStorage.setItem("hotelProvider", this.hotelcart.provider)
-
-      let hotelForm =
-      {
-        "context": {
-          "cultureCode": this.searchObj.context.cultureCode,
-          "trackToken": this.hotelTrackToken,
-          "providerInfo": [
-            {
-              "provider": this.hotelcart.provider,
-              "pcc": "1004",
-              "subpcc": ""
-            }
-          ]
-        },
-        "request": {
-          "code": this.hotelcart.code,
-          "umrahHotelCode": this.hotelcart.umrahHotelCode,
-          // "partnerReferenceNo": `${randomNumber}`,
-          "name": this.hotelcart.name,
-          "countryCode": CountryCode,
-          "locationCode": locationCode,
-          "locationName": this.searchObj.request.locationName,
-          "status": this.hotelcart.status,
-          "vendor": this.hotelcart.vendor,
-          "provider": this.hotelcart.provider,
-          "checkInDate": this.hotelcart.checkInDate,
-          "checkOutDate": this.hotelcart.checkOutDate,
-          "config": this.hotelcart.config,
-          "tpExtensions": this.hotelcart.tpExtensions,
-          "secureTPExtensions": hotelSecureTPExtensions,
-          // "checkInTime" :  this.hotelcart.checkInTime,
-          // "checkOutTime" :  this.hotelcart.checkOutTime,
-          // "freeCancellationDate" : this.hotelcart.freeCancellationDate,
-          // "nationality" : this.hotelcart.nationality,
-          // "flags" : this.hotelcart.flags,
-          // "policies" : this.hotelcart.policies,
-          "roomGroups": this.hotelcart.roomGroups
-        }
-      }
-      console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
-      this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
-
-        this.spinner.hide();
-
-
-        if (data.bookingStatus == "Confirmed") {
-
-
-          // localStorage.removeItem("hotelcart");
-          // localStorage.removeItem("hotelAvailability");
-          // localStorage.removeItem("hotelAvailabilityTracktoken");
-          // localStorage.removeItem("hotelslistrespTrackToken");
-          // localStorage.removeItem("currentHotel");
-
-          localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
-          this.router.navigateByUrl('b2b/mybooking');
-
-          // transport reservation service 
-          if (this.transportCart != null) {
-
-            for (let i = 0; i < this.transportCart.vehicleTypes.length; i++) {
-              this.vehicleCategory = this.transportCart.vehicleTypes[i].categories.map((obj) => {
-                delete obj.maxPaxCapacity;
-                delete obj.availableQuantity;
-                return;
-              })
-
-
-              this.vehicleCategory = this.transportCart.vehicleTypes[i].categories.map((obj) => {
-                let o = Object.assign({}, obj);
-                // o.additionalServices = []
-                // o.termsAndConditions = this.transportCart.termsAndConditions;
-                o.quantity = this.transportCart.vehicleTypes[i].categories[0].quantity
-                o.noOfPax = this.transportCart.vehicleTypes[i].categories[0].noOfPax
-                // o.images = [];
-                // o.config = [];
-                // o.tpExtensions = [];
-
-                return o;
-              })
-              for (let k = 0; k < this.vehicleCategory[0].displayRateInfo.length; k++) {
-
-                if (this.vehicleCategory[0].displayRateInfo[k].purpose === "20") {
-
-                  this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-                  k--
-                }
-                if (this.vehicleCategory[0].displayRateInfo[k].purpose === "30") {
-                  this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-                  k--
-                }
-                if (this.vehicleCategory[0].displayRateInfo[k].purpose === "40") {
-                  this.vehicleCategory[0].displayRateInfo.splice(k, 1)
-                  k--
-                }
-              }
-
-              let vehicleObj = {
-                vehicleTypeCode: this.transportCart.vehicleTypes[i].vehicleTypeCode,
-                vehicleType: this.transportCart.vehicleTypes[i].vehicleType,
-                vehicleTypeAR: this.transportCart.vehicleTypes[i].vehicleTypeAR,
-                categories: this.vehicleCategory,
-              }
-
-              this.vehicleTypes.push(vehicleObj);
-            }
-            this.vehiclePolicies = this.transportCart.policies.map((obj) => {
-              var o = Object.assign({}, obj);
-              o.description = ""
-              return o;
-            })
-
-            localStorage.setItem("transportProvider", this.transportCart.provider)
-
-
-            let TransportFormObj = {
-              "context": {
-                "cultureCode": this.searchObj.context.cultureCode,
-                "trackToken": this.transportAvailabilityTracktoken,
-                "providerInfo": [{
-                  "provider": this.transportCart.provider
-                }]
-              },
-
-              "request": {
-                "companyCode": this.transportCart.companyCode,
-                "companyName": this.transportCart.companyName,
-                "companyNameAR": this.transportCart.companyNameAR,
-                "routeCode": this.transportCart.routeCode,
-                "routeName": this.transportCart.routeName,
-                "routeNameAR": this.transportCart.routeNameAR,
-                "startDate": this.transportCart.startDate,
-                "vendor": this.transportCart.vendor,
-                "provider": this.transportCart.provider,
-                // "freeCancellationDate": this.transportCart.freeCancellationDate,
-                "vehicleTypes": this.vehicleTypes,
-                "policies": this.vehiclePolicies,
-                // "termsAndConditions": this.transportCart.termsAndConditions,
-                "displayRateInfo": this.transportCart.displayRateInfo,
-                "config": this.transportCart.config,
-                "secureTPExtensions": transportSecureTPExtensions,
-                "travellerDetails": {},
-
-              }
-
-            }
-            this.teejanServices.getTransportReservation(TransportFormObj).subscribe((data: any) => {
-              if (data.bookingStatus == "Confirmed") {
-                localStorage.setItem('transportBookingResponse', JSON.stringify(data));
-                //Ground reservation Service 
-                if (this.groundCart != null) {
-                  for (let n = 0; n < this.groundCart.displayRateInfo.length; n++) {
-
-                    if (this.groundCart.displayRateInfo[n].purpose === "20") {
-                      this.groundCart.displayRateInfo.splice(n, 1)
-                      n--
-                    } else if (this.groundCart.displayRateInfo[n].purpose === "30") {
-                      this.groundCart.displayRateInfo.splice(n, 1)
-                      n--
-                    } else if (this.groundCart.displayRateInfo[n].purpose === "40") {
-                      this.groundCart.displayRateInfo.splice(n, 1)
-                      n--
-                    }
-
-                  }
-
-
-
-                  this.groundPolicies = this.groundCart.policies.map((obj) => {
-                    var o = Object.assign({}, obj);
-                    o.name = "",
-                      o.description = ""
-                    o.dateCriteria = {
-                      "endDate": "",
-                      "startDate": ""
-                    }
-                    return o
-
-                  })
-                  localStorage.setItem("groundProvider", this.groundCart.provider)
-
-
-                  var groundForm = {
-
-                    "context": {
-                      "cultureCode": this.searchObj.context.cultureCode,
-                      "trackToken": this.groundAvailabilityToken,
-                      "providerInfo": [{
-                        "provider": this.groundCart.provider,
-
-                      }]
-                    },
-                    "request": {
-                      "uoCode": this.groundCart.uoCode,
-                      "uoName": this.groundCart.uoName,
-                      "uoNameAR": this.groundCart.uoNameAR,
-                      "nationality": this.groundCart.nationality,
-                      "countryOfResidence": this.groundCart.countryOfResidence,
-                      "vendor": this.groundCart.vendor,
-                      "provider": this.groundCart.provider,
-                      // "freeCancellationDate": "",
-                      "category": this.groundCart.category,
-                      // "additionalServices": [],
-                      "displayRateInfo": this.groundCart.displayRateInfo,
-                      "policies": this.groundCart.policies,
-                      "termsAndConditions": this.groundCart.termsAndConditions,
-                      "config": this.groundCart.config,
-                      "secureTPExtensions": groundSecureTPExtensions,
-                    }
-
-                  }
-
-                  console.log("groundForm data: ===>", JSON.stringify(groundForm));
-                  this.teejanServices.getGroundServiceReservation(groundForm).subscribe((data: any) => {
-                    if (data.bookingStatus == "Confirmed") {
-                      localStorage.setItem('groundBookingResponse', JSON.stringify(data));
-
-                      // localStorage.removeItem("groundcart");
-                      // localStorage.removeItem("groundAvailability");
-                      // localStorage.removeItem("groundAvailabilityToken");
-                      // localStorage.removeItem("groundServiceTrackToken");
-
-
-
-
-
-
-                    } else {
-                      // localStorage.removeItem("groundcart");
-                      // localStorage.removeItem("groundAvailability");
-                      // localStorage.removeItem("groundAvailabilityToken");
-                      // localStorage.removeItem("groundServiceTrackToken");
-
-                    }
-
-
-                  });
-                }
-
-
-              } else {
-                // localStorage.removeItem("transportcart");
-                // localStorage.removeItem("transportAvailability");
-                // localStorage.removeItem("transportAvailabilityTracktoken");
-                // localStorage.removeItem("transportSearchResponse");
-                // localStorage.removeItem("transportSearchTrackToken");
-                // localStorage.removeItem("transportSearch");
-
-
-              }
-
-
-
-            });
-          }
-
-
-
-
-        }
-        else {
-
-
-          // localStorage.removeItem("searchObj");
-          // localStorage.removeItem("searchFilterObj");
-          // localStorage.removeItem("searchLookUp");
-
-
-
-          // localStorage.removeItem("hotelcart");
-          // localStorage.removeItem("hotelAvailability");
-          // localStorage.removeItem("hotelAvailabilityTracktoken");
-          // localStorage.removeItem("hotelslistrespTrackToken");
-          // localStorage.removeItem("currentHotel");
-
-          // localStorage.removeItem("transportcart");
-          // localStorage.removeItem("transportAvailability");
-          // localStorage.removeItem("transportAvailabilityTracktoken");
-          // localStorage.removeItem("transportSearchResponse");
-          // localStorage.removeItem("transportSearchTrackToken");
-          // localStorage.removeItem("transportSearch");
-
-
-          // localStorage.removeItem("groundcart");
-          // localStorage.removeItem("groundAvailability");
-          // localStorage.removeItem("groundAvailabilityToken");
-          // localStorage.removeItem("groundServiceTrackToken");
-
-
-          this.isHotelBooking = false
-
-          alert("Booking Faild")
-
-          // this.router.navigateByUrl("b2b/search")
-          setTimeout(() => {
-            this.router.navigateByUrl("b2b/search")
-
-          }, 6000)
-
-
-        }
-      })
-    }
-
 
 
   }
-  onNavToSearch() {
-
-    //  this.router.navigateByUrl("b2b/search")
-
-  }
-
-
+ 
 
   // hotel calculations 
   public hotelCalculations() {
@@ -948,23 +465,16 @@ export class CheckOutComponent implements OnInit {
       roomsDisplayRates.forEach(roomRate => {
         roomRate.forEach(priceDetails => {
           if (priceDetails.purpose == "1") {
-
                   
             this.roomsGDS += priceDetails.amount / 100 * 7.5
             this.roomsOTA += priceDetails.amount / 100 * 30;
-
               
             this.roomsBasePrice += priceDetails.amount;
           }
           if (priceDetails.purpose == "2") {
             this.roomsFees += priceDetails.amount;
           }
-          // if (priceDetails.purpose == "20") {
-          //   this.roomsGDS += priceDetails.amount;
-          // }
-          // if (priceDetails.purpose == "30") {
-          //   this.roomsOTA += priceDetails.amount;
-          // }
+         
           if (priceDetails.purpose == "7") {
             this.roomsVAT += priceDetails.amount;
           }
@@ -978,6 +488,8 @@ export class CheckOutComponent implements OnInit {
         this.roomsGDS +
         this.roomsOTA;
       console.log("hoteTotalPrice", this.hotelTotalPrice);
+
+      localStorage.setItem("hotelAmount" , JSON.stringify(this.hotelTotalPrice))
     }
   }
 
@@ -1004,14 +516,7 @@ export class CheckOutComponent implements OnInit {
             this.transportVAT += rate.amount * this.transportQuantity;
             // console.log("transportVAT", this.transportVAT);
           }
-          // if (rate.purpose == "20") {
-          //   this.transportGDS += rate.amount * this.transportQuantity;
-          //   console.log("transportGDS", this.transportGDS);
-          // }
-          // if (rate.purpose == "30") {
-          //   this.transportOTA += rate.amount * this.transportQuantity;
-          //   console.log("transportOTA", this.transportOTA);
-          // }
+         
         });
       });
 
@@ -1022,6 +527,8 @@ export class CheckOutComponent implements OnInit {
         this.transportOTA;
 
       console.log("transportTotalPrice", this.transportTotalPrice);
+      localStorage.setItem("transportAmount" , JSON.stringify(this.transportTotalPrice))
+
     }
   }
 
@@ -1029,7 +536,8 @@ export class CheckOutComponent implements OnInit {
   public groundCalculations() {
     if (this.groundCart != null || this.groundCart != undefined) {
       this.groundQuantity = 1;
-      if(this.groundCart.displayRateInfo !=undefined){ this.groundCart.displayRateInfo.forEach(rate => {
+      if(this.groundCart.category.displayRateInfo !=undefined)
+      { this.groundCart.category.displayRateInfo.forEach(rate => {
         if (rate.purpose == "1") {
           this.groundBasePrice += rate.amount * this.groundQuantity;
           // console.log("groundBasePrice", this.groundBasePrice);
@@ -1042,17 +550,12 @@ export class CheckOutComponent implements OnInit {
           this.groundVAT += rate.amount * this.groundQuantity;
           console.log("groundVAT", this.groundVAT);
         }
-        // if (rate.purpose == "20") {
-        //   this.groundGDS += rate.amount * this.groundQuantity;
-        //   console.log("groundGDS", this.groundGDS);
-        // }
-        // if (rate.purpose == "30") {
-        //   this.groundOTA += rate.amount * this.groundQuantity;
-        //   console.log("groundOTA", this.groundOTA);
-        // }
+        
       });
       this.groundTotalPrice =
         this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;}
+        localStorage.setItem("groundAmount" , JSON.stringify(this.groundTotalPrice))
+
      
     }
   }

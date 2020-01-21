@@ -578,7 +578,7 @@ export class TransportServiceComponent implements OnInit {
               vehicleTypes: selectTransPort.vehicleTypes,
               policies: selectTransPort.policies,
               termsAndConditions: selectTransPort.termsAndConditions,
-              config: []
+              config: selectTransPort.config
             }
           };
 
@@ -606,12 +606,6 @@ export class TransportServiceComponent implements OnInit {
           this.router.navigateByUrl("b2c/ground");
 
                })
-
-
-         
-         
-  
-
 
         
         } else {

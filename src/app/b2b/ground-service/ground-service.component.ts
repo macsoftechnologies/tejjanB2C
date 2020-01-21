@@ -164,6 +164,8 @@ export class GroundServiceComponent implements OnInit {
         "cultureCode": this.searchData.context.cultureCode,
       },
       "request": {
+        uoCodes : ["1039"],
+        
         "nationality": this.searchFilterObj.nationality.countryCode,
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
@@ -347,7 +349,7 @@ export class GroundServiceComponent implements OnInit {
           "displayRateInfo": groundService.category.displayRateInfo,
           "arrivalDate": groundService.category.arrivalDate
         },
-        "additionalServices": [],
+        "additionalServices": groundService.additionalServices,
         "policies": groundService.policies,
         "termsAndConditions": groundService.termsAndConditions,
         "config": groundService.config,

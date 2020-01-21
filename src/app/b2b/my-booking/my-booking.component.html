@@ -162,15 +162,16 @@
                               <br>
                               <p><b>BookingStatus :</b> {{hotel?.bookingStatus}} </p>
                                              
-                              <p><b>Reference Number :</b>{{hotel?.bookingReferenceNo}}</p>
+                              <p><b>Reference Number :</b>{{hotel?.reservationNo}}</p>
                           
-                            <p><b>Hotel Address:</b> {{hotel?.hotelDetails.address}}</p>
+                            <!-- <p><b>Hotel Address:</b> {{hotel?..address}}</p> -->
+                            <p><b>HotelName :</b> {{hotel?.hotelName}} </p>
                            
 
-                            <p> <b>Check-In:</b>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}
+                            <p> <b>Check-In:</b>{{hotel?.checkInDate | date : "y-MM-dd"}}
                             </p>
                             <p>
-                              <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
+                              <b>Check-Out:</b>{{hotel?.checkOutDate | date : "y-MM-dd"}}
                             </p>
                             <p>
                               <b>Total Amount:</b>SAR {{hotelAmount}}
@@ -181,9 +182,11 @@
                               <h4>transportDetils</h4>
                               <br>
                               <p><b>bookingStatus :</b>{{transport?.bookingStatus}}</p>
-                              <p><b>Reference Number:</b>{{transport?.bookingReferenceNo}}</p>
+                              <p><b>Reference Number:</b>{{transport?.reservationNo}}</p>
                               <p><b>CompanyName:</b>{{transport?.companyName}}</p>
                               <p><b>RouteName :</b>{{transport?.routeName}}</p>
+                              <p><b>StartDate :</b>{{transport?.startDate | date : "y-MM-dd"}}</p>
+
                               <p>
                                 <b>Total Amount:</b>SAR {{transportAmount}}
                               </p>
@@ -192,7 +195,7 @@
                               <h4>groundDetails</h4>
                               <br>
                               <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
-                              <p><b>bookingReferenceNo:</b>{{ground?.bookingReferenceNo}}</p>
+                              <p><b>bookingReferenceNo:</b>{{ground?.reservationNo}}</p>
                               <p><b>category:</b>{{ground?.category?.categoryName}}</p>
                               <p>
                                 <b>Total Amount:</b>SAR {{groundAmount}}
@@ -223,11 +226,11 @@
                         <div class="row">
                           <div class="col-4">
                             <label for="title">Hotel Name:</label>
-                            <p>{{hotel?.hotelDetails.name}}</p>
+                            <p>{{hotel?.hotelName}}</p>
                           </div>
                           <div class="col-3">
                             <label for="title">Check in:</label>
-                            <p>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}</p>
+                            <p>{{hotel?.checkInDate | date : "y-MM-dd"}}</p>
                           </div>
                           <div class="col-2">
                             <label for="title">Nights:</label>
@@ -245,15 +248,15 @@
                         <div class="row">
                           <div class="col-4">
                             <label for="title">City:</label>
-                            <p>{{hotel?.hotelDetails.city}}</p>
+                            <p></p>
                           </div>
                           <div class="col-3">
                             <label for="title">Check out:</label>
-                            <p>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}</p>
+                            <p>{{hotel?.checkOutDate | date : "y-MM-dd"}}</p>
                           </div>
                           <div class="col-2">
                             <label for="title">Rooms:</label>
-                            <p>{{hotel?.hotelDetails.roomGroups[0].rooms.length}} </p>
+                            <p>{{hotel?.roomGroups[0].rooms.length}} </p>
                           </div>
                           <!-- <div class="col-2">
                         <label for="title">Bed Type:</label>

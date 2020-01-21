@@ -41,6 +41,7 @@ export class MyBookingComponent implements OnInit {
   requestId: any;
   constructor(private tejaanServices: AlrajhiumrahService , private spinner : NgxSpinnerService , private router : Router) {
     // console.log("booking reservation response ", JSON.parse(localStorage.getItem("hotelBookingResponse")));
+
     this.hotelBookingResponse = JSON.parse(localStorage.getItem("hotelBookingResponse"));
     this.hotelAmount = JSON.parse(localStorage.getItem("hotelAmount"))
     this.transportBookingResponse = JSON.parse(localStorage.getItem("transportBookingResponse"));
@@ -81,6 +82,7 @@ export class MyBookingComponent implements OnInit {
   /* method to call view hotel reservation api */
   public viewHotelReservation(): void {
 
+    this.spinner.show()
 
 
     if(this.hotelBookingResponse != null){
@@ -99,20 +101,19 @@ export class MyBookingComponent implements OnInit {
     this.tejaanServices.getHotelViewReservation(formData).subscribe(viewHotelReservationResp => {
      
         this.spinner.hide();
-           
-        if(viewHotelReservationResp.body.bookingStatus == "Confirmed"){
+           console.log("viewHotelReservationResp" , viewHotelReservationResp.body)
+        if(viewHotelReservationResp.body.bookingStatus == "Booked"){
 
-          this.hotel  = viewHotelReservationResp.body
         
            
-          const checkInDate = new Date(this.hotel.hotelDetails.checkInDate);
-          const checkOutDate = new Date(this.hotel.hotelDetails.checkOutDate);
+          const checkInDate = new Date(viewHotelReservationResp.body.checkInDate);
+          const checkOutDate = new Date(viewHotelReservationResp.body.checkOutDate);
       
           const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
           this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
        
        
-            this.hotel.hotelDetails.roomGroups[0].rooms.forEach(room =>{
+          viewHotelReservationResp.body.roomGroups[0].rooms.forEach(room =>{
 
                    room.paxInfo.forEach(pax =>{
                      
@@ -125,6 +126,7 @@ export class MyBookingComponent implements OnInit {
                    })
 
             })
+          this.hotel  = viewHotelReservationResp.body
             
             this.guests = this.adults + this.childrens;
             localStorage.setItem("hotelReservationTrackToken", viewHotelReservationResp.headers.get('tracktoken'));
@@ -155,31 +157,9 @@ export class MyBookingComponent implements OnInit {
     this.tejaanServices.getTransPortViewReservation(formData).subscribe(viewTransortReservationResp => {
 
 
-        // if(viewTransortReservationResp.bookingReferenceNo != undefined){
-
       this.transport = viewTransortReservationResp.body
 
-      console.log("transportView" , this.transport)
-        //  if(this.transport.vehicleTypes != undefined) { 
-        //  this.transport.vehicleTypes.foreach(vehicle =>{
-
-        //          vehicle.categories[0].displayRateInfo.foreach(rate =>{
-                          
-        //             if(rate.purpose == "1"){
-        //                   const GDSTAX =  (rate.amount / 100) * 7.5
-        //                   const OTATAX =  (rate.amount / 100) * 30
-        //                  this.tansportTaxAmount += GDSTAX + OTATAX
-        //             }
-                    
-        //             if(rate.purpose == "10"){
-        //                this.tansportTotalAmount += rate.amount + this.tansportTaxAmount
-        //             }
-        //          })
-        //  })
-        // }
-
-
-      // }
+       
     })
 
   }
@@ -250,7 +230,7 @@ export class MyBookingComponent implements OnInit {
             "cultureCode": "en-US",
             "trackToken": trackToken,
             "providerInfo": [{
-              "provider": "HUDXConnect"
+              "provider": this.hotelProvider
             }]
           },
           "request": this.hotelBookingResponse.bookingReferenceNo
@@ -274,42 +254,7 @@ export class MyBookingComponent implements OnInit {
 
   evisaDetails() {
 
-    //********** if(this.hotelBookingResponse.bookingReferenceNo != undefined && this.transportBookingResponse.bookingReferenceNo != undefined && this.groundBookingResponse.bookingReferenceNo != undefined)
-    // this.hotel.roomGroups[0].rooms[0].travellerDetails.forEach(travellerDet => {
-    //   let mutamersArrayObj = {
-    //     "DateOfBirth": travellerDet.details.birthDate,
-    //     "PassportNo": "k1860845", //travellerDet.details.passportNo
-    //     "NationalityId": "20", // travellerDet.details.nationalityCode
-    //     "Gender": travellerDet.details.gender
-    //   }
-    //   this.mutamersArray.push(mutamersArrayObj);
-    // })
-    // let evisaObj = {
-    //   "GroupId": "637014587514758273",
-    //   "BrnId": {
-    //       "Hotels": [
-    //         this.hotelBookingResponse.bookingReferenceNo,
-    //       ],
-    //       "Transpotations": [
-    //         this.transportBookingResponse.bookingReferenceNo,
-    //       ],
-    //       "GroundServices": [
-    //         this.groundBookingResponse.bookingReferenceNo,
-    //       ]
-    //   },
-    //   "Email": this.hotel.roomGroups[0].rooms[0].travellerDetails[0].details.contactInformation.email,
-    //   "MobileNo": this.hotel.roomGroups[0].rooms[0].travellerDetails[0].details.contactInformation.phoneNumber,
-    //   "ArrivalAirportCode": "",
-    //   "ArrivalFlightNumber": "",
-    //   "ArrivalDate": "",
-    //   "ArrivalTime": "",
-    //   "DepartureAirportCode": "",
-    //   "DepartureFlightNumber": "",
-    //   "DepartureDate": "",
-    //   "DepartureTime": "",
-    //   "Mutamers": this.mutamersArray
-    // }
-     
+  
     var randomNumber = Math.floor(Math.random() * 20000000 + 1);
 
     let evisaObj = {
@@ -357,11 +302,11 @@ export class MyBookingComponent implements OnInit {
           "Token":sha256(sha256Str)
        }
         this.tejaanServices.getEvisaLink(evisaLinkObj).subscribe((evisaLinkResponse) => {
-          // console.log("hiiiiiiiiiii")
-           console.log(evisaLinkResponse);
-
+    
            window.open(evisaLinkResponse.evisaLink)
         });
+      }else{
+        alert(`${evisaDetailsResponse.MutamersGroupResponse.ResponseDescription}`)
       }
     });
   
