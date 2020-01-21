@@ -4,18 +4,18 @@
     <div class="bg-mask"></div>
   </div>
   <!-- *ngIf="selectedHotel?.roomGroups == undefined && isroomGroups == false " -->
-  <div class="col-md-12 search-results d-none" >
+  <div class="col-md-12 search-results d-none">
     <div class="no-search-results-section">
       <div>
         <p>{{selectedHotel.name}} Hotel rooms not available at this time please select another hotel </p>
         <div class="search-btns">
           <button class="btn btn-primary" (click)="backToHotelList()">Back to hotelList</button>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
   <!-- *ngIf="selectedHotel?.roomGroups != undefined && isroomGroups == true " -->
-  <div class="container-fluid" >
+  <div class="container-fluid">
     <div class="">
       <div class="hotel-details-wrapper">
         <section class="hotel-image-and-reviews">
@@ -29,37 +29,37 @@
                     <div class="row">
 
                       <div class="col-md-10 col-9">
-                      <div class="hotel-description">
-                        <h5>{{selectedHotel?.name}}</h5>
-                        <p class="hotel-booking-description" [innerHtml]="selectedHotel.description"></p>
+                        <div class="hotel-description">
+                          <h5>{{selectedHotel?.name}}</h5>
+                          <p class="hotel-booking-description" [innerHtml]="selectedHotel.description"></p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="col-md-2 col-3 hotel-star-rating">
-                      <div class="reviews-score">
-                        <!-- review score -->
-                        <div class="reviews-wrapper">
-                          <div class="review-container">
-                            <div>
-                              <span class="review-caption">review score</span>
-                              <span class="reviews-count"> 000 reviews</span>
+                      <div class="col-md-2 col-3 hotel-star-rating">
+                        <div class="reviews-score">
+                          <!-- review score -->
+                          <div class="reviews-wrapper">
+                            <div class="review-container">
+                              <div>
+                                <span class="review-caption">review score</span>
+                                <span class="reviews-count"> 000 reviews</span>
+                              </div>
+                              <div class="favourite-selection">
+                                <span class="review-score">9.5</span>
+                              </div>
                             </div>
-                            <div class="favourite-selection">
-                              <span class="review-score">9.5</span>
+                            <div class="star-rating">
+                              <ng-template #t let-fill="fill">
+                                <span class="star" [class.full]="fill === 100">
+                                  <span class="half" [style.width.%]="fill">&#9733;</span>
+                                </span>
+                              </ng-template>
+                              <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
                             </div>
-                          </div>
-                          <div class="star-rating">
-                            <ng-template #t let-fill="fill">
-                              <span class="star" [class.full]="fill === 100">
-                                <span class="half" [style.width.%]="fill">&#9733;</span>
-                              </span>
-                            </ng-template>
-                            <ngb-rating [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
 
                     <div class="hotel-image-lightbox">
@@ -93,11 +93,12 @@
                     <div class="contact">
                       <h5>Hotel Contact:</h5>
                       <ul>
-                        <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{saudiPhoneCode}}  {{hotelPhone}}
+                        <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{saudiPhoneCode}} {{hotelPhone}}
                         </li>
                         <li><img class="" src="assets/images/icons/email.png">{{selectedHotel.email}}</li>
                         <li class="detail-contact"><img class="" src="assets/images/icons/Group.png">
-                          <div>{{selectedHotel.address}}</div></li>
+                          <div>{{selectedHotel.address}}</div>
+                        </li>
                       </ul>
                     </div>
                     <div class="reviews">
@@ -235,6 +236,27 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6 policies-section" *ngIf="policies.length > 0">
+                <div>
+                  <button class="btn btn-md" data-toggle="modal" data-target="#policiesModal">Policies</button>
+                </div>
+              </div>
+              <div class="modal" id="policiesModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5>Policies</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        <p>Type: <span>{{policies[0]?.type}}</span></p>
+                        <p>Description: <span>{{policies[0]?.description}}</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="table-responsive">
@@ -290,21 +312,22 @@
                     </td>
                     <td class="custom-select-section">
                       <div *ngFor="let roomaAmount of room.displayRateInfo" class="d-none">
-                        <p class="nights-count" *ngIf="roomaAmount.purpose == 1"> 
+                        <p class="nights-count" *ngIf="roomaAmount.purpose == 1">
                           1 nights {{roomaAmount.amount | number : "1.2-2"}} {{roomaAmount.currencyCode}}</p>
-                        
+
                       </div>
 
                       <div>
                         <p class="nights-count">
-                         1 nights {{room.displayRateInfo[0].amount | number : "1.2-2"}} {{room.displayRateInfo[0].currencyCode}}</p>
-                          <small >+ {{getTaxexInfo(room.displayRateInfo).totalTxAmount }}
-                            {{room.displayRateInfo[0].currencyCode}}
-                            taxs</small>
-                      
-                        </div>
+                          1 nights {{room.displayRateInfo[0].amount | number : "1.2-2"}}
+                          {{room.displayRateInfo[0].currencyCode}}</p>
+                        <small>+ {{getTaxexInfo(room.displayRateInfo).totalTxAmount }}
+                          {{room.displayRateInfo[0].currencyCode}}
+                          taxs</small>
+
+                      </div>
                     </td>
-                   
+
                     <td class="custom-select-section">
                       <button class="btn book-room-btn" (click)="onRoomAvailability(selectedHotel,room)">Book
                         room</button>
@@ -348,13 +371,6 @@
   <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner> -->
 
-<ngx-spinner
-bdOpacity = 0.9
-bdColor = "#333"
-size = "medium"
-color = "#BB9356"
-type = "ball-pulse-sync"
-[fullScreen] = "true"
->
-<p style="color: white" > Loading... </p>
+<ngx-spinner bdOpacity=0.9 bdColor="#333" size="medium" color="#BB9356" type="ball-pulse-sync" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
 </ngx-spinner>

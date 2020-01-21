@@ -55,7 +55,7 @@ export class HotelDetailsComponent implements OnInit {
   public saudiPhoneCode: any;
   public hotelPhone: any;
   public travellerCount;
-
+  policies : any;
 
   constructor(private router: Router,
     private teejanServices: AlrajhiumrahService,
@@ -65,12 +65,14 @@ export class HotelDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.searchDate = JSON.parse(localStorage.getItem("searchObj"));
-    this.searchFilter = JSON.parse(localStorage.getItem("searchFilterObj"))
+    this.searchFilter = JSON.parse(localStorage.getItem("searchFilterObj"));
     this.selectedHotel = JSON.parse(localStorage.getItem("currentHotel"));
     this.searchLookUp = JSON.parse(localStorage.getItem("searchLookUp"));
     this.hotelslistrespTrackToken = localStorage.getItem("hotelslistrespTrackToken");
     this.travellerCount = parseInt(this.searchFilter.adults_count) + parseInt(this.searchFilter.child_count);
    console.log(JSON.stringify(this.selectedHotel));
+   this.policies = this.selectedHotel.policies;
+   console.log("policies---",this.policies);
     // this.saudiPhoneCode = this.selectedHotel.phone.substring(0, 3);
     // this.hotelPhone = this.selectedHotel.phone.substring(3);
     /* calculating adult and child count in rooms to display in UI */

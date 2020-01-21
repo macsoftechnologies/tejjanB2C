@@ -368,6 +368,29 @@
             }
           }
         }
+        .policies-section {
+          text-align: right;
+          padding-top: 28px;
+          padding-right: 82px;
+          button {
+            background-color: #bb9356;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+          }
+        }
+        .modal-content {
+          .modal-header .close {
+            color: #bb9356;
+          }
+          .modal-body {
+            p {
+              font-weight: 500;
+              font-size: 14px;
+            };
+          }
+        }
       }
       .date-pickers {
         display: flex;

@@ -439,18 +439,24 @@
                                 {{transport?.companyAddress}}</p>
                               <span class="transport-description "> {{transport?.companyDescription}}</span>
                               <div>
-                                Category:
-                                <span class="transport-description "> {{transport?.vehicleTypes[0]?.categories[0]?.catName}}</span>
+                                <p class="transport-description "> Category:{{transport?.vehicleTypes[0]?.categories[0]?.catName}}</p>
+                                
                               </div>
                               <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices!=undefined">
-                                <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices.length>0">
-                                  Additional Services
+                                <div class="d-flex"  *ngIf="transport?.vehicleTypes[0]?.categories[0]?.additionalServices.length>0">
+                                  <p class="transport-address">Additional Services:</p> 
                                   <ul>
                                     <li
                                       *ngFor=" let additionalServicesItem of transport?.vehicleTypes[0]?.categories[0]?.additionalServices">
                                       <span class="transport-description ">{{additionalServicesItem.description}}</span>
                                     </li>
                                   </ul>
+                                </div>
+                              </div>
+                              <div *ngIf="transport?.vehicleTypes[0]?.categories[0]?.model!=undefined">
+                                <div class="d-flex" >
+                                  <p class="transport-address">Model: {{transport?.vehicleTypes[0]?.categories[0]?.model?.from}} -
+                                     {{transport?.vehicleTypes[0]?.categories[0]?.model?.to}}</p>
                                 </div>
                               </div>
                              
