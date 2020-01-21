@@ -164,7 +164,7 @@
                               <div *ngIf="guest.child >0">
                                 <div class="row">
                                   <div class="col-md-6" *ngFor="let ages of guest.childAges;let j= index;">
-                                    <span>Child {{j+1}}</span>
+                                    <span>Child {{j+1}}(1-9)</span>
                                     <div class="form-group">
                                       <ng-select [items]="child_ages" placeholder="age"
                                         (change)="changeChildAge($event,i,j)">
@@ -212,7 +212,7 @@
             </div>
             <div class="col-md-6 flight-trans-blocks">
               <div class="transport-and-ground-services col">
-                <h5>Transportation & Services</h5>
+                <h5> Transportations and Ground services + Additional services of Ground services as Optional</h5>
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">

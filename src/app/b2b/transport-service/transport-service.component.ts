@@ -34,7 +34,7 @@ export class TransportServiceComponent implements OnInit {
   public companies = [];
   public searchDate: any;
   public transportList = [];
-  public selectTransportDetails : any;
+  public selectTransportDetails: any;
 
   // public transportLists : any
   public page = 1;
@@ -115,7 +115,7 @@ export class TransportServiceComponent implements OnInit {
     this.broadcastService.customStepper.emit(true);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public onFilterDisplay() {
     this.isFilterDisplay = !this.isFilterDisplay;
@@ -139,30 +139,30 @@ export class TransportServiceComponent implements OnInit {
     this.bindTransportFilterData();
   }
 
-  vehicleType(vehicle){
-    console.log("vehicle" , vehicle);
-    let searchFilterData : any = JSON.parse(localStorage.getItem('searchFilterObj'))
+  vehicleType(vehicle) {
+    console.log("vehicle", vehicle);
+    let searchFilterData: any = JSON.parse(localStorage.getItem('searchFilterObj'))
 
     searchFilterData.vehicleType = vehicle
-   
-    localStorage.setItem("searchFilterObj" , JSON.stringify(searchFilterData))
-    
-  }
-  transportaionClass(transportionClass){
 
-    let searchFilterData : any = JSON.parse(localStorage.getItem('searchFilterObj'))
+    localStorage.setItem("searchFilterObj", JSON.stringify(searchFilterData))
+
+  }
+  transportaionClass(transportionClass) {
+
+    let searchFilterData: any = JSON.parse(localStorage.getItem('searchFilterObj'))
 
     searchFilterData.tranportationClass = transportionClass
-   
-    localStorage.setItem("searchFilterObj" , JSON.stringify(searchFilterData))
+
+    localStorage.setItem("searchFilterObj", JSON.stringify(searchFilterData))
 
   }
-  transportAddtionalService(service){
-    let searchFilterData : any = JSON.parse(localStorage.getItem('searchFilterObj'))
+  transportAddtionalService(service) {
+    let searchFilterData: any = JSON.parse(localStorage.getItem('searchFilterObj'))
 
     searchFilterData.transportAdditionalServices = service
-   
-    localStorage.setItem("searchFilterObj" , JSON.stringify(searchFilterData))
+
+    localStorage.setItem("searchFilterObj", JSON.stringify(searchFilterData))
 
   }
 
@@ -182,7 +182,7 @@ export class TransportServiceComponent implements OnInit {
         this.routes = JSON.parse(transportLookUpResp.routes).routes;
         this.companies = JSON.parse(transportLookUpResp.companies).companies;
       },
-      err => {}
+      err => { }
     );
   }
 
@@ -192,7 +192,7 @@ export class TransportServiceComponent implements OnInit {
       routeCode: this.searchFilterObj.route,
       categoryCode: this.searchFilterObj.tranportationClass,
       quantity: this.searchFilterObj.vehicleQuantity,
-      additionalServices : this.searchFilterObj.transportAdditionalServices != null ?this.searchFilterObj.transportAdditionalServices.name :null,
+      additionalServices: this.searchFilterObj.transportAdditionalServices != null ? this.searchFilterObj.transportAdditionalServices.name : null,
       noOfPax:
         parseInt(this.searchFilterObj.adults_count) +
         parseInt(this.searchFilterObj.child_count),
@@ -219,29 +219,29 @@ export class TransportServiceComponent implements OnInit {
       request: {
         routeCode: this.tranportFormGroup.value.routeCode.code,
         startDate: this.tranportFormGroup.value.checkin,
-        categoryCode : this.tranportFormGroup.value.categoryCode != null ? this.tranportFormGroup.value.categoryCode.code:null,
+        categoryCode: this.tranportFormGroup.value.categoryCode != null ? this.tranportFormGroup.value.categoryCode.code : null,
         quantity: parseInt(this.searchFilterObj.vehicleQuantity),
         noOfPax: this.noOfPax,
         // model: {
         //     from : this.tranportFormGroup.value.from,
         //     to : this.tranportFormGroup.value.to
         //  }, 
-         vehicleTypeCode: this.tranportFormGroup.value.vehicleTypeCode != null ? this.tranportFormGroup.value.vehicleTypeCode.code:null,
-         additionalServices: this.tranportFormGroup.value.additionalServices!=null?[this.searchFilterObj.transportAdditionalServices.code]:null
+        vehicleTypeCode: this.tranportFormGroup.value.vehicleTypeCode != null ? this.tranportFormGroup.value.vehicleTypeCode.code : null,
+        additionalServices: this.tranportFormGroup.value.additionalServices != null ? [this.searchFilterObj.transportAdditionalServices.code] : null
       }
     };
     console.log(JSON.stringify(this.transportSearchObj.request));
-     if(this.transportSearchObj.request.categoryCode == null){
-       delete this.transportSearchObj.request.categoryCode
-     }
+    if (this.transportSearchObj.request.categoryCode == null) {
+      delete this.transportSearchObj.request.categoryCode
+    }
 
-     if(this.transportSearchObj.request.vehicleTypeCode == null){
-         delete this.transportSearchObj.request.vehicleTypeCode
-     }
+    if (this.transportSearchObj.request.vehicleTypeCode == null) {
+      delete this.transportSearchObj.request.vehicleTypeCode
+    }
 
-     if(this.tranportFormGroup.value.additionalServices == null){
-         delete this.transportSearchObj.request.additionalServices
-     }
+    if (this.tranportFormGroup.value.additionalServices == null) {
+      delete this.transportSearchObj.request.additionalServices
+    }
 
 
     localStorage.setItem(
@@ -250,22 +250,22 @@ export class TransportServiceComponent implements OnInit {
     );
     this.teejanServices.getTransportSearch(this.transportSearchObj).subscribe(
       transportSearchResp => {
-        
-       this.spinner.hide();
+
+        this.spinner.hide();
         if (transportSearchResp.body.transportations.length > 0) {
 
-           console.log("transportCompanies" , this.companies)
-            this.companies.forEach(company => {
-          transportSearchResp.body.transportations.forEach(transportation => {
+          console.log("transportCompanies", this.companies)
+          this.companies.forEach(company => {
+            transportSearchResp.body.transportations.forEach(transportation => {
 
-              if (company.code  === transportation.companyCode) {
+              if (company.code === transportation.companyCode) {
                 transportation.companyName = company.name;
-                transportation.companyDescription= company.description;
-                transportation.companyAddress= company.address;
+                transportation.companyDescription = company.description;
+                transportation.companyAddress = company.address;
               }
-          });
-
             });
+
+          });
           this.transportList = transportSearchResp.body.transportations;
           this.mainTransportList = transportSearchResp.body.transportations;
 
@@ -292,125 +292,73 @@ export class TransportServiceComponent implements OnInit {
           this.isFirstTimeLoad = false;
         }
       },
-      err => {}
+      err => { }
     );
   }
 
   /* search again if no data found from transport search api */
-  public searchAgain(): void {}
+  public searchAgain(): void { }
 
   /* call transport availability api by click on view details of transport list item */
-  public onTransportationViewDetails(currentTransport): void {     
-
-     console.log("transportList" , this.transportList)
-     console.log("transportList" , currentTransport)
-
-    // this.spinner.show();
+  public onTransportationViewDetails(currentTransport): void {
     this.isTransportListAvailableFlag = false;
     this.transportAvailabilityFlag = true
-   
-
     let quantity = parseInt(this.searchFilterObj.vehicleQuantity);
-  
-     console.log("currentTransportVehicletypes" ,  currentTransport.vehicleTypes)
-
-      
-     currentTransport.vehicleTypes.forEach(vehicle =>{
-
-       
-        this.vehicleTypes.forEach(vehicleType =>{
-              if(vehicleType.code === vehicle.vehicleTypeCode){
-                vehicle.vehicleTypeName = vehicleType.name
-              }
-        })
-
-
-      vehicle.categories.forEach(category =>{
-
-          
-
+    currentTransport.vehicleTypes.forEach(vehicle => {
+      this.vehicleTypes.forEach(vehicleType => {
+        if (vehicleType.code === vehicle.vehicleTypeCode) {
+          vehicle.vehicleTypeName = vehicleType.name
+        }
+      })
+      vehicle.categories.forEach(category => {
         category.displayRateInfo.forEach(displayRate => {
-                    // adding GDS and OTA TAXES with baseprice
-                    if (displayRate.purpose == "1") {
-                      let GDSobject = {
-                        amount: (displayRate.amount / 100) * 7.5,
-                        purpose: "20",
-                        description: "GDSTAX",
-                        currencyCode: "SAR"
-                      };
-                      vehicle.categories[0].displayRateInfo.push(GDSobject);
-                      let OTAobject = {
-                        amount: (displayRate.amount / 100) * 30,
-                        purpose: "30",
-                        description: "OTATAX",
-                        currencyCode: "SAR"
-                      };
-                      vehicle.categories[0].displayRateInfo.push(OTAobject);
-      
-                      // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
-                      if (displayRate.purpose == "7") {
-                        this.taxAmount = 0;
-                        this.taxAmount = displayRate.amount;
-                      }
-                      if (displayRate.purpose == "2") {
-                        this.feeAmount = 0;
-                        this.feeAmount = displayRate.amount;
-                      }
-      
-                      let taxesObject = {
-                        amount:
-                          (displayRate.amount / 100) * 30 +
-                          (displayRate.amount / 100) * 7.5 +
-                          this.taxAmount +
-                          this.feeAmount,
-                        purpose: "40",
-                        description: "TAXES",
-                        currencyCode: "SAR"
-                      };
-                      vehicle.categories[0].displayRateInfo.push(taxesObject);
-                    }
-                  });
-                
+          // adding GDS and OTA TAXES with baseprice
+          if (displayRate.purpose == "1") {
+            let GDSobject = {
+              amount: (displayRate.amount / 100) * 7.5,
+              purpose: "20",
+              description: "GDSTAX",
+              currencyCode: "SAR"
+            };
+            vehicle.categories[0].displayRateInfo.push(GDSobject);
+            let OTAobject = {
+              amount: (displayRate.amount / 100) * 30,
+              purpose: "30",
+              description: "OTATAX",
+              currencyCode: "SAR"
+            };
+            vehicle.categories[0].displayRateInfo.push(OTAobject);
 
+            // calculating all taxes (OTA + GDS + VAT(TAX) + FEES)
+            if (displayRate.purpose == "7") {
+              this.taxAmount = 0;
+              this.taxAmount = displayRate.amount;
+            }
+            if (displayRate.purpose == "2") {
+              this.feeAmount = 0;
+              this.feeAmount = displayRate.amount;
+            }
 
-
-
-        const vehicleQuntity = Array( category.availableQuantity ) .fill(+0).map((x, i) => i);
-      
+            let taxesObject = {
+              amount:
+                (displayRate.amount / 100) * 30 +
+                (displayRate.amount / 100) * 7.5 +
+                this.taxAmount +
+                this.feeAmount,
+              purpose: "40",
+              description: "TAXES",
+              currencyCode: "SAR"
+            };
+            vehicle.categories[0].displayRateInfo.push(taxesObject);
+          }
+        });
+        const vehicleQuntity = Array(category.availableQuantity).fill(+0).map((x, i) => i);
         category.availableQuantity = vehicleQuntity
-
-
-      const vehiclecapacity = Array( category.maxPaxCapacity ).fill(+0).map((x, i) => i);
-         
-      category.maxPaxCapacity = vehiclecapacity
-     
-
-      })      
-
-
-     })
-
-
-       this.selectTransportDetails = currentTransport
-
-
-       console.log("selectTransportDetails" , this.selectTransportDetails);
-
-
-    //add description in policeis
-
-  //   if(currentTransport.policies != undefined || currentTransport.policeis != null){
-
-  //   var policies = currentTransport.policies.map(item => {
-  //     let o = Object.assign({}, item);
-  //     o.description = "";
-  //     return o;
-  //   });
-  // }
-
-    
-
-    
+        const vehiclecapacity = Array(category.maxPaxCapacity).fill(+0).map((x, i) => i);
+        category.maxPaxCapacity = vehiclecapacity
+      })
+    })
+    this.selectTransportDetails = currentTransport
   }
 
   // calling transportlist
@@ -420,9 +368,7 @@ export class TransportServiceComponent implements OnInit {
 
   // select capacity
   vehicleMaxCapacity(capacity, vehicle, veIndex) {
-
     vehicle.categories[0]["noOfPax"] = parseInt(capacity);
-
     this.vehicelcapcityObj = {
       quantity: "0",
       capacity: capacity,
@@ -430,30 +376,26 @@ export class TransportServiceComponent implements OnInit {
       veIndex: veIndex
     };
     let index = this.selectedVehicle.findIndex(veh => veh.veIndex == veIndex);
-
     if (index == -1) {
       this.selectedVehicle.push(this.vehicelcapcityObj);
     } else {
       if (capacity == "0" || capacity == undefined) {
         if (this.selectedVehicle[index].quantity == "0" || this.selectedVehicle[index].quantity == undefined) {
           this.selectedVehicle.splice(index, 1);
-        }else{
-            this.selectedVehicle[index].capacity = 0
+        } else {
+          this.selectedVehicle[index].capacity = 0
         }
       } else {
 
         this.selectedVehicle[index].capacity = capacity;
       }
     }
-  
 
   }
 
   // select vehicle quntity
   vehicleAviQty(quantity, vehicle, veIndex) {
-
     vehicle.categories[0]["Quantity"] = parseInt(quantity);
-
     this.vehicelQuntityObj = {
       capacity: "0",
       quantity: quantity,
@@ -466,40 +408,31 @@ export class TransportServiceComponent implements OnInit {
       this.selectedVehicle.push(this.vehicelQuntityObj);
     } else {
       if (quantity == "0" || quantity == undefined) {
- 
+
         if (this.selectedVehicle[index].capacity == "0" || this.selectedVehicle[index].capacity == undefined) {
           this.selectedVehicle.splice(index, 1);
-        }else{
-             this.selectedVehicle[index].quantity = 0
+        } else {
+          this.selectedVehicle[index].quantity = 0
         }
       } else {
-      
+
         this.selectedVehicle[index].quantity = quantity;
       }
     }
-
-  
   }
 
   /* navigate to ground service */
   onGroundService(selectTransPort) {
-
-    console.log("selectAvailabiltyTransport" , selectTransPort)
     let noOfPax =
       parseInt(this.searchFilterObj.adults_count) +
       parseInt(this.searchFilterObj.child_count);
-
     this.cartVehicleList = [];
-
     if (this.selectedVehicle.length > 0) {
-  
       for (let i = 0; i < this.selectedVehicle.length; i++) {
         if (
           this.selectedVehicle[i].quantity == "0" ||
           this.selectedVehicle[i].capacity == "0"
         ) {
-          // alert("select capacity and quantity of same transportation option.");
-
           swal.fire({
             title:
               "select capacity and quantity of same transportation option.",
@@ -522,39 +455,28 @@ export class TransportServiceComponent implements OnInit {
         );
         // validating
         if (totalPax == noOfPax) {
-
           this.spinner.show();
-
           selectTransPort["vehicleTypes"] = this.cartVehicleList;
-
-          selectTransPort.vehicleTypes.forEach(vehicle =>{
-
-             delete vehicle.vehicleTypeName
-
-            vehicle.categories.forEach(category =>{
-             delete category.availableQuantity 
-             delete category.maxPaxCapacity 
-
-             for (let k = 0; k < category.displayRateInfo.length; k++) {
-
-              if (category.displayRateInfo[k].purpose === "20") {
-
-                category.displayRateInfo.splice(k, 1)
-                k--
+          selectTransPort.vehicleTypes.forEach(vehicle => {
+            delete vehicle.vehicleTypeName
+            vehicle.categories.forEach(category => {
+              delete category.availableQuantity
+              delete category.maxPaxCapacity
+              for (let k = 0; k < category.displayRateInfo.length; k++) {
+                if (category.displayRateInfo[k].purpose === "20") {
+                  category.displayRateInfo.splice(k, 1)
+                  k--
+                }
+                if (category.displayRateInfo[k].purpose === "30") {
+                  category.displayRateInfo.splice(k, 1)
+                  k--
+                }
+                if (category.displayRateInfo[k].purpose === "40") {
+                  category.displayRateInfo.splice(k, 1)
+                  k--
+                }
               }
-              if (category.displayRateInfo[k].purpose === "30") {
-                category.displayRateInfo.splice(k, 1)
-                k--
-              }
-              if (category.displayRateInfo[k].purpose === "40") {
-                category.displayRateInfo.splice(k, 1)
-                k--
-              }
-            }
-
             })
-          
-
           })
           this.transportSearckTrackToken = localStorage.getItem(
             "transportSearchTrackToken"
@@ -562,7 +484,7 @@ export class TransportServiceComponent implements OnInit {
           let formData = {
             context: {
               cultureCode: this.searchDate.context.cultureCode,
-              trackToken: this.transportSearckTrackToken,   
+              trackToken: this.transportSearckTrackToken,
               providerInfo: [
                 {
                   provider: selectTransPort.provider
@@ -581,35 +503,28 @@ export class TransportServiceComponent implements OnInit {
               config: selectTransPort.config
             }
           };
-
-         console.log("ReqTransportAvailability" , formData)
           this.teejanServices.getTransportAvailability(formData).subscribe(
-              resp => {
-                this.spinner.hide();
-                swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  width: '22em',
-                  title: 'Added to the cart',
-                  showConfirmButton: false,
-                  timer: 3000
-                })
-             console.log("TransportAvailabilityResponse" , resp.body)
-             localStorage.setItem(
-              "transportAvailabilityTracktoken",
-              resp.headers.get('tracktoken')
-            );
-             localStorage.setItem(
-              "transportcart",
-              JSON.stringify(resp.body)
-            );
-          this.router.navigateByUrl("b2c/ground");
-
-               })
-
-        
+            resp => {
+              this.spinner.hide();
+              swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                width: '22em',
+                title: 'Added to the cart',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              localStorage.setItem(
+                "transportAvailabilityTracktoken",
+                resp.headers.get('tracktoken')
+              );
+              localStorage.setItem(
+                "transportcart",
+                JSON.stringify(resp.body)
+              );
+              this.router.navigateByUrl("b2c/ground");
+            })
         } else {
-        
           swal.fire({
             title: "Please select vehicle as per your pax capacity.",
             showClass: {
@@ -622,7 +537,6 @@ export class TransportServiceComponent implements OnInit {
         }
       }
     } else {
-    
       swal.fire({
         title: "Please select vehicle with quantity.",
         showClass: {
@@ -634,10 +548,9 @@ export class TransportServiceComponent implements OnInit {
       });
     }
   }
- 
-  skipGroundService(){
+
+  skipGroundService() {
     this.router.navigateByUrl("b2c/ground");
-     
   }
 
   /* Generate skeletons for transport list */
@@ -656,18 +569,15 @@ export class TransportServiceComponent implements OnInit {
     this.mainTransportList.forEach(element => {
       if (
         element.vehicleTypes[0].categories[0].displayRateInfo[0].amount >=
-          event.value &&
+        event.value &&
         element.vehicleTypes[0].categories[0].displayRateInfo[0].amount <=
-          event.highValue
+        event.highValue
       ) {
         temp.push(element);
       }
     });
     if (temp.length > 0) this.transportList = temp;
-    console.log("transportLength" , this.transportList.length)
   }
-
-   
   public clearFilter(filterName): void {
     switch (filterName) {
       case "name":

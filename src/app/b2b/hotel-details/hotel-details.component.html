@@ -258,7 +258,8 @@
                 <tbody>
                   <tr *ngFor="let room of selectedHotel?.roomGroups[0]?.rooms let i = index;">
                     <td>
-                      <p class="room-type-name">{{room?.name}}</p>
+                      <p class="room-type-name">Room Name: {{room?.name}}</p>
+                      <p class="">Room Description: {{room?.description}}</p>
                       <div class="room-type-image-lightbox">
                         <div class="d-flex flex-row mb-3">
                           <div class="p-2 room-type-main-img">

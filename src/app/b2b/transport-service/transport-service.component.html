@@ -538,6 +538,7 @@
                 <thead>
                   <tr>
                     <th>Transportation</th>
+                    <th>Model(From-To)</th>
                     <th><i class="fa fa-user-o" aria-hidden="true"></i>Capacity</th>
                     <th><i class="fa fa-bus" aria-hidden="true"></i>Quantity</th>
                     <th class="text-center">Price</th>
@@ -547,6 +548,7 @@
                 <tbody>
                   <tr *ngFor="let vehicle of selectTransportDetails?.vehicleTypes;let i = index">
                     <td>{{vehicle.vehicleTypeName}}</td>
+                  <td>{{vehicle?.categories[0].model.from}}- {{vehicle?.categories[0].model.to}}</td>
                     <td>
                       <div class="vehicle">
                         <div class="form-group col-md-12 vech-capacity">
