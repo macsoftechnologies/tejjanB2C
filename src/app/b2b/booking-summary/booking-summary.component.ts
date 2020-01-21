@@ -65,6 +65,15 @@ export class BookingSummaryComponent implements OnInit {
     localStorage.setItem("stepperVal", 3 + "");
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"));
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
+    
+    const checkInDate = new Date(this.searchObj.request.checkInDate);
+      
+    const checkOutDate = new Date(this.searchObj.request.checkOutDate);
+
+    const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+    this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    console.log("numberOfNights" , this.numberOfNights)
+ 
 
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"));
     this.guests =
@@ -85,20 +94,17 @@ export class BookingSummaryComponent implements OnInit {
       this.hotelTotalPrice +
       this.transportTotalPrice +
       this.groundTotalPrice +
-      this.guests * 300 + this.guests * 189
+      this.guests * 300 
 
 
 
 
-      const checkInDate = new Date(this.searchObj.request.checkInDate);
-      const checkOutDate = new Date(this.searchObj.request.checkOutDate);
-  
-      const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-      this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-   
   }
 
   public hotelCalculations() {
+
+
+    console.log("numberOfNigts" , this.numberOfNights)
     if (this.hotelcart != null || this.hotelcart != undefined) {
       let roomsDisplayRates = this.hotelcart.roomGroups[0].rooms.map(
         rate => rate.displayRateInfo
@@ -108,15 +114,16 @@ export class BookingSummaryComponent implements OnInit {
         roomRate.forEach(priceDetails => {
           if (priceDetails.purpose == "1") {
 
-                  
-            this.roomsGDS += priceDetails.amount / 100 * 7.5
-            this.roomsOTA += priceDetails.amount / 100 * 30;
+                 
+            this.roomsBasePrice += priceDetails.amount * this.numberOfNights;
+            
+            this.roomsGDS += priceDetails.amount / 100 * 7.5 * this.numberOfNights
+            this.roomsOTA += priceDetails.amount / 100 * 30 * this.numberOfNights
 
               
-            this.roomsBasePrice += priceDetails.amount;
           }
           if (priceDetails.purpose == "2") {
-            this.roomsFees += priceDetails.amount;
+            this.roomsFees += priceDetails.amount * this.numberOfNights;
           }
           // if (priceDetails.purpose == "20") {
           //   this.roomsGDS += priceDetails.amount;
@@ -125,7 +132,7 @@ export class BookingSummaryComponent implements OnInit {
           //   this.roomsOTA += priceDetails.amount;
           // }
           if (priceDetails.purpose == "7") {
-            this.roomsVAT += priceDetails.amount;
+            this.roomsVAT += priceDetails.amount * this.numberOfNights;
           }
         });
       });
@@ -135,7 +142,9 @@ export class BookingSummaryComponent implements OnInit {
         this.roomsFees +
         this.roomsVAT +
         this.roomsGDS +
-        this.roomsOTA;
+        this.roomsOTA 
+
+        // this.hotelTotalPrice = totlaprice * this.numberOfNights
       console.log("hoteTotalPrice", this.hotelTotalPrice);
     }
   }
@@ -173,12 +182,14 @@ export class BookingSummaryComponent implements OnInit {
         });
       });
 
-      this.transportTotalPrice =
+      this.transportTotalPrice=
         this.transportBasePrice +
         this.transportVAT +
         this.transportGDS +
         this.transportOTA;
 
+
+     
       console.log("transportTotalPrice", this.transportTotalPrice);
     }
   }
@@ -208,8 +219,14 @@ export class BookingSummaryComponent implements OnInit {
         //   console.log("groundOTA", this.groundOTA);
         // }
       });
-      this.groundTotalPrice =
-        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;}
+      this.groundTotalPrice  =
+        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
+      
+      
+       
+
+      }
+
      
     }
   }

@@ -35,7 +35,10 @@ export class MyBookingComponent implements OnInit {
   public transportProvider :  any;
   public groundProvider :  any;
 
+ 
   mutamersArray = [];
+  
+  travellerDetails : any
 
  public evisaMutmerDetails = []
   requestId: any;
@@ -54,10 +57,14 @@ export class MyBookingComponent implements OnInit {
     this.groundProvider = localStorage.getItem("groundProvider")     
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"))
 
+    this.travellerDetails = JSON.parse(localStorage.getItem("travellerDetails"))
+
      console.log("groundProvider" , this.groundBookingResponse);
      console.log("transportProvider" , this.transportBookingResponse);
      console.log("hotelProvider" , this.hotelBookingResponse);
 
+
+     console.log("travellerDetails" , this.travellerDetails)
     this.viewHotelReservation();
     this.viewTransportReservation();
     this.viewGroundReservations();
@@ -254,7 +261,11 @@ export class MyBookingComponent implements OnInit {
 
   evisaDetails() {
 
-  
+ if(  this.hotelBookingResponse.bookingReferenceNo != null && this.transportBookingResponse.bookingReferenceNo != null && this.groundBookingResponse.bookingReferenceNo != null){
+
+
+
+  this.spinner.show()
     var randomNumber = Math.floor(Math.random() * 20000000 + 1);
 
     let evisaObj = {
@@ -270,8 +281,8 @@ export class MyBookingComponent implements OnInit {
             this.groundBookingResponse.bookingReferenceNo
           ]
       },
-      "Email": "sanjeev@gmail.com",
-      "MobileNo": "9705385368",
+       "Email":  this.travellerDetails[0].travellersList[0].details.contactInformation.email,
+      "MobileNo": this.travellerDetails[0].travellersList[0].details.contactInformation.phoneNumber,
       "ArrivalAirportCode": "",
       "ArrivalFlightNumber": "",
       "ArrivalDate": this.searchObj.request.checkInDate,
@@ -287,6 +298,7 @@ export class MyBookingComponent implements OnInit {
   
     this.tejaanServices.getEvisaDetails(evisaObj).subscribe((evisaDetailsResponse) => {
       console.log(evisaDetailsResponse);
+      this.spinner.hide();
       localStorage.setItem("evisaResponse",JSON.stringify(evisaDetailsResponse));
       this.requestId = evisaDetailsResponse.MutamersGroupResponse.MutamerStatus.RequestId;
       let sha256Str=this.evisaMutmerDetails[0].PassportNo+
@@ -310,9 +322,12 @@ export class MyBookingComponent implements OnInit {
       }
     });
   
+  }else{
+    alert("failed")
   }
 
 
+}
   cancelordermsg(){
     
   }

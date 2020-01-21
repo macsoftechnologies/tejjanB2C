@@ -105,6 +105,11 @@ export class CheckOutComponent implements OnInit {
     this.groundCart = JSON.parse(localStorage.getItem('groundCart'))
 
     this.groundAvailabilityToken = localStorage.getItem("groundAvailabilityToken")
+    const checkInDate = new Date(this.searchObj.request.checkInDate);
+    const checkOutDate = new Date(this.searchObj.request.checkOutDate);
+
+    const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+    this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
 
     this.hotelCalculations();
@@ -112,7 +117,7 @@ export class CheckOutComponent implements OnInit {
     this.groundCalculations();
 
     // calculating GrandTotal
-    this.cartGrandTotal = this.hotelTotalPrice + this.transportTotalPrice + this.groundTotalPrice + this.guests * 300 + this.guests * 189
+    this.cartGrandTotal = this.hotelTotalPrice + this.transportTotalPrice + this.groundTotalPrice + this.guests * 300 
     this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
 
     this.country();
@@ -121,11 +126,7 @@ export class CheckOutComponent implements OnInit {
 
 
 
-    const checkInDate = new Date(this.searchObj.request.checkInDate);
-    const checkOutDate = new Date(this.searchObj.request.checkOutDate);
-
-    const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-    this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+   
 
   }
 
@@ -248,10 +249,14 @@ export class CheckOutComponent implements OnInit {
 
     if (key === "firstName") {
       this.roomsForms[outerIndex]["adults"][index].firstName = value;
+     
     } else if (key === "lastName") {
       this.roomsForms[outerIndex]["adults"][index].lastName = value;
     } else if (key === "birthDate") {
+      console.log("birthDate" , value)
+
       this.roomsForms[outerIndex]["adults"][index].birthDate = value;
+
     } else if (key === "middleName") {
       this.roomsForms[outerIndex]["adults"][index].middleName = value;
     } else if (key === "passportNumber") {
@@ -285,6 +290,7 @@ export class CheckOutComponent implements OnInit {
       this.roomsForms[outerIndex]["childrens"][index].lastName = value;
     } else if (key === "birthDate") {
       this.roomsForms[outerIndex]["childrens"][index].birthDate = value;
+      console.log("childrenbirthDate" , value)
     } else if (key === "middleName") {
       this.roomsForms[outerIndex]["childrens"][index].middleName = value;
     }
@@ -314,7 +320,7 @@ export class CheckOutComponent implements OnInit {
             "middleName": this.roomsForms[r].adults[q].middleName,
             "lastName": this.roomsForms[r].adults[q].lastName,
             "gender": this.roomsForms[r].adults[q].gender,
-            "birthDate": "1985-02-25T00:00:00",
+            "birthDate": "1995-01-25",
             "location": {
               "name": this.roomsForms[r].adults[q].locationName,
               "countryCode": "IN",
@@ -347,7 +353,7 @@ export class CheckOutComponent implements OnInit {
         let mutamervisaObj =
 
         {
-          "DateOfBirth": "1995-01-31",
+          "DateOfBirth": "1995-01-25",
           "PassportNo": this.roomsForms[r].adults[q].passportNumber,
           "NationalityId": "91",
           "Gender": genderNumber
@@ -369,7 +375,7 @@ export class CheckOutComponent implements OnInit {
             "middleName": this.roomsForms[r].childrens[u].middleName,
             "lastName": this.roomsForms[r].childrens[u].lastName,
             "gender": this.roomsForms[r].childrens[u].gender,
-            "birthDate": this.roomsForms[r].childrens[u].birthDate,
+            "birthDate": "1995-01-25",
             "age": "1",
             "location": {
               "name": this.roomsForms[r].adults[0].locationName,
@@ -402,6 +408,8 @@ export class CheckOutComponent implements OnInit {
 
     }
 
+
+      console.log("travellerDetails" , this.travellerDetails)
     localStorage.setItem("evisaMutmerDetails", JSON.stringify(this.evisaMutmerDetails))
     localStorage.setItem("travellerDetails", JSON.stringify(this.travellerDetails))
 
@@ -465,18 +473,18 @@ export class CheckOutComponent implements OnInit {
       roomsDisplayRates.forEach(roomRate => {
         roomRate.forEach(priceDetails => {
           if (priceDetails.purpose == "1") {
-                  
-            this.roomsGDS += priceDetails.amount / 100 * 7.5
-            this.roomsOTA += priceDetails.amount / 100 * 30;
+
+            this.roomsBasePrice += priceDetails.amount * this.numberOfNights;
+            this.roomsGDS += priceDetails.amount / 100 * 7.5 * this.numberOfNights
+            this.roomsOTA += priceDetails.amount / 100 * 30 * this.numberOfNights;
               
-            this.roomsBasePrice += priceDetails.amount;
           }
           if (priceDetails.purpose == "2") {
-            this.roomsFees += priceDetails.amount;
+            this.roomsFees += priceDetails.amount * this.numberOfNights;
           }
          
           if (priceDetails.purpose == "7") {
-            this.roomsVAT += priceDetails.amount;
+            this.roomsVAT += priceDetails.amount*  this.numberOfNights;
           }
         });
       });

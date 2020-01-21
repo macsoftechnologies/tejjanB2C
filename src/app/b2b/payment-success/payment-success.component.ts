@@ -202,8 +202,6 @@ export class PaymentSuccessComponent implements OnInit {
         localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
         this.transportReservation();
          
-          this.router.navigateByUrl('b2c/mybooking')
-         
          }
          else {
            this.isHotelBooking = false
@@ -274,9 +272,12 @@ export class PaymentSuccessComponent implements OnInit {
         localStorage.setItem("BookingStatus"  , "false")  
       
         localStorage.setItem("transportBookingResponse" , JSON.stringify(data))
+        this.getGroundServiceReservation();
+
+      }else{
+        this.router.navigateByUrl('b2c/mybooking')
 
       }
-      this.getGroundServiceReservation();
       
       // this.getGroundServiceReservation();
     });
@@ -325,7 +326,11 @@ export class PaymentSuccessComponent implements OnInit {
           localStorage.setItem("BookingStatus"  , "true")  
 
           localStorage.setItem('groundBookingResponse', JSON.stringify(data));
+          this.router.navigateByUrl('b2c/mybooking')
+
         } else {
+        this.router.navigateByUrl('b2c/mybooking')
+          
         }
       });
     }

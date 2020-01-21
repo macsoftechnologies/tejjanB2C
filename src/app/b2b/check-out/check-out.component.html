@@ -343,11 +343,11 @@
                                   <div class="form-group">
                                     <label>Birth Date(DD/MM/YYYY)*</label>
                                     <div class="input-group">
-                                      <input class="form-control" (input)="onAddAdult($event.target.value,i,'birthDate',k)"
-                                        type="" name="dp2" ngbDatepicker #d2="ngbDatepicker" #birthDate (focus)="d2.open()"
+                                      <input class="form-control" (select)="onAddAdult($event.target.value,i,'birthDate',k)"
+                                        type="" name="dp2" ngbDatepicker #d2="ngbDatepicker" #birthDate (focus)="d2.open()" 
                                         >
                                       <div class="input-group-append">
-                                        <button class="btn border border-warning no-shadow btn-pad" (click)="d2.toggle()"
+                                        <button class="btn border border-warning no-shadow btn-pad"  (click)="d2.toggle()"
                                           type="button">
                                           <i class="fa fa-calendar"></i>
                                         </button>
@@ -608,7 +608,7 @@
                   </div>
                   <div class="price-details">
                     <p>Total-price</p>
-                    <p>SAR {{hotelTotalPrice | number : "1.2-2"}}</p>
+                    <p>SAR {{hotelTotalPrice * numberOfNights| number : "1.2-2"}}</p>
                   </div>
                 </ng-template>
                 <div class="amount">
@@ -679,12 +679,12 @@
                 <p>(300 SAR Per Traveller)</p>
                 <p>SAR {{guests * 300}}</p>
               </div>
-              <div class="amount">
-                <!-- <p>Special seeds services</p> -->
+              <!-- <div class="amount">
+                <p>Special seeds services</p>
                 <p>Medical Insurance Fees</p>
                 <p>(189 SAR Per Motamer )</p>
                 <p>SAR {{guests * 189}}</p>
-              </div>
+              </div> -->
             </li>
           </ul>
           <div class="total-price">
