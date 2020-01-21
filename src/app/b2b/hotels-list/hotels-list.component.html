@@ -28,11 +28,11 @@
                     <h5 class="booking-filters-title d-inline">Star Rating</h5>
                     <span (click)="clearFilter('RATING')">Clear</span>
                     <div>
-                      
+
                       <a class="card-link" data-toggle="collapse" href="#starRating">
                         <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                       </a>
-                  </div>
+                    </div>
 
                   </div>
                   <div id="starRating" class="collapse show filter-options" data-parent="#star-rating">
@@ -281,13 +281,14 @@
                           <div class="col-md-3 hotel-image" (click)="onHotelDetails(hotel)">
 
                             <!-- <div class="hotel-image"></div> -->
-                            <img src="assets/search-bg.jpg" alt="">
+                            <!-- <img src="assets/search-bg.jpg" alt=""> -->
 
 
 
-                            <div *ngIf="hotel?.images!=undefined" [hidden]=true>
-                              <div *ngIf="hotel?.images.length>0" [hidden]=true>
-                               
+                            <div *ngIf="hotel?.images!=undefined" >
+                              <div *ngIf="hotel?.images.length>0" >
+                                <img src='hotel?.imagePath'
+                                  onError="this.src='assets/images/img_not_avalable.png';" alt=" no image available">
 
                                 <!--  <img src='assets/images/defaultImage.png'
                               [defaultImage]="'assets/images/img_not_avalable.png'" [lazyLoad]="hotel?.images[0].url"
