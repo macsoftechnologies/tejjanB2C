@@ -68,7 +68,7 @@
                           <!-- <img src="assets/search-bg.jpg" alt=""> -->
                           <div *ngIf="selectedHotel?.images!=undefined">
                             <div *ngIf="selectedHotel?.images.length>0">
-                              <img src='selectedHotel?.imagePath'
+                              <img [src]='selectedHotel?.imagePath'
                                 onError="this.src='assets/images/img_not_avalable.png';" alt=" no image available">
                             </div>
                             <div *ngIf="selectedHotel?.images.length === 0" [hidden]=true>
@@ -312,7 +312,7 @@
                             <div *ngIf="room?.images!=undefined">
                               <div *ngIf="room?.images.length>0">
                                 <div class="p-2" >
-                                  <img src='room?.images[0].url'
+                                  <img [src]='room?.images[0].url'
                                   onError="this.src='assets/images/img_not_avalable.png';" alt=" no image available">
                                 </div>
                               </div>

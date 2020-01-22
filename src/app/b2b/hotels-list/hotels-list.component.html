@@ -287,7 +287,7 @@
 
                             <div *ngIf="hotel?.images!=undefined" >
                               <div *ngIf="hotel?.images.length>0" >
-                                <img src='hotel?.imagePath'
+                                <img [src]='hotel?.imagePath'
                                   onError="this.src='assets/images/img_not_avalable.png';" alt=" no image available">
 
                                 <!--  <img src='assets/images/defaultImage.png'
