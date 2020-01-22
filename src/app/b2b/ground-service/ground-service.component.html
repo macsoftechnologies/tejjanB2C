@@ -255,7 +255,19 @@
                             <p class="transport-address">Address:
                               {{groundservice.address}}</p>
                             <span class="transport-description " [innerHtml]="groundservice.comapnyDescription"> </span>
-
+                            <div *ngIf="groundservice?.policies!=undefined">
+                              <div class="d-flex"
+                                *ngIf="groundservice?.policies.length>0">
+                                <!-- <p class="transport-address">Policies:</p> -->
+                                <ul>
+                                  <li
+                                    *ngFor=" let policy of groundservice?.policies">
+                                    <span class="transport-description ">{{policy.type}} : {{policy.name}}</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          <!-- </div> -->
                           </div>
                           <div class="col-md-3 align-items-center justify-content-center transport-price">
                             <div *ngFor="let rate of groundservice.category.displayRateInfo">
