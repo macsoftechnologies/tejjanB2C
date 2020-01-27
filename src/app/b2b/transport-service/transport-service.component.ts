@@ -252,6 +252,7 @@ export class TransportServiceComponent implements OnInit {
       transportSearchResp => {
 
         this.spinner.hide();
+        if(transportSearchResp.body.transportations.length  != undefined){
         if (transportSearchResp.body.transportations.length > 0) {
 
           console.log("transportCompanies", this.companies)
@@ -262,6 +263,12 @@ export class TransportServiceComponent implements OnInit {
                 transportation.companyName = company.name;
                 transportation.companyDescription = company.description;
                 transportation.companyAddress = company.address;
+                
+                transportation.vehicleTypes.companyName = company.name;
+                transportation.vehicleTypes.companyAddress = company.address;
+                transportation.vehicleTypes.phone = company.phone;
+                transportation.vehicleTypes.email = company.email;
+                transportation.vehicleTypes.fax = company.fax;
               }
             });
 
@@ -299,6 +306,7 @@ export class TransportServiceComponent implements OnInit {
           );
           this.isFirstTimeLoad = false;
         }
+      }
       },
       err => { }
     );

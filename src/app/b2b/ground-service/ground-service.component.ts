@@ -184,6 +184,9 @@ export class GroundServiceComponent implements OnInit {
       return item;
     });
 
+    console.log(" this.GroundServicesFormGroup.value" ,  this.GroundServicesFormGroup.value)
+
+
     let formData = {
       "context": {
         "cultureCode": this.searchData.context.cultureCode,
@@ -195,15 +198,17 @@ export class GroundServiceComponent implements OnInit {
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
         "quantity": this.GroundServicesFormGroup.value.noOfPax,
-        "additionalServices": groundServices1
+        "additionalServices": [{code : this.GroundServicesFormGroup.value.additionalServices != null  ? this.GroundServicesFormGroup.value.additionalServices.code : null , quantity : "1" , duration : "5" }]
       }
     }
-    if (formData.request.additionalServices.length <= 0) {
+    if (formData.request.additionalServices[0].code == null) {
       delete formData.request.additionalServices
     }
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
+      this.spinner.hide();
       this.isFirstTimeLoad = false;
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
+      if(resp.body.groundServices != undefined){
       if(this.companies !=undefined){
         this.companies.forEach(comapny => {
           resp.body.groundServices.forEach(groundCompany => {
@@ -212,12 +217,46 @@ export class GroundServiceComponent implements OnInit {
               groundCompany.comapnyDescription = comapny.description
               groundCompany.address = comapny.address
               groundCompany.images = comapny.images
+              groundCompany.category.address = comapny.address
+              groundCompany.category.phone = comapny.phone
+              groundCompany.category.email = comapny.email
+
             }
+
           })
         })
       }
+
+
+
+      
+
+    }
       
       this.groundServiceList = resp.body.groundServices
+      console.log("this.groundServiceList" , this.groundServiceList)
+      if(this.additionalServices != undefined){
+     
+        this.additionalServices.forEach(addService =>{
+          this.groundServiceList.forEach(groundCompany => {
+
+          if(groundCompany.additionalServices != undefined){
+         if(addService.code == groundCompany.additionalServices[0].code){
+           
+          console.log("additionalServices" , groundCompany )
+           
+          groundCompany.additionalServices[0].serviceName = addService.name
+
+
+         }  
+               
+        }
+        })
+      })
+
+      }
+
+      if(this.groundServiceList[0].category != undefined)
       this.mainGroundServiceList = resp.body.groundServices
       this.groundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
       this.minValue = this.groundServiceList[0].category.displayRateInfo[0].amount;
@@ -228,12 +267,16 @@ export class GroundServiceComponent implements OnInit {
         floor: this.minValue,
         ceil: this.maxValue
       };
+      
     }, (err) => {
 
     })
+  
+    
   }
 
   onGroundServices() {
+    this.spinner.show();
     this.onGroundServicesSearch();
   }
 

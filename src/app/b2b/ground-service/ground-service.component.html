@@ -111,7 +111,7 @@
             </div>
             <div class="col-md-4" (click)="onGroundServices()">
               <div class="search-btn">
-                <button class="btn"><img src="assets/images/icons/search_icon.png" alt=""></button>
+                <button class="btn" (click)="onGroundServices()"><img src="assets/images/icons/search_icon.png" alt=""></button>
               </div>
             </div>
           </div>
@@ -255,6 +255,10 @@
                             <p class="transport-address">Address:
                               {{groundservice.address}}</p>
                             <span class="transport-description " [innerHtml]="groundservice.comapnyDescription"> </span>
+
+                            <p   class="transport-description" *ngIf = "groundservice?.additionalServices != undefined">additionalService : {{groundservice?.additionalServices[0].serviceName}}</p>
+                           
+
                             <div *ngIf="groundservice?.policies!=undefined">
                               <div class="d-flex"
                                 *ngIf="groundservice?.policies.length>0">
@@ -358,8 +362,17 @@
       </div>
       <div *ngIf="isGroundAvailabilty == true">
         <div class="">
-          <h6>Overview</h6>
-          <p></p>
+          <div class="contact">
+            <h5>Contact Details:</h5>
+            <ul>
+              <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{groundViewDetails?.category?.phone}}
+              </li>
+              <li><img class="" src="assets/images/icons/email.png">{{groundViewDetails?.category?.email}}</li>
+              <li class="detail-contact"><img class="" src="assets/images/icons/Group.png">
+                <div>{{groundViewDetails?.category?.address}}</div>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="booking-availability">
           <h6>Availability</h6>

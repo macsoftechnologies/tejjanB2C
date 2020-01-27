@@ -547,7 +547,21 @@
 
       <div *ngIf="transportAvailabilityFlag == true">
         <div class="">
-          <h6>Overview</h6>
+          <!-- <h6>Overview</h6> -->
+          <p>{{selectTransportDetails?.vehicleTypes?.companyName}}</p>
+          <div class="contact">
+            <h5>Contact Details:</h5>
+            <ul>
+              <li><img class="" src="assets/images/icons/Phone-Icon.svg">+{{selectTransportDetails?.vehicleTypes?.phone}}
+              </li>
+              <li><img class="" src="assets/images/icons/email.png">{{selectTransportDetails?.vehicleTypes?.email}}</li>
+              <li class="detail-contact"><img class="" src="assets/images/icons/Group.png">
+                <div>{{selectTransportDetails?.vehicleTypes?.companyAddress}}</div>
+              </li>
+            </ul>
+          </div>
+  
+
           <p></p>
         </div>
         <div class="booking-availability">

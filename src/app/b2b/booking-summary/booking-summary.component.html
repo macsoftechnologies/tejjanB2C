@@ -218,16 +218,16 @@
                       <div class="row" *ngIf = "groundCart != null">
                         <div class="col-4">
                           <label for="title">Ground Services:</label>
-                          <p>{{groundCart?.category?.categoryName}}</p>
+                          <p>{{groundCart?.uoName}}</p>
                         </div>
                         <div class="col-4">
+                          <label for="title">Package:</label>
+                          <p>{{groundCart?.category?.categoryName}}</p>
+                        </div>
+                        <div class="col-3">
                           <label for="title">Price:</label>
                           <p>{{groundTotalPrice | number : "1.2-2"}} SAR</p>
                         </div>
-                        <!-- <div class="col-3">
-                          <label for="title">Total:</label>
-                          <p>0.00 SAR</p>
-                        </div> -->
                       </div>
                       </div>
                    </div>

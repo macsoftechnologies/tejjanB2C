@@ -162,16 +162,16 @@
                               <br>
                               <p><b>BookingStatus :</b> {{hotel?.bookingStatus}} </p>
                                              
-                              <p><b>Reference Number :</b>{{hotel?.reservationNo}}</p>
+                              <p><b>Reference Number :</b>{{hotel?.bookingReferenceNo}}</p>
                           
                             <!-- <p><b>Hotel Address:</b> {{hotel?..address}}</p> -->
-                            <p><b>HotelName :</b> {{hotel?.hotelName}} </p>
+                            <p><b>HotelName :</b> {{hotel?.hotelDetails.name}} </p>
                            
 
-                            <p> <b>Check-In:</b>{{hotel?.checkInDate | date : "y-MM-dd"}}
+                            <p> <b>Check-In:</b>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}
                             </p>
                             <p>
-                              <b>Check-Out:</b>{{hotel?.checkOutDate | date : "y-MM-dd"}}
+                              <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
                             </p>
                             <p>
                               <b>Total Amount:</b>SAR {{hotelAmount}}
@@ -196,9 +196,9 @@
                               <br>
                               <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
                               <p><b>bookingReferenceNo:</b>{{ground?.reservationNo}}</p>
-                              <!-- <p><b>bookingDate:</b>{{ground?.bookingDate}}</p> -->
+                              <p><b>companyName:</b>{{ground?.uoName}}</p>
 
-                              <p *ngIf = "ground?.category != undefined"><b>category:</b>{{ground?.category?.categoryName}}</p>
+                              <p *ngIf = "ground?.category != undefined"><b>package:</b>{{ground?.category?.categoryName}}</p>
                               <p *ngIf = "ground?.category != undefined">
                                 <b >Total Amount:</b>SAR {{groundAmount}}
                               </p>
@@ -228,11 +228,11 @@
                         <div class="row">
                           <div class="col-4">
                             <label for="title">Hotel Name:</label>
-                            <p>{{hotel?.hotelName}}</p>
+                            <p>{{hotel?.hotelDetails.name}}</p>
                           </div>
                           <div class="col-3">
                             <label for="title">Check in:</label>
-                            <p>{{hotel?.checkInDate | date : "y-MM-dd"}}</p>
+                            <p>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}</p>
                           </div>
                           <div class="col-2">
                             <label for="title">Nights:</label>
@@ -254,11 +254,11 @@
                           </div>
                           <div class="col-3">
                             <label for="title">Check out:</label>
-                            <p>{{hotel?.checkOutDate | date : "y-MM-dd"}}</p>
+                            <p>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}</p>
                           </div>
                           <div class="col-2">
                             <label for="title">Rooms:</label>
-                            <p>{{hotel?.roomGroups[0].rooms.length}} </p>
+                            <p>{{hotel?.hotelDetails.roomGroups[0].rooms.length}} </p>
                           </div>
                           <!-- <div class="col-2">
                         <label for="title">Bed Type:</label>

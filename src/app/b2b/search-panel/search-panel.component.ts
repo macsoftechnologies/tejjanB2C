@@ -235,6 +235,8 @@ export class SearchPanelComponent implements OnInit {
   // get countries list
   public getCountries(): void {
     this.tejaanServices.getCountyList().subscribe(data => {
+           
+       
       this.countries = data;
     });
   }

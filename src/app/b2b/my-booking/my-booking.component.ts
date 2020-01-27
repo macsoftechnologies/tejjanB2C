@@ -109,36 +109,38 @@ export class MyBookingComponent implements OnInit {
      
         this.spinner.hide();
            console.log("viewHotelReservationResp" , viewHotelReservationResp.body)
-        if(viewHotelReservationResp.body.bookingStatus == "Booked"){
+           if (viewHotelReservationResp.body.bookingStatus == "Confirmed") {
+          
 
-        
-           
-          const checkInDate = new Date(viewHotelReservationResp.body.checkInDate);
-          const checkOutDate = new Date(viewHotelReservationResp.body.checkOutDate);
-      
-          const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-          this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-       
-       
-          viewHotelReservationResp.body.roomGroups[0].rooms.forEach(room =>{
-
-                   room.paxInfo.forEach(pax =>{
-                     
-                    if(pax.type == "ADT"){
-                        this.adults += pax.quantity
-                    }else if(pax.type == "CHD"){
-                        this.childrens +=  1
-                    } 
-
-                   })
-
+            this.spinner.hide();
+            const checkInDate = new Date(viewHotelReservationResp.body.hotelDetails.checkInDate);
+            const checkOutDate = new Date(viewHotelReservationResp.body.hotelDetails.checkOutDate);
+  
+            const timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+            this.numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  
+  
+            viewHotelReservationResp.body.hotelDetails.roomGroups[0].rooms.forEach(room => {
+  
+              room.paxInfo.forEach(pax => {
+  
+                if (pax.type == "ADT") {
+                  this.adults += pax.quantity
+                } else if (pax.type == "CHD") {
+                  this.childrens += 1
+                }
+  
+              })
+  
             })
-          this.hotel  = viewHotelReservationResp.body
-            
+            this.hotel = viewHotelReservationResp.body
+        
+  
             this.guests = this.adults + this.childrens;
             localStorage.setItem("hotelReservationTrackToken", viewHotelReservationResp.headers.get('tracktoken'));
-
-        }
+  
+          }
+  
          
     }, (err) => {
 
