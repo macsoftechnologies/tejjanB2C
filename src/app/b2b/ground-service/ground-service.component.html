@@ -32,7 +32,7 @@
                           alt="transport-class"></div>
                     </div>
                     <ng-select class="custom-select" [items]="categories" [virtualScroll]="true"
-                      placeholder="Select Class" [formControl]="GroundServicesFormGroup.controls['categoryCode']"
+                      placeholder="Select Class" [formControl]="GroundServicesFormGroup.controls['categoryCode']" (change)="GroundServiceClass($event)"
                       bindLabel="name">
                     </ng-select>
                   </div>

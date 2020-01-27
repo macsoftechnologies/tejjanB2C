@@ -5,6 +5,7 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import swal from 'sweetalert2';
 import { Options, LabelType } from "ng5-slider";
+// import { request } from 'https';
 
 @Component({
   selector: "app-ground-service",
@@ -128,6 +129,17 @@ export class GroundServiceComponent implements OnInit {
     })
   }
 
+  // change groundServicePackageClass
+  GroundServiceClass(groundServiceClass){
+
+
+    let searchFilterData: any = JSON.parse(localStorage.getItem('searchFilterObj'))
+
+    searchFilterData.groundServicePackage = groundServiceClass
+
+    localStorage.setItem("searchFilterObj", JSON.stringify(searchFilterData))
+  }
+
   public onFilterDisplay() {
     this.isFilterDisplay = !this.isFilterDisplay;
   }
@@ -166,6 +178,7 @@ export class GroundServiceComponent implements OnInit {
       countryOfResidence: this.searchFilterObj.countryOfResidence.countryName,
       noOfPax: parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
       arrivalDate: this.searchFilterObj.checkIn.year + "-" + this.searchFilterObj.checkIn.month + "-" + this.searchFilterObj.checkIn.day,
+      categoryCode : this.searchFilterObj.groundServicePackage
     })
     
   }
@@ -192,8 +205,8 @@ export class GroundServiceComponent implements OnInit {
         "cultureCode": this.searchData.context.cultureCode,
       },
       "request": {
-        uoCodes: ["1039"],
-
+        "uoCodes": ["1039"],
+        "categoryCode" : this.GroundServicesFormGroup.value.categoryCode != null ? this.GroundServicesFormGroup.value.categoryCode.code : null,
         "nationality": this.searchFilterObj.nationality.countryCode,
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
@@ -203,6 +216,9 @@ export class GroundServiceComponent implements OnInit {
     }
     if (formData.request.additionalServices[0].code == null) {
       delete formData.request.additionalServices
+    }
+    if(formData.request.categoryCode == null){
+      delete formData.request.categoryCode
     }
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
       this.spinner.hide();
