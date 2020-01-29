@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AlrajhiumrahService } from 'src/app/services/alrajhiumrah.service';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import swal from 'sweetalert2';
 import { Options, LabelType } from "ng5-slider";
+import { DropdownDirective, TOGGLE_STATUS } from 'angular-custom-dropdown';
 
 @Component({
   selector: "app-ground-service",
@@ -12,6 +13,9 @@ import { Options, LabelType } from "ng5-slider";
   styleUrls: ["./ground-service.component.scss"]
 })
 export class GroundServiceComponent implements OnInit {
+  
+  @ViewChild('myDropdown') myDropdown: DropdownDirective;
+
   public searchData: any = {};
   public countriesList: any[] = [];
   // public groundResultsNotFound: boolean;
@@ -94,6 +98,17 @@ export class GroundServiceComponent implements OnInit {
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"));
     this.loadGroundSericeFilterForm();
     this.country();
+
+    this.myDropdown.statusChange()
+    .subscribe((status: TOGGLE_STATUS) => {
+      let statusValue: String;
+      if (status === TOGGLE_STATUS.OPEN) {
+        statusValue = 'Opened';
+      } else if (status === TOGGLE_STATUS.CLOSE) {
+        statusValue = 'Closed';
+      }
+      console.info(`Dropdown status changed to "${statusValue}".`);
+    });
   }
 
 
@@ -116,9 +131,8 @@ export class GroundServiceComponent implements OnInit {
       }
 
       if(groundServiceLookUpResp.additionalservices!=""){
-        this.additionalServices = JSON.parse(
-          groundServiceLookUpResp.additionalservices
-        ).additionalServices;
+        this.additionalServices = JSON.parse(groundServiceLookUpResp.additionalservices).additionalServices;
+        console.log("service" , this.additionalServices)
       }else{
         this.additionalServices =[];
       }

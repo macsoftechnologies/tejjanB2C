@@ -845,6 +845,76 @@
       }
     }
   }
+}
 
+// ************  Styles for Custom Dropdown ********
+.dropdown  {
+  position: relative;
+}
+.form-group ::placeholder {
+  font-size: 13px;
+}
+.dropdown-menu {
+  position: absolute;
+  display: block;
+  align-self: center;
+  width: 100%;
+  opacity: 0;
+  margin-top: 6px;
+  padding: 0.25rem;
+  list-style-type: none;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: .2s all ease-in;
+}
 
+.dropdown-menu li {
+  padding: .5rem .5rem;
+}
+
+.dropdown.open .dropdown-menu {
+  opacity: 1;
+  margin-top: 6px;
+  .additional-heading {
+    text-align: center;
+    padding-top: 8px;
+    margin-bottom: 5px; 
+  }
+}
+
+.dropdown-menu {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.additional-dropdown {
+  .additional-checkbox {
+    padding-top: 10px;
+    input {
+      width: 18px;
+      height: 18px;
+    }
+    input[type=checkbox]:hover {
+      -webkit-appearance: checkbox;
+    }
+    input[type=checkbox]:checked {
+      -webkit-appearance: checkbox;
+    }
+  }
+  .additional-text {
+    padding-top: 10px;
+    p {
+      text-align: center;
+    }
+  }
+  .additional-input {
+    input {
+      margin-right: 2px;
+      border: solid 1px #ccc;
+    }
+  }
+}
+.activeClass {
+  background-color: #ccc;
+  
 }

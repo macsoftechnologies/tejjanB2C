@@ -354,6 +354,7 @@
             background-color: #fff !important;
             border: solid 1px #fff;
             // padding: 1.4rem .75rem !important;
+            font-size: 14px;
             @include mobile {
               font-size: 13px;
             }
@@ -701,6 +702,7 @@
 .input-group>.form-control:not(:first-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  font-size: 14px;
 }
 
 @media (max-width: 767px) {

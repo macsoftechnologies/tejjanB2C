@@ -75,7 +75,7 @@
 
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 dropdown" dropdown>
               <div class="form-group">
                 <div>
                   <div class="input-group mb-2">
@@ -83,12 +83,40 @@
                       <div class="input-group-text"><img class="icon-size" src="assets/images/icons/bus.png"
                           alt="transport-class"></div>
                     </div>
-                    <ng-select class="custom-select" [items]="additionalServices" [virtualScroll]="true"
+                    <!-- <ng-select class="custom-select" [items]="additionalServices" [virtualScroll]="true"
                       placeholder="Select Additional Services"
                       [formControl]="GroundServicesFormGroup.controls['additionalServices']" bindLabel="name">
-                    </ng-select>
+                    </ng-select> -->
+                    <input class="custom-select dropdown-toggle" dropdownToggle type="text"
+                      placeholder="Select Additional Services">
+                    <!-- <label for="additional_services">Additional Services</label> -->
+                    <div class="">
+                      <ul class="dropdown-menu" dropdownMenu>
+                        <p class="additional-heading"><b>Additional Services</b></p>
+                        <li class="additional-dropdown">
+                          <div class="row" *ngFor="let service of additionalServices">
+                            <div class="col-md-1 additional-checkbox">
+                              <!-- <div> -->
+                                <input class="form-control" type="checkbox" name="">
+                              <!-- </div> -->
+                            </div>
+                            <div class="col-md-5 additional-text">
+                              <!-- <div> -->
+                                <p>{{service.name}}</p>
+                              <!-- </div> -->
+                            </div>
+                            <div class="col-md-6 additional-input">
+                              <div class="d-flex">
+                                <input class="form-control" type="text" placeholder="Quantity">
+                                <input class="form-control" type="text" placeholder="Duration">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
+                </div> 
               </div>
             </div>
             <div class="col-md-4">
@@ -111,7 +139,8 @@
             </div>
             <div class="col-md-4" (click)="onGroundServices()">
               <div class="search-btn">
-                <button class="btn" (click)="onGroundServices()"><img src="assets/images/icons/search_icon.png" alt=""></button>
+                <button class="btn" (click)="onGroundServices()"><img src="assets/images/icons/search_icon.png"
+                    alt=""></button>
               </div>
             </div>
           </div>
@@ -256,22 +285,21 @@
                               {{groundservice.address}}</p>
                             <span class="transport-description " [innerHtml]="groundservice.comapnyDescription"> </span>
 
-                            <p   class="transport-description" *ngIf = "groundservice?.additionalServices != undefined">additionalService : {{groundservice?.additionalServices[0].serviceName}}</p>
-                           
+                            <p class="transport-description" *ngIf="groundservice?.additionalServices != undefined">
+                              additionalService : {{groundservice?.additionalServices[0].serviceName}}</p>
+
 
                             <div *ngIf="groundservice?.policies!=undefined">
-                              <div class="d-flex"
-                                *ngIf="groundservice?.policies.length>0">
+                              <div class="d-flex" *ngIf="groundservice?.policies.length>0">
                                 <!-- <p class="transport-address">Policies:</p> -->
                                 <ul>
-                                  <li
-                                    *ngFor=" let policy of groundservice?.policies">
+                                  <li *ngFor=" let policy of groundservice?.policies">
                                     <span class="transport-description ">{{policy.type}} : {{policy.name}}</span>
                                   </li>
                                 </ul>
                               </div>
                             </div>
-                          <!-- </div> -->
+                            <!-- </div> -->
                           </div>
                           <div class="col-md-3 align-items-center justify-content-center transport-price">
                             <div *ngFor="let rate of groundservice.category.displayRateInfo">

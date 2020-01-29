@@ -28,7 +28,7 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { MyBookingComponent } from "./my-booking/my-booking.component";
 import { ContactUsComponent } from "./contact-us/contact-us.component";
 import { FaqComponent } from "./faq/faq.component";
-
+import { DropdownModule } from 'angular-custom-dropdown';
 import { Ng5SliderModule } from "ng5-slider";
 import { LightboxModule } from "@ngx-gallery/lightbox";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -75,6 +75,7 @@ import { PaymentFailureComponent } from './payment-failure/payment-failure.compo
     Ng5SliderModule,
     NgxSpinnerModule,
     NgxPrintModule,
+    DropdownModule,
     /* AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcWi1J7vn47wgG815QpbvCeklS_AnGzbU'
     }), */
