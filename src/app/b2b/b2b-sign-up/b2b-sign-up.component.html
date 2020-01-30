@@ -6,7 +6,7 @@
   <div class="signUp">
     <!-- <div class="col-md-2"></div> -->
     <h3 class="heading">Sign Up</h3>
-    <div class="container-body">
+    <div class="container-body"> 
       <!-- <div class="col-md-2 col-sm-0"></div> -->
       <div class="card custom-card">
         <form [formGroup]="signupForm">
@@ -17,38 +17,44 @@
           <div class="row">
             <div class="form-group col-md-6 col-sm-12">
               <label for="companyName">Company Name</label>
-              <input [formControl]="signupForm.controls['companyName']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['companyName'].errors}"
+               [formControl]="signupForm.controls['companyName']" class="form-control custom-input" type="text"
                 placeholder="Company name">
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="fullName">Full Name</label>
-              <input [formControl]="signupForm.controls['fullName']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['fullName'].errors}"
+               [formControl]="signupForm.controls['fullName']" class="form-control custom-input" type="text"
                 placeholder="Full Name">
             </div>
             <div class="form-group col-md-6 col-sm-12">
-              <label for="surName">Sir Name</label> 
+              <label for="surName">Sur Name</label> 
               <!-- <select class="form-control" id="">
                 <option value="">Select</option>
                 <option value="">Sk</option>
                 <option value="">Md</option>
               </select> -->
-              <ng-select class="custom-input" [items]="surName" [virtualScroll]="true" placeholder="Select Sir Name"
-                [formControl]="signupForm.controls['surName']" bindLabel="surName">
+              <ng-select class="custom-input" [items]="surName" [virtualScroll]="true" placeholder="Select Sur Name"
+              [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['surName'].errors}"
+              [formControl]="signupForm.controls['surName']" bindLabel="surName">
               </ng-select>
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="ibanNumber">IBAN Number</label>
-              <input [formControl]="signupForm.controls['ibanNumber']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['ibanNumber'].errors}"
+               [formControl]="signupForm.controls['ibanNumber']" class="form-control custom-input" type="text"
                 placeholder="IBAN Number">
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="email">Email</label>
-              <input [formControl]="signupForm.controls['email']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['email'].errors}"
+               [formControl]="signupForm.controls['email']" class="form-control custom-input" type="text"
                 placeholder="Enter Email">
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="userName">User Name</label>
-              <input [formControl]="signupForm.controls['userName']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['userName'].errors}"
+               [formControl]="signupForm.controls['userName']" class="form-control custom-input" type="text"
                 placeholder="Enter User Name">
             </div>
             <div class="form-group col-md-6 col-sm-12">
@@ -61,22 +67,26 @@
                 <option value="">India</option> 
               </select> -->
               <ng-select class="custom-input" [items]="countries" [virtualScroll]="true" placeholder="Select country"
-                [formControl]="signupForm.controls['country']" bindLabel="countryName">
+              [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['country'].errors}"
+              [formControl]="signupForm.controls['country']" bindLabel="countryName">
               </ng-select>
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="phoneNumber">Phone Number</label>
-              <input [formControl]="signupForm.controls['phoneNumber']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['phoneNumber'].errors}"
+               [formControl]="signupForm.controls['phoneNumber']" class="form-control custom-input" type="text"
                 placeholder="Enter Phone Number">
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="password">Password</label>
-              <input [formControl]="signupForm.controls['password']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['password'].errors}"
+               [formControl]="signupForm.controls['password']" class="form-control custom-input" type="text"
                 placeholder="Enter Password">
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <label for="confirmPassword">Re-enter Password</label>
-              <input [formControl]="signupForm.controls['confirmPasswd']" class="form-control custom-input" type="text"
+              <input [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['confirmPasswd'].errors}"
+               [formControl]="signupForm.controls['confirmPasswd']" class="form-control custom-input" type="text"
                 placeholder="Re-enter Password">
             </div>
             <div class="form-group col-md-6 col-sm-12 terms">

@@ -13,8 +13,9 @@ export class B2bSignUpComponent implements OnInit {
   signupForm: FormGroup;
   countries : any;
   user: any;
+  signUpValidationFlag: boolean;
 
-  public surName = [ "Sk" , "Md" ];
+  public surName = [ "Mr", "Mrs", "Miss" ];
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private tejaanServices: AlrajhiumrahService,
@@ -29,19 +30,21 @@ export class B2bSignUpComponent implements OnInit {
   loadSignupForm() {
     this.signupForm = this.formBuilder.group({
       companyName: ['',Validators.required],
-      fullName: [''],
-      surName:[''],
-      ibanNumber: [''],
-      email: [''],
-      userName: [''],
-      country: [''],
-      phoneNumber: [''],
-      password: [''],
-      confirmPasswd: ['']
+      fullName: ['',Validators.required],
+      surName:['',Validators.required],
+      ibanNumber: ['',Validators.required],
+      email: ['',Validators.required],
+      userName: ['',Validators.required],
+      country: ['',Validators.required],
+      phoneNumber: ['',Validators.required],
+      password: ['',Validators.required],
+      confirmPasswd: ['',Validators.required]
     });
   }
 
   signUp() {
+    this.signUpValidationFlag = this.signupForm.valid ? false : true ; 
+
     let userData = {
       name: "abcd",
       address: "vizag"
@@ -54,6 +57,25 @@ export class B2bSignUpComponent implements OnInit {
     else {
       
     }
+
+    if( !this.signUpValidationFlag ) {
+      
+    let signUpObj = {
+      type: "B2B",
+      companyName: this.signupForm.value.companyName,
+      fullName: this.signupForm.value.fullName,
+      surName: this.signupForm.value.surName,
+      ibanNumber: this.signupForm.value.ibanNumber,
+      email: this.signupForm.value.email,
+      userName: this.signupForm.value.userName,
+      country: this.signupForm.value.country.countryName,
+      phoneNumber: this.signupForm.value.phoneNumber,
+      password: this.signupForm.value.password
+    }
+
+    console.log("SignUpObj ===",signUpObj );
+    }
+
   }
   //  ****** Get countries List *****
 

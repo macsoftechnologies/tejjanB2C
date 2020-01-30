@@ -122,15 +122,21 @@
     }
 }
 
-.ng-select .ng-select-container .ng-value-container .ng-placeholder{
-    font-size: 12px !important;
-    color: #5c6165 !important;
-}
-::ng-deep.ng-select-container.ng-has-value {
-    border: none;
-}
-::ng-deep.ng-select-container {
-    border: none !important;
-    box-shadow: none !important;
+
+::ng-deep {
+    .ng-select .ng-select-container .ng-value-container .ng-placeholder{
+        font-size: 12px !important;
+        color: #5c6165 !important;
+    }
+    .ng-select-container.ng-has-value {
+        border: none;
+    }
+    .ng-select-container {
+        border: none !important;
+        box-shadow: none !important;
+    }
 }
 
+.validationClass {
+    border-bottom: solid 1px red;
+}
