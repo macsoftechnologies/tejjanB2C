@@ -94,21 +94,17 @@
                       <ul class="dropdown-menu" dropdownMenu>
                         <p class="additional-heading"><b>Additional Services</b></p>
                         <li class="additional-dropdown">
-                          <div class="row" *ngFor="let service of additionalServices">
+                          <div class="row" *ngFor="let service of additionalServices, let i= index">
                             <div class="col-md-1 additional-checkbox">
-                              <!-- <div> -->
-                                <input class="form-control" type="checkbox" name="">
-                              <!-- </div> -->
+                              <input (click)="isInputChecked(i)" class="form-control" type="checkbox" name="">
                             </div>
                             <div class="col-md-5 additional-text">
-                              <!-- <div> -->
-                                <p>{{service.name}}</p>
-                              <!-- </div> -->
+                              <p>{{service.name}}</p>
                             </div>
                             <div class="col-md-6 additional-input">
                               <div class="d-flex">
-                                <input class="form-control" type="text" placeholder="Quantity">
-                                <input class="form-control" type="text" placeholder="Duration">
+                                <input [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Quantity">
+                                <input [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Duration">
                               </div>
                             </div>
                           </div>

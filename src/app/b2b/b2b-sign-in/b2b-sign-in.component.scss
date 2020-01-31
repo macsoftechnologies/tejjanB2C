@@ -7,11 +7,12 @@
     }
 }
 .container-body {
+    // margin-bottom: 40px;
     @include tab {
         padding-left: 0px;
     }
     @include mobile {
-        padding-left: 15px;
+        // padding-left: 15px;
         padding-top: 0px;
     }
 }
@@ -20,6 +21,7 @@
     width: 498px;
     // height: 407px;
     border-radius: 8px;
+    // margin-bottom: 40px;
     @include tab {
         width: auto;
     }
@@ -38,14 +40,16 @@
         width: 184px;
     }
 }
-.row {
+.form-fields {
     justify-content: space-around;
-    .form-fields {
-        padding: 41px;
-        @include mobile {
-            padding: 27px;
-        }
-    }
+    margin: 0px;
+    padding-top: 51px;
+    // . {
+    //     padding: 41px;
+    //     @include mobile {
+    //         padding: 27px;
+    //     }
+    // }
 }
 .custom-input {
     width: 298px;
@@ -87,7 +91,7 @@
 }
 .signin-btn {
   margin-bottom: 0px;
-    button {
+    // button {
         background-color: $primary-color;
         color: $light-font-color;
         font-weight: 600;
@@ -96,7 +100,7 @@
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
         box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
-    }
+    // }
 }
 .cancel {
     width: 25px;
@@ -126,3 +130,7 @@
 }
 
 // ***** Override the custom checkbox styles  *******
+
+.validationClass {
+    border: solid 1px red;
+}

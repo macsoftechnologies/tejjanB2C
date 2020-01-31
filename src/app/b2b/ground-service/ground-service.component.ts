@@ -88,6 +88,7 @@ export class GroundServiceComponent implements OnInit {
   priceChangeMinValue: any;
   priceChangeMaxValue: any;
   mainGroundServiceList: any;
+  disableTextbox: boolean;
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
     private fb: FormBuilder, ) { }
@@ -110,6 +111,7 @@ export class GroundServiceComponent implements OnInit {
       console.info(`Dropdown status changed to "${statusValue}".`);
     });
   }
+
 
 
   public getGroundServicesLookup(): void {
@@ -142,6 +144,9 @@ export class GroundServiceComponent implements OnInit {
     })
   }
 
+  isInputChecked(index) {
+    this.disableTextbox[index] = !this.disableTextbox[index];
+  }
   // change groundServicePackageClass
   GroundServiceClass(groundServiceClass){
 
