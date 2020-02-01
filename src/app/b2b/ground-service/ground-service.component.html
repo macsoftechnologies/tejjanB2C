@@ -104,8 +104,8 @@
                             <div class="col-md-6 additional-input">
                               <div class="d-flex">
                                 <!-- <input [disabled]= '(!checkedAdditionalservices.includes(i) )'> -->
-                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Quantity">
-                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Duration">
+                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Quantity" (input) = "additionalServiceQuantity(service , i , $event.target.value)">
+                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Duration" (input) = "additionalServiceDuration(service , i ,$event.target.value)">
                               </div>
                             </div>
                           </div>

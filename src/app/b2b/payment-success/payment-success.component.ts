@@ -204,9 +204,12 @@ export class PaymentSuccessComponent implements OnInit {
 
          localStorage.setItem("BookingStatus"  , "false")  
         localStorage.setItem('hotelBookingResponse', JSON.stringify(data));
+        localStorage.removeItem("hotelcart");
         this.transportReservation();
          }
          else {
+          localStorage.removeItem("hotelcart");
+
            this.isHotelBooking = false
             alert("Booking Faild")
             this.router.navigateByUrl("b2c/search")
@@ -249,28 +252,6 @@ export class PaymentSuccessComponent implements OnInit {
       "request": this.transportCart 
 
 
-
-
-      // {
-      //   "companyCode": this.transportCart.companyCode,
-      //   "companyName": this.transportCart.companyName,
-      //   "companyNameAR": this.transportCart.companyNameAR,
-      //   "routeCode": this.transportCart.routeCode,
-      //   "routeName": this.transportCart.routeName,
-      //   "routeNameAR": this.transportCart.routeNameAR,
-      //   "startDate": this.transportCart.startDate,
-      //   "vendor": this.transportCart.vendor,
-      //   "provider": this.transportCart.provider,
-      //   // "freeCancellationDate": this.transportCart.freeCancellationDate,
-      //   "vehicleTypes": this.transportCart.vehicleTypes,
-      //   // "policies": this.vehiclePolicies,
-      //   // "termsAndConditions": this.transportCart.termsAndConditions,
-      //   "displayRateInfo": this.transportCart.displayRateInfo,
-      //   "config": this.transportCart.config,
-      //   "secureTPExtensions": [],
-      //   "travellerDetails": this.transportTravellerDetails,
-      // }
-
     }
     console.log("TransportFormObj: ===>", JSON.stringify(TransportFormObj));
 
@@ -281,9 +262,13 @@ export class PaymentSuccessComponent implements OnInit {
         localStorage.setItem("BookingStatus"  , "false")  
       
         localStorage.setItem("transportBookingResponse" , JSON.stringify(data))
+        localStorage.removeItem("transportcart");
+
         this.getGroundServiceReservation();
 
       }else{
+        localStorage.removeItem("transportcart");
+
         this.router.navigateByUrl('b2c/mybooking')
 
       }
@@ -338,9 +323,13 @@ export class PaymentSuccessComponent implements OnInit {
           localStorage.setItem("BookingStatus"  , "true")  
 
           localStorage.setItem('groundBookingResponse', JSON.stringify(data));
+          localStorage.removeItem("groundCart");
+
           this.router.navigateByUrl('b2c/mybooking')
 
         } else {
+          localStorage.removeItem("groundCart");
+
         this.router.navigateByUrl('b2c/mybooking')
           
         }
