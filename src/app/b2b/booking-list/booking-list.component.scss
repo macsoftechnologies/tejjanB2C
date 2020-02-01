@@ -1,0 +1,60 @@
+@import "../../../assets/variables/global-variables";
+
+.bg-image {
+    background-image: url(../../../assets/search-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    height: 250px;
+    margin-bottom: 10px;
+    position: relative;
+  
+    @include mobile {
+      height: 143px;
+    }
+  
+    .bg-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #BB9356;
+      opacity: 0.6;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+.ground-service-panel  {
+
+    .ground-service-filter-mask {
+        border-radius: $border-radius;
+        background-color: rgba(58, 58, 58, 0.7);
+        padding: 20px;
+
+        .search-btn {
+            button {
+                display: flex;
+                justify-content: center;
+                border-radius: 5px;
+                background-color: $primary-color;
+                color: $light-font-color;
+            }
+            img {
+                height: 25px;
+                width: 25px;
+            }
+        }
+    }
+}
+   
+.form-group ::placeholder {
+    font-size: 13px;
+  }
+.form-group {
+    input {
+        border-left: solid 1px #ccc;
+    }
+    label {
+        color: #fff;
+    }
+}

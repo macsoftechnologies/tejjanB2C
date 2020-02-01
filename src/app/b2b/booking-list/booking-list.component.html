@@ -1,3 +1,149 @@
-<p>
+<!-- <p>
   booking-list works!
-</p>
+</p> -->
+
+
+<div class="ground-service-panel">
+  <div class="bg-image">
+    <div class="bg-mask"></div>
+  </div>
+  <div>
+    <form>
+      <div class="container-fluid">
+        <div class="ground-service-filter-mask">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <!-- <label for="">Label</label> -->
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
+                        alt="calendar">
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Enter....">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <!-- <label for="">Label</label> -->
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
+                        alt="transport-class">
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Enter....">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <!-- <label for="">Label</label> -->
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/flag.png"
+                        alt="transport-class">
+                    </div>
+                  </div>
+                  <input type="" class="form-control" placeholder="Enter...." />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 dropdown">
+              <div class="form-group">
+                <!-- <label for="">Label</label> -->
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/bus.png"
+                        alt="transport-class">
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Enter....">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <!-- <label for="">Check In</label> -->
+                    <div class="form-group custom-border">
+                      <div class="input-group input-group-md">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                            <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                          </button>
+                        </div>
+                        <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker
+                          #d1="ngbDatepicker" #checkIn [minDate]="chekInMinDate" (focus)="d1.open()">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <!-- <label for="">Check Out</label> -->
+                    <div class="input-group input-group-md checkout-input">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar brad-none" (click)="d2.toggle()"
+                          type="button">
+                          <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                        </button>
+                      </div>
+                      <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp2"
+                        ngbDatepicker #d2="ngbDatepicker" #checkOut (focus)="d2.open()" [minDate]="chekOutMinDate">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-6 search-btn">
+                  <button class="btn btn-md btn-block">Search</button>
+                </div>
+                <div class="col-md-6 search-btn">
+                  <button class="btn btn-md btn-block">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- <div>
+    <table>
+      <thead>
+        <th>RefNo</th>
+        <th>PSA Name</th>
+        <th>PAX</th>
+        <th>Amount(Rs.)</th>
+        <th>Hotel Name</th>
+        <th>City</th>
+        <th>No of Rooms</th>
+        <th>No of Nights</th>
+        <th>Check In Date</th>
+        <th>Check Out Date</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>9874561</td>
+          <td>asdfgfg</td>
+          <td>852</td>
+          <td>8541</td>
+          <td>Babai Hotel</td>
+          <td>Vizag</td>
+          <td>2</td>
+          <td>1</td>
+          <td>3-11-2020</td>
+          <td>4-11-2020</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+</div>

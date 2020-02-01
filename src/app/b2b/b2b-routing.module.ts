@@ -15,6 +15,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FaqComponent } from './faq/faq.component';
 import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 import { BookingCancelComponent } from './booking-cancel/booking-cancel.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
   {
     path: "bookingcancel",
     component: BookingCancelComponent
+  },
+  {
+    path: "bookinglist",
+    component: BookingListComponent
   }
 ];
 
