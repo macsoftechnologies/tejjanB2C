@@ -32,8 +32,8 @@
                           alt="transport-class"></div>
                     </div>
                     <ng-select class="custom-select" [items]="categories" [virtualScroll]="true"
-                      placeholder="Select Class" [formControl]="GroundServicesFormGroup.controls['categoryCode']" (change)="GroundServiceClass($event)"
-                      bindLabel="name">
+                      placeholder="Select Class" [formControl]="GroundServicesFormGroup.controls['categoryCode']"
+                      (change)="GroundServiceClass($event)" bindLabel="name">
                     </ng-select>
                   </div>
                 </div>
@@ -96,15 +96,16 @@
                         <li class="additional-dropdown">
                           <div class="row" *ngFor="let service of additionalServices, let i= index">
                             <div class="col-md-1 additional-checkbox">
-                              <input (click)="isInputChecked(i)" class="form-control" type="checkbox" name="">
+                              <input (change)="isInputChecked(i , $event)" class="form-control" type="checkbox" name="">
                             </div>
                             <div class="col-md-5 additional-text">
                               <p>{{service.name}}</p>
                             </div>
                             <div class="col-md-6 additional-input">
                               <div class="d-flex">
-                                <input [ngClass]="{enabled : i == currentIndex ? true : false}" [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Quantity">
-                                <input [ngClass]="{enabled : i == currentIndex ? true : false}" [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Duration">
+                                <!-- <input [disabled]= '(!checkedAdditionalservices.includes(i) )'> -->
+                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Quantity">
+                                <input [disabled]= '(!checkedAdditionalservices.includes(i) )' class="form-control" type="text" placeholder="Duration">
                               </div>
                             </div>
                           </div>
@@ -112,7 +113,7 @@
                       </ul>
                     </div>
                   </div>
-                </div> 
+                </div>
               </div>
             </div>
             <div class="col-md-4">

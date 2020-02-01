@@ -90,6 +90,7 @@ export class GroundServiceComponent implements OnInit {
   mainGroundServiceList: any;
   disableTextbox: boolean;
   currentIndex: any;
+  checkedAdditionalservices=[];
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
     private fb: FormBuilder, ) { }
@@ -145,13 +146,38 @@ export class GroundServiceComponent implements OnInit {
     })
   }
 
-  isInputChecked(i) {
-    this.currentIndex = i;
-    // this.additionalServices.forEach(x => {
-      if(i === this.currentIndex) {
-        this.disableTextbox[this.currentIndex] = !this.disableTextbox[this.currentIndex]; 
-        console.log("code===", i);
+  isInputChecked(i , event) {
+    // this.currentIndex = i;
+    console.log("event---",event);
+
+    if(event.target.checked){
+      this.currentIndex = i;
+      this.checkedAdditionalservices.push(i);
+      console.log("checkedAdditionalservices" , this.checkedAdditionalservices)
+    }else{
+      // delete this.checkedAdditionalservices[i]
+      for (let k = 0; k < this.checkedAdditionalservices.length; k++) {
+       
+        if(i === k)
+        console.log(i , k)
+        {this.checkedAdditionalservices.splice(i)
+        k--
+         break}
       }
+      console.log("additionlService" , this.checkedAdditionalservices)
+        // this.checkedAdditionalservices.forEach((service , index) =>{
+        //      console.log("service" , service)
+        //      delete 
+
+             
+
+        // })
+    }
+    // this.additionalServices.forEach(x => {
+      // if(i === this.currentIndex) {
+      //   this.disableTextbox[this.currentIndex] = !this.disableTextbox[this.currentIndex]; 
+      //   console.log("code===", i);
+      // }
       // else {
       //   console.log("else condition")
       // }
