@@ -89,6 +89,7 @@ export class GroundServiceComponent implements OnInit {
   priceChangeMaxValue: any;
   mainGroundServiceList: any;
   disableTextbox: boolean;
+  currentIndex: any;
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
     private fb: FormBuilder, ) { }
@@ -144,8 +145,17 @@ export class GroundServiceComponent implements OnInit {
     })
   }
 
-  isInputChecked(index) {
-    this.disableTextbox[index] = !this.disableTextbox[index];
+  isInputChecked(i) {
+    this.currentIndex = i;
+    // this.additionalServices.forEach(x => {
+      if(i === this.currentIndex) {
+        this.disableTextbox[this.currentIndex] = !this.disableTextbox[this.currentIndex]; 
+        console.log("code===", i);
+      }
+      // else {
+      //   console.log("else condition")
+      // }
+    // });
   }
   // change groundServicePackageClass
   GroundServiceClass(groundServiceClass){

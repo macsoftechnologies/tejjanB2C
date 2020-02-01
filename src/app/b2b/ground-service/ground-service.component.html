@@ -103,8 +103,8 @@
                             </div>
                             <div class="col-md-6 additional-input">
                               <div class="d-flex">
-                                <input [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Quantity">
-                                <input [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Duration">
+                                <input [ngClass]="{enabled : i == currentIndex ? true : false}" [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Quantity">
+                                <input [ngClass]="{enabled : i == currentIndex ? true : false}" [disabled]="!disableTextbox" class="form-control" type="text" placeholder="Duration">
                               </div>
                             </div>
                           </div>

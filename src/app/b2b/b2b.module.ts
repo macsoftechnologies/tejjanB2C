@@ -37,6 +37,7 @@ import { BookingCancelComponent } from './booking-cancel/booking-cancel.componen
 import {NgxPrintModule} from 'ngx-print';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentFailureComponent } from './payment-failure/payment-failure.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 @NgModule({
   declarations: [
     B2bSignInComponent,
@@ -58,6 +59,7 @@ import { PaymentFailureComponent } from './payment-failure/payment-failure.compo
     BookingCancelComponent,
     PaymentSuccessComponent,
     PaymentFailureComponent,
+    BookingListComponent,
 
   ],
   imports: [

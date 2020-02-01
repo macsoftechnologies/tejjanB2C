@@ -40,7 +40,7 @@ export class B2bSignInComponent implements OnInit {
     this.signInFormValidationFlag = this.signinForm.valid ? false : true ;
     if(!this.signInFormValidationFlag) {
       let signInObj = {
-        // type:"B2B",
+        type:"B2C",
         userName: this.signinForm.value.userName,
         password: this.signinForm.value.password
       }
