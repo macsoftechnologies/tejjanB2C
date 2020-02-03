@@ -2,13 +2,9 @@
   booking-list works!
 </p> -->
 
-
 <div class="ground-service-panel">
-  <div class="bg-image">
-    <div class="bg-mask"></div>
-  </div>
   <div>
-    <form>
+    <form [formGroup]="bookingListForm">
       <div class="container-fluid">
         <div class="ground-service-filter-mask">
           <div class="row">
@@ -79,7 +75,8 @@
                           </button>
                         </div>
                         <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker
-                          #d1="ngbDatepicker" #checkIn [minDate]="chekInMinDate" (focus)="d1.open()">
+                          [formControl]="bookingListForm.controls.checkIn" #d1="ngbDatepicker" #checkIn
+                          [minDate]="chekInMinDate" (focus)="d1.open()">
                       </div>
                     </div>
                   </div>
@@ -95,7 +92,8 @@
                         </button>
                       </div>
                       <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp2"
-                        ngbDatepicker #d2="ngbDatepicker" #checkOut (focus)="d2.open()" [minDate]="chekOutMinDate">
+                        [formControl]="bookingListForm.controls.checkOut" ngbDatepicker #d2="ngbDatepicker" #checkOut
+                        (focus)="d2.open()" [minDate]="chekOutMinDate">
                     </div>
                   </div>
                 </div>
@@ -104,7 +102,7 @@
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-6 search-btn">
-                  <button class="btn btn-md btn-block">Search</button>
+                  <button class="btn btn-md btn-block" (click)="searchBookingList()">Search</button>
                 </div>
                 <div class="col-md-6 search-btn">
                   <button class="btn btn-md btn-block">Reset</button>
@@ -116,34 +114,50 @@
       </div>
     </form>
   </div>
-  <!-- <div>
-    <table>
-      <thead>
-        <th>RefNo</th>
-        <th>PSA Name</th>
-        <th>PAX</th>
-        <th>Amount(Rs.)</th>
-        <th>Hotel Name</th>
-        <th>City</th>
-        <th>No of Rooms</th>
-        <th>No of Nights</th>
-        <th>Check In Date</th>
-        <th>Check Out Date</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>9874561</td>
-          <td>asdfgfg</td>
-          <td>852</td>
-          <td>8541</td>
-          <td>Babai Hotel</td>
-          <td>Vizag</td>
-          <td>2</td>
-          <td>1</td>
-          <td>3-11-2020</td>
-          <td>4-11-2020</td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
+  <div class="container-fluid">
+    <div class="searchResults">
+      <p>Total:-Bookings: <span>3</span>,
+                Booked:<span>4</span>,
+                Cancelled:<span>0</span>,
+                Pending:<span>1</span>,
+                Failed:<span>0</span>,
+                Collected Fare:<span>
+                Rs.3333.33</span>
+     </p>
+    </div>
+  </div> 
+  <div class="container-fluid">
+    <div class="bookingListTable">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <th>RefNo</th>
+            <th>PSA Name</th>
+            <th>PAX</th>
+            <th>Amount(Rs.)</th>
+            <th>Hotel Name</th>
+            <th>City</th>
+            <th>No of Rooms</th>
+            <th>No of Nights</th>
+            <th>Check In Date</th>
+            <th>Check Out Date</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>9874561</td>
+              <td>asdfgfg</td>
+              <td>852</td>
+              <td>8541</td>
+              <td>Babai Hotel</td>
+              <td>Vizag</td>
+              <td>2</td>
+              <td>1</td>
+              <td>3-11-2020</td>
+              <td>4-11-2020</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

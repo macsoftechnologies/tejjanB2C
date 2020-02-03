@@ -16,6 +16,7 @@ export class B2bSignUpComponent implements OnInit {
   signUpValidationFlag: boolean;
 
   public surName = [ "Mr", "Mrs", "Miss" ];
+  registrationResp: any;
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private tejaanServices: AlrajhiumrahService,
@@ -73,6 +74,10 @@ export class B2bSignUpComponent implements OnInit {
       password: this.signupForm.value.password
     }
 
+    this.tejaanServices.registration(signUpObj).subscribe(data => {
+      this.registrationResp = data;
+      console.log("registrationResp" , this.registrationResp);
+    });
     console.log("SignUpObj ===",signUpObj );
     }
 

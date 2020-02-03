@@ -14,6 +14,7 @@ export class B2cSignUpComponent implements OnInit {
   signupForm: FormGroup;
   countries: any;
   signUpValidationFlag : boolean;
+  registrationResp: any;
 
   constructor(private tejaanServices: AlrajhiumrahService,
     private formBuilder: FormBuilder,
@@ -65,8 +66,14 @@ export class B2cSignUpComponent implements OnInit {
         phoneNumber: this.signupForm.value.phoneNumber,
         password: this.signupForm.value.password
       }
-      console.log("signUpObj====" , signUpObj);
-      this.router.navigateByUrl("b2c/signin");
+
+      this.tejaanServices.registration(signUpObj).subscribe(data => {
+        this.registrationResp = data;
+        console.log("registrationResp" , this.registrationResp);
+        if(this.registrationResp.status === 200) { 
+          this.router.navigateByUrl("b2c/signin");
+        }
+      });
     }
   }
 }

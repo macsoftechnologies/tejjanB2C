@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AlrajhiumrahService {
   baseUrl = environment.baseUrl;
+  baseUrl1 = environment.baseUrl1;
   constructor(private http: HttpClient,
     private pageTitle: Title) { }
 
@@ -309,6 +310,13 @@ export class AlrajhiumrahService {
     .post(this.baseUrl + "payment",data).pipe(map(this.extractData));
   }
 
+  registration(data: any):Observable<any> {
+    return this.http.post(this.baseUrl1 + "register" , data).pipe(map(this.extractData));
+  }
+
+  login(data: any):Observable<any> {
+    return this.http.post(this.baseUrl1 + "login",data).pipe(map(this.extractData));
+  }
 
 }
 
