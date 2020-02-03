@@ -91,6 +91,7 @@ export class GroundServiceComponent implements OnInit {
   disableTextbox: boolean;
   currentIndex: any;
   checkedAdditionalservices=[];
+  selectAdditionalServices = [];
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
     private fb: FormBuilder, ) { }
@@ -155,33 +156,47 @@ export class GroundServiceComponent implements OnInit {
       this.checkedAdditionalservices.push(i);
       console.log("checkedAdditionalservices" , this.checkedAdditionalservices)
     }else{
-      // delete this.checkedAdditionalservices[i]
-      for (let k = 0; k < this.checkedAdditionalservices.length; k++) {
-       
-        if(i === k)
-        console.log(i , k)
-        {this.checkedAdditionalservices.splice(i)
-        k--
-         break}
-      }
-      console.log("additionlService" , this.checkedAdditionalservices)
-        // this.checkedAdditionalservices.forEach((service , index) =>{
-        //      console.log("service" , service)
-        //      delete 
-
-             
-
-        // })
+      // console.log("checkedAdditionalservices11111" , this.checkedAdditionalservices)
+         for(let m = 0 ;m < this.checkedAdditionalservices.length  ; m++){
+           if(this.checkedAdditionalservices[m] === i)
+         {  
+           console.log("checkedAdditionalservices[m]" , this.checkedAdditionalservices[m]) 
+           console.log("index" , i)
+        this.checkedAdditionalservices.splice(m , 1)}
     }
-    // this.additionalServices.forEach(x => {
-      // if(i === this.currentIndex) {
-      //   this.disableTextbox[this.currentIndex] = !this.disableTextbox[this.currentIndex]; 
-      //   console.log("code===", i);
-      // }
-      // else {
-      //   console.log("else condition")
-      // }
-    // });
+
+      
+        console.log("checkedAdditionalservices2222" , this.checkedAdditionalservices)
+    
+    }
+  
+  }
+
+  additionalServiceQuantity(serviceObj , serviceIndex , quantity){
+    console.log("serviceObj , value" , serviceObj , quantity)
+
+          let obj = {
+            index :   serviceIndex ,
+            code : serviceObj.code,
+            quantity : quantity,
+            duration : ""
+          }
+
+          let index = this.selectAdditionalServices.findIndex(service => service.index == serviceIndex);
+          
+          if(index = -1){
+            this.selectAdditionalServices.push(obj)
+
+          }else{
+
+            this.selectAdditionalServices[index].quantity = quantity
+
+          }
+
+     console.log("selectAdditionalServices" , this.selectAdditionalServices);
+  }
+  additionalServiceDuration(serviceObj , duration){
+
   }
   // change groundServicePackageClass
   GroundServiceClass(groundServiceClass){

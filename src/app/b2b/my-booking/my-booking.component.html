@@ -187,7 +187,7 @@
                               <p><b>RouteName :</b>{{transport?.routeName}}</p>
                               <p><b>StartDate :</b>{{transport?.startDate | date : "y-MM-dd"}}</p>
 
-                              <p>
+                              <p *ngIf = "transport?.companyName != undefined">
                                 <b>Total Amount:</b>SAR {{transportAmount}}
                               </p>
                             </div>
@@ -293,11 +293,11 @@
                           </div>
                           <div class="col-3">
                             <label for="title">Price:</label>
-                            <p>{{transportAmount | number : "1.2-2"}} SAR</p>
+                            <p *ngIf = "transport?.companyName != undefined">{{transportAmount | number : "1.2-2"}} SAR</p>
                           </div>
                           <div class="col-2">
                             <label for="title">Guests:</label>
-                            <p>{{guests}} People</p>
+                            <p *ngIf = "transport?.companyName != undefined">{{guests}} People</p>
                          
                         </div>
                         

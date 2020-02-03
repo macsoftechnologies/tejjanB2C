@@ -150,7 +150,7 @@ export class MyBookingComponent implements OnInit {
   }
 
   public viewTransportReservation(): void{
-    if(this.groundBookingResponse != undefined){
+    if(this.transportBookingResponse != undefined){
     if(this.transportBookingResponse.bookingReferenceNo != null || this.transportBookingResponse.bookingReferenceNo != undefined){
 
     let formData = {
