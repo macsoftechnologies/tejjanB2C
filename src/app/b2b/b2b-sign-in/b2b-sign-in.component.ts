@@ -57,9 +57,10 @@ export class B2bSignInComponent implements OnInit {
           this.user = localStorage.getItem("userData");
           this.isCheckout = localStorage.getItem("isCheckOut");
           if (this.user == null && this.user == undefined) {
+            this.broadcastservice.showHideLogin.emit(false);
               this.router.navigateByUrl('b2c/login');
           } else {
-            // this.broadcastservice.showHideLogin.emit(true);
+            this.broadcastservice.showHideLogin.emit(true);
           }
           if(location.pathname === "/b2c/signin") {
             // console.log("hiii");

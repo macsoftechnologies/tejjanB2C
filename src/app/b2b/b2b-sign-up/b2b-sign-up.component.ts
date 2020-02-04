@@ -64,13 +64,13 @@ export class B2bSignUpComponent implements OnInit {
       if(this.registrationResp.status === 200) {
         localStorage.setItem('authorizationKey',this.registrationResp.response.user_id);
         localStorage.setItem('userData', JSON.stringify(signUpObj));
-        this.router.navigateByUrl("b2b/signin");
+        this.router.navigateByUrl("b2b/search");
         this.user = localStorage.getItem('userData');
         if(this.user == null && this.user == undefined) {
           this.broadcastservice.showHideLogin.emit(false);
         }
-        else {
-          
+        else { 
+          this.broadcastservice.showHideLogin.emit(true);
         }
         
       }
