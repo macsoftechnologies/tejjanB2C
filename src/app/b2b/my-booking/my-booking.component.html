@@ -141,74 +141,71 @@
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <!-- Modal Header -->
-                            <div class="modal-header">
-
-                            
- 
+                            <div class="modal-header invoice-header">
                               <h4 class="modal-title">Invoice </h4>
                               <button class="btn btn-md print-btn" printSectionId="printSection" ngxPrint style="
-                              margin-left: 530px;
-                          ">Download</button>
+                                margin-left: 530px;">Download</button>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <!-- Modal body -->
-                              
+
                             <div class="modal-body" style="
                             color: black;" id="printSection">
 
-                        <div class="row">
-                          <div class="col-md-4">
-                              <h4>HotelDetails</h4>
-                              <br>
-                              <p><b>BookingStatus :</b> {{hotel?.bookingStatus}} </p>
-                                             
-                              <p><b>Reference Number :</b>{{hotel?.bookingReferenceNo}}</p>
-                          
-                            <!-- <p><b>Hotel Address:</b> {{hotel?..address}}</p> -->
-                            <p><b>HotelName :</b> {{hotel?.hotelDetails.name}} </p>
-                           
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <h4>HotelDetails</h4>
+                                  <br>
+                                  <p><b>BookingStatus :</b> {{hotel?.bookingStatus}} </p>
 
-                            <p> <b>Check-In:</b>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}
-                            </p>
-                            <p>
-                              <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
-                            </p>
-                            <p>
-                              <b>Total Amount:</b>SAR {{hotelAmount}}
-                            </p>
+                                  <p><b>Reference Number :</b>{{hotel?.bookingReferenceNo}}</p>
+
+                                  <!-- <p><b>Hotel Address:</b> {{hotel?..address}}</p> -->
+                                  <p><b>HotelName :</b> {{hotel?.hotelDetails.name}} </p>
+
+
+                                  <p> <b>Check-In:</b>{{hotel?.hotelDetails.checkInDate | date : "y-MM-dd"}}
+                                  </p>
+                                  <p>
+                                    <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
+                                  </p>
+                                  <p>
+                                    <b>Total Amount:</b>SAR {{hotelAmount}}
+                                  </p>
+                                </div>
+
+                                <div class="col-md-4">
+                                  <h4>transportDetils</h4>
+                                  <br>
+                                  <p><b>bookingStatus :</b>{{transport?.bookingStatus}}</p>
+                                  <p><b>Reference Number:</b>{{transport?.reservationNo}}</p>
+                                  <p><b>CompanyName:</b>{{transport?.companyName}}</p>
+                                  <p><b>RouteName :</b>{{transport?.routeName}}</p>
+                                  <p><b>StartDate :</b>{{transport?.startDate | date : "y-MM-dd"}}</p>
+
+                                  <p *ngIf="transport?.companyName != undefined">
+                                    <b>Total Amount:</b>SAR {{transportAmount}}
+                                  </p>
+                                </div>
+                                <div class="col-md-4">
+                                  <h4>groundDetails</h4>
+                                  <br>
+                                  <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
+                                  <p><b>bookingReferenceNo:</b>{{ground?.reservationNo}}</p>
+                                  <p><b>companyName:</b>{{ground?.uoName}}</p>
+
+                                  <p *ngIf="ground?.category != undefined">
+                                    <b>package:</b>{{ground?.category?.categoryName}}</p>
+                                  <p *ngIf="ground?.category != undefined">
+                                    <b>Total Amount:</b>SAR {{groundAmount}}
+                                  </p>
+                                </div>
+
+
+
+                              </div>
+
                             </div>
-
-                            <div class="col-md-4">
-                              <h4>transportDetils</h4>
-                              <br>
-                              <p><b>bookingStatus :</b>{{transport?.bookingStatus}}</p>
-                              <p><b>Reference Number:</b>{{transport?.reservationNo}}</p>
-                              <p><b>CompanyName:</b>{{transport?.companyName}}</p>
-                              <p><b>RouteName :</b>{{transport?.routeName}}</p>
-                              <p><b>StartDate :</b>{{transport?.startDate | date : "y-MM-dd"}}</p>
-
-                              <p *ngIf = "transport?.companyName != undefined">
-                                <b>Total Amount:</b>SAR {{transportAmount}}
-                              </p>
-                            </div>
-                            <div class="col-md-4">
-                              <h4>groundDetails</h4>
-                              <br>
-                              <p><b>bookingStatus:</b>{{ground?.bookingStatus}}</p>
-                              <p><b>bookingReferenceNo:</b>{{ground?.reservationNo}}</p>
-                              <p><b>companyName:</b>{{ground?.uoName}}</p>
-
-                              <p *ngIf = "ground?.category != undefined"><b>package:</b>{{ground?.category?.categoryName}}</p>
-                              <p *ngIf = "ground?.category != undefined">
-                                <b >Total Amount:</b>SAR {{groundAmount}}
-                              </p>
-                            </div>
-
-
-
-                          </div>
-
-                          </div>
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -286,21 +283,22 @@
                     <div class="services-data">
                       <div class="container-fluid">
                         <div class="row">
-                        
+
                           <div class="col-5">
                             <label for="title">Transportation Services:</label>
                             <p>{{transport?.companyName}}</p>
                           </div>
                           <div class="col-3">
                             <label for="title">Price:</label>
-                            <p *ngIf = "transport?.companyName != undefined">{{transportAmount | number : "1.2-2"}} SAR</p>
+                            <p *ngIf="transport?.companyName != undefined">{{transportAmount | number : "1.2-2"}} SAR
+                            </p>
                           </div>
                           <div class="col-2">
                             <label for="title">Guests:</label>
-                            <p *ngIf = "transport?.companyName != undefined">{{guests}} People</p>
-                         
-                        </div>
-                        
+                            <p *ngIf="transport?.companyName != undefined">{{guests}} People</p>
+
+                          </div>
+
                         </div>
 
                         <!-- <div class="row" *ngIf="transportBookingResponse == null">
@@ -308,18 +306,18 @@
                           <p>Transportation Booking Failed</p>
 
                         </div> -->
-                        <div class="row" >
-                        
+                        <div class="row">
+
                           <div class="col-5">
                             <label for="title">Ground Services:</label>
                             <p>{{ground?.category?.categoryName}}</p>
                           </div>
                           <div class="col-3">
                             <label for="title">Price:</label>
-                            <p *ngIf = "ground?.category != undefined">{{groundAmount | number : "1.2-2"}} SAR</p>
+                            <p *ngIf="ground?.category != undefined">{{groundAmount | number : "1.2-2"}} SAR</p>
                           </div>
-                          
-                   
+
+
                           <!-- <div class="col-2">
                         <label for="title">Total:</label>
                         <p>520 SAR</p>
@@ -403,7 +401,7 @@
     </div>
   </div>
 </div>
- 
+
 <div class="col-md-12">
   <div>
     <button class="btn btn-md evisa-btn" (click)="evisaDetails()">E-visa</button>
