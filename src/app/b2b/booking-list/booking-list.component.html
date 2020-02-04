@@ -10,40 +10,53 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <!-- <label for="">Label</label> -->
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
-                        alt="calendar">
+                <label for="">CheckIn Date</label>
+                <div class="form-group custom-border">
+                  <div class="input-group input-group-md">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                        <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                      </button>
                     </div>
+                    <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker
+                      [formControl]="bookingListForm.controls.checkIn" #d1="ngbDatepicker" #checkIn
+                      [ngClass]="{'validationClass': bookingListFormValidationFlag && bookingListForm.controls['checkIn'].errors}"
+                      (focus)="d1.open()">
                   </div>
-                  <input type="text" class="form-control" placeholder="Enter....">
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <!-- <label for="">Label</label> -->
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/valet.png"
-                        alt="transport-class">
-                    </div>
+                <label for="">CheckOut Date</label>
+                <div class="input-group input-group-md checkout-input">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar brad-none" (click)="d2.toggle()" type="button">
+                      <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                    </button>
                   </div>
-                  <input type="text" class="form-control" placeholder="Enter....">
+                  <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp2"
+                    [formControl]="bookingListForm.controls.checkOut" ngbDatepicker #d2="ngbDatepicker" #checkOut
+                    [ngClass]="{'validationClass': bookingListFormValidationFlag && bookingListForm.controls['checkOut'].errors}"
+                    (focus)="d2.open()">
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <!-- <label for="">Label</label> -->
+                <label for="">Booking Status</label>
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text"><img class="icon-size" src="assets/images/icons/flag.png"
                         alt="transport-class">
                     </div>
                   </div>
-                  <input type="" class="form-control" placeholder="Enter...." />
+                  <ng-select
+                    [ngClass]="{'validationClass': bookingListFormValidationFlag && bookingListForm.controls['bookingStatus'].errors}"
+                    class="custom-input" [items]="bookingStatus" [virtualScroll]="true"
+                    placeholder="Select Booking Status" [formControl]="bookingListForm.controls.bookingStatus"
+                    bindLabel="bookingStatus">
+                  </ng-select>
                 </div>
               </div>
             </div>
@@ -51,55 +64,39 @@
           <div class="row">
             <div class="col-md-4 dropdown">
               <div class="form-group">
-                <!-- <label for="">Label</label> -->
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text"><img class="icon-size" src="assets/images/icons/bus.png"
-                        alt="transport-class">
+                <label for="">Booking Start Date</label>
+                <div class="form-group custom-border">
+                  <div class="input-group input-group-md">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button">
+                        <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                      </button>
                     </div>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Enter....">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <!-- <label for="">Check In</label> -->
-                    <div class="form-group custom-border">
-                      <div class="input-group input-group-md">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
-                            <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
-                          </button>
-                        </div>
-                        <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker
-                          [formControl]="bookingListForm.controls.checkIn" #d1="ngbDatepicker" #checkIn
-                          [minDate]="chekInMinDate" (focus)="d1.open()">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <!-- <label for="">Check Out</label> -->
-                    <div class="input-group input-group-md checkout-input">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar brad-none" (click)="d2.toggle()"
-                          type="button">
-                          <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
-                        </button>
-                      </div>
-                      <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp2"
-                        [formControl]="bookingListForm.controls.checkOut" ngbDatepicker #d2="ngbDatepicker" #checkOut
-                        (focus)="d2.open()" [minDate]="chekOutMinDate">
-                    </div>
+                    <input class="form-control custom-left-input" placeholder="DD-MM-YYYY" name="dp3" ngbDatepicker
+                      [formControl]="bookingListForm.controls.bookingStartDate" #d3="ngbDatepicker" #checkIn
+                      [ngClass]="{'validationClass': bookingListFormValidationFlag && bookingListForm.controls['bookingStartDate'].errors}"
+                      (focus)="d3.open()">
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Booking End Date</label>
+                <div class="input-group input-group-md checkout-input">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar brad-none" (click)="d4.toggle()" type="button">
+                      <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar">
+                    </button>
+                  </div>
+                  <input class="form-control custom-right-input custom-calendar" placeholder="DD-MM-YYYY" name="dp4"
+                    [formControl]="bookingListForm.controls.bookingEndDate" ngbDatepicker #d4="ngbDatepicker" #checkOut
+                    [ngClass]="{'validationClass': bookingListFormValidationFlag && bookingListForm.controls['bookingEndDate'].errors}"
+                    (focus)="d4.open()">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 clickBtns">
               <div class="row">
                 <div class="col-md-6 search-btn">
                   <button class="btn btn-md btn-block" (click)="searchBookingList()">Search</button>
@@ -114,46 +111,45 @@
       </div>
     </form>
   </div>
-  <div class="container-fluid">
+  <!-- <div class="container-fluid">
     <div class="searchResults">
       <p>Total:-Bookings: <span>3</span>,
-                Booked:<span>4</span>,
-                Cancelled:<span>0</span>,
-                Pending:<span>1</span>,
-                Failed:<span>0</span>,
-                Collected Fare:<span>
-                Rs.3333.33</span>
-     </p>
+        Booked:<span>4</span>,
+        Cancelled:<span>0</span>,
+        Pending:<span>1</span>,
+        Failed:<span>0</span>,
+        Collected Fare:<span>Rs.3333.33</span>
+      </p>
     </div>
-  </div> 
+  </div> -->
   <div class="container-fluid">
     <div class="bookingListTable">
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
-            <th>RefNo</th>
-            <th>PSA Name</th>
-            <th>PAX</th>
-            <th>Amount(Rs.)</th>
-            <th>Hotel Name</th>
-            <th>City</th>
-            <th>No of Rooms</th>
-            <th>No of Nights</th>
+            <th>Booking Reference</th>
             <th>Check In Date</th>
             <th>Check Out Date</th>
+            <th>No of Rooms</th>
+            <th>No of Adults</th>
+            <th>Booking Creation Date</th>
+            <th>Hotel Name</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Amount(Rs.)</th>
           </thead>
           <tbody>
             <tr>
               <td>9874561</td>
-              <td>asdfgfg</td>
-              <td>852</td>
-              <td>8541</td>
-              <td>Babai Hotel</td>
-              <td>Vizag</td>
-              <td>2</td>
-              <td>1</td>
               <td>3-11-2020</td>
               <td>4-11-2020</td>
+              <td>2</td>
+              <td>1</td>
+              <td>4-11-2020</td>
+              <td>Babai Hotel</td>
+              <td>India</td>
+              <td>Vizag</td>
+              <td>852</td>
             </tr>
           </tbody>
         </table>

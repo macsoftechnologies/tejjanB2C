@@ -52,7 +52,15 @@ export class B2bSignInComponent implements OnInit {
         this.loginResp = data;
         console.log("location------" , location);
         if(this.loginResp.status === 200) {
-          
+          this.showHideLogin = true;
+          localStorage.setItem("userData", JSON.stringify(signInObj));
+          this.user = localStorage.getItem("userData");
+          this.isCheckout = localStorage.getItem("isCheckOut");
+          if (this.user == null && this.user == undefined) {
+              this.router.navigateByUrl('b2c/login');
+          } else {
+            // this.broadcastservice.showHideLogin.emit(true);
+          }
           if(location.pathname === "/b2c/signin") {
             // console.log("hiii");
             this.router.navigateByUrl("b2b/search");
@@ -62,22 +70,11 @@ export class B2bSignInComponent implements OnInit {
             this.router.navigateByUrl("b2c/checkout");
             this.activeModal.dismissAll("success");
           }
+
         }
       });
         
     }
-    this.showHideLogin = true;
-    let userData = {
-      name: "abcd", 
-      address: "vizag"
-    };
-    localStorage.setItem("userData", JSON.stringify(userData));
-    this.user = localStorage.getItem("userData");
-    this.isCheckout = localStorage.getItem("isCheckOut")
-    if (this.user == null && this.user == undefined) {
-        this.router.navigateByUrl('b2c/login');
-    } else {
-      // this.broadcastservice.showHideLogin.emit(true);
-    }
+    
   }
 }

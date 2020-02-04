@@ -45,22 +45,7 @@ export class B2bSignUpComponent implements OnInit {
 
   signUp() {
     this.signUpValidationFlag = this.signupForm.valid ? false : true ; 
-
-    let userData = {
-      name: "abcd",
-      address: "vizag"
-    }
-    localStorage.setItem('userData', JSON.stringify(userData));
-    this.user = localStorage.getItem('userData');
-    if(this.user == null && this.user == undefined) {
-      this.broadcastservice.showHideLogin.emit(false);
-    }
-    else {
-      
-    }
-
     if( !this.signUpValidationFlag ) {
-      
     let signUpObj = {
       type: "B2B",
       companyName: this.signupForm.value.companyName,
@@ -73,10 +58,25 @@ export class B2bSignUpComponent implements OnInit {
       phoneNumber: this.signupForm.value.phoneNumber,
       password: this.signupForm.value.password
     }
-
     this.tejaanServices.registration(signUpObj).subscribe(data => {
       this.registrationResp = data;
       console.log("registrationResp" , this.registrationResp);
+      if(this.registrationResp.status === 200) {
+        localStorage.setItem('authorizationKey',this.registrationResp.response.user_id);
+        localStorage.setItem('userData', JSON.stringify(signUpObj));
+        this.router.navigateByUrl("b2b/signin");
+        this.user = localStorage.getItem('userData');
+        if(this.user == null && this.user == undefined) {
+          this.broadcastservice.showHideLogin.emit(false);
+        }
+        else {
+          
+        }
+        
+      }
+      else {
+        
+      }
     });
     console.log("SignUpObj ===",signUpObj );
     }

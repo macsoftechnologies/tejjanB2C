@@ -67,3 +67,31 @@
         }
     }
 }
+.validationClass {
+    border: solid 1px red;
+}
+
+.custom-input {
+    width: 88%;
+    border: none;
+    // border-bottom: 1px solid #c2c2c2;
+    border-radius: 0;
+}
+::ng-deep {
+    .ng-select.ng-select-single .ng-select-container {
+        height: 38px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px !important;
+    }
+    .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+        color: #999;
+        font-size: 13px;
+    }
+    .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+        font-size: 13px;
+    }
+}
+
+.clickBtns {
+    padding-top: 32px;
+}
