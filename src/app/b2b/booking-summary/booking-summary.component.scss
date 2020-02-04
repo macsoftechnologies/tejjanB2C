@@ -3,7 +3,7 @@
 .booking-summary-page {
 
     .bg-image {
-        background-image: url(../../../assets/search-bg.jpg);
+        background-image: url(../../../assets/images/UmrahBanner.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center bottom;
@@ -12,16 +12,6 @@
 
         @include mobile {
             height: 143px;
-        }
-
-        .bg-mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: #BB9356;
-            opacity: 0.6;
-            height: 100%;
-            width: 100%;
         }
     }
 

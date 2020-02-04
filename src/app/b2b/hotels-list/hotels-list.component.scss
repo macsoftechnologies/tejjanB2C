@@ -16,22 +16,12 @@ background-color: $primary-color;
 
 .hotel-search-results {
 .mecca-bg {
-background-image: url(../../../assets/search-bg.jpg);
+background-image: url(../../../assets/images/UmrahBanner.png);
 background-repeat: no-repeat;
 background-size: cover;
 background-position: center bottom;
 height: 250px;
 position: relative;
-
-.bg-mask {
-position: absolute;
-top: 0;
-left: 0;
-background: $primary-color;
-opacity: 0.6;
-height: 100%;
-width: 100%;
-}
 }
 
 .results-wrapper {
