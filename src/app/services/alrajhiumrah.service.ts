@@ -311,11 +311,11 @@ export class AlrajhiumrahService {
   }
 
   registration(data: any):Observable<any> {
-    return this.http.post(this.baseUrl1 + "register" , data).pipe(map(this.extractData));
+    return this.http.post(this.baseUrl1 + "register" , data , { observe: 'response' }).pipe(map(response =>{return response}));
   }
 
   login(data: any):Observable<any> {
-    return this.http.post(this.baseUrl1 + "login",data).pipe(map(this.extractData));
+    return this.http.post(this.baseUrl1 + "login",data ,{ observe: 'response' }).pipe(map(response =>{return response}));
   }
 
 }

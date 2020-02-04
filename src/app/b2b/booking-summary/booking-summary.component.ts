@@ -45,6 +45,11 @@ export class BookingSummaryComponent implements OnInit {
   public groundTotalPrice = 0;
   public groundQuantity = 0;
 
+  public  additionalSerBaseAmount = 0
+  public  additionalSerGDS= 0
+  public  additionalSerOTA= 0
+  public  additionalSerVatAmount = 0
+
   public cartGrandTotal = 0;
 
 
@@ -197,7 +202,9 @@ export class BookingSummaryComponent implements OnInit {
   public groundCalculations() {
     if (this.groundCart != null || this.groundCart != undefined) {
       this.groundQuantity = 1;
-      if(this.groundCart.category.displayRateInfo !=undefined){ this.groundCart.displayRateInfo.forEach(rate => {
+      if(this.groundCart.category.displayRateInfo !=undefined)
+      { this.groundCart.displayRateInfo.forEach(rate => {
+
         if (rate.purpose == "1") {
           this.groundBasePrice += rate.amount * this.groundQuantity;
           // console.log("groundBasePrice", this.groundBasePrice);
@@ -219,14 +226,77 @@ export class BookingSummaryComponent implements OnInit {
         //   console.log("groundOTA", this.groundOTA);
         // }
       });
-      this.groundTotalPrice  =
-        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
+        
+      if(this.groundCart.additionalServices != undefined){
+
       
-      
-       
+
+        this.groundCart.additionalServices.forEach(service =>{
+          var baseAmount = 0
+          var vatAmount = 0
+          var GDS = 0
+          var OTA = 0 
+          service.displayRateInfo.forEach(rate =>{
+           if (rate.purpose == "1")
+           baseAmount = rate.amount
+           GDS = rate.amount / 100 * 7.5 
+           OTA = rate.amount / 100 * 30 
+
+           
+         if (rate.purpose == "7")
+         vatAmount = rate.amount 
+
+          })
+          
+          this.additionalSerGDS += GDS   
+          this.additionalSerOTA +=  OTA
+          this.additionalSerVatAmount +=  vatAmount
+          this.additionalSerBaseAmount +=  baseAmount
+          
+          console.log("additionalSerBaseAmount" , this.additionalSerBaseAmount)
+
+          console.log("additionalSerVatAmount" , this.additionalSerVatAmount)
+
+          console.log("additionalSerGDSloop" , this.additionalSerGDS)
+     console.log("additionalSerOTA" , this.additionalSerOTA)
+     console.log("additionalSerVatAmount" , this.additionalSerVatAmount)
+
+
+
+
+     })
+ 
+     
 
       }
 
+      console.log("groundCart" , JSON.stringify(this.groundCart))
+
+          
+
+
+          //  console.log("additionalSerBaseAmount " , this.additionalSerBaseAmount )
+          //  console.log("additionalSerGDS " , this.additionalSerGDS )
+          //  console.log("additionalSerOTA " , this.additionalSerOTA )
+          //  console.log("additionalSerVatAmount " , this.additionalSerVatAmount )
+
+
+          this.groundBasePrice += this.additionalSerBaseAmount
+          this.groundGDS += this.additionalSerGDS
+          this.groundOTA += this.additionalSerOTA
+          this.groundVAT += this.additionalSerVatAmount
+          // console.log("this.groundBasePrice " , this.groundBasePrice )
+          // console.log("this.groundGDS " , this.groundGDS )
+          // console.log("this.groundOTA " , this.groundOTA )
+          // console.log("this.groundVAT " , this.groundVAT )
+
+
+      this.groundTotalPrice  =
+        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA ;
+      
+      }
+
+     
      
     }
   }

@@ -1,6 +1,5 @@
 <div class="grpund-service-panel">
   <div class="bg-image">
-    <div class="bg-mask"></div>
   </div>
   <!-- tranportsearch filter section -->
   <div>
@@ -283,9 +282,11 @@
                             <span class="transport-description " [innerHtml]="groundservice.comapnyDescription"> </span>
 
                             <p class="transport-description" *ngIf="groundservice?.additionalServices != undefined">
-                              additionalService : {{groundservice?.additionalServices[0].serviceName}}</p>
-
-
+                              
+                              additionalService : <span *ngFor = "let service of groundservice?.additionalServices">{{service?.serviceName}} ,  </span>
+                            
+                            </p>
+               
                             <div *ngIf="groundservice?.policies!=undefined">
                               <div class="d-flex" *ngIf="groundservice?.policies.length>0">
                                 <!-- <p class="transport-address">Policies:</p> -->
@@ -417,7 +418,9 @@
                 </thead>
                 <tbody>
                   <!-- <tr *ngFor="let vehicle of groundServiceAvailability?.vehicleTypes;let i = index"> -->
-                  <td>{{groundViewDetails?.category?.categoryName}}</td>
+                  <td>{{groundViewDetails?.category?.categoryName}} <span  *ngIf="groundViewDetails?.additionalServices != undefined">-</span>
+                    <span *ngFor = "let service of groundViewDetails?.additionalServices">{{service?.serviceName}}</span>
+                      <!-- <span *ngIf = "i! = groundViewDetails?.additionalServices.length - 1 ">&#44; &nbsp;</span> -->
                   <td>
                     <div class="form-group">
                       <p>{{groundViewDetails?.category?.arrivalDate | date : "dd-MM-yyyy"}}</p>
@@ -455,10 +458,10 @@
 
                         <div>
                           <p class="nights-count">
-                            {{groundViewDetails?.category.displayRateInfo[0].amount | number : "1.2-2"}}
+                            {{getGroundServicesTaxes(groundViewDetails?.category.displayRateInfo , groundViewDetails?.additionalServices).baseAmount | number : "1.2-2"}}
                             {{groundViewDetails?.category.displayRateInfo[0].currencyCode}}</p>
                           <small>+
-                            {{getGroundServicesTaxes(groundViewDetails?.category.displayRateInfo).totalTxAmount  | number : "1.2-2"}}
+                            {{getGroundServicesTaxes(groundViewDetails?.category.displayRateInfo , groundViewDetails?.additionalServices).totalTxAmount  | number : "1.2-2"}}
                             {{groundViewDetails?.category.displayRateInfo[0].currencyCode}}
                             taxs</small>
 
