@@ -1,11 +1,12 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { DOCUMENT } from "@angular/platform-browser";
 import swal from "sweetalert2";
 import {
   NgbModal,
   NgbModalRef,
-  ModalDismissReasons
+  ModalDismissReasons,
+  NgbModalConfig
 } from "@ng-bootstrap/ng-bootstrap";
 import { B2bSignInComponent } from "../b2b-sign-in/b2b-sign-in.component";
 import { SearchPanelComponent } from "../search-panel/search-panel.component";
@@ -14,6 +15,7 @@ import { B2cSignUpComponent } from 'src/app/b2c/b2c-sign-up/b2c-sign-up.componen
 @Component({
   selector: "app-booking-summary",
   templateUrl: "./booking-summary.component.html",
+  // encapsulation: ViewEncapsulation.None,
   styleUrls: ["./booking-summary.component.scss"]
 })
 export class BookingSummaryComponent implements OnInit {
@@ -56,7 +58,7 @@ export class BookingSummaryComponent implements OnInit {
   public user : any
   closeResult: string;
   modal: NgbModalRef;
-
+  
   constructor(
     private router: Router,
     @Inject(DOCUMENT) document: any,
@@ -232,8 +234,6 @@ export class BookingSummaryComponent implements OnInit {
         
       if(this.groundCart.additionalServices != undefined){
 
-      
-
         this.groundCart.additionalServices.forEach(service =>{
           var baseAmount = 0
           var vatAmount = 0
@@ -245,39 +245,22 @@ export class BookingSummaryComponent implements OnInit {
            GDS = rate.amount / 100 * 7.5 
            OTA = rate.amount / 100 * 30 
 
-           
          if (rate.purpose == "7")
          vatAmount = rate.amount 
-
           })
-          
           this.additionalSerGDS += GDS   
           this.additionalSerOTA +=  OTA
           this.additionalSerVatAmount +=  vatAmount
           this.additionalSerBaseAmount +=  baseAmount
-          
           console.log("additionalSerBaseAmount" , this.additionalSerBaseAmount)
-
           console.log("additionalSerVatAmount" , this.additionalSerVatAmount)
-
           console.log("additionalSerGDSloop" , this.additionalSerGDS)
-     console.log("additionalSerOTA" , this.additionalSerOTA)
-     console.log("additionalSerVatAmount" , this.additionalSerVatAmount)
-
-
-
-
+          console.log("additionalSerOTA" , this.additionalSerOTA)
+          console.log("additionalSerVatAmount" , this.additionalSerVatAmount)
      })
- 
-     
-
       }
 
       console.log("groundCart" , JSON.stringify(this.groundCart))
-
-          
-
-
           //  console.log("additionalSerBaseAmount " , this.additionalSerBaseAmount )
           //  console.log("additionalSerGDS " , this.additionalSerGDS )
           //  console.log("additionalSerOTA " , this.additionalSerOTA )
@@ -334,7 +317,7 @@ export class BookingSummaryComponent implements OnInit {
           result => {
 
             this.closeResult = `Closed with: ${result}`;
-         
+            
 
           },
           reason => {
@@ -347,8 +330,7 @@ export class BookingSummaryComponent implements OnInit {
         console.log(" this.modal" ,  this.modal.result)
         // modal.componentInstance.title = "Dialog";
         // modal.componentInstance.body = "Your message";
-        this.modal.result.then(
-          result => {
+        this.modal.result.then( result => {
 
             this.closeResult = `Closed with: ${result}`;
             console.log("modelResult" , this.closeResult)
@@ -358,10 +340,8 @@ export class BookingSummaryComponent implements OnInit {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           }
         );
-
       }
     });
-   
   }
 
   private getDismissReason(reason: any): string {
