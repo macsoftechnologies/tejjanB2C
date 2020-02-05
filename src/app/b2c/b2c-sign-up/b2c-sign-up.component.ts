@@ -73,7 +73,7 @@ export class B2cSignUpComponent implements OnInit {
         console.log("registrationResp" , this.registrationResp);
         if(this.registrationResp.status === 200) { 
           localStorage.setItem('userData', JSON.stringify(signUpObj));
-          this.router.navigateByUrl("b2b/search");
+          this.router.navigateByUrl("b2b/signin");
           this.user = localStorage.getItem('userData');
           if(this.user == null && this.user == undefined) {
             this.broadcastservice.showHideLogin.emit(false);

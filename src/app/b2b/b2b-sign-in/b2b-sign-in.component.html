@@ -14,6 +14,11 @@
             <div class="top-img">
               <img src="../../../assets/images/footer-images/logo.png" alt="">
             </div>
+            <div class="" *ngIf="userValidationFlag">
+              <div class="userValid">
+                <p>Invalid User</p>
+              </div>
+            </div>
             <div class="row form-fields"> 
               <!-- <div class="form-fields"> -->
                 <div class="form-group">
@@ -35,6 +40,7 @@
                   
                   <div class="forgot-text">
                     <a href="">Forgot Password</a>
+                    <a href="javascript:void(0)" (click)="navigateToSignUp()">Register</a>
                   </div>
                 </div>
                 <!-- <div class="form-group signin-btn"> -->

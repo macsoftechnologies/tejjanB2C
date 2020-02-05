@@ -18,6 +18,7 @@ export class B2bSignInComponent implements OnInit {
   isCheckout : any
   loginResp: any;
   b2cSignInResp: any;
+  userValidationFlag: boolean = false;
 
   constructor(private tejaanServices: AlrajhiumrahService,
     private router: Router,
@@ -51,7 +52,7 @@ export class B2bSignInComponent implements OnInit {
       this.tejaanServices.login(signInObj).subscribe(data => {
         this.loginResp = data;
         console.log("location------" , location);
-        if(this.loginResp.status === 200) {
+        if(this.loginResp.body.status === 200) {
           this.showHideLogin = true;
           localStorage.setItem("userData", JSON.stringify(signInObj));
           this.user = localStorage.getItem("userData");
@@ -64,6 +65,7 @@ export class B2bSignInComponent implements OnInit {
           }
           if(location.pathname === "/b2c/signin") {
             // console.log("hiii");
+            this.userValidationFlag = false;
             this.router.navigateByUrl("b2b/search");
           }
           else {
@@ -73,9 +75,16 @@ export class B2bSignInComponent implements OnInit {
           }
 
         }
+        else {
+          this.userValidationFlag = true;
+        }
       });
         
     }
     
+  }
+
+  public navigateToSignUp(): void {
+    this.router.navigateByUrl("b2b/signup");
   }
 }

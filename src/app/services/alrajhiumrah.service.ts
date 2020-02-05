@@ -310,13 +310,23 @@ export class AlrajhiumrahService {
     .post(this.baseUrl + "payment",data).pipe(map(this.extractData));
   }
 
-  registration(data: any):Observable<any> {
-    return this.http.post(this.baseUrl1 + "register" , data).pipe(map(this.extractData));
+ registration(data: any):Observable<any> {
+    return this.http
+    .post(this.baseUrl1 + "register" ,data,  { observe: 'response' })
+    .pipe(map(result => {
+      return result;
+     
+    } ));
+    
   }
 
-  login(data: any):Observable<any> {
-    return this.http.post(this.baseUrl1 + "login",data).pipe(map(this.extractData));
+  login(data: any):Observable<HttpResponse<any>> {
+    // return this.http.post(this.baseUrl1 + "login",data).pipe(map(this.extractData));
+    return this.http
+    .post(this.baseUrl1 + "login",data,  { observe: 'response' })
+    .pipe(tap(resp => console.log('loginresponse', resp.headers.get('authorization'))));
   }
+
 
 }
 
