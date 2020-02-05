@@ -91,16 +91,18 @@
     }
 }
     .header-logo {
-        text-align: right;
+        // text-align: right;
         img {
-            width: 90px;
-            height: 38px;
+            width: 100%;
+            height: 100%;
+            max-width: 105px;
         }
         a {
             color: #000;
             padding-right: 4px;
             font-weight: 500;
             text-decoration: none;
+            text-align: right;
         }
         i {
             color: #000;
@@ -249,8 +251,9 @@
     }
 
     .mobile-header-image img {
-        height: 65px;
-        width: 120px;
+        height: 100%;
+        width: 100%;
+        max-width: 150px;
     }
     .dropdown-menu.show {
         width: 200px;
