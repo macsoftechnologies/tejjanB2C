@@ -4,6 +4,8 @@ import { AlrajhiumrahService } from "../../services/alrajhiumrah.service";
 import { Router } from '@angular/router';
 import { BroadcastserviceService } from 'src/app/services/broadcastservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { B2bSignInComponent } from 'src/app/b2b/b2b-sign-in/b2b-sign-in.component';
 
 @Component({
   selector: "app-b2c-sign-up",
@@ -16,11 +18,15 @@ export class B2cSignUpComponent implements OnInit {
   signUpValidationFlag : boolean;
   registrationResp: any;
   user: string;
+  modal: NgbModalRef;
+  modals: NgbModalRef;
 
   constructor(private tejaanServices: AlrajhiumrahService,
     private formBuilder: FormBuilder,
     private router:Router,
-    private broadcastservice: BroadcastserviceService
+    private broadcastservice: BroadcastserviceService,
+    private activeModal: NgbModal,
+    private modalService: NgbModal,
     ) {
      
     }
@@ -72,17 +78,43 @@ export class B2cSignUpComponent implements OnInit {
         this.registrationResp = data;
         console.log("registrationResp" , this.registrationResp);
         if(this.registrationResp.status === 200) { 
-          localStorage.setItem('userData', JSON.stringify(signUpObj));
-          this.router.navigateByUrl("b2b/signin");
-          this.user = localStorage.getItem('userData');
-          if(this.user == null && this.user == undefined) {
+          // localStorage.setItem('userData', JSON.stringify(signUpObj));
             this.broadcastservice.showHideLogin.emit(false);
-          }
-          else { 
-            this.broadcastservice.showHideLogin.emit(true);
-          }
+
+
+          this.activeModal.dismissAll();    
+   
+
+    if(location.pathname === "/b2c/signup"){
+      this.router.navigateByUrl("b2c/signin");
+     }else{
+      this.modal = this.modalService.open(B2bSignInComponent);
+     }
+
+          // this.router.navigateByUrl("b2b/signin");
+          // this.user = localStorage.getItem('userData');
+          // if(this.user == null && this.user == undefined) {
+          //   this.broadcastservice.showHideLogin.emit(false);
+          // }
+          // else { 
+          //   this.broadcastservice.showHideLogin.emit(true);
+          // }
+        }else{
+          this.broadcastservice.showHideLogin.emit(true);
         }
       });
     }
+  }
+
+  public navigateToSignIn(): void {
+    this.activeModal.dismissAll();    
+
+
+    if(location.pathname === "/b2c/signup"){
+      this.router.navigateByUrl("b2c/signin");
+     }else{
+      this.modal = this.modalService.open(B2bSignInComponent);
+     }
+
   }
 }
