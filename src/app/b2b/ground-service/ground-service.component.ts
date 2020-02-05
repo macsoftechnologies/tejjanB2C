@@ -6,6 +6,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import swal from 'sweetalert2';
 import { Options, LabelType } from "ng5-slider";
 import { DropdownDirective, TOGGLE_STATUS } from 'angular-custom-dropdown';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: "app-ground-service",
@@ -13,7 +14,7 @@ import { DropdownDirective, TOGGLE_STATUS } from 'angular-custom-dropdown';
   styleUrls: ["./ground-service.component.scss"]
 })
 export class GroundServiceComponent implements OnInit {
-  
+
   @ViewChild('myDropdown') myDropdown: DropdownDirective;
 
   public searchData: any = {};
@@ -38,10 +39,14 @@ export class GroundServiceComponent implements OnInit {
   public groundServiceTrackToken: any
   public isGroundServicesAvailableFlag: boolean = true;
   public groundservice_name_filter: string;
-
-
   public taxAmount = 0
   public feeAmount = 0
+
+  public additionalSerBaseAmount = 0
+  public additionalSerBaseAmountWithTax = 0
+  public additionalSerVatAmount = 0
+
+
 
   /*Ground Currencies*/
 
@@ -55,14 +60,14 @@ export class GroundServiceComponent implements OnInit {
     floor: 0,
     ceil: 0,
     translate: (value: number, label: LabelType): string => {
-     /*  switch (label) {
-        case LabelType.Low:
-          return "SAR" + value;
-        case LabelType.High:
-          return "SAR" + value;
-        default:
-          return "$" + value;
-      } */
+      /*  switch (label) {
+         case LabelType.Low:
+           return "SAR" + value;
+         case LabelType.High:
+           return "SAR" + value;
+         default:
+           return "$" + value;
+       } */
       return "SAR";
     }
   };
@@ -90,7 +95,7 @@ export class GroundServiceComponent implements OnInit {
   mainGroundServiceList: any;
   disableTextbox: boolean;
   currentIndex: any;
-  checkedAdditionalservices=[];
+  checkedAdditionalservices = [];
   selectAdditionalServices = [];
 
   constructor(private router: Router, private teejanServices: AlrajhiumrahService, private spinner: NgxSpinnerService,
@@ -104,42 +109,42 @@ export class GroundServiceComponent implements OnInit {
     this.country();
 
     this.myDropdown.statusChange()
-    .subscribe((status: TOGGLE_STATUS) => {
-      let statusValue: String;
-      if (status === TOGGLE_STATUS.OPEN) {
-        statusValue = 'Opened';
-      } else if (status === TOGGLE_STATUS.CLOSE) {
-        statusValue = 'Closed';
-      }
-      console.info(`Dropdown status changed to "${statusValue}".`);
-    });
+      .subscribe((status: TOGGLE_STATUS) => {
+        let statusValue: String;
+        if (status === TOGGLE_STATUS.OPEN) {
+          statusValue = 'Opened';
+        } else if (status === TOGGLE_STATUS.CLOSE) {
+          statusValue = 'Closed';
+        }
+        console.info(`Dropdown status changed to "${statusValue}".`);
+      });
   }
 
 
 
   public getGroundServicesLookup(): void {
     this.teejanServices.getGroundServiceLookup().subscribe((groundServiceLookUpResp) => {
-      if(groundServiceLookUpResp.categories!=""){
+      if (groundServiceLookUpResp.categories != "") {
         this.categories = JSON.parse(
           groundServiceLookUpResp.categories
         ).categories;
-      }else{
-        this.categories =[];
+      } else {
+        this.categories = [];
       }
 
-      if(groundServiceLookUpResp.uocompanies!=""){
+      if (groundServiceLookUpResp.uocompanies != "") {
         this.companies = JSON.parse(
           groundServiceLookUpResp.uocompanies
         ).uocompanies;
-      }else{
-        this.companies =[];
+      } else {
+        this.companies = [];
       }
 
-      if(groundServiceLookUpResp.additionalservices!=""){
+      if (groundServiceLookUpResp.additionalservices != "") {
         this.additionalServices = JSON.parse(groundServiceLookUpResp.additionalservices).additionalServices;
-        console.log("service" , this.additionalServices)
-      }else{
-        this.additionalServices =[];
+        console.log("service", this.additionalServices)
+      } else {
+        this.additionalServices = [];
       }
       this.onGroundServicesSearch();
       this.patchValues();
@@ -147,59 +152,88 @@ export class GroundServiceComponent implements OnInit {
     })
   }
 
-  isInputChecked(i , event) {
+  isInputChecked(i, event) {
     // this.currentIndex = i;
-    console.log("event---",event);
+    console.log("event---", event);
 
-    if(event.target.checked){
+    if (event.target.checked) {
       this.currentIndex = i;
       this.checkedAdditionalservices.push(i);
-      console.log("checkedAdditionalservices" , this.checkedAdditionalservices)
-    }else{
+      console.log("checkedAdditionalservices", this.checkedAdditionalservices)
+    } else {
       // console.log("checkedAdditionalservices11111" , this.checkedAdditionalservices)
-         for(let m = 0 ;m < this.checkedAdditionalservices.length  ; m++){
-           if(this.checkedAdditionalservices[m] === i)
-         {  
-           console.log("checkedAdditionalservices[m]" , this.checkedAdditionalservices[m]) 
-           console.log("index" , i)
-        this.checkedAdditionalservices.splice(m , 1)}
+      for (let m = 0; m < this.checkedAdditionalservices.length; m++) {
+        if (this.checkedAdditionalservices[m] === i) {
+          console.log("checkedAdditionalservices[m]", this.checkedAdditionalservices[m])
+
+          this.checkedAdditionalservices.splice(m, 1)
+        }
+      }
+
+      this.selectAdditionalServices.forEach((service, index) => {
+
+        if (service.index == i) {
+          this.selectAdditionalServices.splice(index, 1)
+        }
+
+      })
+
+      console.log("checkedAdditionalservices2222", this.checkedAdditionalservices)
+      console.log("selectAdditionalServices", this.selectAdditionalServices)
+
+
     }
 
-      
-        console.log("checkedAdditionalservices2222" , this.checkedAdditionalservices)
-    
+  }
+
+  additionalServiceQuantity(serviceObj, serviceIndex, quantity) {
+    console.log("serviceObj , value", serviceObj, quantity)
+
+    let obj = {
+      index: serviceIndex,
+      code: serviceObj.code,
+      quantity: quantity,
+      duration: ""
     }
-  
+
+    let index = this.selectAdditionalServices.findIndex(service => service.index == serviceIndex);
+
+    if (index == -1) {
+      this.selectAdditionalServices.push(obj)
+
+    } else {
+
+      this.selectAdditionalServices[index].quantity = quantity
+
+    }
+
+    console.log("selectAdditionalServicesQuantity", this.selectAdditionalServices);
   }
+  additionalServiceDuration(serviceObj, serviceIndex, duration) {
 
-  additionalServiceQuantity(serviceObj , serviceIndex , quantity){
-    console.log("serviceObj , value" , serviceObj , quantity)
+    let obj = {
+      index: serviceIndex,
+      code: serviceObj.code,
+      quantity: "",
+      duration: duration
+    }
+    console.log("this.selectAdditionalServices", this.selectAdditionalServices)
+    let index = this.selectAdditionalServices.findIndex(service => service.index == serviceIndex);
+    console.log("index", index)
+    if (index == -1) {
+      this.selectAdditionalServices.push(obj)
 
-          let obj = {
-            index :   serviceIndex ,
-            code : serviceObj.code,
-            quantity : quantity,
-            duration : ""
-          }
+    } else {
 
-          let index = this.selectAdditionalServices.findIndex(service => service.index == serviceIndex);
-          
-          if(index = -1){
-            this.selectAdditionalServices.push(obj)
+      this.selectAdditionalServices[index].duration = duration
 
-          }else{
+    }
 
-            this.selectAdditionalServices[index].quantity = quantity
-
-          }
-
-     console.log("selectAdditionalServices" , this.selectAdditionalServices);
-  }
-  additionalServiceDuration(serviceObj , duration){
+    console.log("selectAdditionalServicesDuration", this.selectAdditionalServices);
 
   }
   // change groundServicePackageClass
-  GroundServiceClass(groundServiceClass){
+  GroundServiceClass(groundServiceClass) {
 
 
     let searchFilterData: any = JSON.parse(localStorage.getItem('searchFilterObj'))
@@ -233,7 +267,7 @@ export class GroundServiceComponent implements OnInit {
       // quantity: [""],
       arrivalDate: [""],
       nationality: [null, Validators.required],
-      
+
       countryOfResidence: [null, Validators.required],
       rows: this.fb.array([]),
     });
@@ -248,26 +282,24 @@ export class GroundServiceComponent implements OnInit {
       countryOfResidence: this.searchFilterObj.countryOfResidence.countryName,
       noOfPax: parseInt(this.searchFilterObj.adults_count) + parseInt(this.searchFilterObj.child_count),
       arrivalDate: this.searchFilterObj.checkIn.year + "-" + this.searchFilterObj.checkIn.month + "-" + this.searchFilterObj.checkIn.day,
-      categoryCode : this.searchFilterObj.groundServicePackage
+      categoryCode: this.searchFilterObj.groundServicePackage
     })
-    
+
   }
 
   /* call ground service search api */
   public onGroundServicesSearch(): void {
-    // filter selected GroundServices from all GroundServices
-    var groundServices = this.GroundServicesFormGroup.value.rows.filter((response) => {
-      return response.quantity != ""
-    });
 
-    // remove checkbox_value  and name
-    let groundServices1 = groundServices.map(function (item) {
-      delete item.checkbox_value;
-      delete item.name
+
+    // remove index Key and filter 
+    let groundAddionalSer = this.selectAdditionalServices.map(function (item) {
+      delete item.index;
       return item;
-    });
+    }).filter(item => { return item.quantity != "" && item.duration != "" });
 
-    console.log(" this.GroundServicesFormGroup.value" ,  this.GroundServicesFormGroup.value)
+
+    console.log("groundAddionalSer", groundAddionalSer)
+    console.log(" this.GroundServicesFormGroup.value", this.GroundServicesFormGroup.value)
 
 
     let formData = {
@@ -276,74 +308,72 @@ export class GroundServiceComponent implements OnInit {
       },
       "request": {
         "uoCodes": ["1039"],
-        "categoryCode" : this.GroundServicesFormGroup.value.categoryCode != null ? this.GroundServicesFormGroup.value.categoryCode.code : null,
+        "categoryCode": this.GroundServicesFormGroup.value.categoryCode != null ? this.GroundServicesFormGroup.value.categoryCode.code : null,
         "nationality": this.searchFilterObj.nationality.countryCode,
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
         "arrivalDate": this.searchData.request.checkInDate,
         "quantity": this.GroundServicesFormGroup.value.noOfPax,
-        "additionalServices": [{code : this.GroundServicesFormGroup.value.additionalServices != null  ? this.GroundServicesFormGroup.value.additionalServices.code : null , quantity : "1" , duration : "5" }]
+        // "additionalServices": [{ code: this.GroundServicesFormGroup.value.additionalServices != null ? this.GroundServicesFormGroup.value.additionalServices.code : null, quantity: "1", duration: "5" }]
+        additionalServices: groundAddionalSer
       }
     }
-    if (formData.request.additionalServices[0].code == null) {
+    console.log("groundForm", formData)
+    if (formData.request.additionalServices.length == 0) {
       delete formData.request.additionalServices
     }
-    if(formData.request.categoryCode == null){
+    if (formData.request.categoryCode == null) {
       delete formData.request.categoryCode
     }
     this.teejanServices.getGroundServiceSearch(formData).subscribe((resp) => {
       this.spinner.hide();
       this.isFirstTimeLoad = false;
       localStorage.setItem("groundServiceTrackToken", resp.headers.get('tracktoken'))
-      if(resp.body.groundServices != undefined){
-      if(this.companies !=undefined){
-        this.companies.forEach(comapny => {
-          resp.body.groundServices.forEach(groundCompany => {
-            if (comapny.code === groundCompany.uoCode) {
-              groundCompany.companyName = comapny.name
-              groundCompany.comapnyDescription = comapny.description
-              groundCompany.address = comapny.address
-              groundCompany.images = comapny.images
-              groundCompany.category.address = comapny.address
-              groundCompany.category.phone = comapny.phone
-              groundCompany.category.email = comapny.email
+      if (resp.body.groundServices != undefined) {
+        if (this.companies != undefined) {
+          this.companies.forEach(comapny => {
+            resp.body.groundServices.forEach(groundCompany => {
+              if (comapny.code === groundCompany.uoCode) {
+                groundCompany.companyName = comapny.name
+                groundCompany.comapnyDescription = comapny.description
+                groundCompany.address = comapny.address
+                groundCompany.images = comapny.images
+                groundCompany.category.address = comapny.address
+                groundCompany.category.phone = comapny.phone
+                groundCompany.category.email = comapny.email
 
-            }
+              }
 
+            })
           })
-        })
+        }
+
       }
 
-
-
-      
-
-    }
-      
       this.groundServiceList = resp.body.groundServices
-      console.log("this.groundServiceList" , this.groundServiceList)
-      if(this.additionalServices != undefined){
-     
-        this.additionalServices.forEach(addService =>{
+      console.log("this.groundServiceList", this.groundServiceList)
+      if (this.additionalServices != undefined) {
+
+        this.additionalServices.forEach(addService => {
           this.groundServiceList.forEach(groundCompany => {
 
-          if(groundCompany.additionalServices != undefined){
-         if(addService.code == groundCompany.additionalServices[0].code){
-           
-          console.log("additionalServices" , groundCompany )
-           
-          groundCompany.additionalServices[0].serviceName = addService.name
+            if (groundCompany.additionalServices != undefined) {
 
+              groundCompany.additionalServices.forEach(service => {
+                if (addService.code == service.code) {
+                  service.serviceName = addService.name
+                }
 
-         }  
-               
-        }
+              })
+
+          
+            }
+          })
         })
-      })
 
       }
 
-      if(this.groundServiceList[0].category != undefined)
-      this.mainGroundServiceList = resp.body.groundServices
+      if (this.groundServiceList[0].category != undefined)
+        this.mainGroundServiceList = resp.body.groundServices
       this.groundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
       this.minValue = this.groundServiceList[0].category.displayRateInfo[0].amount;
       this.maxValue = this.groundServiceList[
@@ -353,12 +383,12 @@ export class GroundServiceComponent implements OnInit {
         floor: this.minValue,
         ceil: this.maxValue
       };
-      
+
     }, (err) => {
 
     })
-  
-    
+
+
   }
 
   onGroundServices() {
@@ -400,10 +430,17 @@ export class GroundServiceComponent implements OnInit {
   }
 
   /* calculating ground service taxes */
-  public getGroundServicesTaxes(displayRateInfo): any {
+  public getGroundServicesTaxes(displayRateInfo , additionalServices): any {
+    // console.log("displayRateInfo , additionalServices" , displayRateInfo , additionalServices)
     let baseAmount = 0;
     let vatAmount = 0;
     let feesAmount = 0;
+
+    this.additionalSerBaseAmount = 0
+    this.additionalSerBaseAmountWithTax = 0
+    this.additionalSerVatAmount = 0
+ 
+
 
     displayRateInfo.forEach(displayRate => {
       if (displayRate.purpose == "1")
@@ -414,9 +451,38 @@ export class GroundServiceComponent implements OnInit {
         feesAmount = displayRate.amount
     })
 
+
+    if(additionalServices != undefined){
+
+             
+      additionalServices.forEach(service =>{
+
+        var  addBaseAmount = 0  
+        var  addTaxamount = 0
+        var addVatAmount = 0
+
+           service.displayRateInfo.forEach(rate =>{
+            if (rate.purpose == "1")
+            addBaseAmount =  rate.amount
+            addTaxamount  =  rate.amount / 100 * 7.5 + rate.amount / 100 * 30;
+          if (rate.purpose == "7")
+          addVatAmount = rate.amount
+          
+           })
+            
+           this.additionalSerBaseAmount  += addBaseAmount
+           this.additionalSerBaseAmountWithTax += addTaxamount
+           this.additionalSerVatAmount += addVatAmount
+
+
+      })
+
+
+    }
+
     let taxesObject = {
-      totalTxAmount: baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount,
-      baseAmount: baseAmount,
+      totalTxAmount: baseAmount / 100 * 30 + baseAmount / 100 * 7.5 + vatAmount + feesAmount + this.additionalSerBaseAmount +  this.additionalSerVatAmount,
+      baseAmount: baseAmount + this.additionalSerBaseAmount,
       vatAmount: vatAmount,
       feesAmount: feesAmount,
       gdsTax: baseAmount / 100 * 7.5,
@@ -503,19 +569,19 @@ export class GroundServiceComponent implements OnInit {
         this.groundservice_name_filter = "";
         break;
 
-        case "price":
-          this.mainGroundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
-          this.minValue = this.mainGroundServiceList[0].category.displayRateInfo[0].amount;
-          this.maxValue = this.mainGroundServiceList[
-            this.mainGroundServiceList.length - 1
-          ].category.displayRateInfo[0].amount;
-          this.options = {
-            floor: this.minValue,
-            ceil: this.maxValue
-          };
+      case "price":
+        this.mainGroundServiceList.sort((a, b) => a.category.displayRateInfo[0].amount - b.category.displayRateInfo[0].amount)
+        this.minValue = this.mainGroundServiceList[0].category.displayRateInfo[0].amount;
+        this.maxValue = this.mainGroundServiceList[
+          this.mainGroundServiceList.length - 1
+        ].category.displayRateInfo[0].amount;
+        this.options = {
+          floor: this.minValue,
+          ceil: this.maxValue
+        };
 
-          this.groundServiceList = this.mainGroundServiceList
-          break;
+        this.groundServiceList = this.mainGroundServiceList
+        break;
       default: break;
     }
   }
@@ -540,6 +606,6 @@ export class GroundServiceComponent implements OnInit {
     if (temp.length > 0) this.groundServiceList = temp;
   }
 
-  
+
 
 }

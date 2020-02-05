@@ -51,6 +51,8 @@ export class B2bSignInComponent implements OnInit {
 
       this.tejaanServices.login(signInObj).subscribe(data => {
         this.loginResp = data;
+
+        console.log("login" , data.headers.keys());
         console.log("location------" , location);
         if(this.loginResp.body.status === 200) {
           this.showHideLogin = true;
