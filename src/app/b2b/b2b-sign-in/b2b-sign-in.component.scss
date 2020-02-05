@@ -2,7 +2,7 @@
 @import "../../../assets/variables/modular-variables";
 
 .container {
-    
+    text-align: center;
     @include mobile {
         padding: 16px;
     }
@@ -84,15 +84,16 @@
     @include mobile {
         padding-top: 0px;
     }
-    .custom-input {
+    .custom-input { 
         margin-top: 7px;
     }
 }
 .forgot-text {
     padding-left: 73px;
-    padding-top: 4px;
+    // padding-top: 4px;
     font-size: 14px;
-    
+    display: flex;
+    flex-direction: column;
     a {
         color: #ccc;   
     }

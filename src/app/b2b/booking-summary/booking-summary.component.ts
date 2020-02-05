@@ -10,6 +10,7 @@ import {
 import { B2bSignInComponent } from "../b2b-sign-in/b2b-sign-in.component";
 import { SearchPanelComponent } from "../search-panel/search-panel.component";
 import { BroadcastserviceService } from "src/app/services/broadcastservice.service";
+import { B2cSignUpComponent } from 'src/app/b2c/b2c-sign-up/b2c-sign-up.component';
 @Component({
   selector: "app-booking-summary",
   templateUrl: "./booking-summary.component.html",
@@ -52,7 +53,7 @@ export class BookingSummaryComponent implements OnInit {
 
   public cartGrandTotal = 0;
 
-
+  public user : any
   closeResult: string;
   modal: NgbModalRef;
 
@@ -70,6 +71,8 @@ export class BookingSummaryComponent implements OnInit {
     localStorage.setItem("stepperVal", 3 + "");
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"));
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
+    this.user = localStorage.getItem("userData");
+
     
     const checkInDate = new Date(this.searchObj.request.checkInDate);
       
@@ -302,40 +305,63 @@ export class BookingSummaryComponent implements OnInit {
   }
 
   checkout() {
-    this.broadcastService.customStepper.emit(false)
-    if (document.location.href.toString().includes("b2b")) {
-      this.broadcastService.customStepper.emit(false);
-      this.router.navigateByUrl("b2c/checkout");
-    } else {
-      console.log("b2c module");
 
-      swal
-        .fire({
-          text: "Please login to continue",
-          // showCancelButton: true,
-          confirmButtonColor: "#bb9356",
-          // cancelButtonColor: "#d33",
-          confirmButtonText: "Login"
-        })
-        .then(result => {
-          if (result.value) {
-            // this.router.navigateByUrl("b2c/login");
-            // this.modalService.open(B2bSignInComponent);
-            this.modal = this.modalService.open(B2bSignInComponent);
-            // modal.componentInstance.title = "Dialog";
-            // modal.componentInstance.body = "Your message";
-            this.modal.result.then(
-              result => {
-                this.closeResult = `Closed with: ${result}`;
-              },
-              reason => {
-                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-              }
-            );
+    this.broadcastService.customStepper.emit(false)
+
+     localStorage.setItem("checkout" , "true")
+
+    swal
+    .fire({
+      text: "Please to continue",
+      showCancelButton: true,
+      confirmButtonColor: "#bb9356",
+      cancelButtonColor: "#bb9356",
+      confirmButtonText: "Login",
+      cancelButtonText : "Register"
+      
+    })
+    .then(result => {
+
+      if (result.value == true) {
+        // this.router.navigateByUrl("b2c/login");
+        // this.modalService.open(B2bSignInComponent);
+      
+        this.modal = this.modalService.open(B2bSignInComponent);
+        console.log(" this.modal" ,  this.modal.result)
+        // modal.componentInstance.title = "Dialog";
+        // modal.componentInstance.body = "Your message";
+        this.modal.result.then(
+          result => {
+
+            this.closeResult = `Closed with: ${result}`;
+         
+
+          },
+          reason => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
           }
-        });
-    }
-    //
+        );
+      }else{
+        
+        this.modal = this.modalService.open(B2cSignUpComponent);
+        console.log(" this.modal" ,  this.modal.result)
+        // modal.componentInstance.title = "Dialog";
+        // modal.componentInstance.body = "Your message";
+        this.modal.result.then(
+          result => {
+
+            this.closeResult = `Closed with: ${result}`;
+            console.log("modelResult" , this.closeResult)
+
+          },
+          reason => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+
+      }
+    });
+   
   }
 
   private getDismissReason(reason: any): string {
