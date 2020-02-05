@@ -316,7 +316,7 @@ export class BookingSummaryComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: "#bb9356",
       cancelButtonColor: "#bb9356",
-      confirmButtonText: "Login",
+      confirmButtonText: "Login", 
       cancelButtonText : "Register"
       
     })

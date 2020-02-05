@@ -2,7 +2,7 @@
 @import "../../../assets/variables/modular-variables";
 
 .container-fluid {
-  background-image: url("../../../assets/search-bg.jpg");
+  background-image: url("../../../assets/images/UmrahBanner.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -17,16 +17,6 @@
     padding: 20px;
     height: 132vh;
   }
-}
-
-.bg-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: #bb9356;
-  opacity: 0.4;
 }
 
 .heading {
