@@ -170,7 +170,7 @@
                                     <b>Check-Out:</b>{{hotel?.hotelDetails.checkOutDate | date : "y-MM-dd"}}
                                   </p>
                                   <p>
-                                    <b>Total Amount:</b>SAR {{hotelAmount | number : "1.2-2}}
+                                    <b>Total Amount:</b>SAR {{hotelAmount | number : "1.2-2"}}
                                   </p>
                                 </div>
 
@@ -184,7 +184,7 @@
                                   <p><b>StartDate :</b>{{transport?.startDate | date : "y-MM-dd"}}</p>
 
                                   <p *ngIf="transport?.companyName != undefined">
-                                    <b>Total Amount:</b>SAR {{transportAmount | number : "1.2-2}}
+                                    <b>Total Amount:</b>SAR {{transportAmount | number : "1.2-2"}}
                                   </p>
                                 </div>
                                 <div class="col-md-4">
@@ -197,7 +197,7 @@
                                   <p *ngIf="ground?.category != undefined">
                                     <b>package:</b>{{ground?.category?.categoryName}}</p>
                                   <p *ngIf="ground?.category != undefined">
-                                    <b>Total Amount:</b>SAR {{groundAmount | number : "1.2-2}}
+                                    <b>Total Amount:</b>SAR {{groundAmount | number : "1.2-2"}}
                                   </p>
                                 </div>
 
@@ -263,7 +263,7 @@
                       </div> -->
                           <div class="col-3">
                             <label for="title">Total:</label>
-                            <p>{{hotelAmount | number : "1.2-2}} SAR</p>
+                            <p>{{hotelAmount | number : "1.2-2"}} SAR</p>
                           </div>
                         </div>
                       </div>
