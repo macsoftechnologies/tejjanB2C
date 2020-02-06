@@ -328,5 +328,26 @@ export class AlrajhiumrahService {
   }
 
 
+   /*                 Booking List Api    */
+
+
+
+   getBookingList(data : any) : Observable<any>{
+
+    let params = new HttpParams().set('user_name', data.user_name)
+    .set('bkStartDate',data.bkStartDate)
+    .set('bkEndDate',data.bkEndDate)
+    .set('chStartDate',data.chStartDate)
+    .set('chEndDate',data.chEndDate)
+    .set('bookingStatus',data.bookingStatus)
+
+    return this.http
+    .get( "http://78.46.66.126:37005/vi/api/bookingList" ,{params:params})
+    .pipe(map(result => {
+      return result;
+     
+    } ));
+
+  }
 }
 

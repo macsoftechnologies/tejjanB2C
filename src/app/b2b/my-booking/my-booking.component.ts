@@ -89,12 +89,11 @@ export class MyBookingComponent implements OnInit {
   /* method to call view hotel reservation api */
   public viewHotelReservation(): void {
 
-    this.spinner.show()
 
 
     if(this.hotelBookingResponse != null){
   
-      // this.spinner.show();  
+      this.spinner.show();  
     
     let formData = {
       "context": {

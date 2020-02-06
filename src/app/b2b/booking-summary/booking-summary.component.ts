@@ -291,7 +291,13 @@ export class BookingSummaryComponent implements OnInit {
 
     this.broadcastService.customStepper.emit(false)
 
-     localStorage.setItem("checkout" , "true")
+     
+    if(this.user != null || this.user != undefined){
+
+      this.router.navigateByUrl("b2c/checkout");
+
+
+    }else{
 
     swal
     .fire({
@@ -342,6 +348,8 @@ export class BookingSummaryComponent implements OnInit {
         );
       }
     });
+
+    }
   }
 
   private getDismissReason(reason: any): string {

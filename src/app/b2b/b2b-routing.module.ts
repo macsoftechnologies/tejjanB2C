@@ -78,11 +78,8 @@ const routes: Routes = [
   {
     path: "bookingcancel",
     component: BookingCancelComponent
-  },
-  {
-    path: "bookinglist",
-    component: BookingListComponent
   }
+ 
 ];
 
 @NgModule({

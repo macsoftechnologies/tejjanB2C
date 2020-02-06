@@ -32,6 +32,14 @@ export class B2bSignInComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+        
+   this.user =   JSON.parse(localStorage.getItem('userData'))
+
+   if(this.user == null || this.user == undefined){
+     
+   }
+
     this.loadSigninForm();
   }
 

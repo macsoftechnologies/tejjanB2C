@@ -16,6 +16,7 @@ import { BookingSummaryComponent } from '../b2b/booking-summary/booking-summary.
 import { PaymentSuccessComponent } from '../b2b/payment-success/payment-success.component';
 import { PaymentFailureComponent } from '../b2b/payment-failure/payment-failure.component';
 import { B2cSignUpComponent } from './b2c-sign-up/b2c-sign-up.component';
+import { BookingListComponent } from '../b2b/booking-list/booking-list.component';
 
 const routes: Routes = [{
   path: "",
@@ -81,6 +82,10 @@ const routes: Routes = [{
   path: "payment/failure",
   component:PaymentFailureComponent
 },
+{
+  path: "bookinglist",
+  component: BookingListComponent
+}
 
 ];
 

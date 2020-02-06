@@ -102,7 +102,7 @@
                   <button class="btn btn-md btn-block" (click)="searchBookingList()">Search</button>
                 </div>
                 <div class="col-md-6 search-btn">
-                  <button class="btn btn-md btn-block">Reset</button>
+                  <button class="btn btn-md btn-block" (click)="reset()">Reset</button>
                 </div>
               </div>
             </div>
@@ -110,6 +110,18 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div class="container-fluid">
+    <div class="listBtns" *ngIf = "hotelBookingList.length > 0 && transportBookingList.length > 0">
+      <button class="btn btn-md" (click) = "hotel()" >Hotel</button>
+      <button class="btn btn-md" (click) = "transport()">Transport</button>
+    </div>
+    <div *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0">
+       
+           No Results  Found
+
+    </div>
   </div>
   <!-- <div class="container-fluid">
     <div class="searchResults">
@@ -123,33 +135,61 @@
     </div>
   </div> -->
   <div class="container-fluid">
-    <div class="bookingListTable">
+    <div class="bookingListTable" >
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <div *ngIf = "hotelFlag == true && transportFlag == false && hotelBookingList.length == 0">
+         
+          <p>  No Results  Found</p>
+
+        </div>
+        <table class="table table-bordered" *ngIf = "hotelFlag && hotelBookingList.length > 0">
           <thead>
-            <th>Booking Reference</th>
+            <!-- <th>Booking Reference</th> -->
+            <th>Booking Creation Date</th>
             <th>Check In Date</th>
             <th>Check Out Date</th>
             <th>No of Rooms</th>
             <th>No of Adults</th>
-            <th>Booking Creation Date</th>
             <th>Hotel Name</th>
             <th>Country</th>
             <th>City</th>
-            <th>Amount(Rs.)</th>
+            <th>Amount(SAR)</th>
           </thead>
           <tbody>
-            <tr>
-              <td>9874561</td>
-              <td>3-11-2020</td>
-              <td>4-11-2020</td>
-              <td>2</td>
-              <td>1</td>
-              <td>4-11-2020</td>
-              <td>Babai Hotel</td>
-              <td>India</td>
-              <td>Vizag</td>
-              <td>852</td>
+            <tr *ngFor = "let hotel of hotelBookingList">
+              <td>{{hotel.bookingTime |  date : "y-MM-dd"}}</td>
+              <td>{{hotel.checkIn |  date : "y-MM-dd"}}</td>
+              <td>{{hotel.checkOut |  date : "y-MM-dd"}}</td>
+              <td>{{hotel.roomInfo[0]?.rooms?.length}}</td>
+              <td>{{hotelPaxInfo(hotel.roomInfo[0]?.paxInfo).adults}}</td>
+              <td>{{hotel.propertyName}}</td>
+              <td>{{hotel.country}}</td>
+              <td>{{hotel.city}}</td>
+              <td>{{hotelCalculations(hotel.roomInfo).totalAmount | number : "1.2-2"}}</td> 
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf = " transportFlag == true && transportBookingList.length == 0">
+         
+          <p> No Results  Found </p>
+
+        </div>
+        <table class="table table-bordered" *ngIf = "transportFlag && transportBookingList.length > 0">
+          <thead>
+            <th>Booking Creation Date</th>
+            <th>CheckIn Date</th>
+            <th>No of Adults</th>
+            <th>Transportation Name</th>
+            <th>Amount(SAR)</th>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let booking of transportBookingList">
+              <td> {{booking.bookingTime |  date : "y-MM-dd"}} </td>
+              <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
+              <td>{{transportion(booking.vehicleTypes).paxDetails}}</td>
+              <td>{{booking.companyName}}</td>
+              <!-- <td>{{booking.}}</td> -->
+              <td>{{transportion(booking.vehicleTypes).transportTotalAmount | number : "1.2-2"}}</td>
             </tr>
           </tbody>
         </table>
