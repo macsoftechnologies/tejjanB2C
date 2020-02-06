@@ -5,6 +5,7 @@ import { BroadcastserviceService } from "src/app/services/broadcastservice.servi
 import { NgbActiveModal, NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { AlrajhiumrahService } from 'src/app/services/alrajhiumrah.service';
 import { B2cSignUpComponent } from 'src/app/b2c/b2c-sign-up/b2c-sign-up.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-b2b-sign-in",
@@ -19,7 +20,6 @@ export class B2bSignInComponent implements OnInit {
   isCheckout : any
   loginResp: any;
   b2cSignInResp: any;
-  userValidationFlag: boolean = false;
   modal: NgbModalRef;
 
 
@@ -32,7 +32,7 @@ export class B2bSignInComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
+    this.broadcastservice.stepperValue.emit(0);
         
    this.user =   JSON.parse(localStorage.getItem('userData'))
 
@@ -80,22 +80,20 @@ export class B2bSignInComponent implements OnInit {
           // }
 
           this.activeModal.dismissAll("success");
-
           if(location.pathname === "/b2c/signin") {
-       
-            this.userValidationFlag = false;
             this.router.navigateByUrl("b2b/search"); 
           }
           else {
-           
             this.router.navigateByUrl("b2c/checkout");
             this.activeModal.dismissAll("success");
           }
-
         }
         else {
           this.broadcastservice.showHideLogin.emit(true);
-          this.userValidationFlag = true;
+          Swal.fire({
+            // title: 'Sweet!',
+            text: this.loginResp.body.message,
+          });
         }
       });
         
