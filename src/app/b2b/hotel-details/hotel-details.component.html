@@ -366,7 +366,7 @@
                         <p class="nights-count">
                           1 nights {{room.displayRateInfo[0].amount | number : "1.2-2"}}
                           {{room.displayRateInfo[0].currencyCode}}</p>
-                        <small>+ {{getTaxexInfo(room.displayRateInfo).totalTxAmount }}
+                        <small>+ {{getTaxexInfo(room.displayRateInfo).totalTxAmount| number : "1.2-2 }}
                           {{room.displayRateInfo[0].currencyCode}}
                           taxs</small>
 
