@@ -28,6 +28,7 @@ export class BookingListComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'))
     this.loadBookingListForm();
+    this.totalBookngList();
   }
 
   public loadBookingListForm(): void {
@@ -40,6 +41,33 @@ export class BookingListComponent implements OnInit {
     });
   }
 
+  public totalBookngList(): void {
+    let bookingListObj = {
+      user_name: this.user.userName,
+      chStartDate: "",
+      chEndDate: "",
+      bkStartDate: "",
+      bkEndDate: "",
+      bookingStatus: ""
+    }
+
+    this.teejanServices.getBookingList(bookingListObj).subscribe(response => {
+      this.hotelBookingList = []
+      this.transportBookingList = []
+      this.groundBookingList = []
+      this.hotelFlag = true
+      console.log("bookingListResponse", response);
+      if (response.length != undefined && response.length > 0) {
+        this.hotelBookingList = response.filter(item => { return item.bookingType == 1 })
+        this.transportBookingList = response.filter(item => { return item.bookingType == 2 })
+        this.groundBookingList = response.filter(item => { return item.bookingType == 3 })
+        this.hotelFlag = true
+        this.transportFlag = false
+        this.groundFlag = false
+      }
+    })
+    console.log("bookingListObj", bookingListObj);
+  }
   public searchBookingList(): void {
     this.bookingListFormValidationFlag = this.bookingListForm.valid ? false : true;
 
@@ -161,27 +189,15 @@ export class BookingListComponent implements OnInit {
         this.transportBookingList = []
         this.groundBookingList = []
         this.hotelFlag = true
-
         console.log("bookingListResponse", response);
-
         if (response.length != undefined && response.length > 0) {
-
-
           this.hotelBookingList = response.filter(item => { return item.bookingType == 1 })
-
-
-
           this.transportBookingList = response.filter(item => { return item.bookingType == 2 })
           this.groundBookingList = response.filter(item => { return item.bookingType == 3 })
-
-
           this.hotelFlag = true
-
           this.transportFlag = false
           this.groundFlag = false
-
         }
-
       })
       console.log("bookingListObj", bookingListObj);
     }
@@ -192,6 +208,7 @@ export class BookingListComponent implements OnInit {
 
 
   reset() {
+    this.totalBookngList();
     this.hotelFlag = false
     this.transportFlag = false
     this.groundFlag = false

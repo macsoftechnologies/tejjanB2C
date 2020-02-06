@@ -30,7 +30,7 @@
   }
 
   label {
-    padding-left: 12px;
+    // padding-left: 12px;
     font-size: 20px !important;
   }
 }
@@ -155,4 +155,9 @@
 }
 .validation-border {
   border-bottom: solid 1px red;
+}
+
+.modal-header {
+  background-color: $primary-color;
+  color: #fff;
 }

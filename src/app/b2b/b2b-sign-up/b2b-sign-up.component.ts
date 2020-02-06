@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlrajhiumrahService } from 'src/app/services/alrajhiumrah.service';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ["./b2b-sign-up.component.scss"]
 })
 export class B2bSignUpComponent implements OnInit {
+  @ViewChild('termsCheckbox') private checkInput;
   signupForm: FormGroup;
   countries : any;
   user: any;
@@ -46,6 +47,7 @@ export class B2bSignUpComponent implements OnInit {
 
   signUp() {
     this.signUpValidationFlag = this.signupForm.valid ? false : true ; 
+    // var termsCheckbox = document.getElementById('termsCheckbox');
     if( !this.signUpValidationFlag ) {
     let signUpObj = {
       type: "B2B",
@@ -59,30 +61,40 @@ export class B2bSignUpComponent implements OnInit {
       phoneNumber: this.signupForm.value.phoneNumber,
       password: this.signupForm.value.password
     }
-    this.tejaanServices.registration(signUpObj).subscribe(data => {
-      this.registrationResp = data;
-      console.log("registrationResp" , this.registrationResp);
-      if(this.registrationResp.body.status === 200) {
-        localStorage.setItem('authorizationKey',this.registrationResp.response.user_id);
-        localStorage.setItem('userData', JSON.stringify(signUpObj));
-        this.router.navigateByUrl("b2b/search");
-        this.user = localStorage.getItem('userData');
-        if(this.user == null && this.user == undefined) {
-          this.broadcastservice.showHideLogin.emit(false);
-        }
-        else { 
-          this.broadcastservice.showHideLogin.emit(true);
-        }
-        
-      }
-      else{
-        Swal.fire({
-          // title: 'Sweet!',
-          text: 'UserName or Email already existed....',
+    console.log(this.checkInput.checked ? 'true' : 'false');
+    if(this.checkInput.checked) { 
+      this.tejaanServices.registration(signUpObj).subscribe(data => {
+        this.registrationResp = data;
+        console.log("registrationResp" , this.registrationResp);
+        if(this.registrationResp.body.status === 200) {
+          localStorage.setItem('authorizationKey',this.registrationResp.response.user_id);
+          localStorage.setItem('userData', JSON.stringify(signUpObj));
+          this.router.navigateByUrl("b2b/search");
+          this.user = localStorage.getItem('userData');
+          if(this.user == null && this.user == undefined) {
+            this.broadcastservice.showHideLogin.emit(false);
+          }
+          else { 
+            this.broadcastservice.showHideLogin.emit(true);
+          }
           
-        });
-      }
-    });
+        }
+        else{
+          Swal.fire({
+            // title: 'Sweet!',
+            text: 'UserName or Email already existed....',
+            
+          });
+        }
+      });
+    }
+    else {
+      Swal.fire({
+        // title: 'Sweet!',
+        text: 'Agree with Terms and conditions....',
+        
+      });
+    }
     console.log("SignUpObj ===",signUpObj );
     }
 

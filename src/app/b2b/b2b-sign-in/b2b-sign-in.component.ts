@@ -67,8 +67,8 @@ export class B2bSignInComponent implements OnInit {
         console.log("login" , data);
         console.log("location------" , location);
         if(this.loginResp.body.status === 200) {
-          this.showHideLogin = true;
-          this.broadcastservice.showHideLogin.emit(false);
+          // this.showHideLogin = true;
+          this.broadcastservice.showHideLogin.emit(true);
           localStorage.setItem('authorizationKey', JSON.stringify(this.loginResp.headers.get('authorization')));
 
           localStorage.setItem("userData", JSON.stringify(signInObj));
@@ -82,7 +82,7 @@ export class B2bSignInComponent implements OnInit {
 
           this.activeModal.dismissAll("success");
           if(location.pathname === "/b2c/signin") {
-            this.router.navigateByUrl("b2b/search"); 
+            this.router.navigateByUrl("b2c/search"); 
           }
           else {
             this.router.navigateByUrl("b2c/checkout");

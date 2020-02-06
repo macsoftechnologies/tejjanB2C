@@ -28,13 +28,13 @@
                 placeholder="Full Name">
             </div>
             <div class="form-group col-md-6 col-sm-12">
-              <label for="surName">Sur Name</label> 
+              <label for="surName">Initial Name</label> 
               <!-- <select class="form-control" id="">
                 <option value="">Select</option>
                 <option value="">Sk</option>
                 <option value="">Md</option>
               </select> -->
-              <ng-select class="custom-input" [items]="surName" [virtualScroll]="true" placeholder="Select Sur Name"
+              <ng-select class="custom-input" [items]="surName" [virtualScroll]="true" placeholder="Select Initial Name"
               [ngClass]="{validationClass:signUpValidationFlag && signupForm.controls['surName'].errors}"
               [formControl]="signupForm.controls['surName']" bindLabel="surName">
               </ng-select>
@@ -91,7 +91,7 @@
             </div>
             <div class="form-group col-md-6 col-sm-12 terms">
               <label class="terms-label checkbox-container">I agree to the <a href="#">Terms & Conditions</a>
-                <input type="checkbox">
+                <input id="termsCheckbox" type="checkbox" (change)="isChecked($event)">
                 <span class="checkmark"></span>
               </label>
               <!-- <input type="checkbox"><label class="terms-label" for="">I agree to the <a href="#">Terms &

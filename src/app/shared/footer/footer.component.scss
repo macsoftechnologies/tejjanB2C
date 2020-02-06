@@ -3,6 +3,27 @@
 .footer-body {
     background-color: #F2F4F6;
     padding: 25px 25px;
+    margin-top: 30px;
+    .footer-main-logo { 
+        @include mobile {
+            order: 0;
+        }
+        // .footer-left-logo {
+
+        // }
+        .footer-right-logo{
+            text-align: right;
+            @include mobile {
+                margin-top: -66px;
+            }
+        }
+    }
+    .footer-subscribe-section {
+        @include mobile {
+            order: 1;
+            padding-top: 17px;
+        }
+    }
         .footer-header {
             color: $primary-color;
             font-weight: 400 !important;
@@ -66,6 +87,7 @@
         }
         .help-links ul li {
             padding-bottom: 10px;
+            cursor: pointer;
         }
         .details-list ul li a {
             color: $primary-color;
@@ -254,4 +276,9 @@
         padding-bottom: 15px;
     }
     
+}
+
+.modal-header {
+    background-color: $primary-color;
+    color: #fff;
 }
