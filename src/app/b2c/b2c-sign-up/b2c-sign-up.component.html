@@ -50,7 +50,7 @@
                 <input [ngClass]="{'validation-border':signUpValidationFlag && signupForm.controls['password'].errors}"
                  [formControl]="signupForm.controls['password']"
                   class="form-control custom-input"
-                  type="text"
+                  type="password"
                   placeholder="Enter Password"
                 />
               </div>
@@ -60,7 +60,7 @@
                 <input [ngClass]="{'validation-border':signUpValidationFlag && signupForm.controls['confirmPasswd'].errors}"
                  [formControl]="signupForm.controls['confirmPasswd']"
                   class="form-control custom-input"
-                  type="text"
+                  type="password"
                   placeholder="Re-enter Password"
                 />
               </div>

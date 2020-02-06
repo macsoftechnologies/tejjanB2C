@@ -6,6 +6,7 @@ import { BroadcastserviceService } from 'src/app/services/broadcastservice.servi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { B2bSignInComponent } from 'src/app/b2b/b2b-sign-in/b2b-sign-in.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-b2c-sign-up",
@@ -32,6 +33,7 @@ export class B2cSignUpComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.broadcastservice.stepperValue.emit(0);
     console.log("sinup constructor");
     this.loadSignUpForm();
     this.broadcastservice.customStepper.emit(false);
@@ -77,19 +79,15 @@ export class B2cSignUpComponent implements OnInit {
       this.tejaanServices.registration(signUpObj).subscribe(data => {
         this.registrationResp = data;
         console.log("registrationResp" , this.registrationResp);
-        if(this.registrationResp.status === 200) { 
+        if(this.registrationResp.body.status === 200) { 
           // localStorage.setItem('userData', JSON.stringify(signUpObj));
-            this.broadcastservice.showHideLogin.emit(false);
-
-
-          this.activeModal.dismissAll();    
-   
-
-    if(location.pathname === "/b2c/signup"){
-      this.router.navigateByUrl("b2c/signin");
-     }else{
-      this.modal = this.modalService.open(B2bSignInComponent);
-     }
+          this.broadcastservice.showHideLogin.emit(false);
+          this.activeModal.dismissAll();   
+          if(location.pathname === "/b2c/signup"){
+            this.router.navigateByUrl("b2c/signin");
+          }else{
+            this.modal = this.modalService.open(B2bSignInComponent);
+          }
 
           // this.router.navigateByUrl("b2b/signin");
           // this.user = localStorage.getItem('userData');
@@ -101,20 +99,21 @@ export class B2cSignUpComponent implements OnInit {
           // }
         }else{
           this.broadcastservice.showHideLogin.emit(true);
+          Swal.fire({
+            // title: 'Sweet!',
+            text: this.registrationResp.body.message,
+          });
         }
       });
     }
   }
 
   public navigateToSignIn(): void {
-    this.activeModal.dismissAll();    
-
-
+    this.activeModal.dismissAll();  
     if(location.pathname === "/b2c/signup"){
       this.router.navigateByUrl("b2c/signin");
      }else{
       this.modal = this.modalService.open(B2bSignInComponent);
      }
-
   }
 }

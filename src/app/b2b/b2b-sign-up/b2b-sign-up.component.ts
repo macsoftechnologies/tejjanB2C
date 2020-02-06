@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlrajhiumrahService } from 'src/app/services/alrajhiumrah.service';
 import { BroadcastserviceService } from 'src/app/services/broadcastservice.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-b2b-sign-up",
@@ -61,7 +62,7 @@ export class B2bSignUpComponent implements OnInit {
     this.tejaanServices.registration(signUpObj).subscribe(data => {
       this.registrationResp = data;
       console.log("registrationResp" , this.registrationResp);
-      if(this.registrationResp.status === 200) {
+      if(this.registrationResp.body.status === 200) {
         localStorage.setItem('authorizationKey',this.registrationResp.response.user_id);
         localStorage.setItem('userData', JSON.stringify(signUpObj));
         this.router.navigateByUrl("b2b/search");
@@ -74,8 +75,12 @@ export class B2bSignUpComponent implements OnInit {
         }
         
       }
-      else {
-        
+      else{
+        Swal.fire({
+          // title: 'Sweet!',
+          text: 'UserName or Email already existed....',
+          
+        });
       }
     });
     console.log("SignUpObj ===",signUpObj );
