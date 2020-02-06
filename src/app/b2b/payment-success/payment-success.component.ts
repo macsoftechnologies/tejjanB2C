@@ -15,7 +15,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 export class PaymentSuccessComponent implements OnInit {
-
+  
+  public headers : any
   public hotelcart: any = {}
   public searchFilterObj: any = {}
   public guests = 0
@@ -95,6 +96,8 @@ export class PaymentSuccessComponent implements OnInit {
   ngOnInit() {
     
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
+    this.headers = JSON.parse(localStorage.getItem("authorizationKey"))
+
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"))
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"))
     this.travellerDetails = JSON.parse(localStorage.getItem("travellerDetails"))
@@ -164,8 +167,9 @@ export class PaymentSuccessComponent implements OnInit {
       localStorage.setItem("hotelProvider", this.hotelcart.provider)
       console.log(JSON.stringify(this.hotelcart));
 
-      let hotelForm =
-      {
+      let hotelForm = {
+    
+      hotelObj :   {
         "context": {
           "cultureCode": this.searchObj.context.cultureCode,
           "trackToken": this.hotelTrackToken,
@@ -195,7 +199,12 @@ export class PaymentSuccessComponent implements OnInit {
           "secureTPExtensions": [],
           "roomGroups": this.hotelcart.roomGroups 
         }
-      }
+      },
+
+      headers : {header : this.headers}
+
+
+    }
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
       this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
         this.spinner.hide();
@@ -241,7 +250,8 @@ export class PaymentSuccessComponent implements OnInit {
                    this.transportCart.travellerDetails = this.transportTravellerDetails
 
 
-    let TransportFormObj = {
+    let TransportFormObj = { 
+     transportObj : {
       "context": {
         // "cultureCode": this.searchObj.context.cultureCode,
         "trackToken": this.transportAvailabilityTracktoken,
@@ -252,7 +262,10 @@ export class PaymentSuccessComponent implements OnInit {
       "request": this.transportCart 
 
 
-    }
+    },
+    headers : {header : this.headers}
+
+  }
     console.log("TransportFormObj: ===>", JSON.stringify(TransportFormObj));
 
     this.teejanServices.getTransportReservation(TransportFormObj).subscribe((data: any) => {
@@ -287,7 +300,8 @@ export class PaymentSuccessComponent implements OnInit {
       localStorage.setItem("groundProvider", this.groundCart.provider)
       this.groundCart.secureTPExtensions = []
 
-      var groundForm = {
+      var groundForm ={
+        groundbj : {
         "context": {
           "cultureCode": this.searchObj.context.cultureCode,
           "trackToken": this.groundAvailabilityToken,
@@ -297,23 +311,12 @@ export class PaymentSuccessComponent implements OnInit {
           }]
         },
         "request": this.groundCart
-        // {
-        //   "uoCode": this.groundCart.uoCode,
-        //   "uoName": this.groundCart.uoName,
-        //   "uoNameAR": this.groundCart.uoNameAR,
-        //   "nationality": this.groundCart.nationality,
-        //   "countryOfResidence": this.groundCart.countryOfResidence,
-        //   "vendor": this.groundCart.vendor,
-        //   "provider": this.groundCart.provider,
-        //   // "freeCancellationDate": "",
-        //   "category": this.groundCart.category,
-        //   "additionalServices": this.groundCart.additionalServices,
-        //   "displayRateInfo": this.groundCart.displayRateInfo,
-        //   "policies": this.groundCart.policies,
-        //   "termsAndConditions": this.groundCart.termsAndConditions,
-        //   "config": this.groundCart.config,
-        //   "secureTPExtensions": [],
-        // }
+
+      },
+      headers : {header : this.headers}
+
+       
+        
 
       }
       console.log("groundForm data: ===>", JSON.stringify(groundForm));

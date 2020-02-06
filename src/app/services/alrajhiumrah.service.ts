@@ -96,35 +96,51 @@ export class AlrajhiumrahService {
 
   /* get hotel reservation data */
   getHotelReservation(data: any): Observable<any> {
+    console.log("hotelData" , data)
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
-    let params = new HttpParams().append("request", JSON.stringify(data));
+    headers = headers.set("Authorization" ,  data.headers.header); 
+    // let params = new HttpParams().append("request", JSON.stringify(data));
+    console.log("headers" , headers)
 
     return this.http
-      .post(this.baseUrl + "hotel/reservation", data)
+      .post(this.baseUrl + "hotel/reservation", data.hotelObj  ,  { 
+            headers:  headers
+        }
+    )
       .pipe(map(this.extractData));
   }
+
+
   /* get hotel reservation data */
 
 
   /* get transport reservation data */
   getTransportReservation(data: any): Observable<any> {
 
-    let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+     console.log("transportData" , data)
+    let headers = new HttpHeaders();  
+    headers = headers.set("Authorization" ,  data.headers.header); 
     let params = new HttpParams().append("request", JSON.stringify(data));
-
+    console.log("headers" , headers)
     return this.http
-      .post(this.baseUrl + "transport/reservation", data)
+      .post(this.baseUrl + "transport/reservation", data.transportObj ,  {
+            headers:  headers
+        })
       .pipe(map(this.extractData));
   }
+//   {
+//     headers: new HttpHeaders({
+//       'Authorization': data.headers.header,
+//     })
+// }
   /* get transport reservation data */
 
   /* get transport search data */
   getTransportSearch(data: any): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
@@ -189,11 +205,15 @@ export class AlrajhiumrahService {
   getGroundServiceReservation(data: any): Observable<any> {
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    // headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.set("Authorization" ,  data.headers.header); 
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
-      .post(this.baseUrl + "groundService/reservation", data)
+      .post(this.baseUrl + "groundService/reservation", data.groundbj ,   {
+        headers:  headers
+    })
       .pipe(map(this.extractData));
   }
   /* get ground service data */
@@ -213,11 +233,15 @@ export class AlrajhiumrahService {
     // return this.http.post(this.baseUrl + "hotel/viewreservation", data);
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    // headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.set("Authorization" ,  data.headers.header); 
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
-      .post(this.baseUrl + "hotel/view/reservation", data ,  { observe: 'response' })
+      .post(this.baseUrl + "hotel/view/reservation", data.hotelObj ,  { observe: 'response' ,  
+             headers: headers
+     } )
       .pipe(map(result => {
         return result;
        
@@ -228,11 +252,15 @@ export class AlrajhiumrahService {
 
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    // headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.set("Authorization" ,  data.headers.header); 
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
-      .post(this.baseUrl + "hotel/cancel/reservation", data ,  { observe: 'response' })
+      .post(this.baseUrl + "hotel/cancel/reservation", data.hotelObj ,  { observe: 'response'  ,  
+             headers: headers
+        })
       .pipe(map(result => {
         return result;
        
@@ -246,11 +274,13 @@ export class AlrajhiumrahService {
     // return this.http.post(this.baseUrl + "hotel/viewreservation", data);
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    // headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.set("Authorization" ,  data.headers.header); 
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
-      .post(this.baseUrl + "groundService/view/reservation", data ,  { observe: 'response' })
+      .post(this.baseUrl + "groundService/view/reservation", data.groundObj ,  { observe: 'response'  ,  headers: headers})
       .pipe(map(result => {
         return result;
        
@@ -261,11 +291,15 @@ export class AlrajhiumrahService {
     // return this.http.post(this.baseUrl + "hotel/viewreservation", data);
 
     let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    // headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.set("Authorization" ,  data.headers.header); 
+
     let params = new HttpParams().append("request", JSON.stringify(data));
 
     return this.http
-      .post(this.baseUrl + "transport/view/reservation", data ,  { observe: 'response' })
+      .post(this.baseUrl + "transport/view/reservation", data.transportObj ,  { observe: 'response'  ,  
+            headers:  headers
+        })  
       .pipe(map(result => {
         return result;
        
@@ -292,25 +326,15 @@ export class AlrajhiumrahService {
     .set('PassportNo',data.PassportNo)
     .set('RequestId',data.RequestId)
     .set('Lang',data.Lang)
-    .set('Token' , data.Token)
     ;
-// let queryParamsStr ="evisa/visaLink?NationalityId="+data.NationalityId+"&PassportNo="+data.PassportNo
-// +"&RequestId="+data.RequestId+"&Lang="+data.Lang;
+
 
 
     return this.http
       .get(this.baseUrl + "evisa/visaLink",{params:params}).pipe(map(this.extractData));
   }
 
-
-  processPayment1(data:any):Observable<any>{
-
-    console.log("Srvicedata" , data);
-    return this.http
-    .post(this.baseUrl + "payment",data).pipe(map(this.extractData));
-  }
-
- registration(data: any):Observable<any> {
+  registration(data: any):Observable<any> {
     return this.http
     .post(this.baseUrl1 + "register" ,data,  { observe: 'response' })
     .pipe(map(result => {
@@ -326,6 +350,7 @@ export class AlrajhiumrahService {
     .post(this.baseUrl1 + "login",data,  { observe: 'response' })
     .pipe(tap(resp => console.log('loginresponse', resp.headers.get('authorization'))));
   }
+
 
 
    /*                 Booking List Api    */
@@ -348,6 +373,20 @@ export class AlrajhiumrahService {
      
     } ));
 
-  }
-}
+   }
 
+
+
+     /*  payment API  */
+
+
+
+     processPayment1(data:any):Observable<any>{
+
+      console.log("Srvicedata" , data);
+      return this.http
+      .post(this.baseUrl + "payment",data).pipe(map(this.extractData));
+    }
+
+
+}

@@ -95,3 +95,14 @@
 .clickBtns {
     padding-top: 32px;
 }
+
+.listBtns {
+    text-align: center;
+    padding-top: 17px;
+    button {
+        margin: 7px;
+        border-radius: 5px;
+        background-color: $primary-color;
+        color: $light-font-color;
+    }
+}

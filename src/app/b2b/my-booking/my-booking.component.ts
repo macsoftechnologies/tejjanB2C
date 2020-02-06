@@ -12,7 +12,7 @@ import { sha256, sha224 } from 'js-sha256';
 export class MyBookingComponent implements OnInit {
 
  public searchObj : any
-
+ public headers : any
   public hotelBookingResponse: any;
   public hotelAmount = 0
   public hotel :  any
@@ -56,6 +56,8 @@ export class MyBookingComponent implements OnInit {
     this.transportProvider = localStorage.getItem("transportProvider")     
     this.groundProvider = localStorage.getItem("groundProvider")     
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"))
+    this.headers = JSON.parse(localStorage.getItem("authorizationKey"))
+
 
     this.travellerDetails = JSON.parse(localStorage.getItem("travellerDetails"))
 
@@ -96,13 +98,14 @@ export class MyBookingComponent implements OnInit {
       this.spinner.show();  
     
     let formData = {
-      "context": {
+      hotelObj :{ "context": {
         "cultureCode": this.searchObj.context.cultureCode,
         "providerInfo": [{
           "provider": this.hotelProvider
         }]
       },
-      "request": this.hotelBookingResponse.bookingReferenceNo
+      "request": this.hotelBookingResponse.bookingReferenceNo},
+      headers : {header :  this.headers}
     }
     this.tejaanServices.getHotelViewReservation(formData).subscribe(viewHotelReservationResp => {
      
@@ -153,15 +156,15 @@ export class MyBookingComponent implements OnInit {
     if(this.transportBookingResponse.bookingReferenceNo != null || this.transportBookingResponse.bookingReferenceNo != undefined){
 
     let formData = {
-      "context": {
+      transportObj : {"context": {
         "cultureCode": this.searchObj.context.cultureCode,
         "providerInfo": [{
           "provider": this.transportProvider
         }]
       },
-      "request": this.transportBookingResponse.bookingReferenceNo
+      "request": this.transportBookingResponse.bookingReferenceNo},
+      headers : {header : this.headers}
     }
-
     this.tejaanServices.getTransPortViewReservation(formData).subscribe(viewTransortReservationResp => {
 
 
@@ -178,9 +181,9 @@ export class MyBookingComponent implements OnInit {
   if(this.groundBookingResponse != undefined){
    if(this.groundBookingResponse.bookingReferenceNo != null || this.groundBookingResponse.bookingReferenceNo != undefined){
 
- 
 
   let formData = {
+    groundObj :{
     "context": {
       "cultureCode": this.searchObj.context.cultureCode,
       "providerInfo": [{
@@ -188,8 +191,10 @@ export class MyBookingComponent implements OnInit {
       }]
     },
     "request": this.groundBookingResponse.bookingReferenceNo
-  }
+  },
+  headers : {header : this.headers}
 
+   }
   this.tejaanServices.getGroundServiceViewReservation(formData).subscribe(viewGroundReservationResp => {
         
         //  if(viewGroundReservationResp.body.bookingReferenceNo != undefined){
@@ -234,14 +239,16 @@ export class MyBookingComponent implements OnInit {
         let trackToken = localStorage.getItem("hotelReservationTrackToken");
 
         let Obj = {
-          "context": {
+          hotelObj : {"context": {
             "cultureCode": this.searchObj.context.cultureCode,
             "trackToken": trackToken,
             "providerInfo": [{
               "provider": this.hotelProvider
             }]
           },
-          "request": this.hotelBookingResponse.bookingReferenceNo
+          "request": this.hotelBookingResponse.bookingReferenceNo},
+          headers : {header : this.headers}
+
         }
       // console.log("Obj" , Obj);
         this.tejaanServices.getCancelHotelReservation(Obj).subscribe((cancelHotelReservation) => {

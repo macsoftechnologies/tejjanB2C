@@ -113,11 +113,13 @@
   </div>
 
   <div class="container-fluid">
-    <div class="listBtns" *ngIf = "hotelBookingList.length > 0 && transportBookingList.length > 0">
+    <div class="listBtns" *ngIf = " hotelBookingList.length > 0 || transportBookingList.length > 0 || groundBookingList.length > 0">
       <button class="btn btn-md" (click) = "hotel()" >Hotel</button>
       <button class="btn btn-md" (click) = "transport()">Transport</button>
+      <button class="btn btn-md" (click) = "ground()">Ground</button>
+
     </div>
-    <div *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0">
+    <div *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">
        
            No Results  Found
 
@@ -137,7 +139,7 @@
   <div class="container-fluid">
     <div class="bookingListTable" >
       <div class="table-responsive">
-        <div *ngIf = "hotelFlag == true && transportFlag == false && hotelBookingList.length == 0">
+        <div *ngIf = "hotelFlag == true && transportFlag == false && groundFlag == false && hotelBookingList.length == 0">
          
           <p>  No Results  Found</p>
 
@@ -165,11 +167,11 @@
               <td>{{hotel.propertyName}}</td>
               <td>{{hotel.country}}</td>
               <td>{{hotel.city}}</td>
-              <td>{{hotelCalculations(hotel.roomInfo).totalAmount | number : "1.2-2"}}</td> 
+              <td>{{hotelCalculations(hotel.roomInfo).groupAmount | number : "1.2-2"}}</td> 
             </tr>
           </tbody>
         </table>
-        <div *ngIf = " transportFlag == true && transportBookingList.length == 0">
+        <div *ngIf = " transportFlag == true && hotelFlag == false && groundFlag == false && transportBookingList.length == 0">
          
           <p> No Results  Found </p>
 
@@ -189,10 +191,38 @@
               <td>{{transportion(booking.vehicleTypes).paxDetails}}</td>
               <td>{{booking.companyName}}</td>
               <!-- <td>{{booking.}}</td> -->
-              <td>{{transportion(booking.vehicleTypes).transportTotalAmount | number : "1.2-2"}}</td>
+              <td>{{transportion(booking.vehicleTypes).totalAmount | number : "1.2-2"}}</td>
             </tr>
           </tbody>
         </table>
+        <div *ngIf = " groundFlag == true && transportFlag == false && hotelFlag == false && groundBookingList.length == 0">
+         
+          <p> No Results  Found </p>
+
+        </div>
+            
+        <table class="table table-bordered " *ngIf = "groundFlag && groundBookingList.length > 0" >
+          <thead>
+            <th>Booking Creation Date</th>
+            <th>CheckIn Date</th>
+            <!-- <th>No of Adults</th> -->
+            <th>Company Name</th>
+            <th>Amount(SAR)</th>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let booking of groundBookingList">
+              <td> {{booking?.checkIn |  date : "y-MM-dd"}} </td>
+              <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
+              <!-- <td>{{transportion(booking.vehicleTypes).paxDetails}}</td> -->
+              <td>{{booking?.uoName}}</td>
+              <!-- <td>{{booking.}}</td> -->
+              <td>{{gorundService(booking?.category).totalAmount | number : "1.2-2"}}</td>
+            </tr>
+          </tbody>
+        </table>
+ 
+
+
       </div>
     </div>
   </div>

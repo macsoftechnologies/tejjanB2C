@@ -69,6 +69,7 @@ export class B2bSignInComponent implements OnInit {
         if(this.loginResp.body.status === 200) {
           this.showHideLogin = true;
           this.broadcastservice.showHideLogin.emit(false);
+          localStorage.setItem('authorizationKey', JSON.stringify(this.loginResp.headers.get('authorization')));
 
           localStorage.setItem("userData", JSON.stringify(signInObj));
           // this.user = localStorage.getItem("userData");

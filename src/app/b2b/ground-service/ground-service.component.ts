@@ -307,7 +307,7 @@ export class GroundServiceComponent implements OnInit {
         "cultureCode": this.searchData.context.cultureCode,
       },
       "request": {
-        "uoCodes": ["1039"],
+        // "uoCodes": ["1039"],
         "categoryCode": this.GroundServicesFormGroup.value.categoryCode != null ? this.GroundServicesFormGroup.value.categoryCode.code : null,
         "nationality": this.searchFilterObj.nationality.countryCode,
         "countryOfResidence": this.searchFilterObj.countryOfResidence.countryCode,
