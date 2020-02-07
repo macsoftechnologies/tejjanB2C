@@ -42,7 +42,8 @@ export class HeaderComponent implements OnInit {
     this.broadcastservice.showHideLogin.emit(false);
     this.router.navigateByUrl('b2c/search');
     localStorage.removeItem('userData');
-  }
+    localStorage.removeItem('authorizationKey');
+  } 
 
   bookigSummary() {
     let hotelCart = localStorage.getItem("hotelcart");

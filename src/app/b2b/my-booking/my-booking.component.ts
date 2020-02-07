@@ -105,7 +105,7 @@ export class MyBookingComponent implements OnInit {
         }]
       },
       "request": this.hotelBookingResponse.bookingReferenceNo},
-      headers : {header :  this.headers}
+      headers : {header :  this.headers != null ? this.headers : null }
     }
     this.tejaanServices.getHotelViewReservation(formData).subscribe(viewHotelReservationResp => {
      
@@ -163,7 +163,7 @@ export class MyBookingComponent implements OnInit {
         }]
       },
       "request": this.transportBookingResponse.bookingReferenceNo},
-      headers : {header : this.headers}
+      headers : {header : this.headers != null ? this.headers : null }
     }
     this.tejaanServices.getTransPortViewReservation(formData).subscribe(viewTransortReservationResp => {
 
@@ -178,8 +178,10 @@ export class MyBookingComponent implements OnInit {
   }  
    
   public viewGroundReservations(): void{
+
+    console.log("this.groundBookingResponse" , this.groundBookingResponse)
   if(this.groundBookingResponse != undefined){
-   if(this.groundBookingResponse.bookingReferenceNo != null || this.groundBookingResponse.bookingReferenceNo != undefined){
+   if(this.groundBookingResponse.bookingReferenceNo != null && this.groundBookingResponse.bookingReferenceNo != undefined){
 
 
   let formData = {
@@ -192,13 +194,15 @@ export class MyBookingComponent implements OnInit {
     },
     "request": this.groundBookingResponse.bookingReferenceNo
   },
-  headers : {header : this.headers}
+  headers : {header : this.headers != null ? this.headers : null }
 
    }
   this.tejaanServices.getGroundServiceViewReservation(formData).subscribe(viewGroundReservationResp => {
         
         //  if(viewGroundReservationResp.body.bookingReferenceNo != undefined){
      this.ground = viewGroundReservationResp.body
+
+     console.log("this.ground" , this.ground)
            
         //  }
 

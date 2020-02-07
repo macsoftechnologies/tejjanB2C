@@ -222,10 +222,10 @@ export class AlrajhiumrahService {
 
     var obj
     if(data.headers.header != null){
-    obj =   { observe: 'response'  ,   headers:  headers
+    obj =   { headers:  headers
   }
     }else{
-        obj =  { observe: 'response'}
+        
     }
 
     return this.http
@@ -315,8 +315,7 @@ export class AlrajhiumrahService {
     obj =   { observe: 'response'  ,   headers:  headers
   }
     }else{
-        
-    }
+      obj =   { observe: 'response' } }
 
 
     return this.http
