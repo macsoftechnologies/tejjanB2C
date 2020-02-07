@@ -326,11 +326,13 @@ export class PaymentSuccessComponent implements OnInit {
       console.log("groundForm data: ===>", JSON.stringify(groundForm));
       this.teejanServices.getGroundServiceReservation(groundForm).subscribe((data: any) => {
         this.spinner.hide();
+        localStorage.setItem('groundBookingResponse', JSON.stringify(data.body));
+
         if (data.bookingStatus == "Confirmed") {
           localStorage.setItem("BookingStatus"  , "true")  
 
-          localStorage.setItem('groundBookingResponse', JSON.stringify(data));
-          
+          localStorage.setItem('groundBookingResponse', JSON.stringify(data.body));
+
           localStorage.removeItem("groundCart");
 
           this.router.navigateByUrl('b2c/mybooking')
