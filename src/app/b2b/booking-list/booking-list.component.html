@@ -120,17 +120,17 @@
             <div class="card" *ngFor = "let hotel of hotelBookingList">
               <div class="card-header">
                 <a class="card-link" data-toggle="collapse" href="#hotelBookingList">
-                  <h4>BRN : 89451284512</h4>
+                  <h4>BRN : {{hotel?.providerConfirmationId}}</h4>
                   <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                 </a>
               </div>
               <div id="hotelBookingList" class="collapse">
                 <div class="card-body">
                   <div class="container-fluid">
-                    <div class="row" *ngIf = "hotelFlag && hotelBookingList.length == 0">
+                    <div class="row" *ngIf = "hotelBookingList.length == 0">
                       <p class="noDataFound">No Hotel Data Available</p>
                     </div>
-                    <div class="row" *ngIf = "hotelFlag && hotelBookingList.length > 0">
+                    <div class="row" *ngIf = "hotelBookingList.length > 0">
                       <div class="col-md-4">
                         <label for="">Booking Creation Date:</label>
                         <p>{{hotel.bookingTime |  date : "y-MM-dd"}}</p>
@@ -267,17 +267,17 @@
             <div class="card" *ngFor = "let booking of transportBookingList">
               <div class="card-header">
                 <a class="card-link" data-toggle="collapse" href="#transBookingList">
-                  <h4>BRN : 89451284512</h4>
+                  <h4>BRN : {{booking?.providerConfirmationId}}</h4>
                   <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                 </a>
               </div>
               <div class="collapse" id="transBookingList">
                 <div class="card-body">
                   <div class="container-fluid">
-                    <div class="row" *ngIf = "transportFlag && transportBookingList.length == 0">
+                    <div class="row" *ngIf = "transportBookingList.length == 0">
                       <p class="noDataFound">No Transport Data Available</p>
                     </div>
-                    <div class="row" *ngIf = "transportFlag && transportBookingList.length > 0">
+                    <div class="row " *ngIf = "transportBookingList.length > 0">
                       <div class="col-md-4">
                         <label for="">Booking Creation Date:</label>
                         <p>{{booking.bookingTime |  date : "y-MM-dd"}} </p>
@@ -306,24 +306,20 @@
             <div class="card" *ngFor = "let booking of groundBookingList">
               <div class="card-header">
                 <a class="card-link" data-toggle="collapse" href="#groundBookingList">
-                  <h4>BRN : 89451284512</h4>
+                  <h4>BRN : {{booking?.providerConfirmationId}}</h4>
                   <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                 </a>
               </div>
               <div class="collapse" id="groundBookingList">
                 <div class="card-body">
                   <div class="container-fluid">
-                    <div class="row" *ngIf = "groundFlag && groundBookingList.length == 0">
+                    <div class="row" *ngIf = "groundBookingList.length == 0">
                       <p class="noDataFound">No Ground Data Available</p>
                     </div>
-                    <div class="row" *ngIf = "groundFlag && groundBookingList.length > 0">
-                      <div class="col-md-4">
-                        <label for=""></label>
-                        <p></p>
-                      </div>
+                    <div class="row" *ngIf = "groundBookingList.length > 0">
                       <div class="col-md-4">
                         <label for="">Booking Creation Date</label>
-                        <p>{{booking?.checkIn |  date : "y-MM-dd"}}</p>
+                        <p>{{booking?.bookingTime |  date : "y-MM-dd"}}</p>
                       </div>
                       <div class="col-md-4">
                         <label for="">CheckIn Date</label>

@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
     this.broadcastservice.stepperValue.emit(0);
     localStorage.setItem("stepperVal", "" + 0);
     this.broadcastservice.showHideLogin.emit(false);
-    this.router.navigateByUrl('b2c/signin');
+    this.router.navigateByUrl('b2c/search');
     localStorage.removeItem('userData');
   }
 
