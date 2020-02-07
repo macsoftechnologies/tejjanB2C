@@ -161,6 +161,8 @@ export class BookingSummaryComponent implements OnInit {
 
   public transportCalculations() {
     if (this.transportCart != null || this.transportCart != undefined) {
+
+      if(this.transportCart.vehicleTypes != undefined && this.transportCart.vehicleTypes != null ){
       let transportCategories = this.transportCart.vehicleTypes.map(
         vehicel => vehicel.categories
       );
@@ -202,6 +204,7 @@ export class BookingSummaryComponent implements OnInit {
      
       console.log("transportTotalPrice", this.transportTotalPrice);
     }
+  }
   }
 
   public groundCalculations() {

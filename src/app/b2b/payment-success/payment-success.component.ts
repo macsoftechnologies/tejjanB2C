@@ -238,7 +238,7 @@ export class PaymentSuccessComponent implements OnInit {
   public transportReservation(){
 
 
-    if(this.transportCart != null){
+    if(this.transportCart != null && this.transportCart.vehicleTypes != undefined){
 
           this.spinner.show()
 

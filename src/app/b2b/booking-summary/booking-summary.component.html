@@ -191,7 +191,7 @@
                 <div class="card-body">
                   <div class="services-data">
                     <div class="container-fluid">
-                      <div class="row" *ngIf = "transportCart != null">
+                      <div class="row" *ngIf = "transportCart != null && transportCart?.vehicleTypes != undefined">
                         <div class="col-4">
                           <label for="title">Transportation Services:</label>
                           <p>{{transportCart?.companyName}}</p>
@@ -340,7 +340,7 @@
                   <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
                 </div>
               </li>
-              <li *ngIf = "transportCart != null"><h4>Transportation</h4>
+              <li *ngIf = "transportCart != null && transportCart?.vehicleTypes != undefined"><h4>Transportation</h4>
                 <ng-template #tipContentTransport>
                   <div class="full-person-details">
                     <p>Quantity x {{transportQuantity}}</p>

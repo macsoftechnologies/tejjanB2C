@@ -504,6 +504,9 @@ export class CheckOutComponent implements OnInit {
   // transport calculations
   public transportCalculations() {
     if (this.transportCart != null || this.transportCart != undefined) {
+
+      if(this.transportCart.vehicleTypes != undefined && this.transportCart.vehicleTypes != null ){
+
       let transportCategories = this.transportCart.vehicleTypes.map(
         vehicel => vehicel.categories
       );
@@ -538,6 +541,7 @@ export class CheckOutComponent implements OnInit {
       localStorage.setItem("transportAmount" , JSON.stringify(this.transportTotalPrice))
 
     }
+  }
   }
 
   // ground calculations 
