@@ -378,9 +378,6 @@ export class AlrajhiumrahService {
 
 
      /*  payment API  */
-
-
-
      processPayment1(data:any):Observable<any>{
 
       console.log("Srvicedata" , data);
@@ -388,5 +385,17 @@ export class AlrajhiumrahService {
       .post(this.baseUrl + "payment",data).pipe(map(this.extractData));
     }
 
+
+    
+                     /* User Profile API */
+
+  getUserProfile(data: any): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set("Content-Type", "application/x-www-form-urlencoded");
+    let params = new HttpParams().set('user_name', data.user_name);
+
+    return this.http
+      .get(this.baseUrl1 + "get/user",{params:params}).pipe(map(this.extractData));
+  }
 
 }
