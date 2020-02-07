@@ -52,7 +52,96 @@
         }
     }
 // }
+.accordion-block {
+    padding: 20px 0px;
+         .card {
+             border: 1px solid $primary-color;
+             box-sizing: border-box;
+             border-radius: 5px;
+              .card-header {
+                  background-color: #fff;
+                  display: flex;
+                  align-items: center;
+                  border-bottom: none;
+                  border-radius: 5px;
 
+                   a {
+                       width: 100%;
+                       display: flex;
+                       justify-content: space-between;
+                       align-items: center;
+                        h4 {
+                            color: #3a3a3a;
+                            font-family: "roboto";
+                            font-size: 20px;
+                            font-weight: bold;
+                            line-height: 24px;
+                            margin: 0;
+
+                            @include mobile {
+                                font-size: 18px;
+                            }
+                        }
+                        i {
+                            font-size: 25px;
+                        }
+                   }
+
+
+              }
+              .card-body {
+                  padding: 5px;
+
+                  
+                  label {
+                      color: $primary-color;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      font-weight: 500;
+                      line-height: 16px;
+                  }
+                  p {
+                      color: #3a3a3a;
+                      font-family: "roboto";
+                      font-size: 14px;
+                      line-height: 16px;
+                      margin-bottom: 8px;
+                  }
+
+                  table, tr, th{
+                      padding-right: 150px;
+                  }
+
+                  
+              } 
+
+              @include mobile {
+                .collapse.show {
+                    max-width: 100%;
+                    overflow-x: scroll;
+                    .card-body {
+                        width: 790px;
+                    }
+
+                    .mutamer-body {
+                        width: 100%;
+
+                        .mutamer-container {
+                            padding: 10px;
+                        }
+                    }  
+                }
+
+                #collapseSix:last-child {
+                    overflow:hidden;
+                }
+              }
+
+              @include mobile {
+                  margin-bottom: 5px;
+              }
+         }
+    }
 .bookingListTable {
     padding: 20px 0px;
     .table-responsive {
@@ -105,4 +194,95 @@
         background-color: $primary-color;
         color: $light-font-color;
     }
+}
+
+.accordion-block {
+    padding-bottom: 20px;
+     .card {
+         border: 1px solid $primary-color;
+         box-sizing: border-box;
+         border-radius: 5px;
+          .card-header {
+              background-color: #fff;
+              display: flex;
+              align-items: center;
+              border-bottom: none;
+              border-radius: 5px;
+
+               a {
+                   width: 100%;
+                   display: flex;
+                   justify-content: space-between;
+                   align-items: center;
+                    h4 {
+                        color: #3a3a3a;
+                        font-family: "roboto";
+                        font-size: 20px;
+                        font-weight: bold;
+                        line-height: 24px;
+                        margin: 0;
+
+                        @include mobile {
+                            font-size: 18px;
+                        }
+                    }
+                    i {
+                        font-size: 25px;
+                    }
+               }
+
+
+          }
+          .card-body {
+              padding: 5px;
+
+              
+              label {
+                  color: $primary-color;
+                  font-family: "roboto";
+                  font-size: 14px;
+                  font-weight: 500;
+                  line-height: 16px;
+              }
+              p {
+                  color: #3a3a3a;
+                  font-family: "roboto";
+                  font-size: 14px;
+                  line-height: 16px;
+                  margin-bottom: 8px;
+              }
+
+              table, tr, th{
+                  padding-right: 150px;
+              }
+
+              
+          } 
+
+          @include mobile {
+            .collapse.show {
+                max-width: 100%;
+                overflow-x: scroll;
+                .card-body {
+                    width: 790px;
+                }
+
+                .mutamer-body {
+                    width: 100%;
+
+                    .mutamer-container {
+                        padding: 10px;
+                    }
+                }  
+            }
+
+            #collapseSix:last-child {
+                overflow:hidden;
+            }
+          }
+
+          @include mobile {
+              margin-bottom: 5px;
+          }
+     }
 }

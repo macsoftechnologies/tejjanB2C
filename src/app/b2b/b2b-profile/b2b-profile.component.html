@@ -10,38 +10,40 @@
     <div class="col-md-8 container-body">
       <div class="card custom-card">
         <form [formGroup]="profileForm">
-          <div class="form-fields">
-            <div class="name-fields">
-              <!-- <div class=""> -->
-                <div class="form-group">
-                  <label for="">First Name</label>
-                  <input [formControl]="profileForm.controls['firstName']" class="form-control" type="text"
-                    placeholder="Abdullah">
-                </div>
-              <!-- </div> -->
-              <!-- <div class=""> -->
-                <div class="form-group">
-                  <label for="">Last Name</label>
-                  <input [formControl]="profileForm.controls['lastName']" class="form-control" type="text"
-                    placeholder="Alsaad">
-                </div>
-              <!-- </div> -->
-              <!-- <div class=""> -->
-                <div class="form-group">
-                  <label for="">User Name</label>
-                  <input [formControl]="profileForm.controls['userName']" class="form-control" type="text"
-                    placeholder="A.A.S">
-                </div>
-              <!-- </div> -->
-            </div>
-            <div class="image-section">
+          <!-- <div class="form-fields"> -->
+            <!-- <div class="name-fields"> -->
+            <!-- <div class=""> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <div class="image-section d-none">
               <div class="user-image">
                 <img src="../../../assets/images/steve-smith.jpg" alt="">
                 <a href="">Change Photo</a>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">First Name</label>
+                <input [formControl]="profileForm.controls['firstName']" class="form-control" type="text"
+                  placeholder="Abdullah">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Last Name</label>
+                <input [formControl]="profileForm.controls['lastName']" class="form-control" type="text"
+                  placeholder="Alsaad">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">User Name</label>
+                <input [formControl]="profileForm.controls['userName']" class="form-control" type="text"
+                  placeholder="A.A.S">
+              </div>
+            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Email</label>
@@ -61,29 +63,23 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Phone</label>
-                <input [formControl]="profileForm.controls['phone']" class="form-control" type="text"
-                  placeholder="">
+                <input [formControl]="profileForm.controls['phone']" class="form-control" type="text" placeholder="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Date of Birth</label>
                 <div class="input-group">
-                  <input class="form-control" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker
-                    #d1="ngbDatepicker" #checkIn [readonly]="true"
-                    [formControl]="profileForm.controls['dateofbirth']" [minDate]=""
-                    (focus)="d1.open()"> 
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
-                        <i class="fa fa-caret-down icon-size" aria-hidden="true"></i>
-                        <!-- <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar"> -->
-                      </button>
-                    </div>
+                  <input class="form-control dateofbirth" placeholder="DD-MM-YYYY" name="dp2" ngbDatepicker #d1="ngbDatepicker"
+                    #checkIn [readonly]="true" [formControl]="profileForm.controls['dateofbirth']" [minDate]=""
+                    (focus)="d1.open()">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                      <i class="fa fa-caret-down icon-size" aria-hidden="true"></i>
+                      <!-- <img class="icon-size" src="assets/images/icons/calendar.png" alt="calendar"> -->
+                    </button>
+                  </div>
                 </div>
-                <!-- <ng-select class="custom-input" [items]="countries" [virtualScroll]="true" placeholder="Select Country"
-                  [formControl]="profileForm.controls['dateofbirth']" bindLabel="countryName">
-                </ng-select> -->
-                <!-- <input class="form-control" type="text" placeholder=""> -->
               </div>
             </div>
             <div class="col-md-6">
@@ -92,7 +88,6 @@
                 <ng-select class="custom-input" [items]="countries" [virtualScroll]="true" placeholder="Select Country"
                   [formControl]="profileForm.controls['country']" bindLabel="countryName">
                 </ng-select>
-                <!-- <input class="form-control" type="text" placeholder="India"> -->
               </div>
             </div>
             <div class="col-md-6">
@@ -102,17 +97,16 @@
                   placeholder="Select Travel Country" [formControl]="profileForm.controls['travelCountry']"
                   bindLabel="countryName">
                 </ng-select>
-                <!-- <input class="form-control" type="text" placeholder=""> -->
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Password</label>
-                <input [formControl]="profileForm.controls['password']" class="form-control" type="text"
+                <input [formControl]="profileForm.controls['password']" class="form-control" type="password"
                   placeholder="*****">
               </div>
             </div>
-            <div class="col-md-6 save-profile">
+            <div class="col-md-12 save-profile">
               <div class="form-group save-btn">
                 <button class="btn btn-md">Save</button>
               </div>

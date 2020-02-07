@@ -306,7 +306,7 @@ export class BookingSummaryComponent implements OnInit {
       confirmButtonColor: "#bb9356",
       cancelButtonColor: "#bb9356",
       confirmButtonText: "Login", 
-      cancelButtonText : "Register"
+      cancelButtonText : "Skip"
       
     })
     .then(result => {
@@ -331,21 +331,21 @@ export class BookingSummaryComponent implements OnInit {
           }
         );
       }else{
-        
-        this.modal = this.modalService.open(B2cSignUpComponent);
-        console.log(" this.modal" ,  this.modal.result)
-        // modal.componentInstance.title = "Dialog";
-        // modal.componentInstance.body = "Your message";
-        this.modal.result.then( result => {
+        this.router.navigateByUrl("b2c/checkout");
+        // this.modal = this.modalService.open(B2cSignUpComponent);
+        // console.log(" this.modal" ,  this.modal.result)
+        // // modal.componentInstance.title = "Dialog";
+        // // modal.componentInstance.body = "Your message";
+        // this.modal.result.then( result => {
 
-            this.closeResult = `Closed with: ${result}`;
-            console.log("modelResult" , this.closeResult)
+        //     this.closeResult = `Closed with: ${result}`;
+        //     console.log("modelResult" , this.closeResult)
 
-          },
-          reason => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-          }
-        );
+        //   },
+        //   reason => {
+        //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        //   }
+        // );
       }
     });
 
