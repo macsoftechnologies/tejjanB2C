@@ -324,11 +324,14 @@ export class TransportServiceComponent implements OnInit {
     this.transportAvailabilityFlag = true
     let quantity = parseInt(this.searchFilterObj.vehicleQuantity);
     currentTransport.vehicleTypes.forEach(vehicle => {
+
+      if(this.vehicleTypes != undefined){
       this.vehicleTypes.forEach(vehicleType => {
         if (vehicleType.code === vehicle.vehicleTypeCode) {
           vehicle.vehicleTypeName = vehicleType.name
         }
       })
+    }
       vehicle.categories.forEach(category => {
         category.displayRateInfo.forEach(displayRate => {
           // adding GDS and OTA TAXES with baseprice

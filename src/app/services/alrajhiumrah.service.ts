@@ -95,6 +95,8 @@ export class AlrajhiumrahService {
   /* get hotel availability data */
 
   /* get hotel reservation data */
+  
+
   getHotelReservation(data: any): Observable<any> {
     console.log("hotelData" , data)
 
@@ -102,13 +104,17 @@ export class AlrajhiumrahService {
     headers = headers.set("Authorization" ,  data.headers.header); 
     // let params = new HttpParams().append("request", JSON.stringify(data));
     console.log("headers" , headers)
-
+    var obj
+    if(data.headers.header != null){
+      obj =   {   headers:  headers }
+      }else{
+      }
     return this.http
-      .post(this.baseUrl + "hotel/reservation", data.hotelObj  ,  { 
-            headers:  headers
-        }
+      .post(this.baseUrl + "hotel/reservation", data.hotelObj  ,  obj
     )
-      .pipe(map(this.extractData));
+    .pipe((resp) =>{
+      return resp
+    });
   }
 
 
@@ -116,24 +122,27 @@ export class AlrajhiumrahService {
 
 
   /* get transport reservation data */
+ 
+
   getTransportReservation(data: any): Observable<any> {
 
-     console.log("transportData" , data)
-    let headers = new HttpHeaders();  
-    headers = headers.set("Authorization" ,  data.headers.header); 
-    let params = new HttpParams().append("request", JSON.stringify(data));
-    console.log("headers" , headers)
-    return this.http
-      .post(this.baseUrl + "transport/reservation", data.transportObj ,  {
-            headers:  headers
-        })
-      .pipe(map(this.extractData));
-  }
-//   {
-//     headers: new HttpHeaders({
-//       'Authorization': data.headers.header,
-//     })
-// }
+    console.log("transportData" , data)
+   let headers = new HttpHeaders();  
+   headers = headers.set("Authorization" ,  data.headers.header); 
+   let params = new HttpParams().append("request", JSON.stringify(data));
+   console.log("headers" , headers)
+   var obj
+   if(data.headers.header != null){
+   obj =   {   headers:  headers }
+   }else{
+   }
+   return this.http
+     .post(this.baseUrl + "transport/reservation", data.transportObj , obj )
+     .pipe((resp) =>{
+       return resp
+     });
+ }
+
   /* get transport reservation data */
 
   /* get transport search data */
@@ -209,12 +218,22 @@ export class AlrajhiumrahService {
     headers = headers.set("Authorization" ,  data.headers.header); 
 
     let params = new HttpParams().append("request", JSON.stringify(data));
+    
+
+    var obj
+    if(data.headers.header != null){
+    obj =   { observe: 'response'  ,   headers:  headers
+  }
+    }else{
+        obj =  { observe: 'response'}
+    }
 
     return this.http
-      .post(this.baseUrl + "groundService/reservation", data.groundbj ,   {
-        headers:  headers
-    })
-      .pipe(map(this.extractData));
+      .post(this.baseUrl + "groundService/reservation", data.groundbj , obj )
+      .pipe(map(result => {
+        return result;
+       
+      } ));
   }
   /* get ground service data */
 
@@ -229,6 +248,7 @@ export class AlrajhiumrahService {
 
 
   /* Hotel View Reservation  */
+ 
   getHotelViewReservation(data: any): Observable<any> {
     // return this.http.post(this.baseUrl + "hotel/viewreservation", data);
 
@@ -237,16 +257,23 @@ export class AlrajhiumrahService {
     headers = headers.set("Authorization" ,  data.headers.header); 
 
     let params = new HttpParams().append("request", JSON.stringify(data));
+    var obj
+    if(data.headers.header != null){
+    obj =   { observe: 'response'  ,   headers:  headers
+  }
+    }else{
+        obj =  { observe: 'response'}
+    }
 
     return this.http
-      .post(this.baseUrl + "hotel/view/reservation", data.hotelObj ,  { observe: 'response' ,  
-             headers: headers
-     } )
+      .post(this.baseUrl + "hotel/view/reservation", data.hotelObj ,  obj)
       .pipe(map(result => {
         return result;
        
       } ));
   }
+
+  
 
   getCancelHotelReservation(data :any): Observable<any>{
 
@@ -256,11 +283,16 @@ export class AlrajhiumrahService {
     headers = headers.set("Authorization" ,  data.headers.header); 
 
     let params = new HttpParams().append("request", JSON.stringify(data));
+    var obj
+    if(data.headers.header != null){
+    obj =   { observe: 'response'  ,   headers:  headers
+  }
+    }else{
+        obj =  { observe: 'response'}
+    }
 
     return this.http
-      .post(this.baseUrl + "hotel/cancel/reservation", data.hotelObj ,  { observe: 'response'  ,  
-             headers: headers
-        })
+      .post(this.baseUrl + "hotel/cancel/reservation", data.hotelObj , obj)
       .pipe(map(result => {
         return result;
        
@@ -278,9 +310,17 @@ export class AlrajhiumrahService {
     headers = headers.set("Authorization" ,  data.headers.header); 
 
     let params = new HttpParams().append("request", JSON.stringify(data));
+    var obj
+    if(data.headers.header != null){
+    obj =   { observe: 'response'  ,   headers:  headers
+  }
+    }else{
+        
+    }
+
 
     return this.http
-      .post(this.baseUrl + "groundService/view/reservation", data.groundObj ,  { observe: 'response'  ,  headers: headers})
+      .post(this.baseUrl + "groundService/view/reservation", data.groundObj ,  obj)
       .pipe(map(result => {
         return result;
        
@@ -296,10 +336,17 @@ export class AlrajhiumrahService {
 
     let params = new HttpParams().append("request", JSON.stringify(data));
 
+    var obj
+    if(data.headers.header != null){
+    obj =   { observe: 'response'  ,   headers:  headers
+  }
+    }else{
+        obj =  { observe: 'response'}
+    }
+
+
     return this.http
-      .post(this.baseUrl + "transport/view/reservation", data.transportObj ,  { observe: 'response'  ,  
-            headers:  headers
-        })  
+      .post(this.baseUrl + "transport/view/reservation", data.transportObj , obj)  
       .pipe(map(result => {
         return result;
        

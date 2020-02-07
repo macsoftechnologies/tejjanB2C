@@ -204,7 +204,7 @@ export class PaymentSuccessComponent implements OnInit {
 
       headers : {header : this.headers != null ? this.headers : null}
 
-      
+
     }
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
       this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
@@ -290,8 +290,7 @@ export class PaymentSuccessComponent implements OnInit {
       // this.getGroundServiceReservation();
     });
   }else{
-    localStorage.removeItem("transportcart");
-    this.getGroundServiceReservation();
+   
 
   }
 }
@@ -331,6 +330,7 @@ export class PaymentSuccessComponent implements OnInit {
           localStorage.setItem("BookingStatus"  , "true")  
 
           localStorage.setItem('groundBookingResponse', JSON.stringify(data));
+          
           localStorage.removeItem("groundCart");
 
           this.router.navigateByUrl('b2c/mybooking')
