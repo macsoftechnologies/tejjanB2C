@@ -288,6 +288,10 @@ export class PaymentSuccessComponent implements OnInit {
       
       // this.getGroundServiceReservation();
     });
+  }else{
+    localStorage.removeItem("transportcart");
+    this.getGroundServiceReservation();
+
   }
 }
 
@@ -337,6 +341,10 @@ export class PaymentSuccessComponent implements OnInit {
           
         }
       });
+    }else{
+      localStorage.removeItem("groundCart");
+      this.router.navigateByUrl('b2c/mybooking')
+
     }
   }
 }

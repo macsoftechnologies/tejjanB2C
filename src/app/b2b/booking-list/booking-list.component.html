@@ -112,7 +112,11 @@
     </form>
   </div>
   <div class="container-fluid">
-    <div class="row">
+
+    <div class="noDataFound" *ngIf="hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">
+      <h4>No Results Found</h4>
+    </div>
+    <div class="row" *ngIf="hotelBookingList.length != 0 || transportBookingList.length != 0 || groundBookingList.length != 0">
       <div class="col-md-12">
         <div class="accordion-block">
           <div id="accordion">
@@ -178,7 +182,7 @@
                     <button class="btn btn-md" (click) = "transport()">Transport</button>
                     <button class="btn btn-md" (click) = "ground()">Ground</button>
                   </div>
-                  <div class="d-none" *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">    
+                  <div class="d-none" *ngIf = " hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">    
                       No Results  Found
                   </div>
                 </div>
