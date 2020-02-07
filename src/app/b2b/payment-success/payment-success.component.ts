@@ -201,9 +201,10 @@ export class PaymentSuccessComponent implements OnInit {
         }
       },
 
-      headers : {header : this.headers}
 
+      headers : {header : this.headers != null ? this.headers : null}
 
+      
     }
       console.log("hotelForm data: ===>", JSON.stringify(hotelForm));
       this.teejanServices.getHotelReservation(hotelForm).subscribe((data: any) => {
@@ -263,7 +264,7 @@ export class PaymentSuccessComponent implements OnInit {
 
 
     },
-    headers : {header : this.headers}
+    headers : {header : this.headers != null ? this.headers : null}
 
   }
     console.log("TransportFormObj: ===>", JSON.stringify(TransportFormObj));
@@ -317,7 +318,7 @@ export class PaymentSuccessComponent implements OnInit {
         "request": this.groundCart
 
       },
-      headers : {header : this.headers}
+      headers : {header : this.headers != null ? this.headers : null }
 
        
         
