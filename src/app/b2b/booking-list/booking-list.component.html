@@ -111,118 +111,239 @@
       </div>
     </form>
   </div>
-
   <div class="container-fluid">
-    <div class="listBtns" *ngIf = " hotelBookingList.length > 0 || transportBookingList.length > 0 || groundBookingList.length > 0">
-      <button class="btn btn-md" (click) = "hotel()" >Hotel</button>
-      <button class="btn btn-md" (click) = "transport()">Transport</button>
-      <button class="btn btn-md" (click) = "ground()">Ground</button>
-
-    </div>
-    <div *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">
-       
-           No Results  Found
-
-    </div>
-  </div>
-  <!-- <div class="container-fluid">
-    <div class="searchResults">
-      <p>Total:-Bookings: <span>3</span>,
-        Booked:<span>4</span>,
-        Cancelled:<span>0</span>,
-        Pending:<span>1</span>,
-        Failed:<span>0</span>,
-        Collected Fare:<span>Rs.3333.33</span>
-      </p>
-    </div>
-  </div> -->
-  <div class="container-fluid">
-    <div class="bookingListTable" >
-      <div class="table-responsive">
-        <div *ngIf = "hotelFlag == true && transportFlag == false && groundFlag == false && hotelBookingList.length == 0">
-         
-          <p>  No Results  Found</p>
-
+    <div class="row">
+      <div class="col-md-12">
+        <div class="accordion-block">
+          <div id="accordion">
+            <!-- <h6>hii</h6> -->
+            <div class="card" *ngFor = "let hotel of hotelBookingList">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#hotelBookingList">
+                  <h4>BRN : 89451284512</h4>
+                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div id="hotelBookingList" class="collapse">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row" *ngIf = "hotelFlag && hotelBookingList.length == 0">
+                      <p class="noDataFound">No Hotel Data Available</p>
+                    </div>
+                    <div class="row" *ngIf = "hotelFlag && hotelBookingList.length > 0">
+                      <div class="col-md-4">
+                        <label for="">Booking Creation Date:</label>
+                        <p>{{hotel.bookingTime |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Check In Date</label>
+                        <p>{{hotel.checkIn |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Check Out Date</label>
+                        <p>{{hotel.checkOut |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">No of Rooms</label>
+                        <p>{{hotel.roomInfo[0]?.rooms?.length}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">No of Adults</label>
+                        <p>{{hotelPaxInfo(hotel.roomInfo[0]?.paxInfo).adults}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Hotel Name</label>
+                        <p>{{hotel.propertyName}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Country</label>
+                        <p>{{hotel.country}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">City</label>
+                        <p>{{hotel.city}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Amount(SAR)</label>
+                        <p>{{hotelCalculations(hotel.roomInfo).groupAmount | number : "1.2-2"}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--  asddddddfgh -->
+                <div class="container-fluid d-none">
+                  
+                  <div class="listBtns" *ngIf = " hotelBookingList.length > 0 || transportBookingList.length > 0 || groundBookingList.length > 0">
+                    <button class="btn btn-md" (click) = "hotel()" >Hotel</button>
+                    <button class="btn btn-md" (click) = "transport()">Transport</button>
+                    <button class="btn btn-md" (click) = "ground()">Ground</button>
+                  </div>
+                  <div class="d-none" *ngIf = " hotelFlag == true  && hotelBookingList.length == 0 && transportBookingList.length == 0 && groundBookingList.length == 0">    
+                      No Results  Found
+                  </div>
+                </div>
+                <div class="container-fluid d-none">
+                  <div class="bookingListTable" >
+                    <div class="table-responsive">
+                      <div *ngIf = "hotelFlag == true && transportFlag == false && groundFlag == false && hotelBookingList.length == 0">        
+                        <p>  No Results  Found</p>
+                      </div>
+                      <table class="table table-bordered" *ngIf = "hotelFlag && hotelBookingList.length > 0">
+                        <thead>
+                          <th>Booking Creation Date</th>
+                          <th>Check In Date</th>
+                          <th>Check Out Date</th>
+                          <th>No of Rooms</th>
+                          <th>No of Adults</th>
+                          <th>Hotel Name</th>
+                          <th>Country</th>
+                          <th>City</th>
+                          <th>Amount(SAR)</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor = "let hotel of hotelBookingList">
+                            <td>{{hotel.bookingTime |  date : "y-MM-dd"}}</td>
+                            <td>{{hotel.checkIn |  date : "y-MM-dd"}}</td>
+                            <td>{{hotel.checkOut |  date : "y-MM-dd"}}</td>
+                            <td>{{hotel.roomInfo[0]?.rooms?.length}}</td>
+                            <td>{{hotelPaxInfo(hotel.roomInfo[0]?.paxInfo).adults}}</td>
+                            <td>{{hotel.propertyName}}</td>
+                            <td>{{hotel.country}}</td>
+                            <td>{{hotel.city}}</td>
+                            <td>{{hotelCalculations(hotel.roomInfo).groupAmount | number : "1.2-2"}}</td> 
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div *ngIf = " transportFlag == true && hotelFlag == false && groundFlag == false && transportBookingList.length == 0">    
+                        <p> No Results  Found </p>
+                      </div>
+                      <table class="table table-bordered" *ngIf = "transportFlag && transportBookingList.length > 0">
+                        <thead>
+                          <th>Booking Creation Date</th>
+                          <th>CheckIn Date</th>
+                          <th>No of Adults</th>
+                          <th>Transportation Name</th>
+                          <th>Amount(SAR)</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor = "let booking of transportBookingList">
+                            <td> {{booking.bookingTime |  date : "y-MM-dd"}} </td>
+                            <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
+                            <td>{{transportion(booking.vehicleTypes).paxDetails}}</td>
+                            <td>{{booking.companyName}}</td>
+                            <!-- <td>{{booking.}}</td> -->
+                            <td>{{transportion(booking.vehicleTypes).totalAmount | number : "1.2-2"}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div *ngIf = " groundFlag == true && transportFlag == false && hotelFlag == false && groundBookingList.length == 0">    
+                        <p> No Results  Found </p>
+                      </div> 
+                      <table class="table table-bordered " *ngIf = "groundFlag && groundBookingList.length > 0" >
+                        <thead>
+                          <th>Booking Creation Date</th>
+                          <th>CheckIn Date</th>
+                          <!-- <th>No of Adults</th> -->
+                          <th>Company Name</th>
+                          <th>Amount(SAR)</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor = "let booking of groundBookingList">
+                            <td> {{booking?.checkIn |  date : "y-MM-dd"}} </td>
+                            <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
+                            <!-- <td>{{transportion(booking.vehicleTypes).paxDetails}}</td> -->
+                            <td>{{booking?.uoName}}</td>
+                            <!-- <td>{{booking.}}</td> -->
+                            <td>{{gorundService(booking?.category).totalAmount | number : "1.2-2"}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- adsfghsfdgh -->
+              </div>
+            </div>
+            <div class="card" *ngFor = "let booking of transportBookingList">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#transBookingList">
+                  <h4>BRN : 89451284512</h4>
+                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="collapse" id="transBookingList">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row" *ngIf = "transportFlag && transportBookingList.length == 0">
+                      <p class="noDataFound">No Transport Data Available</p>
+                    </div>
+                    <div class="row" *ngIf = "transportFlag && transportBookingList.length > 0">
+                      <div class="col-md-4">
+                        <label for="">Booking Creation Date:</label>
+                        <p>{{booking.bookingTime |  date : "y-MM-dd"}} </p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">CheckIn Date:</label>
+                        <p>{{booking.checkIn |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">No of Adults:</label>
+                        <p>{{transportion(booking.vehicleTypes).paxDetails}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Transportation Name:</label>
+                        <p>{{booking.companyName}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Amount(SAR):</label>
+                        <p>{{transportion(booking.vehicleTypes).totalAmount | number : "1.2-2"}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card" *ngFor = "let booking of groundBookingList">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#groundBookingList">
+                  <h4>BRN : 89451284512</h4>
+                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="collapse" id="groundBookingList">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row" *ngIf = "groundFlag && groundBookingList.length == 0">
+                      <p class="noDataFound">No Ground Data Available</p>
+                    </div>
+                    <div class="row" *ngIf = "groundFlag && groundBookingList.length > 0">
+                      <div class="col-md-4">
+                        <label for=""></label>
+                        <p></p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Booking Creation Date</label>
+                        <p>{{booking?.checkIn |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">CheckIn Date</label>
+                        <p>{{booking.checkIn |  date : "y-MM-dd"}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Company Name</label>
+                        <p>{{booking?.uoName}}</p>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Amount(SAR)</label>
+                        <p>{{gorundService(booking?.category).totalAmount | number : "1.2-2"}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <table class="table table-bordered" *ngIf = "hotelFlag && hotelBookingList.length > 0">
-          <thead>
-            <!-- <th>Booking Reference</th> -->
-            <th>Booking Creation Date</th>
-            <th>Check In Date</th>
-            <th>Check Out Date</th>
-            <th>No of Rooms</th>
-            <th>No of Adults</th>
-            <th>Hotel Name</th>
-            <th>Country</th>
-            <th>City</th>
-            <th>Amount(SAR)</th>
-          </thead>
-          <tbody>
-            <tr *ngFor = "let hotel of hotelBookingList">
-              <td>{{hotel.bookingTime |  date : "y-MM-dd"}}</td>
-              <td>{{hotel.checkIn |  date : "y-MM-dd"}}</td>
-              <td>{{hotel.checkOut |  date : "y-MM-dd"}}</td>
-              <td>{{hotel.roomInfo[0]?.rooms?.length}}</td>
-              <td>{{hotelPaxInfo(hotel.roomInfo[0]?.paxInfo).adults}}</td>
-              <td>{{hotel.propertyName}}</td>
-              <td>{{hotel.country}}</td>
-              <td>{{hotel.city}}</td>
-              <td>{{hotelCalculations(hotel.roomInfo).groupAmount | number : "1.2-2"}}</td> 
-            </tr>
-          </tbody>
-        </table>
-        <div *ngIf = " transportFlag == true && hotelFlag == false && groundFlag == false && transportBookingList.length == 0">
-         
-          <p> No Results  Found </p>
-
-        </div>
-        <table class="table table-bordered" *ngIf = "transportFlag && transportBookingList.length > 0">
-          <thead>
-            <th>Booking Creation Date</th>
-            <th>CheckIn Date</th>
-            <th>No of Adults</th>
-            <th>Transportation Name</th>
-            <th>Amount(SAR)</th>
-          </thead>
-          <tbody>
-            <tr *ngFor = "let booking of transportBookingList">
-              <td> {{booking.bookingTime |  date : "y-MM-dd"}} </td>
-              <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
-              <td>{{transportion(booking.vehicleTypes).paxDetails}}</td>
-              <td>{{booking.companyName}}</td>
-              <!-- <td>{{booking.}}</td> -->
-              <td>{{transportion(booking.vehicleTypes).totalAmount | number : "1.2-2"}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div *ngIf = " groundFlag == true && transportFlag == false && hotelFlag == false && groundBookingList.length == 0">
-         
-          <p> No Results  Found </p>
-
-        </div>
-            
-        <table class="table table-bordered " *ngIf = "groundFlag && groundBookingList.length > 0" >
-          <thead>
-            <th>Booking Creation Date</th>
-            <th>CheckIn Date</th>
-            <!-- <th>No of Adults</th> -->
-            <th>Company Name</th>
-            <th>Amount(SAR)</th>
-          </thead>
-          <tbody>
-            <tr *ngFor = "let booking of groundBookingList">
-              <td> {{booking?.checkIn |  date : "y-MM-dd"}} </td>
-              <td>{{booking.checkIn |  date : "y-MM-dd"}}</td>
-              <!-- <td>{{transportion(booking.vehicleTypes).paxDetails}}</td> -->
-              <td>{{booking?.uoName}}</td>
-              <!-- <td>{{booking.}}</td> -->
-              <td>{{gorundService(booking?.category).totalAmount | number : "1.2-2"}}</td>
-            </tr>
-          </tbody>
-        </table>
- 
-
-
       </div>
     </div>
   </div>
