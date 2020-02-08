@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
 export class AlrajhiumrahService {
   baseUrl = environment.baseUrl;
   baseUrl1 = environment.baseUrl1;
+  baseUrl2  =  environment.baseUrl2
+
   constructor(private http: HttpClient,
     private pageTitle: Title) { }
 
@@ -413,7 +415,7 @@ export class AlrajhiumrahService {
     .set('bookingStatus',data.bookingStatus)
 
     return this.http
-    .get( "http://78.46.66.126:37005/vi/api/bookingList" ,{params:params})
+    .get( this.baseUrl2 + "bookingList" ,{params:params})
     .pipe(map(result => {
       return result;
      
