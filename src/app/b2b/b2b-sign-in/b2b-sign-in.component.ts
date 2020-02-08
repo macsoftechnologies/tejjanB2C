@@ -33,13 +33,7 @@ export class B2bSignInComponent implements OnInit {
 
   ngOnInit() {
     this.broadcastservice.stepperValue.emit(0);
-        
-   this.user =   JSON.parse(localStorage.getItem('userData'))
-
-   if(this.user == null || this.user == undefined){
-     
-   }
-
+    localStorage.setItem("stepperVal",""+0);
     this.loadSigninForm();
   }
 
@@ -72,16 +66,10 @@ export class B2bSignInComponent implements OnInit {
           localStorage.setItem('authorizationKey', JSON.stringify(this.loginResp.headers.get('authorization')));
 
           localStorage.setItem("userData", JSON.stringify(signInObj));
-          // this.user = localStorage.getItem("userData");
-          // this.isCheckout = localStorage.getItem("isCheckOut");
-          // if (this.user == null && this.user == undefined) {
-          //   this.broadcastservice.showHideLogin.emit(false);
-          //     this.router.navigateByUrl('b2c/login');
-          // } else {
-          // }
-
           this.activeModal.dismissAll("success");
           if(location.pathname === "/b2c/signin") {
+            this.broadcastservice.stepperValue.emit(0);
+            localStorage.setItem("stepperVal",""+0);
             this.router.navigateByUrl("b2c/search"); 
           }
           else {
@@ -106,7 +94,6 @@ export class B2bSignInComponent implements OnInit {
   
     this.activeModal.dismissAll("success");
      
-
        if( location.pathname === "/b2c/signin"){
         this.router.navigateByUrl("b2c/signup");
        }else{

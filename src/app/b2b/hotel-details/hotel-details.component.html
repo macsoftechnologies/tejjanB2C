@@ -1,7 +1,6 @@
 <div class="hotel-details-container">
 
   <div class="mecca-bg">
-    <div class="bg-mask"></div>
   </div>
   <!-- *ngIf="selectedHotel?.roomGroups == undefined && isroomGroups == false " -->
   <div class="col-md-12 search-results d-none">
@@ -24,17 +23,13 @@
               <div class="row hotel-data">
                 <div class="col-md-9">
                   <div class="hotel-desc-images">
-
-
                     <div class="row">
-
                       <div class="col-md-10 col-9">
                         <div class="hotel-description">
                           <h5>{{selectedHotel?.name}}</h5>
                           <p class="hotel-booking-description" [innerHtml]="selectedHotel.description"></p>
                         </div>
                       </div>
-
                       <div class="col-md-2 col-3 hotel-star-rating">
                         <div class="reviews-score">
                           <!-- review score -->
@@ -60,8 +55,6 @@
                         </div>
                       </div>
                     </div>
-
-
                     <div class="hotel-image-lightbox">
                       <div class="d-flex flex-row mb-3">
                         <div class="p-2 main-img">

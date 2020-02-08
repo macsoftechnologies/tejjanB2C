@@ -83,21 +83,10 @@ label {
     height: 950px;
     // max-height: 100%;
   }
-
-  // .bg-mask {
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   height: 100%;
-  //   width: 100%;
-  //   background: #bb9356;
-  //   opacity: 0.4;
-  // }
-
   .search-container {
     width: 100%;
     position: relative;
-    top: 80px;
+    top: 28px;
 
     .custom-container {
       @include mobile {
@@ -107,7 +96,7 @@ label {
       .search-panel-mask {
         border-radius: $border-radius;
         background-color: rgba(58, 58, 58, 0.7);
-        padding: 35px 20px 20px 20px;
+        padding: 20px 20px 8px 20px;
 
         .checkbox-container {
           font-weight: 300 !important;
