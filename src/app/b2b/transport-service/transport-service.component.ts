@@ -258,6 +258,7 @@ export class TransportServiceComponent implements OnInit {
           console.log("transportCompanies", this.companies)
 
           transportSearchResp.body.transportations.forEach(transportation => {
+            if(this.companies != undefined && this.companies.length > 0)
             this.companies.forEach(company => {
               if (company.code === transportation.companyCode) {
                 transportation.companyName = company.name;
@@ -271,7 +272,7 @@ export class TransportServiceComponent implements OnInit {
                 transportation.vehicleTypes.fax = company.fax;
               }
             });
-
+            if(this.tranportCategories != undefined && this.tranportCategories.length > 0)
             this.tranportCategories.forEach(category=>{
               if(category.code ===transportation.vehicleTypes[0].categories[0].categoryCode)
               transportation.vehicleTypes[0].categories[0]['catName']=category.name;
