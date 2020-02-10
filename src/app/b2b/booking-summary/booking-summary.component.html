@@ -289,7 +289,7 @@
                 <div class="amount ">
                   <div class=summary-date>
                   <p><i class="fa fa-calendar"></i>29/11/2019</p>
-                  <p><i class="fa fa-users" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
+                  <p><i class="fa fa-users d-none" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
                     2 Motamers</p>
                   </div>
                   <span><p><u><a href="#">Edit</a></u></p></span>
@@ -298,14 +298,14 @@
               <li class="d-none"><h4>Flight</h4>
                 <div class="amount ">                 
                   <p>2xAdults</p>
-                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
+                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>
                     SAR 2,600</p>
                 </div>
               </li>
               <li class="d-none"><h4>Accomodations</h4>
                 <div class="amount">
                   <p>Hotel name</p>
-                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>SAR 1,800</p>
+                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>SAR 1,800</p>
                 </div>
               </li>
               <li><h4>Hotels</h4>
@@ -337,7 +337,7 @@
                 </ng-template>
                 <div class="amount">
                   <p>{{hotelcart.name}}</p>
-                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
                 </div>
               </li>
               <li *ngIf = "transportCart != null && transportCart?.vehicleTypes != undefined"><h4>Transportation</h4>
@@ -365,7 +365,7 @@
                 </ng-template>
                 <div class="amount">
                   <p>{{transportCart.companyName}}</p>
-                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
                 </div>
               </li>
               <li *ngIf = "groundCart != null"><h4>Ground Services</h4>
@@ -393,7 +393,7 @@
                 </ng-template>
                 <div class="amount">
                   <p>{{groundCart?.category?.categoryName}}</p>
-                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
                 </div>
               </li>
               <li>
