@@ -274,40 +274,23 @@
                   <div class="passenger-details" [hidden]=false>
                     <!-- <form [formGroup]="travellerForm"> -->
                       <fieldset class="passenger-fieldset-styles">
-                        <!-- <legend>Mutamer Details</legend> -->
-                        <!-- <div class="alert alert-warning alert-dismissible">
-                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet
-                            provident ipsum hic
-                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
-                            perspiciatis iusto et reprehenderit?</p>
-                        </div>
-                        <div class="alert alert-warning alert-dismissible">
-                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet provident ipsum hic
-                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
-                            perspiciatis iusto et reprehenderit?</p>
-                        </div>
-                        <div class="alert alert-warning alert-dismissible">
-                          <button type="button" class="close text-small" data-dismiss="alert">&times;</button>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil esse eveniet provident ipsum hic
-                            molestias, totam cupiditate laudantium vero illum dolore, voluptas adipisci itaque maiores. Laborum
-                            perspiciatis iusto et reprehenderit?</p>
-                        </div> -->
-                
-                        <div class="pilgrim-details" >
-                          
-                          <div *ngFor="let room of roomsForms; let k = index">
-                            <label class="room-name">Room : {{room.sequence + 1}}</label>
-                            <div *ngFor="let adult of room.adults; let i = index;">
+                   
+                        <div  class="pilgrim-details" *ngFor = "let form of totalForms let i = index">
+                            <label class="room-name">Room : {{i + 1}}</label>
+
+                          <form [formGroup]="usersForm">
+                           
+                          <div  *ngFor="let userFormGroup of form.controls; let n = index">
+                            <!-- <p>{{userFormGroup.controls[0]}}</p> -->
+                            <div>
                               <div class="checkout-data">
-                              <label class="piligram-type">Pilgrim Type : Adult {{i+1}}</label>
+                              <label class="piligram-type">Pilgrim Type : Adult {{n+1}}</label>
                               <div class="row piligrim-total-detail">
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Gender*</label>
                                     <select class="form-control custom-select"
-                                      (change)="onAdultChange($event.target.value, i, 'gender', k)"
+                                      
                                       data-placeholder="Choose a Category">
                                       <option value="" selected>Select One</option>
                                       <option value="M">Male</option>
@@ -319,22 +302,22 @@
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>First Name*</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'firstName',k)"
+                                    <input [formControl]="userFormGroup.controls['firstName']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['firstName'].errors}" class="form-control" 
                                       type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Middel Name*</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'middleName',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['middleName']"  class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Last Name*</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'lastName',k)"
-                                      type="text">
+                                    <input [formControl]="userFormGroup.controls['lastName']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['lastName'].errors}" class="form-control" 
+                                    type="text">
                                   </div>
                                 </div>
                               </div>
@@ -358,22 +341,22 @@
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Passport Number*</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'passportNumber',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['passportNumber']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['passportNumber'].errors}" class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Location Name*</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'locationName',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['locationName']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['locationName'].errors}" class="form-control" 
+                                    type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Address</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'address',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['address']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['address'].errors}" class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
                               </div>
@@ -381,15 +364,15 @@
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>City</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'city',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['city']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['city'].errors}" class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>State</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'state',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['state']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['state'].errors}" class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
@@ -406,86 +389,99 @@
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label>Zip</label>
-                                    <input class="form-control" (input)="onAddAdult($event.target.value,i,'zip',k)"
-                                      type="">
+                                    <input [formControl]="userFormGroup.controls['zip']" [ngClass]="{validationClass : usersFormValidationFlag && userFormGroup.controls['zip'].errors}" class="form-control" 
+                                      type="text">
                                   </div>
                                 </div>
+
                               </div>
                             </div>
                              
                             </div>
                 
-                            <div *ngFor="let child of room.childrens; let l = index;">
-                              <div class="checkout-data">
-                              <label class="piligram-type">Pilgrim Type : child {{l+1}}</label>
-                              <div class="row  piligrim-total-detail">
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <label>Gender*</label>
-                                    <select class="form-control custom-select"
-                                      (change)="onChildrenChange($event.target.value, l, 'gender', k)"
-                                      data-placeholder="Choose a Category">
-                                      <option value="" selected>Select One</option>
-                                      <option value="M">Male</option>
-                                      <option value="F">
-                                        Female</option>
-                                    </select>
-                                  </div>
+                          </div>
+
+                          <div *ngFor = "let children of form.controls[i].controls['childArray'].controls let j = index">
+                            <p>{{children}}</p>
+                            <div class="checkout-data">
+                            <label class="piligram-type">Pilgrim Type : child {{j+1}}</label>
+                            <div class="row  piligrim-total-detail">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label>Gender*</label>
+                                  <select class="form-control custom-select"
+                                   
+                                    data-placeholder="Choose a Category">
+                                    <option value="" selected>Select One</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">
+                                      Female</option>
+                                  </select>
                                 </div>
-                                <div class="col-md-3">
+                              </div>
+                              <div class="col-md-3">
+                              
                                   <div class="form-group">
                                     <label>First Name*</label>
-                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'firstName',k)"
+                                    <input [formControl]="children.controls['firstName']"  [ngClass]="{validationClass : usersFormValidationFlag && children.controls['firstName'].errors}" class="form-control" 
                                       type="text">
                                   </div>
-                                </div>
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <label>Middel Name*</label>
-                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'middleName',k)"
-                                      type="text">
-                                  </div>
-                                </div>
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <label>Last Name*</label>
-                                    <input class="form-control" (input)="onAddChildren($event.target.value,l,'lastName',k)"
-                                      type="text">
-                                  </div>
+                             
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label>Middel Name*</label>
+                                  <input [formControl]="children.controls['middleName']"   class="form-control" 
+                                  type="text">
                                 </div>
                               </div>
-                
-                              <div>
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <label>Birth Date(DD/MM/YYYY)*</label>
-                                    <!-- <input class="form-control" (input)="onAddChildren($event.target.value,k,'birthDate',k)"
-                                      type=""> -->
-                                      <div class="input-group">
-                                        <input class="form-control" (input)="onAddChildren($event.target.value,i,'birthDate',k)"
-                                          type="" name="dp3" ngbDatepicker #d3="ngbDatepicker" #birthDate (focus)="d3.open()"
-                                          >
-                                        <div class="input-group-append">
-                                          <button class="btn border border-warning no-shadow btn-pad" (click)="d3.toggle()"
-                                            type="button">
-                                            <i class="fa fa-calendar"></i>
-                                          </button>
-                                        </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label>Last Name*</label>
+                                  <input [formControl]="children.controls['lastName']"  [ngClass]="{validationClass : usersFormValidationFlag && children.controls['lastName'].errors}" class="form-control" 
+                                  type="text">
+                                </div>
+                              </div>
+                            </div>
+              
+                            <div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label>Birth Date(DD/MM/YYYY)*</label>
+                                  <!-- <input class="form-control" (input)="onAddChildren($event.target.value,k,'birthDate',k)"
+                                    type=""> -->
+                                    <div class="input-group">
+                                      <input class="form-control" (input)="onAddChildren($event.target.value,i,'birthDate',k)"
+                                        type="" name="dp3" ngbDatepicker #d3="ngbDatepicker" #birthDate (focus)="d3.open()"
+                                        >
+                                      <div class="input-group-append">
+                                        <button class="btn border border-warning no-shadow btn-pad" (click)="d3.toggle()"
+                                          type="button">
+                                          <i class="fa fa-calendar"></i>
+                                        </button>
                                       </div>
-                                  </div>
+                                    </div>
                                 </div>
                               </div>
                             </div>
-                            
-                            </div>
-                           
                           </div>
-                          <p >Infant and Child should be less than 2 and 12 years respectively till the end of trip.</p>
+                          
+                          </div>
+
+                        </form>
+
+         
+                          <!-- <p >Infant and Child should be less than 2 and 12 years respectively till the end of trip.</p> -->
                         </div>
+                  
+
+                          <button type="submit" (click) = "onSubmit()">submit</button>
+
+
                       
                       </fieldset>
                     <!-- </form> -->
-                      <form [formGroup]="contactForm">
+                      <!-- <form class = "d-none" [formGroup]="contactForm">
                       <fieldset class="passenger-fieldset-styles">
                         <legend>Contact</legend>
                         <div class="contact-details">
@@ -541,7 +537,7 @@
                           </div>
                         </div>
                       </fieldset>
-                    </form>
+                    </form> -->
                   </div>
 
                  </div>
@@ -806,4 +802,39 @@ type = "ball-pulse-sync"
 
 
 
-  
+<form>
+  <!-- <div formArrayName="formArray1">
+<div *ngFor="let X of f.formArray1['controls']; let ix=index"> -->
+<!-- 
+ <input type="text" formControlName="gender">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> -->
+ <!-- <input type="text" formControlName="firstName">
+ <p *ngIf="X['controls'].firstName?.errors?.required">x is required</p> -->
+  <!-- <input type="text" formControlName="middleName">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+
+ <input type="text" formControlName="lastName">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ 
+ <input type="text" formControlName="birthDate">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ 
+ 
+ <input type="text" formControlName="passportNumber">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ 
+ <input type="text" formControlName="locationName">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ <input type="text" formControlName="address">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ <input type="text" formControlName="city">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ <input type="text" formControlName="state">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p> 
+ <input type="text" formControlName="country">
+ <p *ngIf="X['controls'].X?.errors?.required">x is required</p>
+  <input type="text" formControlName="zip">
+  -->
+<!-- </div> --> 
+<!-- </div> -->
+</form>

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { AlrajhiumrahService } from 'src/app/services/alrajhiumrah.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { BroadcastserviceService } from 'src/app/services/broadcastservice.service';
-import {NgbDatepickerConfig, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-check-out",
@@ -78,19 +78,37 @@ export class CheckOutComponent implements OnInit {
   public vehicleTypes = []
   public vehiclePolicies = []
   public countryList = []
-   
-  public numberOfNights : any
+
+  public numberOfNights: any
 
   walletForm: FormGroup
+  myform: FormGroup;
+  // userForm: FormGroup;
+  public formArray1 = []
 
+
+  public addultsArry = []
+  public childArry = []
+
+  public totalForms = []
+
+  usersFormValidationFlag: boolean
   constructor(private fb: FormBuilder,
 
     private teejanServices: AlrajhiumrahService, private router: Router, private spinner: NgxSpinnerService,
     private broadcastService: BroadcastserviceService, private formBuilder: FormBuilder,
     config: NgbDatepickerConfig, calendar: NgbCalendar
-  ) { this.loadcontactForm(fb), 
-    config.minDate = {year: 1900, month: 1, day: 1};
+  ) {
+    this.loadcontactForm(fb),
+      config.minDate = { year: 1900, month: 1, day: 1 };
   }
+
+
+
+
+
+  public usersForm = new FormArray(this.formsArr);
+
 
   ngOnInit() {
 
@@ -117,16 +135,12 @@ export class CheckOutComponent implements OnInit {
     this.groundCalculations();
 
     // calculating GrandTotal
-    this.cartGrandTotal = this.hotelTotalPrice + this.transportTotalPrice + this.groundTotalPrice + this.guests * 300 
+    this.cartGrandTotal = this.hotelTotalPrice + this.transportTotalPrice + this.groundTotalPrice + this.guests * 300
     this.hotelTrackToken = localStorage.getItem('hotelAvailabilityTracktoken')
 
     this.country();
-    this.travellerForms();
-   
-
-
-
-   
+    this.validate()
+    // this.travellerForms();
 
   }
 
@@ -141,83 +155,108 @@ export class CheckOutComponent implements OnInit {
   }
 
 
-  /* preparing travellerForms */
-  public travellerForms() {
+  public validate(): void {
     this.rooms = this.searchObj.request.rooms;
+    this.childArry = []
+  
     for (let m = 0; m < this.rooms.length; m++) {
-
+     
       this.adultsCount = [];
       this.childrenCount = [];
-      this.adults = []
-
+      this.addultsArry = []
+      this.childArry = []
+    
+  
       this.adultsCount = this.rooms[m].PaxInfo.filter(adt => adt.Type == "ADT");
-
-      console.log("adultsCount", this.adultsCount)
-
-      // this.adultsCount[0].  
-
-
-
-      for (let j = 0; j < this.adultsCount[0].Quantity; j++) {
-
-        // this.formsArr.push(this.fb.group({
-        //   gender: this.fb.control('', [Validators.required]),
-        //   firstName: this.fb.control('', [Validators.required]),
-        //   middleName: this.fb.control('', [Validators.required]),
-        //   lastName: this.fb.control('', [Validators.required]),
-        //   birthDate: this.fb.control('', [Validators.required]),
-        //   passportNumber: this.fb.control('', [Validators.required]),
-        //   locationName: this.fb.control('', [Validators.required]),
-        //   address: this.fb.control('', [Validators.required]),
-        //   city: this.fb.control('', [Validators.required]),
-        //   state: this.fb.control('', [Validators.required]),
-        //   country: this.fb.control('', [Validators.required]),
-        //   zip: this.fb.control('', [Validators.required]),
-
-        // }))
-
-        var adultObj = {
-          gender: "",
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          birthDate: "",
-          passportNumber: "",
-          locationName: "",
-          address: "",
-          city: "",
-          state: "",
-          country: "",
-          zip: ""
-        };
-        this.adults.push(adultObj);
-      }
-
-      this.childrens = []
-      this.childrenCount = [];
       this.childrenCount = this.rooms[m].PaxInfo.filter(chd => chd.Type == "CHD")
 
-      for (let s = 0; s < this.childrenCount.length; s++) {
-        var childrenObj = {
-          gender: "",
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          birthDate: "",
 
-        };
-        this.childrens.push(childrenObj);
+        console.log("adultCount" , this.adultsCount[0].Quantity)
+      
+
+      for (var j = 0; j < this.adultsCount[0].Quantity; j++) {
+
+          
+
+        this.addultsArry.push(
+          new FormGroup({
+            gender: new FormControl('', { validators: Validators.required }),
+            firstName: new FormControl('', { validators: Validators.required }),
+            middleName: new FormControl('', { validators: Validators.required }),
+            lastName: new FormControl('', { validators: Validators.required }),
+            birthDate: new FormControl('', { validators: Validators.required }),
+            passportNumber: new FormControl('', { validators: Validators.required }),
+            locationName: new FormControl('', { validators: Validators.required }),
+            address: new FormControl('', { validators: Validators.required }),
+            city: new FormControl('', { validators: Validators.required }),
+            state: new FormControl('', { validators: Validators.required }),
+            country: new FormControl('', { validators: Validators.required }),
+            zip: new FormControl('', { validators: Validators.required }),
+            childArray: new FormArray([])
+          }),
+        )
+
+        
+     
+
       }
 
-      var roomObject = {
-        sequence: this.rooms[m].Sequence,
-        adults: this.adults,
-        childrens: this.childrens
+      
+      for (let k = 0; k < this.childrenCount.length ; k++) {
+       
+        this.childArry.push(
+          new FormGroup({
+            gender: new FormControl('', { validators: Validators.required }),
+            firstName: new FormControl('', { validators: Validators.required }),
+            middleName: new FormControl('', { validators: Validators.required }),
+            lastName: new FormControl('', { validators: Validators.required }),
+            birthDate: new FormControl('', { validators: Validators.required }),
+          }),
+        )
+
       }
-      this.roomsForms.push(roomObject);
+      this.addultsArry[m].controls.childArray = new FormArray(this.childArry);
+            
+  
+     
+    console.log( "this.childrenCount" ,  this.childrenCount)
+
+        console.log("childArry" ,this.childArry);
+       
+
+
+
+      // this.addultsArry[j].controls.childArray = new FormArray(this.childArry);
+
+    this.usersForm = new FormArray(this.addultsArry);
+
+      this.totalForms.push(this.usersForm)
+
+     
     }
 
+    console.log("form value" , this.usersForm.controls)
+    console.log("allForms" , this.totalForms[0].controls[0])
+
+    
+
+    // console.log(this.usersForm.controls)
+
   }
+
+  onSubmit() {
+
+    console.log( "value" , this.usersForm.valid);
+
+    this.usersFormValidationFlag = this.usersForm.valid ? false : true;
+
+    console.log(this.usersForm.valid);
+    console.log(this.totalForms);
+
+  }
+
+
+
 
   public loadcontactForm(fb) {
     this.contactForm = fb.group({
@@ -234,118 +273,85 @@ export class CheckOutComponent implements OnInit {
 
 
 
-  onAdultChange(value, index, key, outerIndex) {
-    if (key === "gender") {
-      this.roomsForms[outerIndex]["adults"][index].gender = value;
-    }
-    else if (key === "country") {
-      this.roomsForms[outerIndex]["adults"][index].country = value;
-    }
-
-
-  }
-
-  onAddAdult(value, index, key, outerIndex) {
-
-    if (key === "firstName") {
-      this.roomsForms[outerIndex]["adults"][index].firstName = value;
-     
-    } else if (key === "lastName") {
-      this.roomsForms[outerIndex]["adults"][index].lastName = value;
-    } else if (key === "birthDate") {
-      console.log("birthDate" , value)
-
-      this.roomsForms[outerIndex]["adults"][index].birthDate = value;
-
-    } else if (key === "middleName") {
-      this.roomsForms[outerIndex]["adults"][index].middleName = value;
-    } else if (key === "passportNumber") {
-      this.roomsForms[outerIndex]["adults"][index].passportNumber = value;
-    } else if (key === "locationName") {
-      this.roomsForms[outerIndex]["adults"][index].locationName = value;
-    } else if (key === "address") {
-      this.roomsForms[outerIndex]["adults"][index].address = value;
-    } else if (key === "city") {
-      this.roomsForms[outerIndex]["adults"][index].city = value;
-    } else if (key === "state") {
-      this.roomsForms[outerIndex]["adults"][index].state = value;
-    } else if (key === "zip") {
-      this.roomsForms[outerIndex]["adults"][index].zip = value;
-    }
-  }
-
-  onChildrenChange(value, index, key, outerIndex) {
-    if (key === "gender") {
-      this.roomsForms[outerIndex]["childrens"][index].gender = value;
-    } else if (key === "country") {
-      this.roomsForms[outerIndex]["childrens"][index].country = value;
-    }
-
-  }
-  onAddChildren(value, index, key, outerIndex) {
-
-    if (key === "firstName") {
-      this.roomsForms[outerIndex]["childrens"][index].firstName = value;
-    } else if (key === "lastName") {
-      this.roomsForms[outerIndex]["childrens"][index].lastName = value;
-    } else if (key === "birthDate") {
-      this.roomsForms[outerIndex]["childrens"][index].birthDate = value;
-      console.log("childrenbirthDate" , value)
-    } else if (key === "middleName") {
-      this.roomsForms[outerIndex]["childrens"][index].middleName = value;
-    }
-
-
-    console.log("roomForms", this.roomsForms);
-  }
-
-
- 
-
-
-  
-
   cardPay(cartGrandTotal) {
 
-    
+        console.log("this.usersForm.controls" , this.usersForm.controls)
+
+    for(let s = 0 ; s < this.usersForm.value.length ; s++){
+      var adultObject =
+      {
+        "type": "ADT",
+        "isMainPax": true,
+        "details": {
+          "firstName": this.usersForm.value[s].firstName,
+          "middleName": this.usersForm.value[s].middleName,
+          "lastName": this.usersForm.value[s].lastName,
+          // "gender": this.roomsForms[r].adults[q].gender,
+          "birthDate": "1995-01-25",
+          "location": {
+            "name": this.usersForm.value[s].locationName,
+            "countryCode": "IN",
+            // "country": this.roomsForms[r].adults[q].country,
+            "address": this.usersForm.value[s].address,
+            "city": this.usersForm.value[s].city,
+            "state": this.usersForm.value[s].state,
+            "zipCode": this.usersForm.value[s].zip
+          },
+          // "contactInformation": {
+          //   "phoneNumber": `${this.contactForm.value.mobileNumber}`,
+          //   "phoneNumberCountryCode": "91",
+          //   "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
+          //   "homePhoneNumberCountryCode": "91",
+          //   "fax": "",
+          //   "email": this.contactForm.value.email
+          // }
+        }
+      }
+
+
+    }   
+    this.traveller.push(adultObject);
+
+    console.log("this.traveller" , this.traveller)
+
+
     for (var r = 0; r < this.roomsForms.length; r++) {
       this.traveller = []
       for (var q = 0; q < this.roomsForms[r].adults.length; q++) {
-        var adultObject =
-        {
-          "type": "ADT",
-          "isMainPax": true,
-          "details": {
-            "firstName": this.roomsForms[r].adults[q].firstName,
-            "middleName": this.roomsForms[r].adults[q].middleName,
-            "lastName": this.roomsForms[r].adults[q].lastName,
-            "gender": this.roomsForms[r].adults[q].gender,
-            "birthDate": "1995-01-25",
-            "location": {
-              "name": this.roomsForms[r].adults[q].locationName,
-              "countryCode": "IN",
-              "country": this.roomsForms[r].adults[q].country,
-              "address": this.roomsForms[r].adults[q].address,
-              "city": this.roomsForms[r].adults[q].city,
-              "state": this.roomsForms[r].adults[q].state,
-              "zipCode": this.roomsForms[r].adults[q].zip
-            },
-            "contactInformation": {
-              "phoneNumber": `${this.contactForm.value.mobileNumber}`,
-              "phoneNumberCountryCode": "91",
-              "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
-              "homePhoneNumberCountryCode": "91",
-              "fax": "",
-              "email": this.contactForm.value.email
-            }
-          }
-        }
+        // var adultObject =
+        // {
+        //   "type": "ADT",
+        //   "isMainPax": true,
+        //   "details": {
+        //     "firstName": this.roomsForms[r].adults[q].firstName,
+        //     "middleName": this.roomsForms[r].adults[q].middleName,
+        //     "lastName": this.roomsForms[r].adults[q].lastName,
+        //     "gender": this.roomsForms[r].adults[q].gender,
+        //     "birthDate": "1995-01-25",
+        //     "location": {
+        //       "name": this.roomsForms[r].adults[q].locationName,
+        //       "countryCode": "IN",
+        //       "country": this.roomsForms[r].adults[q].country,
+        //       "address": this.roomsForms[r].adults[q].address,
+        //       "city": this.roomsForms[r].adults[q].city,
+        //       "state": this.roomsForms[r].adults[q].state,
+        //       "zipCode": this.roomsForms[r].adults[q].zip
+        //     },
+        //     "contactInformation": {
+        //       "phoneNumber": `${this.contactForm.value.mobileNumber}`,
+        //       "phoneNumberCountryCode": "91",
+        //       "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
+        //       "homePhoneNumberCountryCode": "91",
+        //       "fax": "",
+        //       "email": this.contactForm.value.email
+        //     }
+        //   }
+        // }
         this.traveller.push(adultObject);
 
-        if(this.roomsForms[r].adults[q].gender == "M")
-        {
+        if (this.roomsForms[r].adults[q].gender == "M") {
           var genderNumber = 1
-        }else{
+        } else {
           var genderNumber = 2
 
         }
@@ -409,12 +415,12 @@ export class CheckOutComponent implements OnInit {
     }
 
 
-      console.log("travellerDetails" , this.travellerDetails)
+    console.log("travellerDetails", this.travellerDetails)
     localStorage.setItem("evisaMutmerDetails", JSON.stringify(this.evisaMutmerDetails))
     localStorage.setItem("travellerDetails", JSON.stringify(this.travellerDetails))
 
 
-    var transportTravllerObj  = {
+    var transportTravllerObj = {
       "details": {
         "passportNo": this.roomsForms[0].adults[0].passportNumber,
         "firstName": this.roomsForms[0].adults[0].firstName,
@@ -430,7 +436,7 @@ export class CheckOutComponent implements OnInit {
       }
     }
 
-    localStorage.setItem("transportTravellerDetails" , JSON.stringify(transportTravllerObj))
+    localStorage.setItem("transportTravellerDetails", JSON.stringify(transportTravllerObj))
 
 
 
@@ -445,9 +451,9 @@ export class CheckOutComponent implements OnInit {
       "mobileNumber": `${this.contactForm.value.mobileNumber}`,
       "referenceId": `${randomNumber}`
     }
-   
 
-    
+
+
     this.teejanServices.processPayment1(data).subscribe(resp => {
       console.log("success payment page");
       window.location.href = resp.pgLink
@@ -461,7 +467,7 @@ export class CheckOutComponent implements OnInit {
 
 
   }
- 
+
 
   // hotel calculations 
   public hotelCalculations() {
@@ -477,14 +483,14 @@ export class CheckOutComponent implements OnInit {
             this.roomsBasePrice += priceDetails.amount * this.numberOfNights;
             this.roomsGDS += priceDetails.amount / 100 * 7.5 * this.numberOfNights
             this.roomsOTA += priceDetails.amount / 100 * 30 * this.numberOfNights;
-              
+
           }
           if (priceDetails.purpose == "2") {
             this.roomsFees += priceDetails.amount * this.numberOfNights;
           }
-         
+
           if (priceDetails.purpose == "7") {
-            this.roomsVAT += priceDetails.amount*  this.numberOfNights;
+            this.roomsVAT += priceDetails.amount * this.numberOfNights;
           }
         });
       });
@@ -497,7 +503,7 @@ export class CheckOutComponent implements OnInit {
         this.roomsOTA;
       console.log("hoteTotalPrice", this.hotelTotalPrice);
 
-      localStorage.setItem("hotelAmount" , JSON.stringify(this.hotelTotalPrice))
+      localStorage.setItem("hotelAmount", JSON.stringify(this.hotelTotalPrice))
     }
   }
 
@@ -505,70 +511,71 @@ export class CheckOutComponent implements OnInit {
   public transportCalculations() {
     if (this.transportCart != null || this.transportCart != undefined) {
 
-      if(this.transportCart.vehicleTypes != undefined && this.transportCart.vehicleTypes != null ){
+      if (this.transportCart.vehicleTypes != undefined && this.transportCart.vehicleTypes != null) {
 
-      let transportCategories = this.transportCart.vehicleTypes.map(
-        vehicel => vehicel.categories
-      );
+        let transportCategories = this.transportCart.vehicleTypes.map(
+          vehicel => vehicel.categories
+        );
 
-      transportCategories.forEach(category => {
-        this.transportQuantity += category[0].quantity;
-        category[0].displayRateInfo.forEach(rate => {
-          if (rate.purpose == "1") {
-            this.transportBasePrice += rate.amount * this.transportQuantity;
-            // console.log("transportBasePrice", this.transportBasePrice);
+        transportCategories.forEach(category => {
+          this.transportQuantity += category[0].quantity;
+          category[0].displayRateInfo.forEach(rate => {
+            if (rate.purpose == "1") {
+              this.transportBasePrice += rate.amount * this.transportQuantity;
+              // console.log("transportBasePrice", this.transportBasePrice);
 
-            this.transportGDS += rate.amount / 100 * 7.5 * this.transportQuantity;
-            this.transportOTA += rate.amount / 100 * 30 * this.transportQuantity;
-             
-           
-          }
-          if (rate.purpose == "7") {
-            this.transportVAT += rate.amount * this.transportQuantity;
-            // console.log("transportVAT", this.transportVAT);
-          }
-         
+              this.transportGDS += rate.amount / 100 * 7.5 * this.transportQuantity;
+              this.transportOTA += rate.amount / 100 * 30 * this.transportQuantity;
+
+
+            }
+            if (rate.purpose == "7") {
+              this.transportVAT += rate.amount * this.transportQuantity;
+              // console.log("transportVAT", this.transportVAT);
+            }
+
+          });
         });
-      });
 
-      this.transportTotalPrice =
-        this.transportBasePrice +
-        this.transportVAT +
-        this.transportGDS +
-        this.transportOTA;
+        this.transportTotalPrice =
+          this.transportBasePrice +
+          this.transportVAT +
+          this.transportGDS +
+          this.transportOTA;
 
-      console.log("transportTotalPrice", this.transportTotalPrice);
-      localStorage.setItem("transportAmount" , JSON.stringify(this.transportTotalPrice))
+        console.log("transportTotalPrice", this.transportTotalPrice);
+        localStorage.setItem("transportAmount", JSON.stringify(this.transportTotalPrice))
 
+      }
     }
-  }
   }
 
   // ground calculations 
   public groundCalculations() {
     if (this.groundCart != null || this.groundCart != undefined) {
       this.groundQuantity = 1;
-      if(this.groundCart.category.displayRateInfo !=undefined)
-      { this.groundCart.category.displayRateInfo.forEach(rate => {
-        if (rate.purpose == "1") {
-          this.groundBasePrice += rate.amount * this.groundQuantity;
-          // console.log("groundBasePrice", this.groundBasePrice);
-          this.groundGDS += rate.amount / 100 * 7.5  * this.groundQuantity;
-          this.groundOTA += rate.amount / 100 * 30 * this.groundQuantity;
+      if (this.groundCart.category.displayRateInfo != undefined) {
+        this.groundCart.category.displayRateInfo.forEach(rate => {
+          if (rate.purpose == "1") {
+            this.groundBasePrice += rate.amount * this.groundQuantity;
+            // console.log("groundBasePrice", this.groundBasePrice);
+            this.groundGDS += rate.amount / 100 * 7.5 * this.groundQuantity;
+            this.groundOTA += rate.amount / 100 * 30 * this.groundQuantity;
 
 
-        }
-        if (rate.purpose == "7") {
-          this.groundVAT += rate.amount * this.groundQuantity;
-          console.log("groundVAT", this.groundVAT);
-        }
-        
-      });
-      this.groundTotalPrice =
-        this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;}
-        localStorage.setItem("groundAmount" , JSON.stringify(this.groundTotalPrice))
+          }
+          if (rate.purpose == "7") {
+            this.groundVAT += rate.amount * this.groundQuantity;
+            console.log("groundVAT", this.groundVAT);
+          }
 
-     
+        });
+        this.groundTotalPrice =
+          this.groundBasePrice + this.groundVAT + this.groundGDS + this.groundOTA;
+      }
+      localStorage.setItem("groundAmount", JSON.stringify(this.groundTotalPrice))
+
+
     }
   }
 
