@@ -489,70 +489,82 @@
                               <!-- <p >Infant and Child should be less than 2 and 12 years respectively till the end of trip.</p> -->
                             </div>
 
+                             
+
 
                             <button type="submit" (click)="onSubmit()">submit</button>
 
 
 
                           </fieldset>
-                          <!-- </form> -->
-                          <!-- <form class = "d-none" [formGroup]="contactForm">
-                      <fieldset class="passenger-fieldset-styles">
-                        <legend>Contact</legend>
-                        <div class="contact-details">
-                          <div class="row piligrim-total-detail">
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>Gender*</label>
-                                <select class="form-control custom-select" [formControl]="contactForm.controls['cgender']"
-                                  data-placeholder="Choose a Category">
-                                  <option value="contact-male">Male</option>
-                                  <option value="contact-female">
-                                    Female</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>First Name*</label>
-                                <input class="form-control" formControlName="cfirstName" type="text">
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>Last Name*</label>
-                                <input class="form-control" formControlName="clastName" type="text">
-                              </div>
-                            </div>
-                           
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>Email*</label>
-                                <input class="form-control" formControlName="email" type="email">
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>Mobile Number*</label>
-                                <div class="d-flex">
-                                 
-                                  <input class="form-control" formControlName="mobileNumber" type="number">
+                          <form [formGroup]="contactForm">
+                            <fieldset class="passenger-fieldset-styles">
+                              <legend>Contact</legend>
+                              <div class="contact-details">
+                                <div class="row piligrim-total-detail">
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Gender*</label>
+                                      <select class="form-control custom-select"
+                                        data-placeholder="Choose a Category"
+                                        [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['cgender'].errors}"
+                                        [formControl]="contactForm.controls['cgender']">
+                                        <option value="contact-male">Male</option>
+                                        <option value="contact-female">
+                                          Female</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>First Name*</label>
+                                      <input class="form-control" type="text"
+                                       [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['cfirstname'].errors}"
+                                       [formControl]="contactForm.controls['cfirstname']">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Last Name*</label>
+                                      <input class="form-control" type="text" 
+                                      [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['clastName'].errors}"
+                                      [formControl]="contactForm.controls['clastName']">
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Email*</label>
+                                      <input class="form-control" type="email" 
+                                      [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['cemail'].errors}"
+                                      [formControl]="contactForm.controls['cemail']">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Mobile Number*</label>
+                                      <div class="d-flex">
+                                        <input class="form-control" type="number" 
+                                        [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['cmobileNumber'].errors}"
+                                        [formControl]="contactForm.controls['cmobileNumber']">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Home Mobile Number</label>
+                                      <div class="d-flex">
+
+                                        <input class="form-control" type="number" 
+                                        [ngClass]="{'validationClass' : contactFormValidationFlag && contactForm.controls['csecondMobileNumber'].errors}"
+                                        [formControl]="contactForm.controls['csecondMobileNumber']">
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label>Home Mobile Number</label>
-                                <div class="d-flex">
-                                 
-                                  <input class="form-control" formControlName="secondMobileNumber" type="number">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </form> -->
+                            </fieldset>
+                          </form>
                         </div>
 
                       </div>

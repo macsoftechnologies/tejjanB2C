@@ -252,7 +252,7 @@ export class TransportServiceComponent implements OnInit {
       transportSearchResp => {
 
         this.spinner.hide();
-        if(transportSearchResp.body.transportations.length  != undefined){
+        if(transportSearchResp.body.transportations  != undefined){
         if (transportSearchResp.body.transportations.length > 0) {
 
           console.log("transportCompanies", this.companies)

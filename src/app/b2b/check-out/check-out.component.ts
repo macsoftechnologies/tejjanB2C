@@ -48,6 +48,7 @@ export class CheckOutComponent implements OnInit {
 
   public cartGrandTotal = 0
 
+  public contactFormValidationFlag : boolean
 
 
   public groundPolicies: any;
@@ -194,7 +195,6 @@ export class CheckOutComponent implements OnInit {
 
   onSubmit() {
 
-    console.log("value", this.usersForm.valid);
 
     this.usersFormValidationFlag = this.usersForm.valid ? false : true;
 
@@ -207,13 +207,13 @@ export class CheckOutComponent implements OnInit {
 
   public loadcontactForm(fb) {
     this.contactForm = fb.group({
-      cgender: [""],
-      cfirstName: [""],
-      clastName: [""],
+      cgender: ["" , Validators.required],
+      cfirstName: ["" , Validators.required],
+      clastName: ["" , Validators.required],
       city: [""],
-      email: [""],
-      mobileNumber: [""],
-      secondMobileNumber: [""],
+      cemail: ["" , Validators.required],
+      cmobileNumber: ["" , Validators.required],
+      csecondMobileNumber: ["" , Validators.required],
       phoneNumberCountryCode: [""]
     });
   }
@@ -221,10 +221,20 @@ export class CheckOutComponent implements OnInit {
 
 
   cardPay(cartGrandTotal) {
+    console.log("value", this.usersForm.valid);
+    console.log("contactvalue", this.contactForm.valid);
 
-    console.log(this.totalForms);
+    
+
+
+    this.usersFormValidationFlag = this.usersForm.valid ? false : true;
+
+    this.contactFormValidationFlag = this.contactForm.valid ? false : true;
+    if( !this.contactFormValidationFlag && !this.usersFormValidationFlag) {
 
 for(let m = 0 ; m < this.totalForms.length ; m++){
+
+   this.traveller = []
 
     console.log(" this.totalForms[m].value",  this.totalForms[m].value)
 
@@ -234,19 +244,19 @@ for(let m = 0 ; m < this.totalForms.length ; m++){
         "type": "ADT",
         "isMainPax": true,
         "details": {
-          "firstName": this.usersForm.value[s].firstName,
-          "middleName": this.usersForm.value[s].middleName,
-          "lastName": this.usersForm.value[s].lastName,
+          "firstName": this.totalForms[m].value[s].firstName,
+          "middleName": this.totalForms[m].value[s].middleName,
+          "lastName": this.totalForms[m].value[s].lastName,
           // "gender": this.roomsForms[r].adults[q].gender,
           "birthDate": "1995-01-25",
           "location": {
-            "name": this.usersForm.value[s].locationName,
+            "name": this.totalForms[m].value[s].locationName,
             "countryCode": "IN",
             // "country": this.roomsForms[r].adults[q].country,
-            "address": this.usersForm.value[s].address,
-            "city": this.usersForm.value[s].city,
-            "state": this.usersForm.value[s].state,
-            "zipCode": this.usersForm.value[s].zip
+            "address": this.totalForms[m].value[s].address,
+            "city": this.totalForms[m].value[s].city,
+            "state": this.totalForms[m].value[s].state,
+            "zipCode": this.totalForms[m].value[s].zip
           },
           // "contactInformation": {
           //   "phoneNumber": `${this.contactForm.value.mobileNumber}`,
@@ -259,113 +269,160 @@ for(let m = 0 ; m < this.totalForms.length ; m++){
         }
       }
 
+      this.traveller.push(adultObject);
 
     }
-    this.traveller.push(adultObject);
 
+
+    for(let b = 0; b < this.totalForms[m].value[0].childArray.length; b++){
+        
+      console.log( this.totalForms[0].value[0].childArray[b])
+      var childObject =
+      {
+        "type": "CHD",
+        "isMainPax": true,
+        "details": {
+          "firstName":this.totalForms[0].value[0].childArray[b].firstName,
+          "middleName": this.totalForms[0].value[0].childArray[b].middleName,
+          "lastName":this.totalForms[0].value[0].childArray[b].lastName,
+          "gender": this.totalForms[0].value[0].childArray[b].gender,
+          "birthDate": "1995-01-25",
+          "age": "1",
+          "location": {
+            "name": this.totalForms[0].value[0].locationName,
+            "countryCode": "IN",
+            "country": this.totalForms[0].value[0].country,
+            "address":this.totalForms[0].value[0].address,
+            "city": this.totalForms[0].value[0].city,
+            "state": this.totalForms[0].value[0].state,
+            "zipCode": this.totalForms[0].value[0].zip
+          },
+          "contactInformation": {
+            "phoneNumber": `${this.contactForm.value.cmobileNumber}`,
+            "phoneNumberCountryCode": "91",
+            "homePhoneNumber": `${this.contactForm.value.csecondMobileNumber}`,
+            "homePhoneNumberCountryCode": "91",
+            "fax": "",
+            "email": this.contactForm.value.cemail
+          }
+        }
+      }
+    this.traveller.push(childObject)
+      
+
+    }
+
+ 
     
+
+    let travellerListObj = {
+      travellersList: this.traveller
+    }
+
+    this.travellerDetails.push(travellerListObj);
+
+
+
   }
     console.log("this.traveller", this.traveller)
 
 
-    for (var r = 0; r < this.roomsForms.length; r++) {
-      this.traveller = []
-      for (var q = 0; q < this.roomsForms[r].adults.length; q++) {
-        // var adultObject =
-        // {
-        //   "type": "ADT",
-        //   "isMainPax": true,
-        //   "details": {
-        //     "firstName": this.roomsForms[r].adults[q].firstName,
-        //     "middleName": this.roomsForms[r].adults[q].middleName,
-        //     "lastName": this.roomsForms[r].adults[q].lastName,
-        //     "gender": this.roomsForms[r].adults[q].gender,
-        //     "birthDate": "1995-01-25",
-        //     "location": {
-        //       "name": this.roomsForms[r].adults[q].locationName,
-        //       "countryCode": "IN",
-        //       "country": this.roomsForms[r].adults[q].country,
-        //       "address": this.roomsForms[r].adults[q].address,
-        //       "city": this.roomsForms[r].adults[q].city,
-        //       "state": this.roomsForms[r].adults[q].state,
-        //       "zipCode": this.roomsForms[r].adults[q].zip
-        //     },
-        //     "contactInformation": {
-        //       "phoneNumber": `${this.contactForm.value.mobileNumber}`,
-        //       "phoneNumberCountryCode": "91",
-        //       "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
-        //       "homePhoneNumberCountryCode": "91",
-        //       "fax": "",
-        //       "email": this.contactForm.value.email
-        //     }
-        //   }
-        // }
-        this.traveller.push(adultObject);
+    // for (var r = 0; r < this.roomsForms.length; r++) {
+    //   this.traveller = []
+    //   for (var q = 0; q < this.roomsForms[r].adults.length; q++) {
+    //     // var adultObject =
+    //     // {
+    //     //   "type": "ADT",
+    //     //   "isMainPax": true,
+    //     //   "details": {
+    //     //     "firstName": this.roomsForms[r].adults[q].firstName,
+    //     //     "middleName": this.roomsForms[r].adults[q].middleName,
+    //     //     "lastName": this.roomsForms[r].adults[q].lastName,
+    //     //     "gender": this.roomsForms[r].adults[q].gender,
+    //     //     "birthDate": "1995-01-25",
+    //     //     "location": {
+    //     //       "name": this.roomsForms[r].adults[q].locationName,
+    //     //       "countryCode": "IN",
+    //     //       "country": this.roomsForms[r].adults[q].country,
+    //     //       "address": this.roomsForms[r].adults[q].address,
+    //     //       "city": this.roomsForms[r].adults[q].city,
+    //     //       "state": this.roomsForms[r].adults[q].state,
+    //     //       "zipCode": this.roomsForms[r].adults[q].zip
+    //     //     },
+    //     //     "contactInformation": {
+    //     //       "phoneNumber": `${this.contactForm.value.mobileNumber}`,
+    //     //       "phoneNumberCountryCode": "91",
+    //     //       "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
+    //     //       "homePhoneNumberCountryCode": "91",
+    //     //       "fax": "",
+    //     //       "email": this.contactForm.value.email
+    //     //     }
+    //     //   }
+    //     // }
+    //     this.traveller.push(adultObject);
 
-        if (this.roomsForms[r].adults[q].gender == "M") {
-          var genderNumber = 1
-        } else {
-          var genderNumber = 2
+    //     if (this.roomsForms[r].adults[q].gender == "M") {
+    //       var genderNumber = 1
+    //     } else {
+    //       var genderNumber = 2
 
-        }
+    //     }
 
-        let mutamervisaObj =
+    //     let mutamervisaObj =
 
-        {
-          "DateOfBirth": "1995-01-25",
-          "PassportNo": this.roomsForms[r].adults[q].passportNumber,
-          "NationalityId": "91",
-          "Gender": genderNumber
-        }
+    //     {
+    //       "DateOfBirth": "1995-01-25",
+    //       "PassportNo": this.roomsForms[r].adults[q].passportNumber,
+    //       "NationalityId": "91",
+    //       "Gender": genderNumber
+    //     }
 
+    //     this.evisaMutmerDetails.push(mutamervisaObj)
 
+    //   }
+    //   for (var u = 0; u < this.roomsForms[r].childrens.length; u++) {
 
-        this.evisaMutmerDetails.push(mutamervisaObj)
+    //     // var childObject =
+    //     // {
+    //     //   "type": "CHD",
+    //     //   "isMainPax": true,
+    //     //   "details": {
+    //     //     "firstName": this.roomsForms[r].childrens[u].firstName,
+    //     //     "middleName": this.roomsForms[r].childrens[u].middleName,
+    //     //     "lastName": this.roomsForms[r].childrens[u].lastName,
+    //     //     "gender": this.roomsForms[r].childrens[u].gender,
+    //     //     "birthDate": "1995-01-25",
+    //     //     "age": "1",
+    //     //     "location": {
+    //     //       "name": this.roomsForms[r].adults[0].locationName,
+    //     //       "countryCode": "IN",
+    //     //       "country": this.roomsForms[r].adults[0].country,
+    //     //       "address": this.roomsForms[r].adults[0].address,
+    //     //       "city": this.roomsForms[r].adults[0].city,
+    //     //       "state": this.roomsForms[r].adults[0].state,
+    //     //       "zipCode": this.roomsForms[r].adults[0].zip
+    //     //     },
+    //     //     // "contactInformation": {
+    //     //     //   "phoneNumber": `${this.contactForm.value.mobileNumber}`,
+    //     //     //   "phoneNumberCountryCode": "91",
+    //     //     //   "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
+    //     //     //   "homePhoneNumberCountryCode": "91",
+    //     //     //   "fax": "",
+    //     //     //   "email": this.contactForm.value.email
+    //     //     // }
+    //     //   }
+    //     // }
 
-      }
-      for (var u = 0; u < this.roomsForms[r].childrens.length; u++) {
+    //     this.traveller.push(childObject);
+    //   }
 
-        var childObject =
-        {
-          "type": "CHD",
-          "isMainPax": true,
-          "details": {
-            "firstName": this.roomsForms[r].childrens[u].firstName,
-            "middleName": this.roomsForms[r].childrens[u].middleName,
-            "lastName": this.roomsForms[r].childrens[u].lastName,
-            "gender": this.roomsForms[r].childrens[u].gender,
-            "birthDate": "1995-01-25",
-            "age": "1",
-            "location": {
-              "name": this.roomsForms[r].adults[0].locationName,
-              "countryCode": "IN",
-              "country": this.roomsForms[r].adults[0].country,
-              "address": this.roomsForms[r].adults[0].address,
-              "city": this.roomsForms[r].adults[0].city,
-              "state": this.roomsForms[r].adults[0].state,
-              "zipCode": this.roomsForms[r].adults[0].zip
-            },
-            "contactInformation": {
-              "phoneNumber": `${this.contactForm.value.mobileNumber}`,
-              "phoneNumberCountryCode": "91",
-              "homePhoneNumber": `${this.contactForm.value.secondMobileNumber}`,
-              "homePhoneNumberCountryCode": "91",
-              "fax": "",
-              "email": this.contactForm.value.email
-            }
-          }
-        }
+    //   let travellerListObj = {
+    //     travellersList: this.traveller
+    //   }
 
-        this.traveller.push(childObject);
-      }
+    //   this.travellerDetails.push(travellerListObj);
 
-      let travellerListObj = {
-        travellersList: this.traveller
-      }
-
-      this.travellerDetails.push(travellerListObj);
-
-    }
+    // }
 
 
     console.log("travellerDetails", this.travellerDetails)
@@ -375,13 +432,13 @@ for(let m = 0 ; m < this.totalForms.length ; m++){
 
     var transportTravllerObj = {
       "details": {
-        "passportNo": this.roomsForms[0].adults[0].passportNumber,
-        "firstName": this.roomsForms[0].adults[0].firstName,
-        "middleName": this.roomsForms[0].adults[0].middleName,
-        "lastName": this.roomsForms[0].adults[0].lastName,
+        "passportNo":this.totalForms[0].value[0].passportNumber,
+        "firstName": this.totalForms[0].value[0].firstNamee,
+        "middleName": this.totalForms[0].value[0].middleName,
+        "lastName": this.totalForms[0].value[0].lastName,
         "nationalityCode": "IN",
         "fullNameAR": "",
-        "gender": this.roomsForms[0].adults[0].gender,
+        "gender": this.totalForms[0].value[0].gender,
         "birthDate": "1985-02-25T00:00:00",
         "phoneNumber": `${this.contactForm.value.mobileNumber}`,
         "phoneNumberCountryCode": "91",
@@ -420,6 +477,7 @@ for(let m = 0 ; m < this.totalForms.length ; m++){
 
 
   }
+}
 
 
   // hotel calculations 
