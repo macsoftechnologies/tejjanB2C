@@ -103,16 +103,11 @@ export class CheckOutComponent implements OnInit {
       config.minDate = { year: 1900, month: 1, day: 1 };
   }
 
-
-
-
-
-  public usersForm = new FormArray(this.formsArr);
+  // public usersForm = new FormArray(this.formsArr);
+  public usersForm = new FormArray([]);
 
 
   ngOnInit() {
-
-
     this.searchObj = JSON.parse(localStorage.getItem("searchObj"));
     this.hotelcart = JSON.parse(localStorage.getItem("hotelcart"))
     this.searchFilterObj = JSON.parse(localStorage.getItem("searchFilterObj"))
@@ -143,41 +138,24 @@ export class CheckOutComponent implements OnInit {
     // this.travellerForms();
 
   }
-
-
   // get countries list
   public country(): void {
-
     this.teejanServices.getCountyList().subscribe((data) => {
       this.countryList = data;
     })
-
   }
-
-
   public validate(): void {
     this.rooms = this.searchObj.request.rooms;
     this.childArry = []
-  
+    let paxInfoArray = [];
     for (let m = 0; m < this.rooms.length; m++) {
-     
       this.adultsCount = [];
       this.childrenCount = [];
       this.addultsArry = []
       this.childArry = []
-    
-  
       this.adultsCount = this.rooms[m].PaxInfo.filter(adt => adt.Type == "ADT");
       this.childrenCount = this.rooms[m].PaxInfo.filter(chd => chd.Type == "CHD")
-
-
-        console.log("adultCount" , this.adultsCount[0].Quantity)
-      
-
       for (var j = 0; j < this.adultsCount[0].Quantity; j++) {
-
-          
-
         this.addultsArry.push(
           new FormGroup({
             gender: new FormControl('', { validators: Validators.required }),
@@ -195,15 +173,8 @@ export class CheckOutComponent implements OnInit {
             childArray: new FormArray([])
           }),
         )
-
-        
-     
-
       }
-
-      
-      for (let k = 0; k < this.childrenCount.length ; k++) {
-       
+      for (let k = 0; k < this.childrenCount.length; k++) {
         this.childArry.push(
           new FormGroup({
             gender: new FormControl('', { validators: Validators.required }),
@@ -213,45 +184,21 @@ export class CheckOutComponent implements OnInit {
             birthDate: new FormControl('', { validators: Validators.required }),
           }),
         )
-
       }
-      this.addultsArry[m].controls.childArray = new FormArray(this.childArry);
-            
-  
-     
-    console.log( "this.childrenCount" ,  this.childrenCount)
-
-        console.log("childArry" ,this.childArry);
-       
-
-
-
-      // this.addultsArry[j].controls.childArray = new FormArray(this.childArry);
-
-    this.usersForm = new FormArray(this.addultsArry);
-
+      this.addultsArry[0].controls.childArray = new FormArray(this.childArry);
+      this.usersForm = new FormArray(this.addultsArry);
       this.totalForms.push(this.usersForm)
-
-     
+      console.log(this.totalForms);
     }
-
-    console.log("form value" , this.usersForm.controls)
-    console.log("allForms" , this.totalForms[0].controls[0])
-
-    
-
-    // console.log(this.usersForm.controls)
-
   }
 
   onSubmit() {
 
-    console.log( "value" , this.usersForm.valid);
+    console.log("value", this.usersForm.valid);
 
     this.usersFormValidationFlag = this.usersForm.valid ? false : true;
 
     console.log(this.usersForm.valid);
-    console.log(this.totalForms);
 
   }
 
@@ -275,9 +222,13 @@ export class CheckOutComponent implements OnInit {
 
   cardPay(cartGrandTotal) {
 
-        console.log("this.usersForm.controls" , this.usersForm.controls)
+    console.log(this.totalForms);
 
-    for(let s = 0 ; s < this.usersForm.value.length ; s++){
+for(let m = 0 ; m < this.totalForms.length ; m++){
+
+    console.log(" this.totalForms[m].value",  this.totalForms[m].value)
+
+    for (let s = 0; s < this.totalForms[m].value.length; s++) {
       var adultObject =
       {
         "type": "ADT",
@@ -309,10 +260,12 @@ export class CheckOutComponent implements OnInit {
       }
 
 
-    }   
+    }
     this.traveller.push(adultObject);
 
-    console.log("this.traveller" , this.traveller)
+    
+  }
+    console.log("this.traveller", this.traveller)
 
 
     for (var r = 0; r < this.roomsForms.length; r++) {
