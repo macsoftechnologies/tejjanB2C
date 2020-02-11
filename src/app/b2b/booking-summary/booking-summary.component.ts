@@ -125,15 +125,15 @@ export class BookingSummaryComponent implements OnInit {
           if (priceDetails.purpose == "1") {
 
                  
-            this.roomsBasePrice += priceDetails.amount * this.numberOfNights;
+            this.roomsBasePrice += priceDetails.amount 
             
-            this.roomsGDS += priceDetails.amount / 100 * 7.5 * this.numberOfNights
-            this.roomsOTA += priceDetails.amount / 100 * 30 * this.numberOfNights
+            this.roomsGDS += priceDetails.amount / 100 * 7.5 
+            this.roomsOTA += priceDetails.amount / 100 * 30 
 
               
           }
           if (priceDetails.purpose == "2") {
-            this.roomsFees += priceDetails.amount * this.numberOfNights;
+            this.roomsFees += priceDetails.amount 
           }
           // if (priceDetails.purpose == "20") {
           //   this.roomsGDS += priceDetails.amount;
@@ -142,7 +142,7 @@ export class BookingSummaryComponent implements OnInit {
           //   this.roomsOTA += priceDetails.amount;
           // }
           if (priceDetails.purpose == "7") {
-            this.roomsVAT += priceDetails.amount * this.numberOfNights;
+            this.roomsVAT += priceDetails.amount 
           }
         });
       });
