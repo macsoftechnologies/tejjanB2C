@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: "http://157.175.20.244:37005/v1/api/",
-  baseUrl1: "http://157.175.20.244:37005/admin/api/",
-  baseUrl2 : "http://157.175.20.244:37005/vi/api/"
+  baseUrl: "https://dev.alrajhiumrah.com/v1/api/",
+  baseUrl1: "https://dev.alrajhiumrah.com/admin/api/",
+  baseUrl2 : "https://dev.alrajhiumrah.com/vi/api/",
+  baseUrl3 : "https://dev.alrajhiumrah.com/v1/api/country",
   // baseUrl: "http://78.46.66.126:37005/v1/api/",
   // baseUrl1: "http://78.46.66.126:37005/admin/api/"
 

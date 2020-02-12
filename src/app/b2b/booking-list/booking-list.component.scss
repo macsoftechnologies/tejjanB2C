@@ -288,6 +288,66 @@
      }
 }
 .noDataFound {
-    text-align: center;
+    justify-content: center;
     padding-top: 20px;
 }
+.state-group {
+    display: flex;
+    justify-content: center;
+    // margin-bottom: 20px;
+    
+        ul {
+            li {
+                a {
+                    color:#ccc;
+                    border-bottom: 3px solid #c2c2c2;
+                    border-radius: 0;
+                    padding: 8px 30px;
+                
+                    @include mobile {
+                        font-size: 12px;
+                        padding: 8px 30px;
+                    }
+                }
+            
+                a.active {
+                    background: none;
+                    color: #fff;
+                    border-radius: 0;
+                    border-bottom: 3px solid #fff;
+                    padding: 8px 30px;
+                
+                    @include mobile {
+                        font-size: 12px;
+                    }
+                }
+                .nav-link.active{
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: 4px solid #fff;
+                    color: #fff;
+                }
+                .nav-link:hover{
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .bookingListCard {
+        margin-top: 50px;
+        .card-header {
+            background-color: $primary-color;
+            color: #ccc;
+            padding: 2px;
+        }
+        .card-body {
+            .card {
+                padding: 5px;
+            }
+        }
+     }

@@ -305,16 +305,16 @@
               <li class="d-none"><h4>Accomodations</h4>
                 <div class="amount">
                   <p>Hotel name</p>
-                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>SAR 1,800</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="" tooltipClass="my-custom-class"></i>SAR 1,800</p>
                 </div>
               </li>
               <li><h4>Hotels</h4>
                 <ng-template #tipContentHotel>
-                  <div class="full-person-details">
+                  <div class="full-person-details d-none">
                     <p>Quantity x {{hotelcart.roomGroups[0].rooms.length}}</p>
                     <p>SAR {{roomsBasePrice | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "roomsFees != 0">
+                  <div class="vat-details d-none" *ngIf = "roomsFees != 0">
                     <p>Fees</p>
                     <p>SAR {{roomsFees | number : "1.2-2"}}</p>
                   </div>
@@ -322,27 +322,27 @@
                     <p>VAT</p>
                     <p>SAR {{roomsVAT | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "roomsGDS != 0">
+                  <div class="vat-details d-none" *ngIf = "roomsGDS != 0">
                     <p>GDS</p>
                     <p>SAR {{roomsGDS | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "roomsOTA != 0">
+                  <div class="vat-details d-none" *ngIf = "roomsOTA != 0">
                     <p>OTA</p>
                     <p>SAR {{roomsOTA | number : "1.2-2"}}</p>
                   </div>
-                  <div class="price-details">
+                  <div class="price-details d-none">
                     <p>Total-price</p>
                     <p>SAR {{hotelTotalPrice | number : "1.2-2"}}</p>
                   </div>
                 </ng-template>
                 <div class="amount">
                   <p>{{hotelcart.name}}</p>
-                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentHotel" tooltipClass="my-custom-class"></i>SAR {{hotelTotalPrice | number: "1.2-2"}}</p>
                 </div>
               </li>
               <li *ngIf = "transportCart != null && transportCart?.vehicleTypes != undefined"><h4>Transportation</h4>
                 <ng-template #tipContentTransport>
-                  <div class="full-person-details">
+                  <div class="full-person-details d-none">
                     <p>Quantity x {{transportQuantity}}</p>
                     <p>SAR {{transportBasePrice | number : "1.2-2"}}</p>
                   </div>
@@ -350,27 +350,27 @@
                     <p>VAT</p>
                     <p>SAR {{transportVAT | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "transportGDS != 0">
+                  <div class="vat-details d-none" *ngIf = "transportGDS != 0">
                     <p>GDS</p>
                     <p>SAR {{transportGDS | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "transportOTA != 0">
+                  <div class="vat-details d-none" *ngIf = "transportOTA != 0">
                     <p>OTA</p>
                     <p>SAR {{transportOTA | number : "1.2-2"}}</p>
                   </div>
-                  <div class="price-details">
+                  <div class="price-details d-none">
                     <p>Total-price</p>
                     <p>SAR {{transportTotalPrice | number : "1.2-2"}}</p>
                   </div>
                 </ng-template>
                 <div class="amount">
                   <p>{{transportCart.companyName}}</p>
-                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentTransport" tooltipClass="my-custom-class"></i>SAR {{transportTotalPrice | number: "1.2-2"}}</p>
                 </div>
               </li>
               <li *ngIf = "groundCart != null"><h4>Ground Services</h4>
                 <ng-template #tipContentGround>
-                  <div class="full-person-details">
+                  <div class="full-person-details d-none">
                     <p>Quantity x {{groundQuantity}}</p>
                     <p>SAR {{groundBasePrice | number : "1.2-2"}}</p>
                   </div>
@@ -378,22 +378,22 @@
                     <p>VAT</p>
                     <p>SAR {{groundVAT | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "transportGDS != 0">
+                  <div class="vat-details d-none" *ngIf = "transportGDS != 0">
                     <p>GDS</p>
                     <p>SAR {{groundGDS | number : "1.2-2"}}</p>
                   </div>
-                  <div class="vat-details" *ngIf = "transportOTA != 0">
+                  <div class="vat-details d-none" *ngIf = "transportOTA != 0">
                     <p>OTA</p>
                     <p>SAR {{groundOTA | number : "1.2-2"}}</p>
                   </div>
-                  <div class="price-details">
+                  <div class="price-details d-none">
                     <p>Total-price</p>
                     <p>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
                   </div>
                 </ng-template>
                 <div class="amount">
                   <p>{{groundCart?.category?.categoryName}}</p>
-                  <p><i class="fa fa-info-circle d-none" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
+                  <p><i class="fa fa-info-circle" aria-hidden="true" [ngbTooltip]="tipContentGround" tooltipClass="my-custom-class"></i>SAR {{groundTotalPrice | number : "1.2-2"}}</p>
                 </div>
               </li>
               <li>

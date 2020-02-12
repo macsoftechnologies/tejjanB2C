@@ -427,5 +427,12 @@
     .modal-dialog {
         max-width: 584px;
     }
+    .tooltip-inner {
+        background-color: #bb9356;
+        color: #fff !important;
+    }
+    .bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+        border-top-color: #bb9356;
+    }
 }
     

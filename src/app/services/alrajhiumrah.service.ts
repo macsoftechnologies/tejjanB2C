@@ -18,8 +18,9 @@ import { environment } from 'src/environments/environment';
 export class AlrajhiumrahService {
   baseUrl = environment.baseUrl;
   baseUrl1 = environment.baseUrl1;
-  baseUrl2  =  environment.baseUrl2
-
+  baseUrl2  =  environment.baseUrl2;
+  baseUrl3 = environment.baseUrl3;
+  
   constructor(private http: HttpClient,
     private pageTitle: Title) { }
 
@@ -243,7 +244,7 @@ export class AlrajhiumrahService {
   /* get country service data */
   getCountyList(): Observable<any> {
     return this.http
-      .get(this.baseUrl + "country")
+      .get(this.baseUrl3)
       .pipe(map(this.extractData));
   }
   /* get country service data */

@@ -75,7 +75,7 @@ export class TransportServiceComponent implements OnInit {
   public isFirstTimeLoad: boolean = true;
 
   transportAvailability: any;
-  public transportCurrency = ["SAR", "INR"];
+  public transportCurrency = ["SAR"];
 
 
   minValue: number = 100;

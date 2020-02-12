@@ -26,10 +26,6 @@ export class CheckOutComponent implements OnInit {
 
   public isHotelBooking: boolean = true
 
-
-
-
-
   public transportCart: any = {}
   public transportBasePrice = 0
   public transportVAT = 0
@@ -220,11 +216,34 @@ export class CheckOutComponent implements OnInit {
     console.log("this.traveller", this.traveller)
 
     for (let m = 0; m < this.totalForms.length; m++) {
-
+      // console.log("adultOrgBirthDate0" , this.totalForms[m].value.birthDate);
       this.traveller = []
       // `${this.totalForms[m].value[s].birthDate.year}-${this.totalForms[m].value[s].birthDate.month}-${this.totalForms[m].value[s].birthDate.day}`
 
       for (let s = 0; s < this.totalForms[m].value.length; s++) {
+        console.log("adultOrgBirthDate1" , this.totalForms[m].value[s].birthDate);
+        // checkInDay
+      if (this.totalForms[m].value[s].birthDate.day < 10)
+      this.totalForms[m].value[s].birthDate.day = `0${this.totalForms[m].value[s].birthDate.day}`;
+      else
+      this.totalForms[m].value[s].birthDate.day = `${this.totalForms[m].value[s].birthDate.day}`;
+
+      // checkInMonth
+      if (this.totalForms[m].value[s].birthDate.month < 10)
+        this.totalForms[m].value[s].birthDate.month = `0${this.totalForms[m].value[s].birthDate.month}`;
+      else
+        this.totalForms[m].value[s].birthDate.month = `${this.totalForms[m].value[s].birthDate.month}`;
+
+      let adultBirthDate =
+      this.totalForms[m].value[s].birthDate.year +
+      "-" +
+      this.totalForms[m].value[s].birthDate.month +
+      "-" +
+      this.totalForms[m].value[s].birthDate.day;
+
+      console.log("adultOrgBirthDate2" , this.totalForms[m].value[s].birthDate);
+        console.log("adultBirthDate", adultBirthDate);
+
         var adultObject =
         {
           "type": "ADT",
@@ -234,7 +253,7 @@ export class CheckOutComponent implements OnInit {
             "middleName": this.totalForms[m].value[s].middleName,
             "lastName": this.totalForms[m].value[s].lastName,
             "gender": this.totalForms[m].value[s].gender,
-            "birthDate": "1995-01-25",
+            "birthDate": adultBirthDate,
             "location": {
               "name": this.totalForms[m].value[s].locationName,
               "countryCode": this.totalForms[m].value[s].country.countryCode,
@@ -255,12 +274,37 @@ export class CheckOutComponent implements OnInit {
           }
         }
 
+        console.log("adultObject" , adultObject);
         this.traveller.push(adultObject);
 
       }
+      // console.log(this.totalForms[m].controls[0].controls.childArray.value)
 
       for (let b = 0; b < this.totalForms[m].controls[0].controls.childArray.value.length; b++) {
-        let child = this.totalForms[m].controls[0].controls.childArray.value[b]
+        let child = this.totalForms[m].controls[0].controls.childArray.value[b];
+
+        // console.log("childOrgBirthDate0" , child);
+        // console.log("childOrgBirthDate0" , child.birthDate);
+        //   // checkInDay
+        //   if (child.birthDate.day < 10)
+        //   child.birthDate.day = `0${child.birthDate.day}`;
+        //   else
+        //   child.birthDate.day = `${child.birthDate.day}`;
+
+        //   // checkInMonth
+        //   if (child.birthDate.month < 10)
+        //   child.birthDate.month = `0${child.birthDate.month}`;
+        //   else
+        //   child.birthDate.month = `${child.birthDate.month}`;
+
+        //   let childBirthDate =
+        //   child.birthDate.year +
+        //   "-" +
+        //   child.birthDate.month +
+        //   "-" +
+        //   child.birthDate.day;
+        //   console.log("childOrgBirthDate1" , child.birthDate);
+        //   console.log("childBirthDate", childBirthDate);
 
         var childObject =
         {
@@ -271,7 +315,7 @@ export class CheckOutComponent implements OnInit {
             "middleName": child.middleName,
             "lastName": child.lastName,
             "gender": child.gender,
-            "birthDate": "1995-01-25",
+            "birthDate": "1995-02-03",
             "age": "1",
             "location": {
               "name": this.totalForms[0].value[0].locationName,
@@ -292,30 +336,22 @@ export class CheckOutComponent implements OnInit {
             }
           }
         }
+
+        console.log("childObject" , childObject);
         this.traveller.push(childObject)
 
-
       }
-
-
-
-
       let travellerListObj = {
         travellersList: this.traveller
       }
 
       this.travellerDetails.push(travellerListObj);
 
-
-
     }
-
-   
 
     console.log("travellerDetails", this.travellerDetails)
     localStorage.setItem("evisaMutmerDetails", JSON.stringify(this.evisaMutmerDetails))
     localStorage.setItem("travellerDetails", JSON.stringify(this.travellerDetails))
-
 
     var transportTravllerObj = {
       "details": {
